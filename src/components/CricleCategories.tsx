@@ -3,6 +3,8 @@ import { Image, ScrollView, Text, View } from 'native-base'
 import { useCallback } from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 
+import { isMedium } from '~utils/breakpoints'
+
 interface ICircleCategories {
   categories: TCircleCategories[]
   navigation: Function
@@ -24,43 +26,47 @@ const CircleCategories: FC<ICircleCategories> = ({ categories, navigation }) => 
     [navigation]
   )
   return (
-    <ScrollView
-      scrollEnabled={true}
-      showsHorizontalScrollIndicator={false}
-      showsVerticalScrollIndicator={false}
-      horizontal={true}
-      style={styles.body}
-    >
-      {categories.map(({ name, image, navigate }, index) => {
-        return (
-          <View key={index} style={styles.items}>
-            <TouchableOpacity
-              onPress={() => {
-                navigateToCategory(navigate)
-              }}
-              style={styles.categoryButton}
-            >
-              <Image
-                // source={require(image)}
-                src={image}
-                alt={`category ${name}`}
-                height={24}
-                width={24}
-              />
-              <Text style={styles.text}>{name}</Text>
-            </TouchableOpacity>
-          </View>
-        )
-      })}
-    </ScrollView>
+    <View style={styles.main}>
+      <ScrollView
+        scrollEnabled={false}
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        horizontal={true}
+        style={styles.body}
+        contentContainerStyle={styles.container}
+      >
+        {categories.map(({ name, image, navigate }, index) => {
+          return (
+            <View key={index} style={styles.items}>
+              <TouchableOpacity
+                onPress={() => {
+                  navigateToCategory(navigate)
+                }}
+                style={styles.categoryButton}
+              >
+                <Image
+                  // source={require(image)}
+                  src={image}
+                  alt={`category ${name}`}
+                  height={isMedium ? 120 : 20}
+                  width={isMedium ? 120 : 20}
+                />
+                <Text style={styles.text}>{name}</Text>
+              </TouchableOpacity>
+            </View>
+          )
+        })}
+      </ScrollView>
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
   body: {
     flexGrow: 0,
-    height: 140,
-    paddingHorizontal: 20,
+    height: isMedium ? 170 : 120,
+    // paddingHorizontal: 0,
+    maxWidth: 800,
     width: '100%',
   },
 
@@ -71,16 +77,28 @@ const styles = StyleSheet.create({
     width: '100%',
   },
 
+  container: {
+    flex: 1,
+    justifyContent: 'space-between',
+  },
+
   items: {
     flexGrow: 1,
     height: '100%',
-    marginRight: 40,
+    // marginRight: 16,
+  },
+
+  main: {
+    flex: 0,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    width: '100%',
   },
 
   text: {
-    fontSize: 12,
+    fontSize: isMedium ? 18 : 12,
     fontWeight: 'bold',
-    marginTop: 10,
+    marginTop: isMedium ? 18 : 10,
   },
 })
 

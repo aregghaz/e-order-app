@@ -3,6 +3,8 @@ import React, { FC } from 'react'
 import { GestureResponderEvent, StyleSheet, TouchableOpacity } from 'react-native'
 import Swiper from 'react-native-swiper'
 
+import { isMedium } from '~utils/breakpoints'
+
 export type TOfferPoster = {
   image: string
   onPress?: (event: GestureResponderEvent) => void
@@ -19,6 +21,11 @@ interface IOfferPosterSlider {
   navigation?: Function
 }
 
+const colors = {
+  dotColor: '#BFBFBF',
+  activeDotColor: '#404040',
+}
+
 const OfferPosterSlider: FC<IOfferPosterSlider> = ({ slides, navigation }) => {
   return (
     <View style={styles.body}>
@@ -26,7 +33,10 @@ const OfferPosterSlider: FC<IOfferPosterSlider> = ({ slides, navigation }) => {
         <Swiper
           horizontal={true}
           loop={true}
-          showsPagination={false}
+          showsPagination={true}
+          paginationStyle={styles.paginationStyle}
+          dotStyle={styles.dot}
+          activeDotStyle={styles.activeDot}
           scrollEnabled={true}
           showsButtons={false}
           autoplay={true}
@@ -56,21 +66,44 @@ const OfferPosterSlider: FC<IOfferPosterSlider> = ({ slides, navigation }) => {
 }
 
 const styles = StyleSheet.create({
+  activeDot: {
+    backgroundColor: colors.activeDotColor,
+    borderRadius: 100,
+    height: 8,
+    marginEnd: 8,
+    marginStart: 8,
+    width: 8,
+  },
+
   body: {
     flex: 1,
     flexDirection: 'row',
-    height: 230,
+    height: isMedium ? 650 : 250,
     justifyContent: 'center',
     width: '100%',
   },
 
   container: {
-    maxWidth: 500,
+    height: '90%',
+    // maxWidth: 500,
+  },
+
+  dot: {
+    backgroundColor: colors.dotColor,
+    borderRadius: 100,
+    height: 8,
+    marginEnd: 8,
+    marginStart: 8,
+    width: 8,
   },
 
   image: {
     borderRadius: 10,
     flex: 1,
+  },
+
+  paginationStyle: {
+    bottom: -15,
   },
 
   slide: {

@@ -7,6 +7,7 @@ const borderColor = 'gray'
 export type TAdvantages = {
   icon: string
   text: string
+  color: string
 }
 
 interface IAdvantages {
@@ -16,11 +17,13 @@ interface IAdvantages {
 const Advantages: FC<IAdvantages> = ({ advantages }) => {
   return (
     <View style={styles.body}>
-      {advantages.map(({ icon, text }, index) => {
+      {advantages.map(({ icon, text, color }, index) => {
         return (
           <View style={styles.item} key={index}>
             <TouchableOpacity style={styles.button}>
-              <Image src={icon} alt={text} width={40} height={55} resizeMode={'contain'} />
+              <View style={styles.iconWrapper} backgroundColor={color}>
+                <Image src={icon} alt={text} width={25} height={25} resizeMode={'contain'} />
+              </View>
               <Text style={styles.text}>{text}</Text>
             </TouchableOpacity>
           </View>
@@ -35,6 +38,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     height: 'auto',
+    justifyContent: 'space-evenly',
     width: '100%',
   },
 
@@ -46,6 +50,15 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     flex: 1,
     justifyContent: 'center',
+  },
+
+  iconWrapper: {
+    alignItems: 'center',
+    borderRadius: 100,
+    flex: 0,
+    height: 50,
+    justifyContent: 'center',
+    width: 50,
   },
 
   item: {
