@@ -5,8 +5,9 @@ import { StyleSheet, TouchableOpacity } from 'react-native'
 import { isMedium, screenWidth } from '~utils/breakpoints'
 
 interface ICircleCategories {
-  categories: TCircleCategories[]
+  // categories: TCircleCategories[]
   navigation: Function
+  categories: (false | TCircleCategories)[]
 }
 
 export type TCircleCategories = {
@@ -27,12 +28,17 @@ const CircleCategories: FC<ICircleCategories> = ({ categories, navigation }) => 
   return (
     <View style={styles.main}>
       <ScrollView
-        scrollEnabled={false}
+        snapToInterval={isMedium ? 120 : (screenWidth * 22) / 100}
+        snapToAlignment={'start'}
+        snapToStart={true}
+        decelerationRate={0}
+        // scrollEnabled={true}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         horizontal={true}
         style={styles.body}
-        contentContainerStyle={styles.container}
+        // containerStyle={styles.container}
+        // contentContainerStyle={styles.content}
       >
         {categories.map(({ name, image, navigate }, index) => {
           return (
@@ -63,24 +69,30 @@ const CircleCategories: FC<ICircleCategories> = ({ categories, navigation }) => 
 
 const styles = StyleSheet.create({
   body: {
+    flexDirection: 'row',
     flexGrow: 0,
     height: isMedium ? 170 : 120,
     maxWidth: 800,
-    paddingHorizontal: 10,
     width: '100%',
   },
 
   categoryButton: {
     alignItems: 'center',
-    flexGrow: 1,
+    flexGrow: 0,
+    // flexGrow: 1,
     height: '100%',
-    width: '100%',
+    // width: '100%',
   },
 
-  container: {
-    flex: 1,
-    justifyContent: 'space-between',
-  },
+  // content: {
+  //   width: 10,
+  //   // flex: 1,
+  //   // justifyContent: 'space-between',
+  // },
+
+  // container: {
+  //   width: 20,
+  // },
 
   image: {
     height: isMedium ? 120 : (screenWidth * 22) / 100,
@@ -89,13 +101,14 @@ const styles = StyleSheet.create({
 
   items: {
     height: '100%',
-    // marginRight: 16,
+    marginRight: 10,
   },
 
   main: {
     flex: 0,
     flexDirection: 'row',
     justifyContent: 'center',
+    paddingStart: 10,
     width: '100%',
   },
 

@@ -1,61 +1,78 @@
 import { ScrollView } from 'native-base'
 
 // import { useCallback, useTranslation } from '~hooks'
+import React, { useEffect, useState } from 'react'
+
+import { HomeApi } from '~api/home-api'
 import Advantages from '~components/Advantages'
-import CircleCategories from '~components/CricleCategories'
+import CircleCategories, { TCircleCategories } from '~components/CricleCategories'
 import OfferPosterSlider from '~components/OfferPosterSlider'
 import Reviews from '~components/Reviews'
 import TrendingItems from '~components/TrendingItems'
+//import { useFocusEffect } from '@react-navigation/native'
+
+const local = 'ru'
 
 export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const {
     navigation: { navigate },
   } = props
+  const [data, setData] = useState([])
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     ;(async () => {
+  //       const categoryData = await HomeApi.getCategory()
+  //       console.log(categoryData,'categoryData');
+  //       setData(categoryData)
+  //       //  dispatch(clientAction.fetching({clientById: clientData.client}))
+  //     })()
+  //     //  return () => clientData();
+  //   }, [])
+  // )
+  useEffect(() => {
+    ;(async function () {
+      const categoryData = await HomeApi.getCategory()
+      console.log(categoryData, 'categoryData')
+      setData(categoryData.payload.content)
+    })()
+  }, [])
   // const { t } = useTranslation()
-  //
+  //r
   // const navigateToDetails = useCallback(() => {
   //   navigate('Details', { id: 'home-id' })
   // }, [navigate])
 
   return (
     <ScrollView flex={1}>
-      <CircleCategories
-        navigation={navigate}
-        categories={[
-          {
-            name: 'Men',
-            image: 'https://codervent.com/mobile/synrok/demo/assets/images/category/01.webp',
-            navigate: {
-              to: 'Details',
-              param: {},
-            },
-          },
-          {
-            name: 'Women',
-            image: 'https://codervent.com/mobile/synrok/demo/assets/images/category/02.webp',
-            navigate: {
-              to: '',
-              param: {},
-            },
-          },
-          {
-            name: 'Kids',
-            image: 'https://codervent.com/mobile/synrok/demo/assets/images/category/03.webp',
-            navigate: {
-              to: '',
-              param: {},
-            },
-          },
-          {
-            name: 'On Sales',
-            image: 'https://codervent.com/mobile/synrok/demo/assets/images/category/04.webp',
-            navigate: {
-              to: '',
-              param: {},
-            },
-          },
-        ]}
-      />
+      {data.length > 0 && (
+        <CircleCategories
+          navigation={navigate}
+          categories={
+            data.length > 0 &&
+            data.map(({ mainImage, name }): TCircleCategories => {
+              return {
+                name: name[local],
+                image:
+                  mainImage ??
+                  'https://codervent.com/mobile/synrok/demo/assets/images/category/01.webp',
+                navigate: {
+                  to: 'Details',
+                  param: {},
+                },
+              }
+            })
+          }
+          // categories={[
+          //   {
+          //     name: 'Men',
+          //     image: 'https://codervent.com/mobile/synrok/demo/assets/images/category/01.webp',
+          //     navigate: {
+          //       to: 'Details',
+          //       param: {},
+          //     },
+          //   },
+        />
+      )}
       <OfferPosterSlider
         navigation={navigate}
         slides={[
@@ -94,16 +111,6 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
             icon: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA10lEQVR4nO3ZsRGCUBCE4SsDsSQsB7QAbQt7Eg0w+p3n3IwOPtHA4B7ul15yNwsEi5mIiIi8AjZAD1yI5+y7NZ+OOFCO/VwSyQi0wMqCAVZA5zuSTQY4+rC14ICt79rnhun5SyoLDqh81yE3vLNC8G7fxR1SGtMhwZgSCca+/goEhQ5ZQiL8+jnWIQ96R6JBX61gUCLBoESCQYkUlMjgs3DF3BSw9l1PuWHqVJPOggN2cwVd48PRm7zaggFqP+Lqu+bL7FQMU3qJPUmmf6pQy/utICIi8q9uYdJqXVSS4jUAAAAASUVORK5CYII=',
             text: 'Secure Payment',
             color: '#723DA6',
-          },
-          {
-            icon: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAAByklEQVR4nO2ZS07DMBRFLbV8Jm2ZwkYYsIiWLiAzGBQW0nUl4idVzKBlAwwZtFPQQRavUtTEIXFfwJF8JEtR6xvf61cnTmpMJBKJ7APQBxJgBSzluG+6BNAD7ihiP+uZrsDP7Fve5TiRY0tiOlCFbKcCSUm4LVmQ1aFoNM0blaCpK2gICzpras5Rnf+7EDiq0G9rAlQBjoEHLRMlk3Fvx9B1XT7w3KcKDasz13VdHPQc+AS+gItgz0/5TSxUsqogncL8FsQEDjFIVyvSFUxFkN3recikOuX7Y/D1E4O0BLEiggkEfP3EIC1BrIhgAgFfPzFISxArIphAoK4f187XBAJ1n9ubBAGOgGt5B/Uhzb64uAIOa5hqrMd3K+8KApwBT7ixL+9OK87rpcf3F1ImtLMFPMpXL8AYGEibyB86WzOFmd1Hz75BHLwCoxLNKGemFb3xCFL12Duu0F3WCOKrTxsHcQyykRMOKvoMpc9GW68GsK5hxP48LGttvRq5hTqp6DOVPvfaejWAWxlk6VisJ8Cb9Jlp69WQy+ezDLSShTmUNs2ZWAAH2npV5Ia2NVPGosYN0VuviszsjWwxNtLsFmNWZyb31UdMB/gGWQfynCUuH5UAAAAASUVORK5CYII=',
-            text: 'Free Returns',
-            color: '#FF2C2C',
-          },
-          {
-            icon: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAADSUlEQVR4nO2az0tVQRTHJ/yRGkQ/KJeV+Q9E9ks3QpBFuwiCaNOPRZQREfRDN7mwp7YoaFebFtW2ny4igiKhWphaQVAiRdbCihAqzFd+4vTO803P+3zv+ubdd6/4BeHNzJ3v+Z47d+acmdGYOUwFUAM0A9eBPuALEAfG9fdz4BpwGFhlwgSgDNgNPMEfJoAeYHsYnGgCXlvifgB3gUNAA1ALLNC/Wq2Ttm7gp9XvGbC5GA6UAl36VgXDwBGg0gdHpfb5aI1QTLgLqz4lYDnwWI3Lt38KqMiDrwJoUS7BI2CZW9VTjS4Eev+Zgw/yqTjkXgcMKXc/sMgVt9ebe6iG3gDVBbBRrdyCB8B8UwAjF62RWOHcQMrOSp1zgguuyTcCfzQmrHFK7m1vrdr6LZ+cyxXqhb6hTiekudntsuZL/iuZBjvBO6DKicrc7FYB79X2LheET5XshBOF/myfVNs9+RKt1kA1VvC1PXPM+qUaZp6baXInuOVUoT8Nt1XDwXxIJIsVtDpV509Dq2q4mg+JpOKCLU7V+U9MBb0z6Vyuy18y/zkfWDI3dekX26iWTtk2mBms4TZiJmCQEJ6O7LEMWC8T2xqJet1DCEYCUW8B+OyhY1w11mXqdEBTgklYbf+VgwIZdChE6770Do3aMGF/VpkIQ+DIOdUqmhuTjSXAK33gzHQEYXHEJH63afGl+CAV27TibXJFiIgjZcCgVjVJxWUtnM6FICyOCHSLLLgkhQEtbIigI5u0ql8K37SwOFeCEDmyRKu+Gt2JYUfuCDlSqlXxWTUiA7NgjvTZq1ZLrgQhcqTVXrW2amEw6nGkxIrsbZGN7BHPteKTuZb10P6IZb9xYG+mjnXATT25QPcAyX3AcJBOCGQP5KFD9iM35DTSZIPeU6Sj3QQMvHV0+CEo1W3miB4ot8s+vqCqvXWUqG307PlsMc4OnIDElZ1gyEQZpM6eu02UAdxTR5pNVAHsUCdGgaVBGy/XheIT3hjR9mknLbAT+K59jgfnQUpAB7kh5nEfUgPsAe5bz10B5hXDkeS9eX2G9mRgy4ZR4FhRnEhzpMGnI/JfE3JDdQc4WrDr6TyjcdZPK3QgMdlj1sh4TfaOydR7DrMUfwEbaScFEF18jgAAAABJRU5ErkJggg==',
-            text: '24/7 Support',
-            color: '#21AD61',
           },
           {
             icon: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAAByklEQVR4nO2ZS07DMBRFLbV8Jm2ZwkYYsIiWLiAzGBQW0nUl4idVzKBlAwwZtFPQQRavUtTEIXFfwJF8JEtR6xvf61cnTmpMJBKJ7APQBxJgBSzluG+6BNAD7ihiP+uZrsDP7Fve5TiRY0tiOlCFbKcCSUm4LVmQ1aFoNM0blaCpK2gICzpras5Rnf+7EDiq0G9rAlQBjoEHLRMlk3Fvx9B1XT7w3KcKDasz13VdHPQc+AS+gItgz0/5TSxUsqogncL8FsQEDjFIVyvSFUxFkN3recikOuX7Y/D1E4O0BLEiggkEfP3EIC1BrIhgAgFfPzFISxArIphAoK4f187XBAJ1n9ubBAGOgGt5B/Uhzb64uAIOa5hqrMd3K+8KApwBT7ixL+9OK87rpcf3F1ImtLMFPMpXL8AYGEibyB86WzOFmd1Hz75BHLwCoxLNKGemFb3xCFL12Duu0F3WCOKrTxsHcQyykRMOKvoMpc9GW68GsK5hxP48LGttvRq5hTqp6DOVPvfaejWAWxlk6VisJ8Cb9Jlp69WQy+ezDLSShTmUNs2ZWAAH2npV5Ia2NVPGosYN0VuviszsjWwxNtLsFmNWZyb31UdMB/gGWQfynCUuH5UAAAAASUVORK5CYII=',
