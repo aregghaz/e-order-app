@@ -6,10 +6,10 @@ import { linking } from './linking'
 
 import { StatusBar } from '~components'
 import {
-  useScreenTracker,
+  useCallback,
   useNavigationStatePersistence,
   useNavigationTheme,
-  useCallback,
+  useScreenTracker,
 } from '~hooks'
 
 export const Navigation: FC = () => {
