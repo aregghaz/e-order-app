@@ -1,6 +1,5 @@
-import { FC } from 'React'
 import { Image, ScrollView, Text, View } from 'native-base'
-import { useCallback } from 'react'
+import { FC, useCallback } from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 
 import { isMedium, screenWidth } from '~utils/breakpoints'

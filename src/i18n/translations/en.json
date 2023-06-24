@@ -15,9 +15,9 @@
       "discard": "Discard"
     },
     "screen_titles": {
-      "home_stack": "HomeStack",
-      "examples_stack": "ExamplesStack",
-      "examples": "Examples",
+      "category": "Category",
+      "profile": "Profile",
+      "contact": "Contact",
       "components": "Components",
       "colors": "Colors",
       "typography": "Typography",
@@ -25,6 +25,7 @@
       "details": "Details",
       "sign_in": "Sign in",
       "sign_up": "Sign up",
+      "header": "Header",
       "main_tab": "MainTab",
       "settings": "Settings",
       "application_info": "ApplicationInfo",

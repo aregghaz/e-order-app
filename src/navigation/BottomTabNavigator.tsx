@@ -1,13 +1,15 @@
 import { Feather } from '@expo/vector-icons'
-import { createBottomTabNavigator, BottomTabNavigationOptions } from '@react-navigation/bottom-tabs'
+import { BottomTabNavigationOptions, createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { FC } from 'react'
 
-import { ExamplesStack } from './ExamplesStack'
+import { CategoryStack } from './CategoryStack'
+import { ContactStack } from './ContactStack'
 import { HomeStack } from './HomeStack'
+import { ProfileStack } from './ProfileStack'
 
 import { useCallback, useNavigationTheme, useTranslation } from '~hooks'
 
-const { Navigator, Screen } = createBottomTabNavigator<MainTabParamList>()
+const { Navigator, Screen } = createBottomTabNavigator()
 
 type ScreenOptions = (params: BottomTabScreenProps) => BottomTabNavigationOptions
 
@@ -20,10 +22,14 @@ export const BottomTabNavigator: FC = () => {
       tabBarIcon: ({ color, size }) => {
         let iconName: keyof typeof Feather.glyphMap
 
-        if (route.name === 'HomeStack') {
+        if (route.name === 'Home') {
           iconName = 'home'
-        } else if (route.name === 'ExamplesStack') {
-          iconName = 'list'
+        } else if (route.name === 'Category') {
+          iconName = 'grid'
+        } else if (route.name === 'Profile') {
+          iconName = 'user'
+        } else if (route.name === 'Contact') {
+          iconName = 'help-circle'
         } else {
           iconName = 'alert-triangle'
         }
@@ -32,6 +38,13 @@ export const BottomTabNavigator: FC = () => {
         return <Feather name={iconName} size={size} color={color} />
       },
       headerShown: false,
+      tabBarStyle: [
+        {
+          display: 'flex',
+          height: 70,
+          paddingBottom: 10,
+        },
+      ],
       ...tabBarTheme,
     }),
     [tabBarTheme]
@@ -40,14 +53,24 @@ export const BottomTabNavigator: FC = () => {
   return (
     <Navigator screenOptions={screenOptions}>
       <Screen
-        name="HomeStack"
-        options={{ title: t('navigation.screen_titles.home_stack') }}
+        name="Home"
+        options={{ title: t('navigation.screen_titles.home') }}
         component={HomeStack}
       />
       <Screen
-        name="ExamplesStack"
-        options={{ title: t('navigation.screen_titles.examples_stack') }}
-        component={ExamplesStack}
+        name="Category"
+        options={{ title: t('navigation.screen_titles.category') }}
+        component={CategoryStack}
+      />
+      <Screen
+        name="Profile"
+        options={{ title: t('navigation.screen_titles.profile') }}
+        component={ProfileStack}
+      />
+      <Screen
+        name="Contact"
+        options={{ title: t('navigation.screen_titles.contact') }}
+        component={ContactStack}
       />
     </Navigator>
   )

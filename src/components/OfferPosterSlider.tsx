@@ -1,4 +1,4 @@
-import { View, Image } from 'native-base'
+import { Image, View } from 'native-base'
 import React, { FC } from 'react'
 import { GestureResponderEvent, StyleSheet, TouchableOpacity } from 'react-native'
 import Swiper from 'react-native-swiper'

@@ -12,7 +12,7 @@ import {
   SignUpScreen,
 } from '~screens'
 
-const { Navigator, Screen, Group } = createStackNavigator<RootStackParamList>()
+const { Navigator, Screen, Group } = createStackNavigator()
 
 export const RootNavigator: FC = () => {
   const { t } = useTranslation()
