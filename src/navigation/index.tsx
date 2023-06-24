@@ -1,7 +1,7 @@
 import { NavigationContainer, NavigationState } from '@react-navigation/native'
 import { FC } from 'react'
 
-import { RootNavigator } from './RootNavigator'
+// import { RootNavigator } from './RootNavigator'
 import { linking } from './linking'
 
 import { StatusBar } from '~components'
@@ -11,6 +11,7 @@ import {
   useNavigationTheme,
   useScreenTracker,
 } from '~hooks'
+import { DrawerNavigator } from '~navigation/Drawer'
 
 export const Navigation: FC = () => {
   const { navigationRef, onReady, onStateChange: onStateChangeScreenTracker } = useScreenTracker()
@@ -45,7 +46,8 @@ export const Navigation: FC = () => {
         linking={linking}
         initialState={initialState}
       >
-        <RootNavigator />
+        {/*<RootNavigator />*/}
+        <DrawerNavigator />
       </NavigationContainer>
     </>
   )

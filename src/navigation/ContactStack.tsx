@@ -1,27 +1,25 @@
-/**
- * was created by tigran at 23.06.23
- */
+import { createStackNavigator } from '@react-navigation/stack'
 
-import { Text, View } from 'native-base'
-import React, { FC } from 'react'
-import { StyleSheet } from 'react-native'
+import { useTranslation } from '~hooks'
+import { Header } from '~navigation/Header'
+import { optionForScreen } from '~navigation/HeaderGlobalStyles'
+import { ContactScreen } from '~screens'
 
-export const ContactStack: FC = () => {
+const { Navigator, Screen } = createStackNavigator()
+
+export const ContactStack = (): JSX.Element => {
+  const { t } = useTranslation()
   return (
-    <View style={styles.contact_wrapper}>
-      <Text style={styles.contact_wrapper_title}>Contact</Text>
-    </View>
+    <Navigator screenOptions={optionForScreen}>
+      <Screen
+        name="ContactStack"
+        options={({ navigation }) => ({
+          headerTitle: () => (
+            <Header navigation={navigation} title={t('navigation.screen_titles.contact')} />
+          ),
+        })}
+        component={ContactScreen}
+      />
+    </Navigator>
   )
 }
-
-const styles = StyleSheet.create({
-  contact_wrapper: {
-    alignItems: 'center',
-    flex: 1,
-    justifyContent: 'center',
-  },
-  contact_wrapper_title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-})

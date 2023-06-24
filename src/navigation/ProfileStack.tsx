@@ -1,27 +1,25 @@
-/**
- * was created by tigran at 23.06.23
- */
+import { createStackNavigator } from '@react-navigation/stack'
 
-import { Text, View } from 'native-base'
-import React, { FC } from 'react'
-import { StyleSheet } from 'react-native'
+import { useTranslation } from '~hooks'
+import { Header } from '~navigation/Header'
+import { optionForScreen } from '~navigation/HeaderGlobalStyles'
+import { ProfileScreen } from '~screens'
 
-export const ProfileStack: FC = () => {
+const { Navigator, Screen } = createStackNavigator()
+
+export const ProfileStack = (): JSX.Element => {
+  const { t } = useTranslation()
   return (
-    <View style={styles.profile_wrapper}>
-      <Text style={styles.profile_wrapper_title}>Profile</Text>
-    </View>
+    <Navigator screenOptions={optionForScreen}>
+      <Screen
+        name="ProfileStack"
+        options={({ navigation }) => ({
+          headerTitle: () => (
+            <Header navigation={navigation} title={t('navigation.screen_titles.profile')} />
+          ),
+        })}
+        component={ProfileScreen}
+      />
+    </Navigator>
   )
 }
-
-const styles = StyleSheet.create({
-  profile_wrapper: {
-    alignItems: 'center',
-    flex: 1,
-    justifyContent: 'center',
-  },
-  profile_wrapper_title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-})
