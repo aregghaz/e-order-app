@@ -9,7 +9,7 @@ interface IReviews {
 const Reviews: FC<IReviews> = () => {
   return (
     <View style={styles.body}>
-      <Text>Client Reviews</Text>
+      <Text style={styles.header}>Client Reviews</Text>
       <View style={styles.container}>
         <Swiper style={styles.swiper}>
           <View style={styles.review}></View>
@@ -22,9 +22,13 @@ const Reviews: FC<IReviews> = () => {
 const styles = StyleSheet.create({
   body: {
     alignItems: 'center',
+    height: 300,
+    paddingTop: 20,
   },
 
   container: {},
+
+  header: {},
 
   review: {},
 
