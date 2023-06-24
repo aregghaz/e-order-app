@@ -3,7 +3,7 @@ import { Image, ScrollView, Text, View } from 'native-base'
 import { useCallback } from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 
-import { isMedium } from '~utils/breakpoints'
+import { isMedium, screenWidth } from '~utils/breakpoints'
 
 interface ICircleCategories {
   categories: TCircleCategories[]
@@ -50,6 +50,7 @@ const CircleCategories: FC<ICircleCategories> = ({ categories, navigation }) => 
                   alt={`category ${name}`}
                   height={isMedium ? 120 : 20}
                   width={isMedium ? 120 : 20}
+                  style={styles.image}
                 />
                 <Text style={styles.text}>{name}</Text>
               </TouchableOpacity>
@@ -65,8 +66,8 @@ const styles = StyleSheet.create({
   body: {
     flexGrow: 0,
     height: isMedium ? 170 : 120,
-    // paddingHorizontal: 0,
     maxWidth: 800,
+    paddingHorizontal: 10,
     width: '100%',
   },
 
@@ -82,8 +83,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
 
+  image: {
+    height: isMedium ? 120 : (screenWidth * 22) / 100,
+    width: isMedium ? 120 : (screenWidth * 22) / 100,
+  },
+
   items: {
-    flexGrow: 1,
     height: '100%',
     // marginRight: 16,
   },

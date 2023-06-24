@@ -4,6 +4,8 @@ import { ScrollView } from 'native-base'
 import Advantages from '~components/Advantages'
 import CircleCategories from '~components/CricleCategories'
 import OfferPosterSlider from '~components/OfferPosterSlider'
+import Reviews from '~components/Reviews'
+import TrendingItems from '~components/TrendingItems'
 
 export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const {
@@ -105,6 +107,35 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
           },
         ]}
       />
+      <TrendingItems
+        items={[
+          {
+            image: 'https://codervent.com/mobile/synrok/demo/assets/images/trending/01.webp',
+            name: 'Denim Shirts',
+          },
+          {
+            image: 'https://codervent.com/mobile/synrok/demo/assets/images/trending/02.webp',
+            name: 'Casual Shirts',
+          },
+          {
+            image: 'https://codervent.com/mobile/synrok/demo/assets/images/trending/03.webp',
+            name: 'Women Tops',
+          },
+          {
+            image: 'https://codervent.com/mobile/synrok/demo/assets/images/trending/04.webp',
+            name: 'Women Shirts',
+          },
+          {
+            image: 'https://codervent.com/mobile/synrok/demo/assets/images/trending/05.webp',
+            name: 'Women Jeans',
+          },
+          {
+            image: 'https://codervent.com/mobile/synrok/demo/assets/images/trending/06.webp',
+            name: 'Nightwear',
+          },
+        ]}
+      />
+      <Reviews asd={'asd'} />
       {/*<Image*/}
       {/*  source={require('~assets/logo.png')}*/}
       {/*  resizeMode="contain"*/}

@@ -3,7 +3,7 @@ import React, { FC } from 'react'
 import { GestureResponderEvent, StyleSheet, TouchableOpacity } from 'react-native'
 import Swiper from 'react-native-swiper'
 
-import { isMedium } from '~utils/breakpoints'
+import { isMedium, screenHeight } from '~utils/breakpoints'
 
 export type TOfferPoster = {
   image: string
@@ -69,16 +69,17 @@ const styles = StyleSheet.create({
   activeDot: {
     backgroundColor: colors.activeDotColor,
     borderRadius: 100,
-    height: 8,
+    height: isMedium ? 12 : 8,
     marginEnd: 8,
     marginStart: 8,
-    width: 8,
+    width: isMedium ? 12 : 8,
   },
 
   body: {
     flex: 1,
     flexDirection: 'row',
-    height: isMedium ? 650 : 250,
+    // height: isMedium ? 650 : 250,
+    height: (screenHeight * (isMedium ? 44 : 30)) / 100,
     justifyContent: 'center',
     width: '100%',
   },
@@ -91,10 +92,10 @@ const styles = StyleSheet.create({
   dot: {
     backgroundColor: colors.dotColor,
     borderRadius: 100,
-    height: 8,
+    height: isMedium ? 12 : 8,
     marginEnd: 8,
     marginStart: 8,
-    width: 8,
+    width: isMedium ? 12 : 8,
   },
 
   image: {
@@ -103,7 +104,7 @@ const styles = StyleSheet.create({
   },
 
   paginationStyle: {
-    bottom: -15,
+    bottom: isMedium ? -20 : -15,
   },
 
   slide: {
