@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     height: 'auto',
     justifyContent: 'space-evenly',
+    paddingHorizontal: 5,
     width: '100%',
   },
 
