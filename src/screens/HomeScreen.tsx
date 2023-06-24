@@ -1,7 +1,7 @@
 import { ScrollView } from 'native-base'
-
 // import { useCallback, useTranslation } from '~hooks'
 import React, { useEffect, useState } from 'react'
+import { StyleSheet } from 'react-native'
 
 import { HomeApi } from '~api/home-api'
 import Advantages from '~components/Advantages'
@@ -30,11 +30,17 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   //   }, [])
   // )
   useEffect(() => {
-    ;(async function () {
+    const getAsyncCategory = async () => {
       const categoryData = await HomeApi.getCategory()
-      console.log(categoryData, 'categoryData')
+      // console.log(categoryData, 'categoryData')
       setData(categoryData.payload.content)
-    })()
+    }
+    getAsyncCategory()
+    // (async function () {
+    //   const categoryData = await HomeApi.getCategory()
+    //   // console.log(categoryData, 'categoryData')
+    //   setData(categoryData.payload.content)
+    // })()
   }, [])
   // const { t } = useTranslation()
   //r
@@ -43,7 +49,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   // }, [navigate])
 
   return (
-    <ScrollView flex={1}>
+    <ScrollView flex={1} style={styles.main_wrapper}>
       {data.length > 0 && (
         <CircleCategories
           navigation={navigate}
@@ -179,3 +185,9 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
     </ScrollView>
   )
 }
+
+const styles = StyleSheet.create({
+  main_wrapper: {
+    paddingVertical: 20,
+  },
+})

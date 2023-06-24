@@ -1,17 +1,19 @@
 import { createStackNavigator } from '@react-navigation/stack'
 
-import { useTranslation } from '~hooks'
+import { Header } from '~navigation/Header'
+import { optionForScreen } from '~navigation/HeaderGlobalStyles'
 import { HomeScreen } from '~screens'
 
 const { Navigator, Screen } = createStackNavigator()
 
 export const HomeStack = (): JSX.Element => {
-  const { t } = useTranslation()
   return (
-    <Navigator>
+    <Navigator screenOptions={optionForScreen}>
       <Screen
-        name="HomePage"
-        options={{ title: t('navigation.screen_titles.home') }}
+        name="HomeStack"
+        options={({ navigation }) => ({
+          headerTitle: () => <Header navigation={navigation} />,
+        })}
         component={HomeScreen}
       />
     </Navigator>
