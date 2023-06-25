@@ -1,7 +1,6 @@
 import { ScrollView } from 'native-base'
-
-// import { useCallback, useTranslation } from '~hooks'
 import React, { useEffect, useState } from 'react'
+import { StyleSheet } from 'react-native'
 
 import { HomeApi } from '~api/home-api'
 import Advantages from '~components/Advantages'
@@ -9,7 +8,6 @@ import CircleCategories, { TCircleCategories } from '~components/CricleCategorie
 import OfferPosterSlider from '~components/OfferPosterSlider'
 import Trending from '~components/Trending'
 import TrendingItems from '~components/TrendingItems'
-//import { useFocusEffect } from '@react-navigation/native'
 
 const local = 'ru'
 
@@ -18,50 +16,32 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
     navigation: { navigate },
   } = props
   const [data, setData] = useState([])
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     ;(async () => {
-  //       const categoryData = await HomeApi.getCategory()
-  //       console.log(categoryData,'categoryData');
-  //       setData(categoryData)
-  //       //  dispatch(clientAction.fetching({clientById: clientData.client}))
-  //     })()
-  //     //  return () => clientData();
-  //   }, [])
-  // )
+
   useEffect(() => {
-    ;(async function () {
+    const getAsyncCategory = async () => {
       const categoryData = await HomeApi.getCategory()
-      console.log(categoryData, 'categoryData')
       setData(categoryData.payload.content)
-    })()
+    }
+    getAsyncCategory()
   }, [])
-  // const { t } = useTranslation()
-  //r
-  // const navigateToDetails = useCallback(() => {
-  //   navigate('Details', { id: 'home-id' })
-  // }, [navigate])
 
   return (
-    <ScrollView flex={1}>
+    <ScrollView flex={1} style={styles.main_wrapper}>
       {data.length > 0 && (
         <CircleCategories
           navigation={navigate}
-          categories={
-            data.length > 0 &&
-            data.map(({ mainImage, name }): TCircleCategories => {
-              return {
-                name: name[local],
-                image:
-                  mainImage ??
-                  'https://codervent.com/mobile/synrok/demo/assets/images/category/01.webp',
-                navigate: {
-                  to: 'Details',
-                  param: {},
-                },
-              }
-            })
-          }
+          categories={data.map(({ mainImage, name }): TCircleCategories => {
+            return {
+              name: name[local],
+              image:
+                mainImage ??
+                'https://codervent.com/mobile/synrok/demo/assets/images/category/04.webp',
+              navigate: {
+                to: 'Details',
+                param: {},
+              },
+            }
+          })}
           // categories={[
           //   {
           //     name: 'Men',
@@ -169,3 +149,9 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
     </ScrollView>
   )
 }
+
+const styles = StyleSheet.create({
+  main_wrapper: {
+    paddingVertical: 20,
+  },
+})
