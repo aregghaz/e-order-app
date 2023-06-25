@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
     flexDirection: 'row',
-    height: '100%',
+    // height: '100%',
     justifyContent: 'space-between',
     width,
   },

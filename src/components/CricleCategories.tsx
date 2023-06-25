@@ -5,9 +5,8 @@ import { StyleSheet, TouchableOpacity } from 'react-native'
 import { isMedium, screenWidth } from '~utils/breakpoints'
 
 interface ICircleCategories {
-  // categories: TCircleCategories[]
+  categories: TCircleCategories[]
   navigation: Function
-  categories: (false | TCircleCategories)[]
 }
 
 export type TCircleCategories = {
@@ -15,7 +14,7 @@ export type TCircleCategories = {
   image: string
   navigate: {
     to: string
-    param: never
+    param: object
   }
 }
 const CircleCategories: FC<ICircleCategories> = ({ categories, navigation }) => {
@@ -32,13 +31,10 @@ const CircleCategories: FC<ICircleCategories> = ({ categories, navigation }) => 
         snapToAlignment={'start'}
         snapToStart={true}
         decelerationRate={0}
-        // scrollEnabled={true}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         horizontal={true}
         style={styles.body}
-        // containerStyle={styles.container}
-        // contentContainerStyle={styles.content}
       >
         {categories.map(({ name, image, navigate }, index) => {
           return (
@@ -50,7 +46,6 @@ const CircleCategories: FC<ICircleCategories> = ({ categories, navigation }) => 
                 style={styles.categoryButton}
               >
                 <Image
-                  // source={require(image)}
                   src={image}
                   alt={`category ${name}`}
                   height={isMedium ? 120 : 20}
@@ -79,20 +74,8 @@ const styles = StyleSheet.create({
   categoryButton: {
     alignItems: 'center',
     flexGrow: 0,
-    // flexGrow: 1,
     height: '100%',
-    // width: '100%',
   },
-
-  // content: {
-  //   width: 10,
-  //   // flex: 1,
-  //   // justifyContent: 'space-between',
-  // },
-
-  // container: {
-  //   width: 20,
-  // },
 
   image: {
     height: isMedium ? 120 : (screenWidth * 22) / 100,
