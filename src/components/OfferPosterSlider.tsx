@@ -3,7 +3,7 @@ import React, { FC } from 'react'
 import { GestureResponderEvent, StyleSheet, TouchableOpacity } from 'react-native'
 import Swiper from 'react-native-swiper'
 
-import { isMedium, screenHeight } from '~utils/breakpoints'
+import { getVH, isMedium, isSmall } from '~utils/breakpoints'
 
 export type TOfferPoster = {
   image: string
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     // height: isMedium ? 650 : 250,
-    height: (screenHeight * (isMedium ? 44 : 30)) / 100,
+    height: getVH(isSmall ? 30 : 35),
     justifyContent: 'center',
     width: '100%',
   },

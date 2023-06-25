@@ -2,7 +2,7 @@ import { Image, ScrollView, Text, View } from 'native-base'
 import { FC, useCallback } from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 
-import { isMedium, screenWidth } from '~utils/breakpoints'
+import { getVH, getVW, isMedium } from '~utils/breakpoints'
 
 interface ICircleCategories {
   categories: TCircleCategories[]
@@ -36,7 +36,7 @@ const CircleCategories: FC<ICircleCategories> = ({ categories, navigation }) => 
         horizontal={true}
         style={styles.body}
       >
-        {categories.map(({ name, image, navigate }, index) => {
+        {(categories ?? []).map(({ name, image, navigate }, index) => {
           return (
             <View key={index} style={styles.items}>
               <TouchableOpacity
@@ -52,7 +52,9 @@ const CircleCategories: FC<ICircleCategories> = ({ categories, navigation }) => 
                   width={isMedium ? 120 : 20}
                   style={styles.image}
                 />
-                <Text style={styles.text}>{name}</Text>
+                <View style={styles.textContainer}>
+                  <Text style={styles.text}>{name}</Text>
+                </View>
               </TouchableOpacity>
             </View>
           )
@@ -66,25 +68,26 @@ const styles = StyleSheet.create({
   body: {
     flexDirection: 'row',
     flexGrow: 0,
-    height: isMedium ? 170 : 120,
-    maxWidth: 800,
+    // height: isMedium ? 170 : 120,
+    height: 'auto',
+    // maxWidth: 800,
     width: '100%',
   },
 
   categoryButton: {
     alignItems: 'center',
-    flexGrow: 0,
-    height: '100%',
+    flexGrow: 1,
   },
 
   image: {
-    height: isMedium ? 120 : (screenWidth * 22) / 100,
-    width: isMedium ? 120 : (screenWidth * 22) / 100,
+    height: isMedium ? 130 : (screenWidth * 22) / 100,
+    width: isMedium ? 130 : (screenWidth * 22) / 100,
   },
 
   items: {
-    height: '100%',
-    marginRight: 10,
+    height: 'auto',
+    marginRight: 20,
+    maxWidth: getVW(33),
   },
 
   main: {
@@ -96,9 +99,17 @@ const styles = StyleSheet.create({
   },
 
   text: {
-    fontSize: isMedium ? 18 : 12,
+    fontSize: getVH(1.6),
     fontWeight: 'bold',
-    marginTop: isMedium ? 18 : 10,
+    marginTop: 5,
+    textAlign: 'center',
+    // backgroundColor: "red",
+  },
+
+  textContainer: {
+    // backgroundColor: "orange",
+    flexGrow: 1,
+    // justifyContent: "center",
   },
 })
 

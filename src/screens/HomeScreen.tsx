@@ -6,7 +6,7 @@ import { HomeApi } from '~api/home-api'
 import Advantages from '~components/Advantages'
 import CircleCategories, { TCircleCategories } from '~components/CricleCategories'
 import OfferPosterSlider from '~components/OfferPosterSlider'
-import Reviews from '~components/Reviews'
+import Trending from '~components/Trending'
 import TrendingItems from '~components/TrendingItems'
 
 const local = 'ru'
@@ -102,16 +102,6 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
             text: '24/7 Support',
             color: '#21AD61',
           },
-          {
-            icon: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAAByklEQVR4nO2ZS07DMBRFLbV8Jm2ZwkYYsIiWLiAzGBQW0nUl4idVzKBlAwwZtFPQQRavUtTEIXFfwJF8JEtR6xvf61cnTmpMJBKJ7APQBxJgBSzluG+6BNAD7ihiP+uZrsDP7Fve5TiRY0tiOlCFbKcCSUm4LVmQ1aFoNM0blaCpK2gICzpras5Rnf+7EDiq0G9rAlQBjoEHLRMlk3Fvx9B1XT7w3KcKDasz13VdHPQc+AS+gItgz0/5TSxUsqogncL8FsQEDjFIVyvSFUxFkN3recikOuX7Y/D1E4O0BLEiggkEfP3EIC1BrIhgAgFfPzFISxArIphAoK4f187XBAJ1n9ubBAGOgGt5B/Uhzb64uAIOa5hqrMd3K+8KApwBT7ixL+9OK87rpcf3F1ImtLMFPMpXL8AYGEibyB86WzOFmd1Hz75BHLwCoxLNKGemFb3xCFL12Duu0F3WCOKrTxsHcQyykRMOKvoMpc9GW68GsK5hxP48LGttvRq5hTqp6DOVPvfaejWAWxlk6VisJ8Cb9Jlp69WQy+ezDLSShTmUNs2ZWAAH2npV5Ia2NVPGosYN0VuviszsjWwxNtLsFmNWZyb31UdMB/gGWQfynCUuH5UAAAAASUVORK5CYII=',
-            text: 'Free Returns',
-            color: '#FF2C2C',
-          },
-          {
-            icon: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAADSUlEQVR4nO2az0tVQRTHJ/yRGkQ/KJeV+Q9E9ks3QpBFuwiCaNOPRZQREfRDN7mwp7YoaFebFtW2ny4igiKhWphaQVAiRdbCihAqzFd+4vTO803P+3zv+ubdd6/4BeHNzJ3v+Z47d+acmdGYOUwFUAM0A9eBPuALEAfG9fdz4BpwGFhlwgSgDNgNPMEfJoAeYHsYnGgCXlvifgB3gUNAA1ALLNC/Wq2Ttm7gp9XvGbC5GA6UAl36VgXDwBGg0gdHpfb5aI1QTLgLqz4lYDnwWI3Lt38KqMiDrwJoUS7BI2CZW9VTjS4Eev+Zgw/yqTjkXgcMKXc/sMgVt9ebe6iG3gDVBbBRrdyCB8B8UwAjF62RWOHcQMrOSp1zgguuyTcCfzQmrHFK7m1vrdr6LZ+cyxXqhb6hTiekudntsuZL/iuZBjvBO6DKicrc7FYB79X2LheET5XshBOF/myfVNs9+RKt1kA1VvC1PXPM+qUaZp6baXInuOVUoT8Nt1XDwXxIJIsVtDpV509Dq2q4mg+JpOKCLU7V+U9MBb0z6Vyuy18y/zkfWDI3dekX26iWTtk2mBms4TZiJmCQEJ6O7LEMWC8T2xqJet1DCEYCUW8B+OyhY1w11mXqdEBTgklYbf+VgwIZdChE6770Do3aMGF/VpkIQ+DIOdUqmhuTjSXAK33gzHQEYXHEJH63afGl+CAV27TibXJFiIgjZcCgVjVJxWUtnM6FICyOCHSLLLgkhQEtbIigI5u0ql8K37SwOFeCEDmyRKu+Gt2JYUfuCDlSqlXxWTUiA7NgjvTZq1ZLrgQhcqTVXrW2amEw6nGkxIrsbZGN7BHPteKTuZb10P6IZb9xYG+mjnXATT25QPcAyX3AcJBOCGQP5KFD9iM35DTSZIPeU6Sj3QQMvHV0+CEo1W3miB4ot8s+vqCqvXWUqG307PlsMc4OnIDElZ1gyEQZpM6eu02UAdxTR5pNVAHsUCdGgaVBGy/XheIT3hjR9mknLbAT+K59jgfnQUpAB7kh5nEfUgPsAe5bz10B5hXDkeS9eX2G9mRgy4ZR4FhRnEhzpMGnI/JfE3JDdQc4WrDr6TyjcdZPK3QgMdlj1sh4TfaOydR7DrMUfwEbaScFEF18jgAAAABJRU5ErkJggg==',
-            text: '24/7 Support',
-            color: '#21AD61',
-          },
         ]}
       />
       <TrendingItems
@@ -142,7 +132,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
           },
         ]}
       />
-      <Reviews asd={'asd'} />
+      <Trending name={'Shoes'} />
       {/*<Image*/}
       {/*  source={require('~assets/logo.png')}*/}
       {/*  resizeMode="contain"*/}
