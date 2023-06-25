@@ -27,7 +27,7 @@ const CircleCategories: FC<ICircleCategories> = ({ categories, navigation }) => 
   return (
     <View style={styles.main}>
       <ScrollView
-        snapToInterval={isMedium ? 120 : (screenWidth * 22) / 100}
+        snapToInterval={isMedium ? 120 : getVW(22)}
         snapToAlignment={'start'}
         snapToStart={true}
         decelerationRate={0}
@@ -80,13 +80,13 @@ const styles = StyleSheet.create({
   },
 
   image: {
-    height: isMedium ? 130 : (screenWidth * 22) / 100,
-    width: isMedium ? 130 : (screenWidth * 22) / 100,
+    height: isMedium ? 130 : getVW(22),
+    width: isMedium ? 130 : getVW(22),
   },
 
   items: {
     height: 'auto',
-    marginRight: 20,
+    marginRight: getVW(10),
     maxWidth: getVW(33),
   },
 
@@ -99,8 +99,8 @@ const styles = StyleSheet.create({
   },
 
   text: {
-    fontSize: getVH(1.6),
-    fontWeight: 'bold',
+    fontSize: getVH(1.4),
+    fontWeight: '500',
     marginTop: 5,
     textAlign: 'center',
     // backgroundColor: "red",
