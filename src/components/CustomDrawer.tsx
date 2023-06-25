@@ -8,7 +8,7 @@ import React, { FC } from 'react'
 import { Image, StyleSheet, View } from 'react-native'
 
 import { fakeData } from '~FakeData'
-import { Accordion } from '~components/Accordion'
+import { Accordion, TIcon } from '~components/Accordion'
 
 // interface IProps {
 // }
@@ -36,8 +36,8 @@ export const CustomDrawer: FC = (props) => {
           renderItem={({ item }) => (
             <Accordion
               title={item.title}
-              icon={item.icon}
-              childs={item.children}
+              iconName={item.iconName as TIcon}
+              subChildren={item.children}
               hasChildren={item.hasChildren}
             />
           )}

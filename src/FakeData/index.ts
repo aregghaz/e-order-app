@@ -3,14 +3,14 @@ export const fakeData = {
     {
       id: '1',
       title: 'Home',
-      icon: 'home',
+      iconName: 'home',
       hasChildren: false,
       children: [],
     },
     {
       id: '2',
       title: 'Account',
-      icon: 'user',
+      iconName: 'user',
       hasChildren: true,
       children: [
         {
@@ -48,7 +48,7 @@ export const fakeData = {
     {
       id: '3',
       title: 'Shop Pages',
-      icon: 'shopping-cart',
+      iconName: 'shopping-cart',
       hasChildren: true,
       children: [
         {
@@ -92,7 +92,7 @@ export const fakeData = {
     {
       id: '4',
       title: 'Payment',
-      icon: 'credit-card',
+      iconName: 'credit-card',
       hasChildren: true,
       children: [
         {
@@ -118,7 +118,7 @@ export const fakeData = {
     {
       id: '5',
       title: 'Category',
-      icon: 'grid',
+      iconName: 'grid',
       hasChildren: true,
       children: [
         {
@@ -138,7 +138,7 @@ export const fakeData = {
     {
       id: '6',
       title: 'Authentication',
-      icon: 'lock',
+      iconName: 'lock',
       hasChildren: true,
       children: [
         {
@@ -182,7 +182,7 @@ export const fakeData = {
     {
       id: '7',
       title: 'Customer Reviews',
-      icon: 'star',
+      iconName: 'star',
       hasChildren: true,
       children: [
         {
@@ -202,13 +202,13 @@ export const fakeData = {
     {
       id: '8',
       title: 'About Us',
-      icon: 'smile',
+      iconName: 'smile',
       hasChildren: false,
     },
     {
       id: '9',
       title: 'Contact Us',
-      icon: 'headphones',
+      iconName: 'headphones',
       hasChildren: false,
     },
   ],

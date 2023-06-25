@@ -5,15 +5,25 @@ import { Feather } from '@expo/vector-icons'
 import React, { FC, useCallback, useRef, useState } from 'react'
 import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native'
 
+export type TIcon =
+  | 'home'
+  | 'user'
+  | 'shopping-cart'
+  | 'credit-card'
+  | 'grid'
+  | 'lock'
+  | 'star'
+  | 'smile'
+  | 'headphones'
+
 interface IProps {
   hasChildren?: boolean
   title: string
-  icon?: string
-  childs: object
-  sub?: boolean
+  iconName?: TIcon
+  subChildren?: object
 }
 
-export const Accordion: FC<IProps> = ({ hasChildren, childs, icon, title, sub }) => {
+export const Accordion: FC<IProps> = ({ hasChildren, iconName, title }) => {
   const [rotateState, setRotateState] = useState(false)
   const rotateRefValue = useRef('0deg')
   const handlePress = useCallback(() => {
@@ -26,9 +36,9 @@ export const Accordion: FC<IProps> = ({ hasChildren, childs, icon, title, sub })
   }, [rotateState])
   const chevronStyle = { transform: [{ rotate: rotateRefValue.current }] }
   // const childrenElements = hasChildren ? (
-  //   childs.map((item) => (
-  //     <View key={item.id} style={styles.opopo}>
-  //       <Accordion title={item.title} childs={item.childs} sub />
+  //   subChildren.map((item) => (
+  //     <View key={item.id}>
+  //       <Accordion title={item.title} subChildren={item.subChildren} />
   //     </View>
   //   ))
   // ) : (
@@ -39,7 +49,7 @@ export const Accordion: FC<IProps> = ({ hasChildren, childs, icon, title, sub })
       <TouchableWithoutFeedback onPress={handlePress}>
         <View style={styles.accordion_text__wrapper}>
           <View style={styles.sidebar_icon__block}>
-            <Feather name={icon} size={20} />
+            <Feather name={iconName} size={20} />
             <Text style={styles.text}>{title}</Text>
           </View>
           {/*{childrenElements}*/}
