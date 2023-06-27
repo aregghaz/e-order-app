@@ -1,10 +1,11 @@
-import { ScrollView } from 'native-base'
+import { ScrollView, View } from 'native-base'
 import React, { useEffect, useState } from 'react'
 import { StyleSheet } from 'react-native'
 
 import { HomeApi } from '~api/home-api'
 import Advantages from '~components/Advantages'
-import CircleCategories, { TCircleCategories } from '~components/CricleCategories'
+// import CircleCategories, { TCircleCategories } from '~components/CricleCategories'
+import CircleCategories from '~components/CricleCategories'
 import OfferPosterSlider from '~components/OfferPosterSlider'
 import Trending from '~components/Trending'
 import TrendingItems from '~components/TrendingItems'
@@ -28,31 +29,44 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   return (
     <ScrollView flex={1} style={styles.main_wrapper}>
       {data.length > 0 && (
-        <CircleCategories
-          navigation={navigate}
-          categories={data.map(({ mainImage, name }): TCircleCategories => {
-            return {
-              name: name[local],
-              image:
-                mainImage ??
-                'https://codervent.com/mobile/synrok/demo/assets/images/category/04.webp',
-              navigate: {
-                to: 'Details',
-                param: {},
-              },
-            }
-          })}
-          // categories={[
-          //   {
-          //     name: 'Men',
-          //     image: 'https://codervent.com/mobile/synrok/demo/assets/images/category/01.webp',
-          //     navigate: {
-          //       to: 'Details',
-          //       param: {},
-          //     },
-          //   },
-        />
+        <>
+          <CircleCategories
+            categories={data.map(({ name, mainImage }) => {
+              return {
+                name: name[local],
+                image: 'https://codervent.com/mobile/synrok/demo/assets/images/category/04.webp',
+              }
+            })}
+            navigation={navigate}
+          />
+        </>
       )}
+      {/*{data.length > 0 && (*/}
+      {/*  <CircleCategories*/}
+      {/*    navigation={navigate}*/}
+      {/*    categories={data.map(({ mainImage, name }): TCircleCategories => {*/}
+      {/*      return {*/}
+      {/*        name: name[local],*/}
+      {/*        image:*/}
+      {/*          mainImage ??*/}
+      {/*          'https://codervent.com/mobile/synrok/demo/assets/images/category/04.webp',*/}
+      {/*        navigate: {*/}
+      {/*          to: 'Details',*/}
+      {/*          param: {},*/}
+      {/*        },*/}
+      {/*      }*/}
+      {/*    })}*/}
+      {/*    // categories={[*/}
+      {/*    //   {*/}
+      {/*    //     name: 'Men',*/}
+      {/*    //     image: 'https://codervent.com/mobile/synrok/demo/assets/images/category/01.webp',*/}
+      {/*    //     navigate: {*/}
+      {/*    //       to: 'Details',*/}
+      {/*    //       param: {},*/}
+      {/*    //     },*/}
+      {/*    //   },*/}
+      {/*  />*/}
+      {/*)}*/}
       <OfferPosterSlider
         navigation={navigate}
         slides={[
@@ -132,7 +146,28 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
           },
         ]}
       />
-      <Trending name={'Shoes'} />
+      <Trending
+        name={'Shoes'}
+        items={[
+          {
+            name: 'Women Heels',
+            image: 'https://codervent.com/mobile/synrok/demo/assets/images/trending-shoes/01.webp',
+          },
+          {
+            name: 'Sports Shoes',
+            image: 'https://codervent.com/mobile/synrok/demo/assets/images/trending-shoes/02.webp',
+          },
+          {
+            name: 'Leather Shoes',
+            image: 'https://codervent.com/mobile/synrok/demo/assets/images/trending-shoes/03.webp',
+          },
+          {
+            name: 'Sneakes',
+            image: 'https://codervent.com/mobile/synrok/demo/assets/images/trending-shoes/04.webp',
+          },
+        ]}
+      />
+      <View style={styles.dummy}></View>
       {/*<Image*/}
       {/*  source={require('~assets/logo.png')}*/}
       {/*  resizeMode="contain"*/}
@@ -151,6 +186,11 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
 }
 
 const styles = StyleSheet.create({
+  dummy: {
+    height: 500,
+    width: '100%',
+  },
+
   main_wrapper: {
     paddingVertical: 20,
   },

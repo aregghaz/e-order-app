@@ -12,14 +12,14 @@ interface ICircleCategories {
 export type TCircleCategories = {
   name: string
   image: string
-  navigate: {
+  navigate?: {
     to: string
     param: object
   }
 }
 const CircleCategories: FC<ICircleCategories> = ({ categories, navigation }) => {
   const navigateToCategory = useCallback(
-    ({ to, param }: TCircleCategories['navigate']) => {
+    ({ to, param }: { to: string; param: object }) => {
       navigation(to, param)
     },
     [navigation]
@@ -41,7 +41,7 @@ const CircleCategories: FC<ICircleCategories> = ({ categories, navigation }) => 
             <View key={index} style={styles.items}>
               <TouchableOpacity
                 onPress={() => {
-                  navigateToCategory(navigate)
+                  if (navigate) navigateToCategory(navigate)
                 }}
                 style={styles.categoryButton}
               >
