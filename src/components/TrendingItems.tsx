@@ -2,7 +2,7 @@ import { View, Text, Image } from 'native-base'
 import { FC } from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 
-import { isMedium, screenHeight } from '~utils/breakpoints'
+import { getVH, isMedium } from '~utils/breakpoints'
 
 interface ITrendingItems {
   items: TTrendingItems[]
@@ -15,7 +15,7 @@ export type TTrendingItems = {
 
 const colors = {
   headingColor: '#212529',
-  borderColor: 'rgb(0,0,0,0.175)',
+  borderColor: '#D2D2D2',
   nameColor: '#646464',
 }
 
@@ -35,7 +35,9 @@ const TrendingItems: FC<ITrendingItems> = ({ items }) => {
                 // height={300}
                 resizeMode={'cover'}
               />
-              <Text style={styles.name}>{name}</Text>
+              <View style={styles.textContainer}>
+                <Text style={styles.name}>{name}</Text>
+              </View>
             </TouchableOpacity>
           )
         })}
@@ -61,7 +63,6 @@ const styles = StyleSheet.create({
 
   image: {
     height: isMedium ? '85%' : '80%',
-    marginBottom: isMedium ? 18 : 15,
     width: '100%',
     // borderTopLeftRadius: 8,
     // borderTopRightRadius: 8,
@@ -73,12 +74,12 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderStyle: 'solid',
     borderWidth: 1.5,
-    height: (screenHeight * 30) / 100,
+    height: getVH(35),
     justifyContent: 'flex-start',
     marginHorizontal: 2,
     marginVertical: 10,
     overflow: 'hidden',
-    width: isMedium ? '30%' : '48%',
+    width: isMedium ? '48%' : '48%',
   },
 
   main: {
@@ -93,6 +94,12 @@ const styles = StyleSheet.create({
     color: colors.nameColor,
     fontSize: isMedium ? 18 : 16,
     fontWeight: '700',
+  },
+
+  textContainer: {
+    alignItems: 'center',
+    flexGrow: 1,
+    justifyContent: 'center',
   },
 })
 

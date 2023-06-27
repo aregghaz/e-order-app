@@ -2,7 +2,9 @@ import { View, Text, Image } from 'native-base'
 import React, { FC } from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 
-const borderColor = 'gray'
+const colors = {
+  borderColor: '#D2D2D2',
+}
 
 export type TAdvantages = {
   icon: string
@@ -45,7 +47,7 @@ const styles = StyleSheet.create({
 
   button: {
     alignItems: 'center',
-    borderColor,
+    borderColor: colors.borderColor,
     borderRadius: 10,
     borderStyle: 'solid',
     borderWidth: 1,
