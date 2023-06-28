@@ -27,7 +27,7 @@ const CircleCategories: FC<ICircleCategories> = ({ categories, navigation }) => 
   return (
     <View style={styles.main}>
       <ScrollView
-        snapToInterval={isMedium ? 120 : getVW(22)}
+        snapToInterval={getVW(25)}
         snapToAlignment={'start'}
         snapToStart={true}
         decelerationRate={0}
@@ -51,6 +51,7 @@ const CircleCategories: FC<ICircleCategories> = ({ categories, navigation }) => 
                   height={isMedium ? 120 : 20}
                   width={isMedium ? 120 : 20}
                   style={styles.image}
+                  resizeMode={'contain'}
                 />
                 <View style={styles.textContainer}>
                   <Text style={styles.text}>{name}</Text>
@@ -80,27 +81,30 @@ const styles = StyleSheet.create({
   },
 
   image: {
-    height: isMedium ? 130 : getVW(22),
-    width: isMedium ? 130 : getVW(22),
+    width: '100%',
+    // height: isMedium ? 130 : getVW(22),
+    // width: isMedium ? 130 : getVW(20),
   },
 
   items: {
     height: 'auto',
-    marginRight: getVW(10),
-    maxWidth: getVW(33),
+    // marginRight: getVW(10),
+    width: getVW(25),
   },
 
   main: {
     flex: 0,
     flexDirection: 'row',
     justifyContent: 'center',
-    paddingStart: 10,
+    // paddingStart: 10,
     width: '100%',
   },
 
   text: {
-    fontSize: getVH(1.4),
+    fontSize: getVH(1),
     fontWeight: '500',
+    letterSpacing: -0.3,
+    lineHeight: 0,
     marginTop: 5,
     textAlign: 'center',
     // backgroundColor: "red",
@@ -109,7 +113,7 @@ const styles = StyleSheet.create({
   textContainer: {
     // backgroundColor: "orange",
     flexGrow: 1,
-    // justifyContent: "center",
+    justifyContent: 'center',
   },
 })
 

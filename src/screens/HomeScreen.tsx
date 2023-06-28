@@ -4,11 +4,11 @@ import { StyleSheet } from 'react-native'
 
 import { HomeApi } from '~api/home-api'
 import Advantages from '~components/Advantages'
-// import CircleCategories, { TCircleCategories } from '~components/CricleCategories'
 import CircleCategories from '~components/CricleCategories'
 import OfferPosterSlider from '~components/OfferPosterSlider'
 import Trending from '~components/Trending'
 import TrendingItems from '~components/TrendingItems'
+// import TopBrands from '~components/TopBrands'
 
 const local = 'ru'
 
@@ -167,6 +167,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
           },
         ]}
       />
+      {/*<TopBrands />*/}
       <View style={styles.dummy}></View>
       {/*<Image*/}
       {/*  source={require('~assets/logo.png')}*/}
