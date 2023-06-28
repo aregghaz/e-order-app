@@ -21,6 +21,7 @@ const Trending: FC<ITrending> = ({ name, items }) => {
           enableSnap={true}
           autoplay={true}
           data={items}
+          useScrollView={true}
           style={styles.swiper}
           renderItem={({ item, index }: { item: TTrendingItems; index: number }) => {
             return (
