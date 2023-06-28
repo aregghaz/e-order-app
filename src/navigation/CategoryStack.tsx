@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { useTranslation } from '~hooks'
 import { Header } from '~navigation/Header'
 import { optionForScreen } from '~navigation/HeaderGlobalStyles'
-import { ExamplesScreen } from '~screens'
+import { CategoryInnerScreen, CategoryScreen } from '~screens'
 
 const { Navigator, Screen } = createStackNavigator()
 
@@ -18,7 +18,16 @@ export const CategoryStack = (): JSX.Element => {
             <Header navigation={navigation} title={t('navigation.screen_titles.category')} />
           ),
         })}
-        component={ExamplesScreen}
+        component={CategoryScreen}
+      />
+      <Screen
+        name="CategoryInnerScreen"
+        options={({ navigation }) => ({
+          headerTitle: () => (
+            <Header navigation={navigation} title={t('navigation.screen_titles.category')} />
+          ),
+        })}
+        component={CategoryInnerScreen}
       />
     </Navigator>
   )
