@@ -9,6 +9,11 @@ declare global {
     Details: { id: string }
   }
 
+  type CategoryStackParamList = {
+    Category: undefined
+    CategoryInner: { id: string }
+  }
+
   type ExampleStackParamList = {
     Examples: undefined
     Components: undefined
@@ -18,6 +23,7 @@ declare global {
 
   type MainTabParamList = {
     HomeStack: NavigatorScreenParams<HomeStackParamList>
+    CategoryStack: NavigatorScreenParams<CategoryStackParamList>
     ExamplesStack: NavigatorScreenParams<ExampleStackParamList>
   }
 

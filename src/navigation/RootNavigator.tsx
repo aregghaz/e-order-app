@@ -10,6 +10,7 @@ import {
   SettingsScreen,
   SignInScreen,
   SignUpScreen,
+  CategoryInnerScreen,
 } from '~screens'
 
 const { Navigator, Screen, Group } = createStackNavigator()
@@ -39,6 +40,7 @@ export const RootNavigator: FC = () => {
         </Group>
       ) : (
         <Group key="authorized">
+          {/*** after commenting this code, it still works ....***/}
           <Screen
             name="MainTab"
             options={{ title: t('navigation.screen_titles.main_tab'), headerShown: false }}
@@ -48,6 +50,11 @@ export const RootNavigator: FC = () => {
             name="Settings"
             options={{ title: t('navigation.screen_titles.settings') }}
             component={SettingsScreen}
+          />
+          <Screen
+            name="CategoryInner"
+            options={{ title: t('navigation.screen_titles.category_inner') }}
+            component={CategoryInnerScreen}
           />
         </Group>
       )}

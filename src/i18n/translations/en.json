@@ -16,6 +16,7 @@
     },
     "screen_titles": {
       "category": "Category",
+      "category_inner": "CategoryInner",
       "profile": "Profile",
       "contact": "Contact",
       "components": "Components",

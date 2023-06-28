@@ -3,7 +3,7 @@
  */
 // import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer'
 import { DrawerContentScrollView } from '@react-navigation/drawer'
-import { FlatList, Switch } from 'native-base'
+import { Switch } from 'native-base'
 import React, { FC } from 'react'
 import { Image, StyleSheet, View } from 'react-native'
 
@@ -30,18 +30,16 @@ export const CustomDrawer: FC = (props) => {
       </View>
       <DrawerContentScrollView {...props}>
         {/*<DrawerItemList {...props} />*/}
-        <FlatList
-          data={fakeData.accordion}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
+        {fakeData.accordion &&
+          fakeData.accordion.map((item) => (
             <Accordion
+              key={item.id}
               title={item.title}
               iconName={item.iconName as TIcon}
               subChildren={item.children}
               hasChildren={item.hasChildren}
             />
-          )}
-        />
+          ))}
       </DrawerContentScrollView>
       <Switch />
     </View>
