@@ -20,40 +20,22 @@ export const CategoryScreen = (props: ExamplesScreenProps): JSX.Element => {
     fetchCategories()
   }, [locale])
 
-  // const { t } = useTranslation()
-
-  // const goToInnerDetails = useCallback(() => navigate('CategoryInner'), [navigate])
   const goToCategoryStackDetails = useCallback(
-    (id: string) => {
-      console.log(id)
-      return navigate('CategoryStack', {
-        screen: 'CategoryInner',
-        params: { id },
-      })
+    (category: ICategory) => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      return navigate('CategoryInner', category)
     },
     [navigate]
   )
-  // const goToApplicationInfo = useCallback(() => navigate('ApplicationInfo'), [navigate])
-  // const goToAppSettings = useCallback(() => navigate('Settings'), [navigate])
-  // const goToColors = useCallback(() => navigate('Colors'), [navigate])
-  // const goToComponents = useCallback(() => navigate('Components'), [navigate])
-  // const goToTypography = useCallback(() => navigate('Typography'), [navigate])
-  // const goToHomeStackDetails = useCallback(
-  //   () =>
-  //     navigate('HomeStack', {
-  //       screen: 'Details',
-  //       params: { id: 'examples-id' },
-  //     }),
-  //   [navigate]
-  // )
   return (
-    <ScrollView p={6} style={styles.scroll}>
-      <View>
+    <ScrollView style={styles.scroll}>
+      <View style={styles.inner_scroll}>
         {categories &&
           categories.map((category: ICategory) => (
             <TouchableWithoutFeedback
               key={category.id}
-              onPress={() => goToCategoryStackDetails(category.id)}
+              onPress={() => goToCategoryStackDetails(category)}
             >
               <View style={styles.category_block__wrapper}>
                 <Text style={styles.synchronized_block}>{category.name[locale]}</Text>
@@ -109,8 +91,12 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     width: 100,
   },
+  inner_scroll: {
+    paddingVertical: 10,
+  },
   scroll: {
     flexGrow: 1,
+    paddingHorizontal: 16,
   },
   synchronized_block: {
     flex: 1,
