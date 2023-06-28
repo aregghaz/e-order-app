@@ -10,7 +10,6 @@ import {
   SettingsScreen,
   SignInScreen,
   SignUpScreen,
-  CategoryInnerScreen,
 } from '~screens'
 
 const { Navigator, Screen, Group } = createStackNavigator()
@@ -50,11 +49,6 @@ export const RootNavigator: FC = () => {
             name="Settings"
             options={{ title: t('navigation.screen_titles.settings') }}
             component={SettingsScreen}
-          />
-          <Screen
-            name="CategoryInner"
-            options={{ title: t('navigation.screen_titles.category_inner') }}
-            component={CategoryInnerScreen}
           />
         </Group>
       )}

@@ -75,15 +75,15 @@ const styles = StyleSheet.create({
   font: {
     alignItems: 'center',
     flexDirection: 'row',
-    fontSize: 18,
+    fontSize: 16,
     justifyContent: 'center',
     marginHorizontal: 7,
+    width: 150,
   },
   header_wrapper: {
     alignItems: 'center',
     flex: 1,
     flexDirection: 'row',
-    // height: '100%',
     justifyContent: 'space-between',
     width,
   },
@@ -95,6 +95,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 7,
   },
   is_back: {
+    alignItems: 'center',
     flexDirection: 'row',
   },
 })

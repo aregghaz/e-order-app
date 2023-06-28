@@ -1,6 +1,7 @@
 import { CompositeScreenProps, NavigatorScreenParams } from '@react-navigation/native'
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs'
 import { StackScreenProps } from '@react-navigation/stack'
+// import { ICategory } from '~types/category'
 
 declare global {
   // PARAMS
@@ -9,10 +10,10 @@ declare global {
     Details: { id: string }
   }
 
-  type CategoryStackParamList = {
-    Category: undefined
-    CategoryInner: { id: string }
-  }
+  // type CategoryStackParamList = {
+  //   Category: undefined
+  //   CategoryInner: ICategory
+  // }
 
   type ExampleStackParamList = {
     Examples: undefined
@@ -23,7 +24,7 @@ declare global {
 
   type MainTabParamList = {
     HomeStack: NavigatorScreenParams<HomeStackParamList>
-    CategoryStack: NavigatorScreenParams<CategoryStackParamList>
+    // CategoryStack: NavigatorScreenParams<CategoryStackParamList>
     ExamplesStack: NavigatorScreenParams<ExampleStackParamList>
   }
 
