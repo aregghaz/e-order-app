@@ -3,33 +3,32 @@ import React, { FC } from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 import Carousel from 'react-native-reanimated-carousel'
 
+import { TTrendingItems } from '~components/TrendingItems'
 import { getVW, screenWidth } from '~utils/breakpoints'
 
-export type TBrand = {
-  name: string
-  image: string
+interface IAccessories {
+  accessories: TTrendingItems[]
 }
 
-interface ITopBrands {
-  brands: TBrand[]
-}
-
-const TopBrands: FC<ITopBrands> = ({ brands }) => {
+const Accessories: FC<IAccessories> = ({ accessories }) => {
   return (
     <View style={styles.main}>
       <Text style={styles.heading}>Top Brands</Text>
       <Carousel
         width={getVW(50)}
         style={styles.container}
-        height={65}
-        data={brands}
+        height={250}
+        data={accessories}
         loop
         autoPlay
-        autoPlayInterval={1000}
-        renderItem={({ item, index }: { item: TBrand; index: number }) => {
+        autoPlayInterval={2000}
+        renderItem={({ item, index }: { item: never; index: number }) => {
           return (
             <TouchableOpacity key={index} style={styles.item}>
-              <Image style={styles.image} src={item.image} alt={item.name} resizeMode={'contain'} />
+              <Image style={styles.image} src={item.image} alt={'test'} resizeMode={'contain'} />
+              <View style={styles.textContainer}>
+                <Text style={styles.text}>{item.name}</Text>
+              </View>
             </TouchableOpacity>
           )
         }}
@@ -57,7 +56,7 @@ const styles = StyleSheet.create({
   },
 
   image: {
-    flexGrow: 1,
+    flexGrow: 5,
   },
 
   item: {
@@ -73,10 +72,22 @@ const styles = StyleSheet.create({
 
   main: {
     alignItems: 'center',
-    height: 130,
+    height: 350,
     paddingTop: 20,
     width: '100%',
   },
+
+  text: {
+    color: colors.nameColor,
+    fontSize: 16,
+    fontWeight: '600',
+  },
+
+  textContainer: {
+    alignItems: 'center',
+    flexGrow: 1,
+    justifyContent: 'center',
+  },
 })
 
-export default TopBrands
+export default Accessories

@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     borderColor: colors.borderColor,
     borderRadius: 8,
     borderStyle: 'solid',
-    borderWidth: 1.5,
+    borderWidth: 1,
     height: getVH(50),
     width: '100%',
   },
