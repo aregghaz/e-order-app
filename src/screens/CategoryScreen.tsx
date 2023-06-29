@@ -5,6 +5,8 @@ import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native'
 import { HomeApi } from '~api/home-api'
 import { ICategory } from '~types/category'
 
+let ind = 0
+
 const locale = 'ru'
 export const CategoryScreen = (props: ExamplesScreenProps): JSX.Element => {
   const [categories, setCategories] = useState([])
@@ -32,21 +34,28 @@ export const CategoryScreen = (props: ExamplesScreenProps): JSX.Element => {
     <ScrollView style={styles.scroll}>
       <View style={styles.inner_scroll}>
         {categories &&
-          categories.map((category: ICategory) => (
-            <TouchableWithoutFeedback
-              key={category.id}
-              onPress={() => goToCategoryStackDetails(category)}
-            >
-              <View style={styles.category_block__wrapper}>
-                <Text style={styles.synchronized_block}>{category.name[locale]}</Text>
-                <Image
-                  src="https://codervent.com/mobile/synrok/demo/assets/images/circular-category/01.webp"
-                  alt="gweger"
-                  style={styles.image}
-                />
-              </View>
-            </TouchableWithoutFeedback>
-          ))}
+          categories.map((category: ICategory) => {
+            if (ind >= 8) {
+              ind = 1
+            }
+            ind++
+            console.log(ind, 'ind++')
+            return (
+              <TouchableWithoutFeedback
+                key={category.id}
+                onPress={() => goToCategoryStackDetails(category)}
+              >
+                <View style={styles.category_block__wrapper}>
+                  <Text style={styles.synchronized_block}>{category.name[locale]}</Text>
+                  <Image
+                    src={`https://codervent.com/mobile/synrok/demo/assets/images/circular-category/0${ind}.webp`}
+                    alt="gweger"
+                    style={styles.image}
+                  />
+                </View>
+              </TouchableWithoutFeedback>
+            )
+          })}
       </View>
       {/*<Center>*/}
       {/*<Button size="lg" width="64" mb={2} onPress={goToApplicationInfo}>*/}

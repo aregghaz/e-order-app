@@ -22,7 +22,7 @@ const Accessories: FC<IAccessories> = ({ accessories }) => {
         loop
         autoPlay
         autoPlayInterval={2000}
-        renderItem={({ item, index }: { item: never; index: number }) => {
+        renderItem={({ item, index }: { item: TTrendingItems; index: number }) => {
           return (
             <TouchableOpacity key={index} style={styles.item}>
               <Image style={styles.image} src={item.image} alt={'test'} resizeMode={'contain'} />

@@ -1,29 +1,30 @@
 import { Image, ScrollView, Text, View } from 'native-base'
-import { FC, useCallback } from 'react'
+import { FC } from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 
+import { ICategory } from '~types/category'
 import { getVH, getVW, isMedium } from '~utils/breakpoints'
 
 interface ICircleCategories {
-  categories: TCircleCategories[]
-  navigation: Function
+  categories: ICategory[]
+  navigation: (to: string, param: object) => void
 }
 
-export type TCircleCategories = {
-  name: string
-  image: string
-  navigate?: {
-    to: string
-    param: object
-  }
-}
+//
+// export type TCircleCategories = {
+//   navigate?: {
+//     to: string
+//     param: object
+//   }
+// }
+const local = 'ru'
 const CircleCategories: FC<ICircleCategories> = ({ categories, navigation }) => {
-  const navigateToCategory = useCallback(
-    ({ to, param }: { to: string; param: object }) => {
-      navigation(to, param)
-    },
-    [navigation]
-  )
+  // const navigateToCategory = useCallback(
+  //   ({ to, param }: { to: string; param: object }) => {
+  //     navigation(to, param)
+  //   },
+  //   [navigation]
+  // )
   return (
     <View style={styles.main}>
       <ScrollView
@@ -36,17 +37,17 @@ const CircleCategories: FC<ICircleCategories> = ({ categories, navigation }) => 
         horizontal={true}
         style={styles.body}
       >
-        {(categories ?? []).map(({ name, image, navigate }, index) => {
+        {(categories ?? []).map(({ name, id }) => {
           return (
-            <View key={index} style={styles.items}>
+            <View key={id} style={styles.items}>
               <TouchableOpacity
-                onPress={() => {
-                  if (navigate) navigateToCategory(navigate)
-                }}
+                // onPress={() => {
+                //   if (navigate) navigateToCategory(navigate)
+                // }}
                 style={styles.categoryButton}
               >
                 <Image
-                  src={image}
+                  src="https://codervent.com/mobile/synrok/demo/assets/images/category/04.webp"
                   alt={`category ${name}`}
                   height={isMedium ? 120 : 20}
                   width={isMedium ? 120 : 20}
@@ -54,7 +55,7 @@ const CircleCategories: FC<ICircleCategories> = ({ categories, navigation }) => 
                   resizeMode={'contain'}
                 />
                 <View style={styles.textContainer}>
-                  <Text style={styles.text}>{name}</Text>
+                  <Text style={styles.text}>{name[local]}</Text>
                 </View>
               </TouchableOpacity>
             </View>

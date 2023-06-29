@@ -2,7 +2,8 @@ import { createDrawerNavigator } from '@react-navigation/drawer'
 import { useCallback } from 'react'
 
 import { CustomDrawer } from '~components/CustomDrawer'
-import { BottomTabNavigator } from '~navigation/BottomTabNavigator'
+// import { BottomTabNavigator } from '~navigation/BottomTabNavigator'
+import { RootNavigator } from '~navigation/RootNavigator'
 
 const Drawer = createDrawerNavigator()
 export const DrawerNavigator = () => {
@@ -11,11 +12,7 @@ export const DrawerNavigator = () => {
   }, [])
   return (
     <Drawer.Navigator useLegacyImplementation drawerContent={renderCustomDrawerContent}>
-      <Drawer.Screen
-        name="Avatar"
-        component={BottomTabNavigator}
-        options={{ headerShown: false }}
-      />
+      <Drawer.Screen name="Avatar" component={RootNavigator} options={{ headerShown: false }} />
     </Drawer.Navigator>
   )
 }

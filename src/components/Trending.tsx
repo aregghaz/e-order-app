@@ -17,11 +17,11 @@ const Trending: FC<ITrending> = ({ name, items }) => {
       <Text style={styles.heading}>Trending {name && `in ${name}`}</Text>
       <View style={styles.main}>
         <Carousel
-          loop={true}
-          enableSnap={true}
-          autoplay={true}
+          loop
+          enableSnap
+          autoplay
           data={items}
-          useScrollView={true}
+          useScrollView
           style={styles.swiper}
           renderItem={({ item, index }: { item: TTrendingItems; index: number }) => {
             return (
