@@ -7,6 +7,7 @@ const colors = {
 }
 
 export type TAdvantages = {
+  id: number
   icon: string
   text: string
   color: string
@@ -19,9 +20,9 @@ interface IAdvantages {
 const Advantages: FC<IAdvantages> = ({ advantages }) => {
   return (
     <View style={styles.body}>
-      {advantages.map(({ icon, text, color }, index) => {
+      {advantages.map(({ icon, text, color, id }) => {
         return (
-          <View style={styles.item} key={index}>
+          <View style={styles.item} key={id}>
             <TouchableOpacity style={styles.button}>
               <View style={styles.iconWrapper} backgroundColor={color}>
                 <Image src={icon} alt={text} width={25} height={25} resizeMode={'contain'} />

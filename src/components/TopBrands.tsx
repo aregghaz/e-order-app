@@ -6,6 +6,7 @@ import Carousel from 'react-native-reanimated-carousel'
 import { getVW, screenWidth } from '~utils/breakpoints'
 
 export type TBrand = {
+  id: number
   name: string
   image: string
 }

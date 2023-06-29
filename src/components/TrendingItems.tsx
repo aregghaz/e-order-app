@@ -9,6 +9,7 @@ interface ITrendingItems {
 }
 
 export type TTrendingItems = {
+  id: number
   image: string
   name: string
 }
@@ -24,9 +25,9 @@ const TrendingItems: FC<ITrendingItems> = ({ items }) => {
     <View style={styles.main}>
       <Text style={styles.heading}>Trending</Text>
       <View style={styles.container}>
-        {items.map(({ image, name }, index) => {
+        {items.map(({ image, name, id }) => {
           return (
-            <TouchableOpacity key={index} style={styles.item}>
+            <TouchableOpacity key={id} style={styles.item}>
               <Image
                 src={image}
                 alt={`Trending ${name}`}

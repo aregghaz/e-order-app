@@ -8,6 +8,7 @@ import { HomeStack } from './HomeStack'
 import { ProfileStack } from './ProfileStack'
 
 import { useCallback, useNavigationTheme, useTranslation } from '~hooks'
+// import { CustomTabBar } from '~navigation/CustomTabBar'
 
 const { Navigator, Screen } = createBottomTabNavigator()
 
@@ -51,6 +52,7 @@ export const BottomTabNavigator: FC = () => {
   )
 
   return (
+    // <Navigator screenOptions={screenOptions} tabBar={CustomTabBar}>
     <Navigator screenOptions={screenOptions}>
       <Screen
         name="Home"

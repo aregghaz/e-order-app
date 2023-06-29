@@ -6,6 +6,7 @@ import Swiper from 'react-native-swiper'
 import { getVH, isMedium, isSmall } from '~utils/breakpoints'
 
 export type TOfferPoster = {
+  id: number
   image: string
   onPress?: (event: GestureResponderEvent) => void
   navigate?: {
@@ -44,11 +45,11 @@ const OfferPosterSlider: FC<IOfferPosterSlider> = ({ slides, navigation }) => {
           autoplayDirection={true}
           pagingEnabled={true}
         >
-          {slides.map(({ image, onPress, navigate = { to: '', param: {} } }, index) => {
+          {slides.map(({ image, onPress, navigate = { to: '', param: {} }, id }) => {
             return (
               <TouchableOpacity
                 activeOpacity={1}
-                key={index}
+                key={id}
                 onPress={(event) => {
                   onPress && onPress(event)
                   navigation && navigation(navigate.to, navigate.param)
