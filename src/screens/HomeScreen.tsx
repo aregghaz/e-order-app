@@ -3,12 +3,13 @@ import React, { useEffect, useState } from 'react'
 import { StyleSheet } from 'react-native'
 
 import { HomeApi } from '~api/home-api'
+import Accessories from '~components/Accessories'
 import Advantages from '~components/Advantages'
 import CircleCategories from '~components/CricleCategories'
 import OfferPosterSlider from '~components/OfferPosterSlider'
+import TopBrands from '~components/TopBrands'
 import Trending from '~components/Trending'
 import TrendingItems from '~components/TrendingItems'
-// import TopBrands from '~components/TopBrands'
 
 const local = 'ru'
 
@@ -167,7 +168,62 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
           },
         ]}
       />
-      {/*<TopBrands />*/}
+      <TopBrands
+        brands={[
+          {
+            name: 'amazon',
+            image: 'https://codervent.com/mobile/synrok/demo/assets/images/brands/01.webp',
+          },
+          {
+            name: 'canon',
+            image: 'https://codervent.com/mobile/synrok/demo/assets/images/brands/02.webp',
+          },
+          {
+            name: 'dji',
+            image: 'https://codervent.com/mobile/synrok/demo/assets/images/brands/03.webp',
+          },
+          {
+            name: 'samsung',
+            image: 'https://codervent.com/mobile/synrok/demo/assets/images/brands/04.webp',
+          },
+          {
+            name: 'motorola',
+            image: 'https://codervent.com/mobile/synrok/demo/assets/images/brands/05.webp',
+          },
+          {
+            name: 'sony',
+            image: 'https://codervent.com/mobile/synrok/demo/assets/images/brands/06.webp',
+          },
+          {
+            name: 'microsoft',
+            image: 'https://codervent.com/mobile/synrok/demo/assets/images/brands/07.webp',
+          },
+          {
+            name: 'puma',
+            image: 'https://codervent.com/mobile/synrok/demo/assets/images/brands/08.webp',
+          },
+        ]}
+      />
+      <Accessories
+        accessories={[
+          {
+            name: 'Women Caps',
+            image: 'https://codervent.com/mobile/synrok/demo/assets/images/accessories/01.webp',
+          },
+          {
+            name: 'Men Belts',
+            image: 'https://codervent.com/mobile/synrok/demo/assets/images/accessories/02.webp',
+          },
+          {
+            name: 'Ladies Purse',
+            image: 'https://codervent.com/mobile/synrok/demo/assets/images/accessories/03.webp',
+          },
+          {
+            name: 'Headphones',
+            image: 'https://codervent.com/mobile/synrok/demo/assets/images/accessories/04.webp',
+          },
+        ]}
+      />
       <View style={styles.dummy}></View>
       {/*<Image*/}
       {/*  source={require('~assets/logo.png')}*/}
