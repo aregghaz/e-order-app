@@ -3,6 +3,7 @@ import { FC } from 'react'
 
 import { BottomTabNavigator } from './BottomTabNavigator'
 
+import { SCREEN } from '~constants'
 import { useAuth, useTranslation } from '~hooks'
 import {
   ApplicationInfoScreen,
@@ -23,14 +24,14 @@ export const RootNavigator: FC = () => {
       {!isSignedIn ? (
         <Group key="unauthorized">
           <Screen
-            name="SignIn"
+            name={SCREEN.STACK_SIGN_IN}
             component={SignInScreen}
             options={{
               title: t('navigation.screen_titles.sign_in'),
             }}
           />
           <Screen
-            name="SignUp"
+            name={SCREEN.STACK_SIGN_UP}
             component={SignUpScreen}
             options={{
               title: t('navigation.screen_titles.sign_up'),
@@ -41,12 +42,12 @@ export const RootNavigator: FC = () => {
         <Group key="authorized">
           {/*** after commenting this code, it still works ....***/}
           <Screen
-            name="MainTab"
+            name={SCREEN.STACK_MAIN_TAB}
             options={{ title: t('navigation.screen_titles.main_tab'), headerShown: false }}
             component={BottomTabNavigator}
           />
           <Screen
-            name="Settings"
+            name={SCREEN.STACK_SETTINGS}
             options={{ title: t('navigation.screen_titles.settings') }}
             component={SettingsScreen}
           />
@@ -54,12 +55,12 @@ export const RootNavigator: FC = () => {
       )}
       <Group key="modals" screenOptions={{ presentation: 'modal' }}>
         <Screen
-          name="ApplicationInfo"
+          name={SCREEN.STACK_APPLICATION_INFO}
           options={{ title: t('navigation.screen_titles.application_info') }}
           component={ApplicationInfoScreen}
         />
         <Screen
-          name="NotFound"
+          name={SCREEN.STACK_NOT_FOUND}
           options={{ title: t('navigation.screen_titles.not_found') }}
           component={NotFoundScreen}
         />

@@ -7,6 +7,7 @@ import { ContactStack } from './ContactStack'
 import { HomeStack } from './HomeStack'
 import { ProfileStack } from './ProfileStack'
 
+import { SCREEN } from '~constants/screenNames'
 import { useCallback, useNavigationTheme, useTranslation } from '~hooks'
 // import { CustomTabBar } from '~navigation/CustomTabBar'
 
@@ -55,22 +56,22 @@ export const BottomTabNavigator: FC = () => {
     // <Navigator screenOptions={screenOptions} tabBar={CustomTabBar}>
     <Navigator screenOptions={screenOptions}>
       <Screen
-        name="Home"
+        name={SCREEN.TAB_HOME}
         options={{ title: t('navigation.screen_titles.home') }}
         component={HomeStack}
       />
       <Screen
-        name="Category"
+        name={SCREEN.TAB_CATEGORY}
         options={{ title: t('navigation.screen_titles.category') }}
         component={CategoryStack}
       />
       <Screen
-        name="Profile"
+        name={SCREEN.TAB_PROFILE}
         options={{ title: t('navigation.screen_titles.profile') }}
         component={ProfileStack}
       />
       <Screen
-        name="Contact"
+        name={SCREEN.TAB_CONTACT}
         options={{ title: t('navigation.screen_titles.contact') }}
         component={ContactStack}
       />

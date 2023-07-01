@@ -39,7 +39,6 @@ export const CategoryScreen = (props: ExamplesScreenProps): JSX.Element => {
               ind = 1
             }
             ind++
-            console.log(ind, 'ind++')
             return (
               <TouchableWithoutFeedback
                 key={category.id}

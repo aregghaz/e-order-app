@@ -13,7 +13,7 @@ import { Accordion, TIcon } from '~components/Accordion'
 // interface IProps {
 // }
 
-export const CustomDrawer: FC = (props) => {
+export const CustomDrawer: FC = (props: any) => {
   return (
     <View style={styles.sidebar}>
       <View style={styles.infoBlock}>
@@ -38,6 +38,7 @@ export const CustomDrawer: FC = (props) => {
               iconName={item.iconName as TIcon}
               subChildren={item.children}
               hasChildren={item.hasChildren}
+              navigation={props.navigation}
             />
           ))}
       </DrawerContentScrollView>

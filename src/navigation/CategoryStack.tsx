@@ -1,5 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack'
 
+import { SCREEN } from '~constants'
 import { useTranslation } from '~hooks'
 import { Header } from '~navigation/Header'
 import { optionForScreen } from '~navigation/HeaderGlobalStyles'
@@ -15,7 +16,7 @@ export const CategoryStack = (): JSX.Element => {
   return (
     <Navigator screenOptions={optionForScreen}>
       <Screen
-        name="CategoryStack"
+        name={SCREEN.STACK_CATEGORY}
         options={({ navigation }) => ({
           headerTitle: () => (
             <Header navigation={navigation} title={t('navigation.screen_titles.category')} />
@@ -24,7 +25,7 @@ export const CategoryStack = (): JSX.Element => {
         component={CategoryScreen}
       />
       <Screen
-        name="CategoryInner"
+        name={SCREEN.STACK_CATEGORY_INNER}
         options={({ navigation, route }) => ({
           headerTitle: () => (
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -36,7 +37,7 @@ export const CategoryStack = (): JSX.Element => {
         component={CategoryInnerScreen}
       />
       <Screen
-        name="CategoryDetail"
+        name={SCREEN.STACK_CATEGORY_DETAIL}
         options={({ navigation, route }) => ({
           headerTitle: () => (
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
