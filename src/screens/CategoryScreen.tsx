@@ -2,10 +2,9 @@ import { ScrollView, Image } from 'native-base'
 import { useCallback, useEffect, useState } from 'react'
 import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native'
 
-import { HomeApi } from '~api/home-api'
+import { HomeApi, getImagePath } from '~api/home-api'
+import { SCREEN } from '~constants'
 import { ICategory } from '~types/category'
-
-let ind = 0
 
 const locale = 'ru'
 export const CategoryScreen = (props: ExamplesScreenProps): JSX.Element => {
@@ -26,7 +25,7 @@ export const CategoryScreen = (props: ExamplesScreenProps): JSX.Element => {
     (category: ICategory) => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      return navigate('CategoryInner', category)
+      return navigate(SCREEN.STACK_CATEGORY_INNER, category)
     },
     [navigate]
   )
@@ -35,10 +34,6 @@ export const CategoryScreen = (props: ExamplesScreenProps): JSX.Element => {
       <View style={styles.inner_scroll}>
         {categories &&
           categories.map((category: ICategory) => {
-            if (ind >= 8) {
-              ind = 1
-            }
-            ind++
             return (
               <TouchableWithoutFeedback
                 key={category.id}
@@ -47,7 +42,7 @@ export const CategoryScreen = (props: ExamplesScreenProps): JSX.Element => {
                 <View style={styles.category_block__wrapper}>
                   <Text style={styles.synchronized_block}>{category.name[locale]}</Text>
                   <Image
-                    src={`https://codervent.com/mobile/synrok/demo/assets/images/circular-category/0${ind}.webp`}
+                    src={`${getImagePath(category.mainImage?.filename)}`}
                     alt="gweger"
                     style={styles.image}
                   />
@@ -95,8 +90,10 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   image: {
+    borderRadius: 50,
     height: 100,
     marginLeft: 10,
+    resizeMode: 'contain',
     width: 100,
   },
   inner_scroll: {

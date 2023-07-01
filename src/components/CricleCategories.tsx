@@ -2,29 +2,18 @@ import { Image, ScrollView, Text, View } from 'native-base'
 import { FC } from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 
+import { getImagePath } from '~api/home-api'
+import { SCREEN } from '~constants'
 import { ICategory } from '~types/category'
-import { getVH, getVW, isMedium } from '~utils/breakpoints'
+import { getVW } from '~utils/breakpoints'
 
 interface ICircleCategories {
   categories: ICategory[]
   navigation: (to: string, param: object) => void
 }
 
-//
-// export type TCircleCategories = {
-//   navigate?: {
-//     to: string
-//     param: object
-//   }
-// }
 const local = 'ru'
 const CircleCategories: FC<ICircleCategories> = ({ categories, navigation }) => {
-  // const navigateToCategory = useCallback(
-  //   ({ to, param }: { to: string; param: object }) => {
-  //     navigation(to, param)
-  //   },
-  //   [navigation]
-  // )
   return (
     <View style={styles.main}>
       <ScrollView
@@ -37,20 +26,19 @@ const CircleCategories: FC<ICircleCategories> = ({ categories, navigation }) => 
         horizontal={true}
         style={styles.body}
       >
-        {(categories ?? []).map(({ name, id }) => {
+        {(categories ?? []).map((item) => {
+          const { name, id, mainImage } = item
           return (
             <View key={id} style={styles.items}>
               <TouchableOpacity
-                // onPress={() => {
-                //   if (navigate) navigateToCategory(navigate)
-                // }}
+                onPress={() => {
+                  navigation(SCREEN.STACK_CATEGORY_INNER, item)
+                }}
                 style={styles.categoryButton}
               >
                 <Image
-                  src="https://codervent.com/mobile/synrok/demo/assets/images/category/04.webp"
+                  src={`${getImagePath(mainImage?.filename)}`}
                   alt={`category ${name}`}
-                  height={isMedium ? 120 : 20}
-                  width={isMedium ? 120 : 20}
                   style={styles.image}
                   resizeMode={'contain'}
                 />
@@ -70,26 +58,26 @@ const styles = StyleSheet.create({
   body: {
     flexDirection: 'row',
     flexGrow: 0,
-    // height: isMedium ? 170 : 120,
-    height: 'auto',
-    // maxWidth: 800,
     width: '100%',
   },
 
   categoryButton: {
     alignItems: 'center',
     flexGrow: 1,
+    height: 100,
+    padding: 4,
+    width: 100,
   },
 
   image: {
+    aspectRatio: 1,
+    borderRadius: 50,
+    resizeMode: 'contain',
     width: '100%',
-    // height: isMedium ? 130 : getVW(22),
-    // width: isMedium ? 130 : getVW(20),
   },
 
   items: {
-    height: 'auto',
-    // marginRight: getVW(10),
+    paddingBottom: 100,
     width: getVW(25),
   },
 
@@ -97,22 +85,19 @@ const styles = StyleSheet.create({
     flex: 0,
     flexDirection: 'row',
     justifyContent: 'center',
-    // paddingStart: 10,
     width: '100%',
   },
 
   text: {
-    fontSize: getVH(1),
+    flex: 1,
+    fontSize: 13,
     fontWeight: '500',
     letterSpacing: -0.3,
-    lineHeight: 0,
     marginTop: 5,
     textAlign: 'center',
-    // backgroundColor: "red",
   },
 
   textContainer: {
-    // backgroundColor: "orange",
     flexGrow: 1,
     justifyContent: 'center',
   },
