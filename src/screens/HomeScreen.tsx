@@ -21,7 +21,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const [data, setData] = useState([])
 
   useEffect(() => {
-    const getAsyncCategory = async () => {
+    const getAsyncCategory = async (): Promise<void> => {
       const categoryData = await HomeApi.getCategory()
       setData(categoryData.payload.content)
     }
@@ -30,7 +30,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
 
   return (
     <ScrollView flex={1} style={styles.main_wrapper}>
-      {data.length > 0 && <CircleCategories categories={data} />}
+      {data.length > 0 && <CircleCategories navigation={navigate} categories={data} />}
       <OfferPosterSlider navigation={navigate} slides={slides} />
       <Advantages advantages={advantages} />
       <TrendingItems items={trending} />
@@ -38,26 +38,12 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
       <TopBrands brands={brands} />
       <Accessories accessories={accessories} />
       <View style={styles.dummy}></View>
-      {/*<Image*/}
-      {/*  source={require('~assets/logo.png')}*/}
-      {/*  resizeMode="contain"*/}
-      {/*  resizeMethod="resize"*/}
-      {/*  height={24}*/}
-      {/*  alt="logo"*/}
-      {/*/>*/}
-      {/*<Text textAlign="center">{t('hello')}</Text>*/}
-      {/*<Text textAlign="center">{t('thanks')}</Text>*/}
-      {/*<Text textAlign="center">{t('app_information')}</Text>*/}
-      {/*<Button mt={4} onPress={navigateToDetails}>*/}
-      {/*  {t('home_screen.details')}*/}
-      {/*</Button>*/}
     </ScrollView>
   )
 }
 
 const styles = StyleSheet.create({
   dummy: {
-    // height: 500,
     width: '100%',
   },
 
