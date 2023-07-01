@@ -1,6 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack'
 import { useCallback } from 'react'
 
+import { SCREEN } from '~constants'
 import { Header } from '~navigation/Header'
 import { optionForScreen } from '~navigation/HeaderGlobalStyles'
 import { HomeScreen } from '~screens'
@@ -16,7 +17,7 @@ export const HomeStack = (): JSX.Element => {
   )
   return (
     <Navigator screenOptions={optionForScreen}>
-      <Screen name="HomeStack" options={homeStackOptions} component={HomeScreen} />
+      <Screen name={SCREEN.STACK_HOME} options={homeStackOptions} component={HomeScreen} />
     </Navigator>
   )
 }

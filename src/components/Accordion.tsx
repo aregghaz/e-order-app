@@ -2,8 +2,11 @@
  * was created by tigran at 25.06.23
  */
 import { Feather } from '@expo/vector-icons'
-import React, { FC, useCallback, useRef, useState } from 'react'
+import React, { FC, useCallback, useState } from 'react'
 import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native'
+
+import { SubList } from '~components/SubList'
+import { SCREEN } from '~constants'
 
 export type TIcon =
   | 'home'
@@ -20,40 +23,60 @@ interface IProps {
   hasChildren?: boolean
   title: string
   iconName?: TIcon
-  subChildren?: object
+  navigation: any
+  subChildren?: any[]
 }
 
-export const Accordion: FC<IProps> = ({ hasChildren, iconName, title }) => {
+export const Accordion: FC<IProps> = ({
+  hasChildren,
+  iconName,
+  title,
+  navigation,
+  subChildren,
+}) => {
   const [rotateState, setRotateState] = useState(false)
-  const rotateRefValue = useRef('0deg')
+  const [rotateValue, setRotateValue] = useState('0deg')
   const handlePress = useCallback(() => {
     setRotateState(!rotateState)
     if (rotateState) {
-      rotateRefValue.current = '0deg'
+      setRotateValue('0deg')
     } else {
-      rotateRefValue.current = '-90deg'
+      // rotateRefValue.current = '-90deg'
+      setRotateValue('-90deg')
     }
   }, [rotateState])
-  const chevronStyle = { transform: [{ rotate: rotateRefValue.current }] }
-  // const childrenElements = hasChildren ? (
-  //   subChildren.map((item) => (
-  //     <View key={item.id}>
-  //       <Accordion title={item.title} subChildren={item.subChildren} />
-  //     </View>
-  //   ))
-  // ) : (
-  //   <Text style={styles.text}>{title}</Text>
-  // )
+  const chevronStyle = { transform: [{ rotate: rotateValue }] }
+  const childrenElements = hasChildren ? (
+    subChildren &&
+    subChildren.map((item) => (
+      <View key={item.id}>
+        <SubList title={item.title} navigation={navigation} hasChildren={item.hasChildren} />
+      </View>
+    ))
+  ) : (
+    <></>
+  )
+  /*** checking if there is matching screen name ***/
+  const findScreenName = Object.values(SCREEN).find((item) => item === title) || 'Menu'
+  // const newStyle = { ...styles.accordion_block, height }
   return (
     <View style={styles.accordion_block}>
-      <TouchableWithoutFeedback onPress={handlePress}>
-        <View style={styles.accordion_text__wrapper}>
-          <View style={styles.sidebar_icon__block}>
-            <Feather name={iconName} size={20} />
-            <Text style={styles.text}>{title}</Text>
+      {/*// <View style={newStyle}>*/}
+      <TouchableWithoutFeedback
+        onPress={() => {
+          handlePress()
+          !hasChildren ? navigation.navigate(findScreenName, { title }) : null
+        }}
+      >
+        <View>
+          <View style={styles.accordion_text__wrapper}>
+            <View style={styles.sidebar_icon__block}>
+              <Feather name={iconName} size={20} />
+              <Text style={styles.text}>{title}</Text>
+            </View>
+            {hasChildren && <Feather name="chevron-left" size={18} style={chevronStyle} />}
           </View>
-          {/*{childrenElements}*/}
-          {hasChildren && <Feather name="chevron-left" size={18} style={chevronStyle} />}
+          {rotateState && <View>{childrenElements}</View>}
         </View>
       </TouchableWithoutFeedback>
     </View>
@@ -62,11 +85,14 @@ export const Accordion: FC<IProps> = ({ hasChildren, iconName, title }) => {
 
 const colors = {
   grey: '#ddd',
+  red: 'red',
 }
 
 const styles = StyleSheet.create({
   accordion_block: {
     flex: 1,
+    // height: 55,
+    overflow: 'hidden',
   },
   accordion_text__wrapper: {
     borderBottomColor: colors.grey,

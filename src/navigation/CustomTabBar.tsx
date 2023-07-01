@@ -3,7 +3,7 @@
  */
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import React, { FC } from 'react'
-import { StyleSheet, View, TouchableOpacity, Text, Dimensions } from 'react-native'
+import { StyleSheet, View, Text, Dimensions, TouchableWithoutFeedback } from 'react-native'
 
 interface IProps {
   props: object
@@ -12,14 +12,18 @@ interface IProps {
 export const CustomTabBar: FC<IProps> = (props) => {
   return (
     <View style={styles.custom_bottom_nav}>
-      <TouchableOpacity style={[styles.bottom_nav__icons, styles.border_right]}>
-        <MaterialCommunityIcons name="sort-descending" size={24} color="black" />
-        <Text style={styles.text_gap}>SORT BY</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.bottom_nav__icons}>
-        <MaterialCommunityIcons name="sort-variant" size={24} color="black" />
-        <Text style={styles.text_gap}>FILTER</Text>
-      </TouchableOpacity>
+      <TouchableWithoutFeedback>
+        <View style={[styles.bottom_nav__icons, styles.border_right]}>
+          <MaterialCommunityIcons name="sort-descending" size={24} color="black" />
+          <Text style={styles.text_gap}>SORT BY</Text>
+        </View>
+      </TouchableWithoutFeedback>
+      <TouchableWithoutFeedback>
+        <View style={styles.bottom_nav__icons}>
+          <MaterialCommunityIcons name="sort-variant" size={24} color="black" />
+          <Text style={styles.text_gap}>FILTER</Text>
+        </View>
+      </TouchableWithoutFeedback>
     </View>
   )
 }
