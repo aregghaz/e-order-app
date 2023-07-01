@@ -17,14 +17,13 @@ export const SubList: FC<IProps> = ({ title, navigation, hasChildren }) => {
   /*** checking if there is matching screen name ***/
   const findScreenName = Object.values(SCREEN).find((item) => item === title) || 'Menu'
   return (
-    <View style={styles.SubList_wrapper}>
-      <TouchableOpacity
-        onPress={() => (!hasChildren ? navigation.navigate(findScreenName, { title }) : null)}
-      >
-        {/*<TouchableOpacity>*/}
+    <TouchableOpacity
+      onPress={() => (!hasChildren ? navigation.navigate(findScreenName, { title }) : null)}
+    >
+      <View style={styles.SubList_wrapper}>
         <Text>{title}</Text>
-      </TouchableOpacity>
-    </View>
+      </View>
+    </TouchableOpacity>
   )
 }
 const colors = {
