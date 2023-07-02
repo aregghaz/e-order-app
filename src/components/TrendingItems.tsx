@@ -1,11 +1,15 @@
-import { View, Text, Image } from 'native-base'
+import { Image, Text, View } from 'native-base'
 import { FC } from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 
-import { getVH, isMedium } from '~utils/breakpoints'
+import { getImagePath } from '~api'
+// import { SCREEN } from '~constants'
+import { IFeatured } from '~types/featuredProducts'
+import { getVH } from '~utils/breakpoints'
 
 interface ITrendingItems {
-  items: TTrendingItems[]
+  items: IFeatured[]
+  navigation: any
 }
 
 export type TTrendingItems = {
@@ -20,28 +24,37 @@ const colors = {
   nameColor: '#646464',
 }
 
-const TrendingItems: FC<ITrendingItems> = ({ items }) => {
+// const TrendingItems: FC<ITrendingItems> = ({ items }) => {
+const TrendingItems: FC<ITrendingItems> = ({ items, navigation }) => {
   return (
     <View style={styles.main}>
-      <Text style={styles.heading}>Trending</Text>
+      {items.length > 0 && <Text style={styles.heading}>Featured</Text>}
       <View style={styles.container}>
-        {items.map(({ image, name, id }) => {
-          return (
-            <TouchableOpacity key={id} style={styles.item}>
-              <Image
-                src={image}
-                alt={`Trending ${name}`}
-                style={styles.image}
-                // width={300}
-                // height={300}
-                resizeMode={'cover'}
-              />
-              <View style={styles.textContainer}>
-                <Text style={styles.name}>{name}</Text>
-              </View>
-            </TouchableOpacity>
-          )
-        })}
+        {items &&
+          items.map((item) => {
+            const { name, id } = item
+            return (
+              <TouchableOpacity
+                key={id}
+                style={styles.item}
+                // onPress={navigation(SCREEN.STACK_PRODUCT_INNER, item)}
+                // onPress={navigation(SCREEN.STACK_CATEGORY, {
+                //   screen: SCREEN.STACK_PRODUCT_INNER,
+                //   params: { item },
+                // })}
+              >
+                <Image
+                  src={getImagePath(item.gallery[0].filename, '-product')}
+                  alt={`Trending ${name}`}
+                  style={styles.image}
+                  resizeMode={'cover'}
+                />
+                <View style={styles.textContainer}>
+                  <Text style={styles.name}>{name}</Text>
+                </View>
+              </TouchableOpacity>
+            )
+          })}
       </View>
     </View>
   )
@@ -63,10 +76,8 @@ const styles = StyleSheet.create({
   },
 
   image: {
-    height: isMedium ? '85%' : '80%',
+    aspectRatio: 1,
     width: '100%',
-    // borderTopLeftRadius: 8,
-    // borderTopRightRadius: 8,
   },
 
   item: {
@@ -80,7 +91,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 2,
     marginVertical: 10,
     overflow: 'hidden',
-    width: isMedium ? '48%' : '48%',
+    padding: 10,
+    width: '48%',
   },
 
   main: {
@@ -93,7 +105,7 @@ const styles = StyleSheet.create({
 
   name: {
     color: colors.nameColor,
-    fontSize: isMedium ? 18 : 16,
+    // fontSize: isMedium ? 18 : 16,
     fontWeight: '700',
   },
 

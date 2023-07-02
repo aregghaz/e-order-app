@@ -2,7 +2,7 @@ import { ScrollView, Image } from 'native-base'
 import { useCallback, useEffect, useState } from 'react'
 import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native'
 
-import { HomeApi, getImagePath } from '~api/home-api'
+import { SHOP_API, getImagePath } from '~api'
 import { SCREEN } from '~constants'
 import { ICategory } from '~types/category'
 
@@ -15,7 +15,7 @@ export const CategoryScreen = (props: ExamplesScreenProps): JSX.Element => {
 
   useEffect(() => {
     const fetchCategories = async () => {
-      const categories = await HomeApi.getCategory()
+      const categories = await SHOP_API.getCategory()
       setCategories(categories.payload.content)
     }
     fetchCategories()
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     height: 100,
     marginLeft: 10,
-    resizeMode: 'contain',
+    // resizeMode: 'contain',
     width: 100,
   },
   inner_scroll: {
