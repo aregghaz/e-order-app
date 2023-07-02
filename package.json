@@ -153,6 +153,6 @@
     "xmlhttprequest": "^1.8.0"
   },
   "lint-staged": {
-    "*.{ts,tsx,js,jsx}": "./node_modules/.bin/eslint src --fix"
+    "*.{ts,tsx}": "./node_modules/.bin/eslint src --fix"
   }
 }
