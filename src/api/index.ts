@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 export const fakeUrl = 'https://test-api.redro.ru/api'
+const shopId = `07c1a17d-41ed-49a6-96a0-01db91821db2`
 export const getImagePath = (path: string | null, product = '') =>
   path
     ? `${fakeUrl}/local-files/get${product}-image/${path}`
@@ -15,7 +16,7 @@ export const SHOP_API = {
   getFeaturedProducts: () => {
     return axios
       .get(
-        `${fakeUrl}/analytics/get-products?period=30&category=&type=new-arrivals&shopId=07c1a17d-41ed-49a6-96a0-01db91821db2`
+        `${fakeUrl}/analytics/get-products?period=30&category=&type=new-arrivals&shopId=${shopId}`
       )
       .then((res) => res.data)
       .catch((err) => console.log(err))
