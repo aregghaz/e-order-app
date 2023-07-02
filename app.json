@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "Template",
-    "slug": "expo-typescript-template",
+    "name": "e-order-app",
+    "slug": "e-order-app",
     "scheme": "template",
     "version": "1.0.0",
-    "owner": "binarapps",
+    "owner": "itflame",
     "userInterfaceStyle": "automatic",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -20,7 +20,7 @@
     "ios": {
       "supportsTablet": true,
       "jsEngine": "hermes",
-      "bundleIdentifier": "com.binarapps.template.dev"
+      "bundleIdentifier": "com.order.app"
     },
     "android": {
       "adaptiveIcon": {
