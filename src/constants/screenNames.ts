@@ -3,6 +3,7 @@ export const SCREEN = {
   STACK_CATEGORY: 'CategoryStack',
   STACK_CATEGORY_INNER: 'CategoryInner',
   STACK_CATEGORY_DETAIL: 'CategoryDetail',
+  STACK_PRODUCT_INNER: 'ProductInner',
   STACK_PROFILE: 'ProfileStack',
   STACK_CONTACT: 'ContactStack',
   STACK_SIGN_IN: 'SignIn',

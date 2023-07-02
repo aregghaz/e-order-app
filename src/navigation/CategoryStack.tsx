@@ -6,6 +6,7 @@ import { Header } from '~navigation/Header'
 import { optionForScreen } from '~navigation/HeaderGlobalStyles'
 import { CategoryInnerScreen, CategoryScreen } from '~screens'
 import { CategoryDetailScreen } from '~screens/CategoryDetailScreen'
+import { ProductInnerScreen } from '~screens/ProductInnerScreen'
 
 const { Navigator, Screen } = createStackNavigator()
 const locale = 'ru'
@@ -47,6 +48,18 @@ export const CategoryStack = (): JSX.Element => {
           headerLeft: () => null,
         })}
         component={CategoryDetailScreen}
+      />
+      <Screen
+        name={SCREEN.STACK_PRODUCT_INNER}
+        options={({ navigation, route }) => ({
+          headerTitle: () => (
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            <Header navigation={navigation} title={route.params.name} />
+          ),
+          headerLeft: () => null,
+        })}
+        component={ProductInnerScreen}
       />
     </Navigator>
   )

@@ -212,80 +212,11 @@ export const fakeData = {
       hasChildren: false,
     },
   ],
-  categoryData: [
-    {
-      id: '1',
-      name: {
-        am: '',
-        en: '',
-        ru: 'string',
-      },
-      sortOrder: 1,
-      isActive: false,
-      metaTagTitle: {
-        am: '',
-        en: '',
-        ru: 'string',
-      },
-      metaTagDescription: {
-        am: '',
-        en: '',
-        ru: 'string',
-      },
-      metaTagKeyword: {
-        am: '',
-        en: '',
-        ru: 'string',
-      },
-      mainImage: {
-        am: '',
-        en: '',
-        ru: 'string',
-      },
-      children: [
-        {
-          id: '1',
-          name: {
-            am: '',
-            en: '',
-            ru: 'string',
-          },
-          sortOrder: 1,
-          isActive: false,
-          metaTagTitle: {
-            am: '',
-            en: '',
-            ru: 'string',
-          },
-          metaTagDescription: {
-            am: '',
-            en: '',
-            ru: 'string',
-          },
-          metaTagKeyword: {
-            am: '',
-            en: '',
-            ru: 'string',
-          },
-          mainImage: {
-            am: '',
-            en: '',
-            ru: 'string',
-          },
-          children: [],
-        },
-      ],
-    },
-  ],
   homeScreen: {
     slides: [
       {
         id: 1,
         image: 'https://codervent.com/mobile/synrok/demo/assets/images/banner-sliders/01.webp',
-        navigate: {
-          to: 'Details',
-          param: {},
-        },
       },
       {
         id: 2,

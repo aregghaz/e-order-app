@@ -2,7 +2,7 @@ import { Image, ScrollView, Text, View } from 'native-base'
 import { FC } from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 
-import { getImagePath } from '~api/home-api'
+import { getImagePath } from '~api'
 import { SCREEN } from '~constants'
 import { ICategory } from '~types/category'
 import { getVW } from '~utils/breakpoints'
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
   image: {
     aspectRatio: 1,
     borderRadius: 50,
-    resizeMode: 'contain',
+    // resizeMode: 'contain',
     width: '100%',
   },
 
