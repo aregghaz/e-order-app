@@ -72,7 +72,7 @@ export const Accordion: FC<IProps> = ({
           <View style={styles.accordion_text__wrapper}>
             <View style={styles.sidebar_icon__block}>
               <Feather name={iconName} size={20} />
-              <Text style={styles.text}>{title} sssss</Text>
+              <Text style={styles.text}>{title}</Text>
             </View>
             {hasChildren && <Feather name="chevron-left" size={18} style={chevronStyle} />}
           </View>
