@@ -3,8 +3,13 @@ import React, { FC } from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 import Carousel from 'react-native-snap-carousel'
 
-import { TTrendingItems } from '~components/TrendingItems'
 import { getVH, getVW, screenWidth } from '~utils/breakpoints'
+
+export type TTrendingItems = {
+  id: number
+  image: string
+  name: string
+}
 
 interface ITrending {
   name?: string

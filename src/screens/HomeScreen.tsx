@@ -15,9 +15,7 @@ import TrendingItems from '~components/TrendingItems'
 const { slides, advantages, trendingSecond, brands, accessories } = fakeData.homeScreen
 
 export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
-  const {
-    navigation: { navigate },
-  } = props
+  const { navigation } = props
   const [data, setData] = useState([])
   const [featured, setFeatured] = useState([])
 
@@ -32,10 +30,10 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   }, [])
   return (
     <ScrollView flex={1} style={styles.main_wrapper}>
-      {data.length > 0 && <CircleCategories navigation={navigate} categories={data} />}
-      <OfferPosterSlider navigation={navigate} slides={slides} />
+      {data.length > 0 && <CircleCategories navigation={navigation} categories={data} />}
+      <OfferPosterSlider navigation={navigation} slides={slides} />
       <Advantages advantages={advantages} />
-      <TrendingItems navigation={navigate} items={featured} />
+      <TrendingItems navigation={navigation} items={featured} />
       <Trending name={'Shoes'} items={trendingSecond} />
       <TopBrands brands={brands} />
       <Accessories accessories={accessories} />

@@ -3,19 +3,14 @@ import { FC } from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 
 import { getImagePath } from '~api'
-// import { SCREEN } from '~constants'
+import { SCREEN } from '~constants'
 import { IFeatured } from '~types/featuredProducts'
-import { getVH } from '~utils/breakpoints'
+
+// import { getVH } from '~utils/breakpoints'
 
 interface ITrendingItems {
   items: IFeatured[]
   navigation: any
-}
-
-export type TTrendingItems = {
-  id: number
-  image: string
-  name: string
 }
 
 const colors = {
@@ -32,25 +27,28 @@ const TrendingItems: FC<ITrendingItems> = ({ items, navigation }) => {
       <View style={styles.container}>
         {items &&
           items.map((item) => {
-            const { name, id } = item
+            const { name, id, price } = item
             return (
               <TouchableOpacity
                 key={id}
                 style={styles.item}
-                // onPress={navigation(SCREEN.STACK_PRODUCT_INNER, item)}
-                // onPress={navigation(SCREEN.STACK_CATEGORY, {
-                //   screen: SCREEN.STACK_PRODUCT_INNER,
-                //   params: { item },
-                // })}
+                // onPress={navigation(SCREEN.STACK_PRODUCT_INNER, {item})}
+                onPress={navigation.navigate(SCREEN.STACK_CATEGORY, {
+                  screen: SCREEN.STACK_PRODUCT_INNER,
+                  params: item,
+                })}
               >
                 <Image
-                  src={getImagePath(item.gallery[0].filename, '-product')}
+                  src={getImagePath(item.gallery?.[0]?.filename, '-product')}
                   alt={`Trending ${name}`}
                   style={styles.image}
                   resizeMode={'cover'}
                 />
                 <View style={styles.textContainer}>
                   <Text style={styles.name}>{name}</Text>
+                </View>
+                <View>
+                  <Text style={styles.price}>{price}</Text>
                 </View>
               </TouchableOpacity>
             )
@@ -81,12 +79,12 @@ const styles = StyleSheet.create({
   },
 
   item: {
-    alignItems: 'center',
+    // alignItems: 'center',
     borderColor: colors.borderColor,
     borderRadius: 8,
     borderStyle: 'solid',
     borderWidth: 1.5,
-    height: getVH(35),
+    // height: getVH(35),
     justifyContent: 'flex-start',
     marginHorizontal: 2,
     marginVertical: 10,
@@ -108,7 +106,10 @@ const styles = StyleSheet.create({
     // fontSize: isMedium ? 18 : 16,
     fontWeight: '700',
   },
-
+  price: {
+    flex: 1,
+    textAlign: 'left',
+  },
   textContainer: {
     alignItems: 'center',
     flexGrow: 1,
