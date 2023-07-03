@@ -11,6 +11,7 @@ import OfferPosterSlider from '~components/OfferPosterSlider'
 import TopBrands from '~components/TopBrands'
 import Trending from '~components/Trending'
 import TrendingItems from '~components/TrendingItems'
+// import { ProductInnerScreen } from '~screens/ProductInnerScreen'
 
 const { slides, advantages, trendingSecond, brands, accessories } = fakeData.homeScreen
 
@@ -30,6 +31,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   }, [])
   return (
     <ScrollView flex={1} style={styles.main_wrapper}>
+      {/***FIXME testing product inner page // open comments after test and remove ProductInnerScreen component ***/}
       {data.length > 0 && <CircleCategories navigation={navigation} categories={data} />}
       <OfferPosterSlider navigation={navigation} slides={slides} />
       <Advantages advantages={advantages} />
@@ -38,6 +40,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
       <TopBrands brands={brands} />
       <Accessories accessories={accessories} />
       <View style={styles.dummy}></View>
+      {/*<ProductInnerScreen />*/}
     </ScrollView>
   )
 }
