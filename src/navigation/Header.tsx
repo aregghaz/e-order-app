@@ -24,16 +24,11 @@ export const Header: FC<IProps> = ({ title, navigation }) => {
     <View style={styles.header_wrapper}>
       <View style={styles.is_back}>
         <TouchableOpacity>
-          <Feather name="menu" size={28} onPress={handleOpenMenu} style={styles.icons} />
+          <Feather name="menu" size={25} onPress={handleOpenMenu} style={styles.icons} />
         </TouchableOpacity>
         {title && (
           <TouchableOpacity>
-            <Ionicons
-              name="arrow-back"
-              size={28}
-              onPress={goBack}
-              style={[styles.icons, styles.back]}
-            />
+            <Ionicons name="arrow-back" size={25} onPress={goBack} style={[styles.icons]} />
           </TouchableOpacity>
         )}
         <Text style={styles.font}>{title}</Text>
@@ -42,7 +37,7 @@ export const Header: FC<IProps> = ({ title, navigation }) => {
         <TouchableOpacity>
           <Feather
             name="search"
-            size={28}
+            size={25}
             style={styles.icons}
             // onPress={}
           />
@@ -50,7 +45,7 @@ export const Header: FC<IProps> = ({ title, navigation }) => {
         <TouchableOpacity>
           <Feather
             name="heart"
-            size={28}
+            size={25}
             style={styles.icons}
             // onPress={}
           />
@@ -58,7 +53,7 @@ export const Header: FC<IProps> = ({ title, navigation }) => {
         <TouchableOpacity>
           <Feather
             name="shopping-bag"
-            size={28}
+            size={25}
             style={styles.icons}
             // onPress={}
           />
@@ -69,33 +64,40 @@ export const Header: FC<IProps> = ({ title, navigation }) => {
 }
 
 const styles = StyleSheet.create({
-  back: {
-    marginLeft: 20,
-  },
   font: {
     alignItems: 'center',
     flexDirection: 'row',
+    flex: 1,
     fontSize: 16,
     justifyContent: 'center',
-    marginHorizontal: 7,
-    width: 150,
+    marginHorizontal: 6,
+    // maxWidth: 150,
+    // borderStyle: 'solid',
+    // borderWidth: 1,
   },
   header_wrapper: {
     alignItems: 'center',
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    // backgroundColor: 'red',
     width,
   },
   icon_blocks: {
     alignItems: 'center',
     flexDirection: 'row',
+    // flex: 1,
+    // borderStyle: 'solid',
+    // borderWidth: 1,
   },
   icons: {
-    marginHorizontal: 7,
+    marginHorizontal: 8,
   },
   is_back: {
     alignItems: 'center',
     flexDirection: 'row',
+    flex: 1,
+    // borderStyle: 'solid',
+    // borderWidth: 1,
   },
 })
