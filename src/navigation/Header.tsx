@@ -71,24 +71,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     justifyContent: 'center',
     marginHorizontal: 6,
-    // maxWidth: 150,
-    // borderStyle: 'solid',
-    // borderWidth: 1,
   },
   header_wrapper: {
     alignItems: 'center',
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    // backgroundColor: 'red',
     width,
   },
   icon_blocks: {
     alignItems: 'center',
     flexDirection: 'row',
-    // flex: 1,
-    // borderStyle: 'solid',
-    // borderWidth: 1,
   },
   icons: {
     marginHorizontal: 8,
@@ -97,7 +90,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     flex: 1,
-    // borderStyle: 'solid',
-    // borderWidth: 1,
   },
 })

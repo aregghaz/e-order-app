@@ -2,14 +2,16 @@ import { createDrawerNavigator } from '@react-navigation/drawer'
 import { useCallback } from 'react'
 
 import { CustomDrawer } from '~components/CustomDrawer'
-// import { BottomTabNavigator } from '~navigation/BottomTabNavigator'
 import { SCREEN } from '~constants'
 import { Header } from '~navigation/Header'
+import { optionForScreen } from '~navigation/HeaderGlobalStyles'
 import { RootNavigator } from '~navigation/RootNavigator'
 import { CategoryInnerScreen } from '~screens'
 import { CategoryDetailScreen } from '~screens/CategoryDetailScreen'
 import { MenuScreen } from '~screens/MenuScreen'
 import { ProductInnerScreen } from '~screens/ProductInnerScreen'
+
+const locale = 'ru'
 
 const Drawer = createDrawerNavigator()
 export const DrawerNavigator = () => {
@@ -17,42 +19,46 @@ export const DrawerNavigator = () => {
     return <CustomDrawer {...props} />
   }, [])
   return (
-    <Drawer.Navigator useLegacyImplementation drawerContent={renderCustomDrawerContent}>
-      <Drawer.Screen name="Root" component={RootNavigator} options={{ headerShown: false }} />
+    <Drawer.Navigator
+      useLegacyImplementation
+      drawerContent={renderCustomDrawerContent}
+      screenOptions={optionForScreen}
+    >
       <Drawer.Screen
-        name="CategoryInner"
-        component={CategoryInnerScreen}
-        /// options={{headerShown: false}}
+        name={SCREEN.DRAWER_ROOT}
+        component={RootNavigator}
+        options={{ headerShown: false }}
       />
       <Drawer.Screen
-        name="CategoryDetail"
+        name={SCREEN.STACK_CATEGORY_INNER}
+        component={CategoryInnerScreen}
+        options={({ navigation, route }: any) => ({
+          headerTitle: () => <Header navigation={navigation} title={route.params.name[locale]} />,
+          headerLeft: () => null,
+        })}
+      />
+      <Drawer.Screen
+        name={SCREEN.STACK_CATEGORY_DETAIL}
         component={CategoryDetailScreen}
-        //   options={{headerShown: false}}
+        options={({ navigation, route }: any) => ({
+          headerTitle: () => <Header navigation={navigation} title={route.params.name[locale]} />,
+          headerLeft: () => null,
+        })}
       />
 
       <Drawer.Screen
         name={SCREEN.STACK_PRODUCT_INNER}
-        options={({ navigation, route }) => ({
-          headerTitle: () => (
-            ////FIXME
-            <Header
-              navigation={navigation}
-              ///        title={route.params.name}
-            />
-          ),
+        component={ProductInnerScreen}
+        options={({ navigation, route }: any) => ({
+          headerTitle: () => <Header navigation={navigation} title={route.params.name} />,
           headerLeft: () => null,
         })}
-        component={ProductInnerScreen}
       />
       <Drawer.Screen
-        name="Menu"
+        name={SCREEN.DRAWER_MENU}
         component={MenuScreen}
-        options={({ navigation, route }) => ({
-          headerTitle: () => (
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            <Header navigation={navigation} title={route.params.title} />
-          ),
+        options={({ navigation, route }: any) => ({
+          headerTitle: () => <Header navigation={navigation} title={route.params.title} />,
           headerLeft: () => null,
         })}
       />
