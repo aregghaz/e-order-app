@@ -2,63 +2,59 @@
  * was created by tigran at 02.07.23
  */
 import { Ionicons } from '@expo/vector-icons'
+import { useFocusEffect } from '@react-navigation/native'
 import { Image } from 'native-base'
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useState } from 'react'
 import { ScrollView, View, Text, StyleSheet } from 'react-native'
 
 // import { IFeatured } from '~types/featuredProducts'
-import { fakeData } from '~FakeData'
+///import { fakeData } from '~FakeData'
 import { getImagePath, SHOP_API } from '~api'
 import TrendingItems from '~components/TrendingItems'
 
 // export const ProductInnerScreen: FC<IFeatured> = () => {
-export const ProductInnerScreen: FC = () => {
-  const [product] = useState(fakeData.productInner)
+export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
   const [featured, setFeatured] = useState([])
-  useEffect(() => {
-    const getAsyncData = async (): Promise<void> => {
-      const featuredData = await SHOP_API.getFeaturedProducts()
-      setFeatured(featuredData.payload.content)
-    }
-    getAsyncData()
-  }, [])
+  const params = route.params
+  console.log(params, 'itemitemitem')
+  const getAsyncData = async (): Promise<void> => {
+    const featuredData = await SHOP_API.getFeaturedProducts()
+    setFeatured(featuredData.payload.content)
+  }
+  useFocusEffect(
+    React.useCallback(() => {
+      ;(async () => {
+        await getAsyncData()
+      })()
+    }, [params.id])
+  )
   return (
     <ScrollView style={styles.ProductInnerScreen_wrapper}>
       <Image
-        src={getImagePath(product.gallery?.[0]?.filename, '-product')}
-        alt={`Trending ${product.name}`}
+        src={getImagePath(params.gallery?.[0]?.filename, '-product')}
+        alt={`Trending ${params.name}`}
         style={styles.image}
       />
       <View style={styles.inner_wrapper}>
-        <Text style={styles.title}>{product.name}</Text>
-        <Text style={styles.description}>{product.description}</Text>
+        <Text style={styles.title}>{params.name}</Text>
+        <Text style={styles.description}>{params.description}</Text>
         <View style={styles.rating_block}>
-          <Text style={styles.rates}>{product.reward}</Text>
+          <Text style={styles.rates}>{params.reward}</Text>
           <Ionicons name="star" size={16} color="#FFC107" />
           <View style={styles.slash} />
-          <Text style={styles.rates}>{product.rating} Ratings</Text>
+          <Text style={styles.rates}>{params.rating} Ratings</Text>
         </View>
         <View style={styles.horizontal_row} />
         <View>
-          <Text style={styles.price}>$ {product.price}</Text>
+          <Text style={styles.price}>$ {params.price}</Text>
         </View>
         <View style={styles.horizontal_row} />
         <View>
           <Text style={styles.details}>Product Details</Text>
-          <Text>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad architecto at delectus hic
-            iure molestias, perferendis quam quidem ratione, sint totam veniam! A aspernatur
-            blanditiis consequuntur deleniti dolores exercitationem fuga impedit ipsa libero magni
-            minus obcaecati odit porro possimus quaerat quam quisquam quod, reiciendis repellendus
-            rerum, sint tempora veniam voluptas? Animi architecto labore minima odio perferendis
-            quae repellendus. Cum doloremque eum excepturi facere impedit laborum nam necessitatibus
-            officia ut! Adipisci aliquid architecto assumenda debitis deserunt dolorum eaque error
-            expedita explicabo hic id impedit ipsam ipsum modi nobis numquam odio qui quia quis,
-            quod repellendus sed temporibus ut velit, veritatis vitae?
-          </Text>
+          <Text>{params.description}</Text>
         </View>
         <View style={styles.horizontal_row} />
-        <TrendingItems items={featured} />
+        <TrendingItems items={featured} navigation={navigation} />
       </View>
     </ScrollView>
   )

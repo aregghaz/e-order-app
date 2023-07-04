@@ -9,7 +9,7 @@ import { getVW } from '~utils/breakpoints'
 
 interface ICircleCategories {
   categories: ICategory[]
-  navigation: (to: string, param: object) => void
+  navigation: any
 }
 
 const local = 'ru'
@@ -32,7 +32,7 @@ const CircleCategories: FC<ICircleCategories> = ({ categories, navigation }) => 
             <View key={id} style={styles.items}>
               <TouchableOpacity
                 onPress={() => {
-                  navigation(SCREEN.STACK_CATEGORY_INNER, item)
+                  navigation.navigate(SCREEN.STACK_CATEGORY_INNER_PAGE, item)
                 }}
                 style={styles.categoryButton}
               >
@@ -40,7 +40,7 @@ const CircleCategories: FC<ICircleCategories> = ({ categories, navigation }) => 
                   src={`${getImagePath(mainImage?.filename)}`}
                   alt={`category ${name}`}
                   style={styles.image}
-                  resizeMode={'contain'}
+                  // resizeMode={'contain'}
                 />
                 <View style={styles.textContainer}>
                   <Text style={styles.text}>{name[local]}</Text>

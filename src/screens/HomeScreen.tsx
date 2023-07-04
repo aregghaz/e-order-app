@@ -1,5 +1,6 @@
+import { useFocusEffect } from '@react-navigation/native'
 import { ScrollView, View } from 'native-base'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { StyleSheet } from 'react-native'
 
 import { fakeData } from '~FakeData'
@@ -20,20 +21,26 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const [data, setData] = useState([])
   const [featured, setFeatured] = useState([])
 
-  useEffect(() => {
-    const getAsyncData = async (): Promise<void> => {
-      const categoryData = await SHOP_API.getCategory()
-      const featuredData = await SHOP_API.getFeaturedProducts()
-      setData(categoryData.payload.content)
-      setFeatured(featuredData.payload.content)
-    }
-    getAsyncData()
-  }, [])
+  useFocusEffect(
+    React.useCallback(() => {
+      ;(async () => {
+        const getAsyncData = async (): Promise<void> => {
+          const categoryData = await SHOP_API.getCategory()
+          const featuredData = await SHOP_API.getFeaturedProducts()
+          setData(categoryData.payload.content)
+          setFeatured(featuredData.payload.content)
+        }
+        await getAsyncData()
+      })()
+
+      //  return () => clientData();
+    }, [])
+  )
   return (
     <ScrollView flex={1} style={styles.main_wrapper}>
       {/***FIXME testing product inner page // open comments after test and remove ProductInnerScreen component ***/}
       {data.length > 0 && <CircleCategories navigation={navigation} categories={data} />}
-      <OfferPosterSlider navigation={navigation} slides={slides} />
+      <OfferPosterSlider slides={slides} />
       <Advantages advantages={advantages} />
       <TrendingItems navigation={navigation} items={featured} />
       <Trending name={'Shoes'} items={trendingSecond} />

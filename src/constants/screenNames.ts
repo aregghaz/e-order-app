@@ -2,6 +2,7 @@ export const SCREEN = {
   STACK_HOME: 'HomeStack',
   STACK_CATEGORY: 'CategoryStack',
   STACK_CATEGORY_INNER: 'CategoryInner',
+  STACK_CATEGORY_INNER_PAGE: 'CategoryInnerPage',
   STACK_CATEGORY_DETAIL: 'CategoryDetail',
   STACK_PRODUCT_INNER: 'ProductInner',
   STACK_PROFILE: 'ProfileStack',
