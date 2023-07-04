@@ -27,22 +27,6 @@ export const linking: LinkingOptions<RootStackParamList> = {
               Details: '/details/:id',
             },
           },
-          // CategoryStack: {
-          //   initialRouteName: 'Category',
-          //   screens: {
-          //     Category: '',
-          //     CategoryInner: '/details/:id',
-          //   },
-          // },
-          ExamplesStack: {
-            initialRouteName: 'Examples',
-            screens: {
-              Examples: '/examples',
-              Components: '/components',
-              Colors: '/colors',
-              Typography: '/typography',
-            },
-          },
         },
       },
       SignIn: 'sign-in',

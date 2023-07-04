@@ -4,13 +4,14 @@ import { StyleSheet, TouchableOpacity } from 'react-native'
 
 import { getImagePath } from '~api'
 // import { SCREEN } from '~constants'
+import { SCREEN } from '~constants'
 import { IFeatured } from '~types/featuredProducts'
 
 // import { getVH } from '~utils/breakpoints'
 
 interface ITrendingItems {
   items: IFeatured[]
-  navigation?: any
+  navigation: any
 }
 
 const colors = {
@@ -33,10 +34,9 @@ const TrendingItems: FC<ITrendingItems> = ({ items, navigation }) => {
                 key={id}
                 style={styles.item}
                 // onPress={navigation(SCREEN.STACK_PRODUCT_INNER, {item})}
-                // onPress={navigation.navigate(SCREEN.STACK_CATEGORY, {
-                //   screen: SCREEN.STACK_PRODUCT_INNER,
-                //   params: item,
-                // })}
+                onPress={() => {
+                  navigation.navigate(SCREEN.STACK_PRODUCT_INNER, item)
+                }}
               >
                 <Image
                   src={getImagePath(item.gallery?.[0]?.filename, '-product')}
