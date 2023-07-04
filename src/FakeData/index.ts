@@ -444,4 +444,36 @@ export const fakeData = {
     status: 'approved',
     featured: [],
   },
+  profile: [
+    {
+      id: '1',
+      title: 'My Profile',
+      iconName: 'user',
+    },
+    {
+      id: '2',
+      title: 'My Order',
+      iconName: 'shopping-cart',
+    },
+    {
+      id: '3',
+      title: 'Addresses',
+      iconName: 'map-pin',
+    },
+    {
+      id: '4',
+      title: 'Notification',
+      iconName: 'bell',
+    },
+    {
+      id: '5',
+      title: 'Wishlist',
+      iconName: 'heart',
+    },
+    {
+      id: '6',
+      title: 'Logout',
+      iconName: 'log-out',
+    },
+  ],
 }

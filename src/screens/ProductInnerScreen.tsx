@@ -41,7 +41,6 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
         height={width}
         data={params.gallery}
         renderItem={({ item, index }: any) => {
-          console.log(item, '+++++')
           return (
             <Image
               key={index}
