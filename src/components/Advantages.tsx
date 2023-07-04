@@ -1,6 +1,6 @@
 import { View, Text, Image } from 'native-base'
 import React, { FC } from 'react'
-import { StyleSheet, TouchableOpacity } from 'react-native'
+import { StyleSheet } from 'react-native'
 
 const colors = {
   borderColor: '#D2D2D2',
@@ -23,12 +23,12 @@ const Advantages: FC<IAdvantages> = ({ advantages }) => {
       {advantages.map(({ icon, text, color, id }) => {
         return (
           <View style={styles.item} key={id}>
-            <TouchableOpacity style={styles.button}>
+            <View style={styles.button}>
               <View style={styles.iconWrapper} backgroundColor={color}>
                 <Image src={icon} alt={text} width={25} height={25} resizeMode={'contain'} />
               </View>
               <Text style={styles.text}>{text}</Text>
-            </TouchableOpacity>
+            </View>
           </View>
         )
       })}

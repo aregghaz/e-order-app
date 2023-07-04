@@ -32,7 +32,7 @@ const CircleCategories: FC<ICircleCategories> = ({ categories, navigation }) => 
             <View key={id} style={styles.items}>
               <TouchableOpacity
                 onPress={() => {
-                  navigation.navigate(SCREEN.STACK_CATEGORY_INNER_PAGE, item)
+                  navigation.navigate(SCREEN.STACK_CATEGORY_INNER, item)
                 }}
                 style={styles.categoryButton}
               >

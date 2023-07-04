@@ -46,50 +46,6 @@ export const fakeData = {
       ],
     },
     {
-      id: '3',
-      title: 'Shop Pages',
-      iconName: 'shopping-cart',
-      hasChildren: true,
-      children: [
-        {
-          id: '1',
-          title: 'Shop',
-          hasChildren: false,
-          children: [],
-        },
-        {
-          id: '2',
-          title: 'Cart',
-          hasChildren: false,
-          children: [],
-        },
-        {
-          id: '3',
-          title: 'Wishlist',
-          hasChildren: false,
-          children: [],
-        },
-        {
-          id: '4',
-          title: 'Product Details',
-          hasChildren: false,
-          children: [],
-        },
-        {
-          id: '5',
-          title: 'Checkout',
-          hasChildren: false,
-          children: [],
-        },
-        {
-          id: '6',
-          title: 'Order Tracking',
-          hasChildren: false,
-          children: [],
-        },
-      ],
-    },
-    {
       id: '4',
       title: 'Payment',
       iconName: 'credit-card',
@@ -110,26 +66,6 @@ export const fakeData = {
         {
           id: '3',
           title: 'Payment Completed',
-          hasChildren: false,
-          children: [],
-        },
-      ],
-    },
-    {
-      id: '5',
-      title: 'Category',
-      iconName: 'grid',
-      hasChildren: true,
-      children: [
-        {
-          id: '1',
-          title: 'Category Grid',
-          hasChildren: false,
-          children: [],
-        },
-        {
-          id: '2',
-          title: 'Category List',
           hasChildren: false,
           children: [],
         },

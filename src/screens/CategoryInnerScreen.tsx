@@ -18,6 +18,7 @@ const locale = 'ru'
 
 export const CategoryInnerScreen: FC<IProps> = ({ route, navigation }) => {
   const [categories] = useState<ICategory[]>(route.params.children)
+  console.log(categories, 'categoriescategoriescategories')
   const goToDetails = (item: ICategory) => navigation.navigate('CategoryDetail', item)
   const numColumns = 2
   return (

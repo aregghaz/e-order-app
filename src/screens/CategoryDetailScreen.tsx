@@ -18,6 +18,7 @@ interface IProps {
 
 export const CategoryDetailScreen: FC<IProps> = ({ route, navigation }) => {
   const [detail] = useState(route.params)
+  console.log(detail, 'detaildetail')
   return (
     <View style={styles.detail_wrapper}>
       <Image

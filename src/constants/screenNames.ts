@@ -1,5 +1,5 @@
 export const SCREEN = {
-  STACK_HOME: 'HomeStack',
+  STACK_HOME: 'MainTab',
   STACK_CATEGORY: 'CategoryStack',
   STACK_CATEGORY_INNER: 'CategoryInner',
   STACK_CATEGORY_INNER_PAGE: 'CategoryInnerPage',
