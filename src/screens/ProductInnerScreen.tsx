@@ -4,25 +4,21 @@
 import { Ionicons } from '@expo/vector-icons'
 import { useFocusEffect } from '@react-navigation/native'
 import { Image } from 'native-base'
-import React, { FC, useState } from 'react'
+import React, { FC, useState, useCallback } from 'react'
 import { ScrollView, View, Text, StyleSheet } from 'react-native'
 
-// import { IFeatured } from '~types/featuredProducts'
-///import { fakeData } from '~FakeData'
 import { getImagePath, SHOP_API } from '~api'
 import TrendingItems from '~components/TrendingItems'
 
-// export const ProductInnerScreen: FC<IFeatured> = () => {
 export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
   const [featured, setFeatured] = useState([])
   const params = route.params
-  console.log(params, 'itemitemitem')
   const getAsyncData = async (): Promise<void> => {
     const featuredData = await SHOP_API.getFeaturedProducts()
     setFeatured(featuredData.payload.content)
   }
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       ;(async () => {
         await getAsyncData()
       })()

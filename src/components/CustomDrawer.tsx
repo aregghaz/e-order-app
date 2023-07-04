@@ -1,7 +1,7 @@
 /**
  * was created by tigran at 25.06.23
  */
-// import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer'
+
 import { DrawerContentScrollView } from '@react-navigation/drawer'
 import { Switch } from 'native-base'
 import React, { FC } from 'react'
@@ -9,9 +9,6 @@ import { Image, StyleSheet, View } from 'react-native'
 
 import { fakeData } from '~FakeData'
 import { Accordion, TIcon } from '~components/Accordion'
-
-// interface IProps {
-// }
 
 export const CustomDrawer: FC = (props: any) => {
   return (

@@ -33,7 +33,6 @@ const TrendingItems: FC<ITrendingItems> = ({ items, navigation }) => {
               <TouchableOpacity
                 key={id}
                 style={styles.item}
-                // onPress={navigation(SCREEN.STACK_PRODUCT_INNER, {item})}
                 onPress={() => {
                   navigation.navigate(SCREEN.STACK_PRODUCT_INNER, item)
                 }}
