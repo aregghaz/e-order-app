@@ -2,8 +2,8 @@
  * was created by tigran at 24.06.23
  */
 import { Feather, Ionicons } from '@expo/vector-icons'
-import React, { FC, useCallback } from 'react'
-import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React, { FC, useCallback, useState } from 'react'
+import { Dimensions, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 
 const width = Dimensions.get('window').width - 30
 
@@ -16,12 +16,19 @@ export const Header: FC<IProps> = ({ title, navigation }) => {
   const handleOpenMenu = useCallback(() => {
     navigation.openDrawer()
   }, [navigation])
+  const [search, setSearch] = useState(false)
 
   const goBack = useCallback(() => {
     navigation.goBack()
   }, [navigation])
   return (
     <View style={styles.header_wrapper}>
+      {search && (
+        <View style={styles.search_block}>
+          <TextInput style={styles.search_input} placeholder="Search" />
+          <Feather name="x" size={24} style={styles.icons} onPress={() => setSearch(false)} />
+        </View>
+      )}
       <View style={styles.is_back}>
         <TouchableOpacity>
           <Feather name="menu" size={25} onPress={handleOpenMenu} style={styles.icons} />
@@ -35,12 +42,7 @@ export const Header: FC<IProps> = ({ title, navigation }) => {
       </View>
       <View style={styles.icon_blocks}>
         <TouchableOpacity>
-          <Feather
-            name="search"
-            size={25}
-            style={styles.icons}
-            // onPress={}
-          />
+          <Feather name="search" size={25} style={styles.icons} onPress={() => setSearch(true)} />
         </TouchableOpacity>
         <TouchableOpacity>
           <Feather
@@ -63,6 +65,10 @@ export const Header: FC<IProps> = ({ title, navigation }) => {
   )
 }
 
+const colors = {
+  white: 'white',
+}
+
 const styles = StyleSheet.create({
   font: {
     alignItems: 'center',
@@ -77,6 +83,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    position: 'relative',
     width,
   },
   icon_blocks: {
@@ -90,5 +97,27 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     flex: 1,
+  },
+  search_block: {
+    alignItems: 'center',
+    backgroundColor: colors.white,
+    bottom: 0,
+    flex: 1,
+    flexDirection: 'row',
+    height: '100%',
+    justifyContent: 'center',
+    left: 0,
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    width: '100%',
+    zIndex: 1,
+  },
+  search_input: {
+    borderRadius: 4,
+    borderStyle: 'solid',
+    borderWidth: 0.5,
+    padding: 10,
+    width: '80%',
   },
 })

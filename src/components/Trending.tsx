@@ -19,7 +19,7 @@ interface ITrending {
 const Trending: FC<ITrending> = ({ name, items }) => {
   return (
     <View style={styles.body}>
-      <Text style={styles.heading}>Trending {name && `in ${name}`}</Text>
+      <Text style={styles.heading}>Featured</Text>
       <View style={styles.main}>
         <Carousel
           loop

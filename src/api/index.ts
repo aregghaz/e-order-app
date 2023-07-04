@@ -13,7 +13,7 @@ export const SHOP_API = {
       .then((res) => res.data)
       .catch((err) => console.log(err))
   },
-  getFeaturedProducts: () => {
+  getLatestProducts: () => {
     return axios
       .get(
         `${fakeUrl}/analytics/get-products?period=30&category=&type=new-arrivals&shopId=${shopId}`

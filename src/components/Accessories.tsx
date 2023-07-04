@@ -3,7 +3,7 @@ import React, { FC } from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 import Carousel from 'react-native-reanimated-carousel'
 
-import { TTrendingItems } from '~components/TrendingItems'
+import { TTrendingItems } from '~components/Trending'
 import { getVW, screenWidth } from '~utils/breakpoints'
 
 interface IAccessories {
@@ -13,7 +13,7 @@ interface IAccessories {
 const Accessories: FC<IAccessories> = ({ accessories }) => {
   return (
     <View style={styles.main}>
-      <Text style={styles.heading}>Top Brands</Text>
+      <Text style={styles.heading}>Best seller</Text>
       <Carousel
         width={getVW(50)}
         style={styles.container}

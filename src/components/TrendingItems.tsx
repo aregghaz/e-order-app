@@ -24,7 +24,7 @@ const colors = {
 const TrendingItems: FC<ITrendingItems> = ({ items, navigation }) => {
   return (
     <View style={styles.main}>
-      {items.length > 0 && <Text style={styles.heading}>Featured</Text>}
+      {items.length > 0 && <Text style={styles.heading}>Latest</Text>}
       <View style={styles.container}>
         {items &&
           items.map((item) => {
@@ -47,7 +47,7 @@ const TrendingItems: FC<ITrendingItems> = ({ items, navigation }) => {
                   <Text style={styles.name}>{name}</Text>
                 </View>
                 <View>
-                  <Text style={styles.price}>{price}</Text>
+                  <Text style={styles.price}>₽ {price}</Text>
                 </View>
               </TouchableOpacity>
             )
