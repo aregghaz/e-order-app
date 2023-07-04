@@ -5,16 +5,20 @@ import { Ionicons } from '@expo/vector-icons'
 import { useFocusEffect } from '@react-navigation/native'
 import { Image } from 'native-base'
 import React, { FC, useState, useCallback } from 'react'
-import { ScrollView, View, Text, StyleSheet } from 'react-native'
+import { ScrollView, View, Text, StyleSheet, Dimensions } from 'react-native'
+import Carousel from 'react-native-reanimated-carousel'
 
 import { getImagePath, SHOP_API } from '~api'
 import TrendingItems from '~components/TrendingItems'
+// import { getVW } from '~utils/breakpoints'
+// import { TTrendingItems } from '~components/Trending'
 
 export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
   const [featured, setFeatured] = useState([])
+  const width = Dimensions.get('window').width
   const params = route.params
   const getAsyncData = async (): Promise<void> => {
-    const featuredData = await SHOP_API.getFeaturedProducts()
+    const featuredData = await SHOP_API.getLatestProducts()
     setFeatured(featuredData.payload.content)
   }
   useFocusEffect(
@@ -26,10 +30,27 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
   )
   return (
     <ScrollView style={styles.ProductInnerScreen_wrapper}>
-      <Image
-        src={getImagePath(params.gallery?.[0]?.filename, '-product')}
-        alt={`Trending ${params.name}`}
-        style={styles.image}
+      {/*<Image*/}
+      {/*  src={getImagePath(params.gallery?.[0]?.filename, '-product')}*/}
+      {/*  alt={`Trending ${params.name}`}*/}
+      {/*  style={styles.image}*/}
+      {/*/>*/}
+      <Carousel
+        width={width}
+        style={styles.carousel}
+        height={width}
+        data={params.gallery}
+        renderItem={({ item, index }: any) => {
+          console.log(item, '+++++')
+          return (
+            <Image
+              key={index}
+              style={styles.image}
+              src={getImagePath(item?.filename, '-product')}
+              alt={params.name}
+            />
+          )
+        }}
       />
       <View style={styles.inner_wrapper}>
         <Text style={styles.title}>{params.name}</Text>
@@ -42,7 +63,7 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
         </View>
         <View style={styles.horizontal_row} />
         <View>
-          <Text style={styles.price}>$ {params.price}</Text>
+          <Text style={styles.price}>₽ {params.price}</Text>
         </View>
         <View style={styles.horizontal_row} />
         <View>
@@ -63,6 +84,9 @@ const colors = {
 const styles = StyleSheet.create({
   ProductInnerScreen_wrapper: {
     flex: 1,
+  },
+  carousel: {
+    marginTop: 10,
   },
   description: {},
   details: {

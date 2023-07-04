@@ -3,11 +3,11 @@ export const optionForScreen = {
     height: 100,
     shadowOffset: {
       width: 0,
-      height: 3,
+      height: 2,
     },
-    shadowColor: 'black',
+    shadowColor: 'grey',
     shadowOpacity: 1,
-    shadowRadius: 3.84,
-    elevation: 15,
+    shadowRadius: 2,
+    elevation: 10,
   },
 }

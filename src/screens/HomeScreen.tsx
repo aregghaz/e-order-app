@@ -26,7 +26,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
       ;(async () => {
         const getAsyncData = async (): Promise<void> => {
           const categoryData = await SHOP_API.getCategory()
-          const featuredData = await SHOP_API.getFeaturedProducts()
+          const featuredData = await SHOP_API.getLatestProducts()
           setData(categoryData.payload.content)
           setFeatured(featuredData.payload.content)
         }
@@ -38,7 +38,6 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   )
   return (
     <ScrollView flex={1} style={styles.main_wrapper}>
-      {/***FIXME testing product inner page // open comments after test and remove ProductInnerScreen component ***/}
       {data.length > 0 && <CircleCategories navigation={navigation} categories={data} />}
       <OfferPosterSlider slides={slides} />
       <Advantages advantages={advantages} />
@@ -47,7 +46,6 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
       <TopBrands brands={brands} />
       <Accessories accessories={accessories} />
       <View style={styles.dummy}></View>
-      {/*<ProductInnerScreen />*/}
     </ScrollView>
   )
 }
