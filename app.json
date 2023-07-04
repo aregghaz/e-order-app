@@ -13,6 +13,12 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "extra": {
+      "eas": {
+        "projectId": "4eb24f80-de3b-497f-9623-3d5eb4ae1d96"
+      }
+    },
+
     "updates": {
       "fallbackToCacheTimeout": 0
     },
