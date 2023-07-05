@@ -17,36 +17,28 @@ export const CategoryStack = (): JSX.Element => {
     <Navigator screenOptions={optionForScreen}>
       <Screen
         name={SCREEN.STACK_CATEGORY}
+        component={CategoryScreen}
         options={({ navigation }) => ({
           headerTitle: () => (
             <Header navigation={navigation} title={t('navigation.screen_titles.category')} />
           ),
         })}
-        component={CategoryScreen}
       />
       <Screen
         name={SCREEN.STACK_CATEGORY_INNER}
-        options={({ navigation, route }) => ({
-          headerTitle: () => (
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            <Header navigation={navigation} title={route.params.name[locale]} />
-          ),
+        component={CategoryInnerScreen}
+        options={({ navigation, route }: any) => ({
+          headerTitle: () => <Header navigation={navigation} title={route.params.name[locale]} />,
           headerLeft: () => null,
         })}
-        component={CategoryInnerScreen}
       />
       <Screen
         name={SCREEN.STACK_CATEGORY_DETAIL}
-        options={({ navigation, route }) => ({
-          headerTitle: () => (
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            <Header navigation={navigation} title={route.params.name[locale]} />
-          ),
+        component={CategoryDetailScreen}
+        options={({ navigation, route }: any) => ({
+          headerTitle: () => <Header navigation={navigation} title={route.params.name[locale]} />,
           headerLeft: () => null,
         })}
-        component={CategoryDetailScreen}
       />
     </Navigator>
   )

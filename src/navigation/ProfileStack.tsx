@@ -13,14 +13,13 @@ export const ProfileStack = (): JSX.Element => {
   return (
     <Navigator screenOptions={optionForScreen}>
       <Screen
-        // name="ProfileStack"
         name={SCREEN.STACK_PROFILE}
+        component={ProfileScreen}
         options={({ navigation }) => ({
           headerTitle: () => (
             <Header navigation={navigation} title={t('navigation.screen_titles.profile')} />
           ),
         })}
-        component={ProfileScreen}
       />
     </Navigator>
   )

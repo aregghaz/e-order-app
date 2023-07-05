@@ -2,7 +2,7 @@
  * was created by tigran at 27.06.23
  */
 import { Image } from 'native-base'
-import React, { FC, useState } from 'react'
+import React, { FC } from 'react'
 import { Dimensions, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import { SCREEN } from '~constants'
@@ -18,7 +18,8 @@ interface IProps {
 const locale = 'ru'
 
 export const CategoryInnerScreen: FC<IProps> = ({ route, navigation }) => {
-  const [categories] = useState<ICategory[]>(route.params.children)
+  // const [categories] = useState<ICategory[]>(route.params.children)
+  const categories = route.params.children
   const goToDetails = (item: ICategory) => navigation.navigate(SCREEN.STACK_CATEGORY_DETAIL, item)
   const numColumns = 2
   return (

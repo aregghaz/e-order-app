@@ -17,7 +17,7 @@ export const HomeStack = (): JSX.Element => {
   )
   return (
     <Navigator screenOptions={optionForScreen}>
-      <Screen name={SCREEN.STACK_HOME} options={homeStackOptions} component={HomeScreen} />
+      <Screen name={SCREEN.STACK_HOME} component={HomeScreen} options={homeStackOptions} />
     </Navigator>
   )
 }
