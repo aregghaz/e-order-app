@@ -24,15 +24,15 @@ export const RootNavigator: FC = () => {
       <Group key="authorized">
         <Screen
           name={SCREEN.STACK_MAIN_TAB}
-          options={{ title: t('navigation.screen_titles.main_tab'), headerShown: false }}
           component={BottomTabNavigator}
+          options={{ title: t('navigation.screen_titles.main_tab'), headerShown: false }}
         />
       </Group>
       <Group key="modals" screenOptions={{ presentation: 'modal' }}>
         <Screen
           name={SCREEN.STACK_NOT_FOUND}
-          options={{ title: t('navigation.screen_titles.not_found') }}
           component={NotFoundScreen}
+          options={{ title: t('navigation.screen_titles.not_found') }}
         />
       </Group>
     </Navigator>

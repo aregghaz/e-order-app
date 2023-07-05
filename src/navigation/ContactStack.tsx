@@ -14,12 +14,12 @@ export const ContactStack = (): JSX.Element => {
     <Navigator screenOptions={optionForScreen}>
       <Screen
         name={SCREEN.STACK_CONTACT}
+        component={ContactScreen}
         options={({ navigation }) => ({
           headerTitle: () => (
             <Header navigation={navigation} title={t('navigation.screen_titles.contact')} />
           ),
         })}
-        component={ContactScreen}
       />
     </Navigator>
   )

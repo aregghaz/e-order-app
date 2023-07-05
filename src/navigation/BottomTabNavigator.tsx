@@ -57,23 +57,23 @@ export const BottomTabNavigator: FC = () => {
     <Navigator screenOptions={screenOptions}>
       <Screen
         name={SCREEN.TAB_HOME}
-        options={{ title: t('navigation.screen_titles.home') }}
         component={HomeStack}
+        options={{ title: t('navigation.screen_titles.home') }}
       />
       <Screen
         name={SCREEN.TAB_CATEGORY}
-        options={{ title: t('navigation.screen_titles.category') }}
         component={CategoryStack}
+        options={{ title: t('navigation.screen_titles.category') }}
       />
       <Screen
         name={SCREEN.TAB_PROFILE}
-        options={{ title: t('navigation.screen_titles.profile') }}
         component={ProfileStack}
+        options={{ title: t('navigation.screen_titles.profile') }}
       />
       <Screen
         name={SCREEN.TAB_CONTACT}
-        options={{ title: t('navigation.screen_titles.contact') }}
         component={ContactStack}
+        options={{ title: t('navigation.screen_titles.contact') }}
       />
     </Navigator>
   )
