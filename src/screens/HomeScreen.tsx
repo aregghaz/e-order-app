@@ -14,21 +14,21 @@ import Trending from '~components/Trending'
 import TrendingItems from '~components/TrendingItems'
 // import { ProductInnerScreen } from '~screens/ProductInnerScreen'
 
-const { slides, advantages, trendingSecond, brands, accessories } = fakeData.homeScreen
+const { slides, advantages } = fakeData.homeScreen
 
 export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const { navigation } = props
   const [data, setData] = useState([])
-  const [featured, setFeatured] = useState([])
+  const [latest, setLatest] = useState([])
 
   useFocusEffect(
     React.useCallback(() => {
       ;(async () => {
         const getAsyncData = async (): Promise<void> => {
           const categoryData = await SHOP_API.getCategory()
-          const featuredData = await SHOP_API.getLatestProducts()
+          const latestData = await SHOP_API.getLatestProducts()
           setData(categoryData.payload.content)
-          setFeatured(featuredData.payload.content)
+          setLatest(latestData.payload.content)
         }
         await getAsyncData()
       })()
@@ -41,10 +41,13 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
       {data.length > 0 && <CircleCategories navigation={navigation} categories={data} />}
       <OfferPosterSlider slides={slides} />
       <Advantages advantages={advantages} />
-      <TrendingItems navigation={navigation} items={featured} />
-      <Trending name={'Shoes'} items={trendingSecond} />
-      <TopBrands brands={brands} />
-      <Accessories accessories={accessories} />
+      <TrendingItems navigation={navigation} items={latest} />
+      {/*<Trending name={'Shoes'} items={trendingSecond} />*/}
+      <Trending navigation={navigation} items={latest} />
+      {/*<TopBrands brands={brands} />*/}
+      <TopBrands navigation={navigation} brands={latest} />
+      {/*<Accessories accessories={accessories} />*/}
+      <Accessories navigation={navigation} accessories={latest} />
       <View style={styles.dummy}></View>
     </ScrollView>
   )

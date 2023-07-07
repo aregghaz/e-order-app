@@ -3,6 +3,9 @@ import React, { FC } from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 import Carousel from 'react-native-snap-carousel'
 
+import { getImagePath } from '~api'
+import { SCREEN } from '~constants'
+import { IFeatured } from '~types/featuredProducts'
 import { getVH, getVW, screenWidth } from '~utils/breakpoints'
 
 export type TTrendingItems = {
@@ -12,27 +15,35 @@ export type TTrendingItems = {
 }
 
 interface ITrending {
-  name?: string
-  items: TTrendingItems[]
+  items: IFeatured[]
+  navigation: any
 }
 
-const Trending: FC<ITrending> = ({ name, items }) => {
+// const Trending: FC<ITrending> = ({ name, items }) => {
+const Trending: FC<ITrending> = ({ items, navigation }) => {
   return (
     <View style={styles.body}>
       <Text style={styles.heading}>Featured</Text>
       <View style={styles.main}>
         <Carousel
           loop
-          enableSnap
           autoplay
+          vertical={false}
+          style={styles.swiper}
+          enableSnap
           data={items}
           useScrollView
-          style={styles.swiper}
-          renderItem={({ item, index }: { item: TTrendingItems; index: number }) => {
+          renderItem={({ item, index }: any) => {
             return (
-              <TouchableOpacity key={index} style={styles.item}>
+              <TouchableOpacity
+                key={index}
+                style={styles.item}
+                onPress={() => {
+                  navigation.navigate(SCREEN.STACK_PRODUCT_INNER, item)
+                }}
+              >
                 <Image
-                  src={item.image}
+                  src={getImagePath(item.gallery?.[0]?.filename, '-product')}
                   alt={`Trending ${item.name}`}
                   style={styles.image}
                   width={'100%'}
@@ -41,6 +52,9 @@ const Trending: FC<ITrending> = ({ name, items }) => {
                 />
                 <View style={styles.textContainer}>
                   <Text style={styles.name}>{item.name}</Text>
+                </View>
+                <View>
+                  <Text style={styles.price}>₽ {item.price}</Text>
                 </View>
               </TouchableOpacity>
             )
@@ -84,6 +98,7 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderWidth: 1,
     height: getVH(50),
+    padding: 10,
     width: '100%',
   },
 
@@ -96,25 +111,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 
+  price: {
+    textAlign: 'left',
+  },
+
   swiper: {
     flexGrow: 1,
   },
 
-  // 426225
-
   textContainer: {
-    alignItems: 'center',
     flexGrow: 1,
-    justifyContent: 'center',
   },
-
-  // swiper: {
-  //   flexGrow: 1,
-  // },
-  //
-  // item: {
-  //   flexGrow: 1,
-  // },
 })
 
 export default Trending
