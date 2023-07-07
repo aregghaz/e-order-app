@@ -3,34 +3,49 @@ import React, { FC } from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 import Carousel from 'react-native-reanimated-carousel'
 
+import { getImagePath } from '~api'
+import { SCREEN } from '~constants'
+import { IFeatured } from '~types/featuredProducts'
 import { getVW, screenWidth } from '~utils/breakpoints'
 
-export type TBrand = {
-  id: number
-  name: string
-  image: string
-}
+// export type TBrand = {
+//   id: number
+//   name: string
+//   image: string
+// }
 
 interface ITopBrands {
-  brands: TBrand[]
+  brands: IFeatured[]
+  navigation: any
 }
 
-const TopBrands: FC<ITopBrands> = ({ brands }) => {
+const TopBrands: FC<ITopBrands> = ({ brands, navigation }) => {
   return (
     <View style={styles.main}>
-      <Text style={styles.heading}>Top Brands</Text>
+      <Text style={styles.heading}>New arrivals</Text>
       <Carousel
-        width={getVW(50)}
-        style={styles.container}
-        height={65}
-        data={brands}
         loop
         autoPlay
-        autoPlayInterval={1000}
-        renderItem={({ item, index }: { item: TBrand; index: number }) => {
+        style={styles.container}
+        width={getVW(50)}
+        height={100}
+        data={brands}
+        autoPlayInterval={2500}
+        renderItem={({ item, index }: { item: IFeatured; index: number }) => {
           return (
-            <TouchableOpacity key={index} style={styles.item}>
-              <Image style={styles.image} src={item.image} alt={item.name} resizeMode={'contain'} />
+            <TouchableOpacity
+              key={index}
+              style={styles.item}
+              onPress={() => {
+                navigation.navigate(SCREEN.STACK_PRODUCT_INNER, item)
+              }}
+            >
+              <Image
+                style={styles.image}
+                src={getImagePath(item.gallery?.[0]?.filename, '-product')}
+                alt={item.name}
+                resizeMode={'contain'}
+              />
             </TouchableOpacity>
           )
         }}
@@ -54,7 +69,7 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: 18,
     fontWeight: '700',
-    marginBottom: 20,
+    marginVertical: 20,
   },
 
   image: {
@@ -74,8 +89,7 @@ const styles = StyleSheet.create({
 
   main: {
     alignItems: 'center',
-    height: 130,
-    paddingTop: 20,
+    height: 180,
     width: '100%',
   },
 })

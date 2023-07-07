@@ -3,14 +3,17 @@ import React, { FC } from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 import Carousel from 'react-native-reanimated-carousel'
 
-import { TTrendingItems } from '~components/Trending'
+import { getImagePath } from '~api'
+import { SCREEN } from '~constants'
+import { IFeatured } from '~types/featuredProducts'
 import { getVW, screenWidth } from '~utils/breakpoints'
 
 interface IAccessories {
-  accessories: TTrendingItems[]
+  accessories: IFeatured[]
+  navigation: any
 }
 
-const Accessories: FC<IAccessories> = ({ accessories }) => {
+const Accessories: FC<IAccessories> = ({ accessories, navigation }) => {
   return (
     <View style={styles.main}>
       <Text style={styles.heading}>Best seller</Text>
@@ -21,13 +24,27 @@ const Accessories: FC<IAccessories> = ({ accessories }) => {
         data={accessories}
         loop
         autoPlay
-        autoPlayInterval={2000}
-        renderItem={({ item, index }: { item: TTrendingItems; index: number }) => {
+        autoPlayInterval={2500}
+        renderItem={({ item, index }: { item: IFeatured; index: number }) => {
           return (
-            <TouchableOpacity key={index} style={styles.item}>
-              <Image style={styles.image} src={item.image} alt={'test'} resizeMode={'contain'} />
+            <TouchableOpacity
+              key={index}
+              style={styles.item}
+              onPress={() => {
+                navigation.navigate(SCREEN.STACK_PRODUCT_INNER, item)
+              }}
+            >
+              <Image
+                style={styles.image}
+                src={getImagePath(item.gallery?.[0]?.filename, '-product')}
+                alt={'test'}
+                resizeMode={'contain'}
+              />
               <View style={styles.textContainer}>
                 <Text style={styles.text}>{item.name}</Text>
+              </View>
+              <View>
+                <Text style={styles.price}>₽ {item.price}</Text>
               </View>
             </TouchableOpacity>
           )
@@ -56,7 +73,8 @@ const styles = StyleSheet.create({
   },
 
   image: {
-    flexGrow: 5,
+    // flexGrow: 5
+    aspectRatio: 1,
   },
 
   item: {
@@ -67,6 +85,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     height: '100%',
     marginHorizontal: 10,
+    padding: 10,
     width: getVW(45),
   },
 
@@ -77,14 +96,17 @@ const styles = StyleSheet.create({
     width: '100%',
   },
 
+  price: {
+    textAlign: 'left',
+  },
+
   text: {
     color: colors.nameColor,
     fontSize: 16,
     fontWeight: '600',
   },
-
   textContainer: {
-    alignItems: 'center',
+    // alignItems: 'center',
     flexGrow: 1,
     justifyContent: 'center',
   },
