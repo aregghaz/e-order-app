@@ -36,6 +36,8 @@ declare global {
     // authorized
     MainTab: NavigatorScreenParams<MainTabParamList>
     Settings: undefined
+    VerifyCode: undefined
+    // VerifyCode: NavigatorScreenParams
 
     // modals
     ApplicationInfo: undefined

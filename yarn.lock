@@ -2650,6 +2650,11 @@
   "resolved" "https://registry.npmjs.org/@react-native-community/netinfo/-/netinfo-9.3.0.tgz"
   "version" "9.3.0"
 
+"@react-native-picker/picker@^2.4.10":
+  "integrity" "sha512-EvAlHmPEPOwvbP6Pjg/gtDV3XJzIjIxr10fXFNlX5r9HeHw582G1Zt2o8FLyB718nOttgj8HYUTGxvhu4N65sQ=="
+  "resolved" "https://registry.npmjs.org/@react-native-picker/picker/-/picker-2.4.10.tgz"
+  "version" "2.4.10"
+
 "@react-native/assets@1.0.0":
   "integrity" "sha512-KrwSpS1tKI70wuKl68DwJZYEvXktDHdZMG0k2AXD/rJVSlB23/X2CB2cutVR0HwNMJIal9HOUOBB2rVfa6UGtQ=="
   "resolved" "https://registry.npmjs.org/@react-native/assets/-/assets-1.0.0.tgz"
@@ -7782,6 +7787,11 @@
     "merge2" "^1.3.0"
     "slash" "^3.0.0"
 
+"google-libphonenumber@^3.2.32":
+  "integrity" "sha512-mcNgakausov/B/eTgVeX8qc8IwWjRrupk9UzZZ/QDEvdh5fAjE7Aa211bkZpZj42zKkeS6MTT8avHUwjcLxuGQ=="
+  "resolved" "https://registry.npmjs.org/google-libphonenumber/-/google-libphonenumber-3.2.32.tgz"
+  "version" "3.2.32"
+
 "graceful-fs@^4.1.11", "graceful-fs@^4.1.15", "graceful-fs@^4.1.2", "graceful-fs@^4.1.3", "graceful-fs@^4.1.6", "graceful-fs@^4.1.9", "graceful-fs@^4.2.0", "graceful-fs@^4.2.4", "graceful-fs@^4.2.9":
   "integrity" "sha512-9ByhssR2fPVsNZj478qUUbKfmL0+t5BDVyjShtyZZLiK7ZDAArFFfopyOTj0M05wE2tJPisA4iTnnXl2YoPvOA=="
   "resolved" "https://registry.npmjs.org/graceful-fs/-/graceful-fs-4.2.10.tgz"
@@ -12570,6 +12580,15 @@
   "integrity" "sha512-dRMB7i3B+mu4NCeIN6gqbR/kC/rr2wzqO0gisXDdJwJr78G24sWoTNpLEDFo3G8TFHY9nTMutVl5CUvkN2dp6g=="
   "resolved" "https://registry.npmjs.org/react-native-pager-view/-/react-native-pager-view-5.4.24.tgz"
   "version" "5.4.24"
+
+"react-native-phone-input@^1.3.6":
+  "integrity" "sha512-siT4vzeng6894F64PfcMoy4MQs9xap/ucA1WK9UHywWH4N9FX/h12AD191x3hiskKod9QG3mCeQJXg3EZkjf9g=="
+  "resolved" "https://registry.npmjs.org/react-native-phone-input/-/react-native-phone-input-1.3.6.tgz"
+  "version" "1.3.6"
+  dependencies:
+    "google-libphonenumber" "^3.2.32"
+    "lodash" "^4.17.21"
+    "prop-types" "^15.8.1"
 
 "react-native-reanimated-carousel@^3.4.0":
   "integrity" "sha512-mbEeAMbX+mqOLf2bN55wnWQt/LMx5FFxVneV9XjLvJ69ySMN0yVc3r/lS9/nHx8MdmW2ZUfAsQ4C139Taq+GPQ=="
