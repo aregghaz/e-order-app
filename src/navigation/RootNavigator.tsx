@@ -5,6 +5,8 @@ import { BottomTabNavigator } from './BottomTabNavigator'
 
 import { SCREEN } from '~constants'
 import { useTranslation } from '~hooks'
+import { PhoneRegisterStack } from '~navigation/PhoneRegisterStack'
+import { Verification } from '~navigation/Verification'
 import {
   /// ApplicationInfoScreen,
   NotFoundScreen,
@@ -22,6 +24,17 @@ export const RootNavigator: FC = () => {
   return (
     <Navigator>
       <Group key="authorized">
+        {/*FIXME i am not sure this is right!!! check this!!!*/}
+        <Screen
+          name={SCREEN.PHONE_REGISTER}
+          component={PhoneRegisterStack}
+          options={{ headerShown: false }}
+        />
+        <Screen
+          name={SCREEN.STACK_VERIFICATION}
+          component={Verification}
+          options={{ headerShown: false }}
+        />
         <Screen
           name={SCREEN.STACK_MAIN_TAB}
           component={BottomTabNavigator}

@@ -42,11 +42,8 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
       <OfferPosterSlider slides={slides} />
       <Advantages advantages={advantages} />
       <TrendingItems navigation={navigation} items={latest} />
-      {/*<Trending name={'Shoes'} items={trendingSecond} />*/}
       <Trending navigation={navigation} items={latest} />
-      {/*<TopBrands brands={brands} />*/}
       <TopBrands navigation={navigation} brands={latest} />
-      {/*<Accessories accessories={accessories} />*/}
       <Accessories navigation={navigation} accessories={latest} />
       <View style={styles.dummy}></View>
     </ScrollView>

@@ -19,4 +19,6 @@ export const SCREEN = {
   TAB_CONTACT: 'Contact',
   DRAWER_MENU: 'Menu',
   DRAWER_ROOT: 'Root',
+  PHONE_REGISTER: 'PhoneRegister',
+  STACK_VERIFICATION: 'VerifyCode',
 }
