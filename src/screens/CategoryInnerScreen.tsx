@@ -19,8 +19,16 @@ const locale = 'ru'
 
 export const CategoryInnerScreen: FC<IProps> = ({ route, navigation }) => {
   // const [categories] = useState<ICategory[]>(route.params.children)
+  console.log(route.params, 'params in route')
   const categories = route.params.children
-  const goToDetails = (item: ICategory) => navigation.navigate(SCREEN.STACK_CATEGORY_DETAIL, item)
+  const goToDetails = (item: ICategory) => {
+    console.log(item, 'item!!!!')
+    if (item.children.length > 0) {
+      navigation.navigate(SCREEN.STACK_CATEGORY_INNER, item)
+    } else {
+      navigation.navigate(SCREEN.STACK_CATEGORY_DETAIL, item)
+    }
+  }
   const numColumns = 2
   return (
     <View>
@@ -34,8 +42,6 @@ export const CategoryInnerScreen: FC<IProps> = ({ route, navigation }) => {
               <View>
                 <Image
                   style={styles.image}
-                  // src="https://codervent.com/mobile/synrok/demo/assets/images/shop/01.webp"
-                  // src='https://t3.ftcdn.net/jpg/03/45/05/92/360_F_345059232_CPieT8RIWOUk4JqBkkWkIETYAkmz2b75.jpg'
                   src="https://simplot-media.azureedge.net/-/media/feature/simplotfoods/components/data/blog/blog-posts/unicorn-salad.jpg?rev=90dabe21a5984a969e92a632d369e5b9"
                   alt={item.name[locale]}
                 />
