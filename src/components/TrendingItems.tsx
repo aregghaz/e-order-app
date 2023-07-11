@@ -12,6 +12,7 @@ import { IFeatured } from '~types/featuredProducts'
 interface ITrendingItems {
   items: IFeatured[]
   navigation: any
+  isCategoryProduct?: boolean
 }
 
 const colors = {
@@ -21,10 +22,10 @@ const colors = {
 }
 
 // const TrendingItems: FC<ITrendingItems> = ({ items }) => {
-const TrendingItems: FC<ITrendingItems> = ({ items, navigation }) => {
+const TrendingItems: FC<ITrendingItems> = ({ items, navigation, isCategoryProduct }) => {
   return (
     <View style={styles.main}>
-      {items.length > 0 && <Text style={styles.heading}>Latest</Text>}
+      {items.length > 0 && !isCategoryProduct && <Text style={styles.heading}>Latest</Text>}
       <View style={styles.container}>
         {items &&
           items.map((item) => {

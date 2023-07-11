@@ -28,6 +28,7 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
       })()
     }, [params.id])
   )
+  console.log(params, 'product___________!!!!!!!!!!!!!!!!!')
   return (
     <ScrollView style={styles.ProductInnerScreen_wrapper}>
       {/*<Image*/}

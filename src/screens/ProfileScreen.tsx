@@ -9,6 +9,35 @@ import { StyleSheet } from 'react-native'
 
 import { fakeData } from '~FakeData'
 
+// interface IProps {
+//   address: IAddress
+//   birthDate: string
+//   citizenship: string
+//   email: string
+//   fatherName: string
+//   firstName: string
+//   inn: string
+//   issueDate: string
+//   issuedBy: string
+//   lastName: string
+//   passport: string
+// }
+//
+// interface IAddress {
+//   address_1: string,
+//   address_2: string,
+//   city: string,
+//   country: string,
+//   gpsCoordinates: {
+//     latitude: string
+//     longitude: string
+//   }
+//   phoneNumber1: string
+//   phoneNumber2: string
+//   postCode: string,
+//   state: string,
+// }
+
 type TProfileIcon = 'user' | 'shopping-cart' | 'map-pin' | 'bell' | 'heart' | 'log-out'
 export const ProfileScreen: FC = () => {
   const [data] = useState(fakeData.profile)

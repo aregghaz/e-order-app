@@ -23,6 +23,7 @@ export const CategoryScreen = (props: ExamplesScreenProps): JSX.Element => {
 
   const goToCategoryStackDetails = useCallback(
     (category: ICategory) => {
+      console.log(category, 'varod!!!!x')
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       return navigate(SCREEN.STACK_CATEGORY_INNER, category)
