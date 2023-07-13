@@ -1,17 +1,17 @@
 import { createStackNavigator } from '@react-navigation/stack'
 import { FC } from 'react'
 
-import { BottomTabNavigator } from './BottomTabNavigator'
+// import { BottomTabNavigator } from './BottomTabNavigator'
 
 import { SCREEN } from '~constants'
 import { useTranslation } from '~hooks'
-// import { PhoneRegisterStack } from '~navigation/PhoneRegisterStack'
+import { PhoneRegisterStack } from '~navigation/PhoneRegisterStack'
 // import { Verification } from '~navigation/Verification'
 import {
   /// ApplicationInfoScreen,
   NotFoundScreen,
   // SettingsScreen,
-  // SignInScreen,
+  SignInScreen,
   // SignUpScreen,
 } from '~screens'
 
@@ -25,19 +25,25 @@ export const RootNavigator: FC = () => {
     <Navigator>
       <Group key="authorized">
         {/*FIXME i am not sure this is right!!! check this!!!*/}
-        {/*<Screen*/}
-        {/*  name={SCREEN.PHONE_REGISTER}*/}
-        {/*  component={PhoneRegisterStack}*/}
-        {/*  options={{ headerShown: false }}*/}
-        {/*/>*/}
+        <Screen
+          name={SCREEN.PHONE_REGISTER}
+          component={PhoneRegisterStack}
+          options={{ headerShown: false }}
+        />
         {/*<Screen*/}
         {/*  name={SCREEN.STACK_VERIFICATION}*/}
         {/*  component={Verification}*/}
         {/*  options={{ headerShown: false }}*/}
         {/*/>*/}
+        {/*FIXME commented to see the sign in screen*/}
+        {/*<Screen*/}
+        {/*  name={SCREEN.STACK_MAIN_TAB}*/}
+        {/*  component={BottomTabNavigator}*/}
+        {/*  options={{ title: t('navigation.screen_titles.main_tab'), headerShown: false }}*/}
+        {/*/>*/}
         <Screen
-          name={SCREEN.STACK_MAIN_TAB}
-          component={BottomTabNavigator}
+          name={SCREEN.STACK_SIGN_IN}
+          component={SignInScreen}
           options={{ title: t('navigation.screen_titles.main_tab'), headerShown: false }}
         />
       </Group>

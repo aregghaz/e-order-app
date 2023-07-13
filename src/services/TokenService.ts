@@ -7,6 +7,7 @@ const { USER_TOKEN } = ASYNC_STORAGE_KEYS
 export type Token = string
 
 export function setToken(token: Token) {
+  console.log(token, 'SET_TOKEN')
   return secureStore.setItem(USER_TOKEN, token)
 }
 
@@ -22,7 +23,7 @@ export async function getToken(): Promise<Token | undefined> {
 
 export async function deleteToken() {
   const token = await secureStore.getItem(USER_TOKEN)
-
+  console.log(token, 'tokiiiiiiiiiiii')
   if (!token) return
 
   return secureStore.removeItem(USER_TOKEN)

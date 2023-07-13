@@ -9,8 +9,8 @@ import { SignInFormValues } from '~types/authForms'
 
 const defaultValues: SignInFormValues = {
   // TODO: Reset this values when building production app
-  email: 'test@example.com',
-  password: '123456',
+  phone: '',
+  password: '',
   confirm: false,
 }
 
@@ -34,6 +34,7 @@ export const useSignInForm = () => {
       setIsSubmitting(true)
       setError('')
       await signIn(data)
+      console.log(data, 'HURURURURURURUUR_____&&&_________')
     } catch (e) {
       if (isError(e)) {
         setError(e.message)

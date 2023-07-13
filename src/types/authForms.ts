@@ -7,7 +7,7 @@ export type SignUpFormValues = {
 }
 
 export type SignInFormValues = {
-  email: string
+  phone: string
   password: string
   confirm: boolean
 }

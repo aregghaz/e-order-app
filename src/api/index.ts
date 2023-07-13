@@ -77,7 +77,6 @@ export const SHOP_API = {
         mobile: phoneNumber,
       })
       .then((res) => {
-        console.log(res.data, 'data in result')
         return res.data
       })
       .catch((err) => console.log(err))
@@ -95,6 +94,15 @@ export const SHOP_API = {
   getCategoryProducts: (categoryId: any) => {
     return axios
       .post(`${fakeUrl}/api/products/products-search?categories=${categoryId}`)
+      .then((res) => {
+        console.log(res.data, 'data in result')
+        return res.data
+      })
+      .catch((err) => console.log(err))
+  },
+  signInRequest: (phone: string, password: string) => {
+    return axios
+      .post(`${fakeUrl}/api/auth/customer-login`, { login: phone, password })
       .then((res) => {
         console.log(res.data, 'data in result')
         return res.data
