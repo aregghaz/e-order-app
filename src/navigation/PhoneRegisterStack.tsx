@@ -37,6 +37,10 @@ export const PhoneRegisterStack: FC = () => {
         textProps={{ placeholder: '+37491444444' }}
       />
       <CustomButton title="Registration" onPress={handleButtonPress} />
+      {/*** open only for auth ***/}
+      {/*<TouchableOpacity onPress={navigation.navigate(SCREEN.STACK_SIGN_IN)}>*/}
+      {/*  <Text>Already have account ?</Text>*/}
+      {/*</TouchableOpacity>*/}
     </View>
   )
 }
