@@ -13,60 +13,76 @@ export const SHOP_API = {
       .then((res) => res.data)
       .catch((err) => console.log(err))
   },
-  getLatestProducts: (shopId: string = shopIdTest) => {
+  getLatestProducts: (limit = 6, page = 1, shopId: string = shopIdTest) => {
     return axios
       .get(
-        `${fakeUrl}/api/analytics/get-products?period=30&category=&type=new-arrivals&shopId=${shopId}`
+        `${fakeUrl}/api/analytics/get-products?period=30&category=&type=new-arrivals&shopId=${shopId}&limit=${limit}&page=${page}`
       )
       .then((res) => res.data)
       .catch((err) => console.log(err))
   },
-  getFeaturedProducts: (shopId: string = shopIdTest) => {
+  getFeaturedProducts: (shopId: string = shopIdTest, limit = 20, page = 1) => {
     return axios
       .get(
-        `${fakeUrl}/api/analytics/get-products?period=30&category=&type=featured&shopId=${shopId}`
+        `${fakeUrl}/api/analytics/get-products?period=30&category=&type=featured&shopId=${shopId}&limit=${limit}&page=${page}`
       )
       .then((res) => res.data)
       .catch((err) => console.log(err))
   },
-  getFeaturedProductsByCategories: (categoryId: number | string, shopId: string = shopIdTest) => {
+  getFeaturedProductsByCategories: (
+    categoryId: number | string,
+    shopId: string = shopIdTest,
+    limit = 20,
+    page = 1
+  ) => {
     return axios
       .get(
-        `${fakeUrl}/api/analytics/get-products?period=30&category=${categoryId}&type=featured&shopId=${shopId}`
+        `${fakeUrl}/api/analytics/get-products?period=30&category=${categoryId}&type=featured&shopId=${shopId}&limit=${limit}&page=${page}`
       )
       .then((res) => res.data)
       .catch((err) => console.log(err))
   },
-  getNewArrivals: (shopId: string = shopIdTest) => {
+  getNewArrivals: (shopId: string = shopIdTest, limit = 20, page = 1) => {
     return axios
       .get(
-        `${fakeUrl}/api/analytics/get-products?period=30&category=&type=new-arrivals&shopId=${shopId}`
+        `${fakeUrl}/api/analytics/get-products?period=30&category=&type=new-arrivals&shopId=${shopId}&limit=${limit}&page=${page}`
       )
       .then((res) => res.data)
       .catch((err) => console.log(err))
   },
-  getBestSeller: (shopId: string = shopIdTest) => {
+  getBestSeller: (shopId: string = shopIdTest, limit = 20, page = 1) => {
     return axios
       .get(
-        `${fakeUrl}/api/analytics/get-products?period=30&category=&type=best-seller&shopId=${shopId}`
+        `${fakeUrl}/api/analytics/get-products?period=30&category=&type=best-seller&shopId=${shopId}&limit=${limit}&page=${page}`
       )
       .then((res) => res.data)
       .catch((err) => console.log(err))
   },
-  getTopRated: (shopId: string = shopIdTest) => {
+  getTopRated: (shopId: string = shopIdTest, limit = 20, page = 1) => {
     return axios
       .get(
-        `${fakeUrl}/api/analytics/get-products?period=30&category=&type=top-rated&shopId=${shopId}`
+        `${fakeUrl}/api/analytics/get-products?period=30&category=&type=top-rated&shopId=${shopId}&limit=${limit}&page=${page}`
       )
       .then((res) => res.data)
       .catch((err) => console.log(err))
   },
-  getTopDiscounts: (shopId: string = shopIdTest) => {
+  getTopDiscounts: (shopId: string = shopIdTest, limit = 20, page = 1) => {
     return axios
       .get(
-        `${fakeUrl}/api/analytics/get-products?period=30&category=&type=top-discounts&shopId=${shopId}`
+        `${fakeUrl}/api/analytics/get-products?period=30&category=&type=top-discounts&shopId=${shopId}&limit=${limit}&page=${page}`
       )
       .then((res) => res.data)
+      .catch((err) => console.log(err))
+  },
+  getCategoryProducts: (categoryId: any, limit = 20, page = 1) => {
+    return axios
+      .post(
+        `${fakeUrl}/api/products/products-search?categories=${categoryId}&limit=${limit}&page=${page}`
+      )
+      .then((res) => {
+        console.log(res.data, 'data in result')
+        return res.data
+      })
       .catch((err) => console.log(err))
   },
   /*** Authentication ***/
@@ -88,15 +104,6 @@ export const SHOP_API = {
       .then((res) => {
         console.log(res, 'data in result')
         return res
-      })
-      .catch((err) => console.log(err))
-  },
-  getCategoryProducts: (categoryId: any) => {
-    return axios
-      .post(`${fakeUrl}/api/products/products-search?categories=${categoryId}`)
-      .then((res) => {
-        console.log(res.data, 'data in result')
-        return res.data
       })
       .catch((err) => console.log(err))
   },

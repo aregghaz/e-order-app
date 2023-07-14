@@ -21,6 +21,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const { navigation } = props
   const [data, setData] = useState([])
   const [latest, setLatest] = useState([])
+  // const [page, setPage] = useState(1)
   const { signOut } = useAuth()
 
   useFocusEffect(
@@ -28,6 +29,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
       ;(async () => {
         const getAsyncData = async (): Promise<void> => {
           const categoryData = await SHOP_API.getCategory()
+          // const latestData = await SHOP_API.getLatestProducts(20, page)
           const latestData = await SHOP_API.getLatestProducts()
           setData(categoryData.payload.content)
           setLatest(latestData.payload.content)

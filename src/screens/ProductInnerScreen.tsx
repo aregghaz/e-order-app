@@ -4,38 +4,74 @@
 import { Ionicons } from '@expo/vector-icons'
 import { useFocusEffect } from '@react-navigation/native'
 import { Image } from 'native-base'
-import React, { FC, useState, useCallback } from 'react'
-import { ScrollView, View, Text, StyleSheet, Dimensions } from 'react-native'
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react'
+import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native'
 import Carousel from 'react-native-reanimated-carousel'
 
 import { getImagePath, SHOP_API } from '~api'
 import TrendingItems from '~components/TrendingItems'
-// import { getVW } from '~utils/breakpoints'
-// import { TTrendingItems } from '~components/Trending'
+import { IFeatured } from '~types/featuredProducts'
 
 export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
-  const [featured, setFeatured] = useState([])
+  const [featured, setFeatured] = useState<IFeatured[]>([])
+  const [page, setPage] = useState(1)
+  const [hasNext, setHasNext] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
+  const scrollViewRef = useRef<any>(null)
   const width = Dimensions.get('window').width
   const params = route.params
   const getAsyncData = async (): Promise<void> => {
-    const featuredData = await SHOP_API.getLatestProducts()
-    setFeatured(featuredData.payload.content)
+    try {
+      setIsLoading(true)
+      const featuredData = await SHOP_API.getLatestProducts(10, page)
+      const filteredArr = featuredData.payload.content.filter(
+        (item: IFeatured) => item.id !== params.id
+      )
+      if (featured.some((item: IFeatured) => item.id === params.id)) {
+        console.log('if')
+        // setFeatured(featured.length > 0 ? featured : filteredArr)
+        setFeatured(filteredArr)
+      } else {
+        console.log('else')
+        setFeatured((featured) => [...featured, ...filteredArr])
+        // setFeatured(featured => [...featured, ...filteredArr])
+      }
+      // setFeatured(filteredArr)
+      // setFeatured(featured => [...featured, ...filteredArr])
+      setHasNext(featuredData.payload.pagination.hasNext)
+    } catch (err) {
+      console.error('Error fetching latest products:', err)
+    } finally {
+      setIsLoading(false)
+    }
   }
   useFocusEffect(
     useCallback(() => {
       ;(async () => {
         await getAsyncData()
       })()
-    }, [params.id])
+    }, [params.id, page])
   )
-  console.log(params, 'product___________!!!!!!!!!!!!!!!!!')
+  useEffect(() => {
+    // Scroll to the top when the selected product ID changes
+    if (scrollViewRef.current) {
+      scrollViewRef.current.scrollTo({ y: 0, animated: true })
+    }
+  }, [params.id])
+
+  const increment = () => {
+    console.log(
+      featured.some((item: IFeatured) => item.id === params.id),
+      '!!!!___!!!!____!!!!'
+    )
+    console.log(page, 'page!!!')
+    if (hasNext) {
+      setPage(page + 1)
+    }
+  }
+
   return (
-    <ScrollView style={styles.ProductInnerScreen_wrapper}>
-      {/*<Image*/}
-      {/*  src={getImagePath(params.gallery?.[0]?.filename, '-product')}*/}
-      {/*  alt={`Trending ${params.name}`}*/}
-      {/*  style={styles.image}*/}
-      {/*/>*/}
+    <ScrollView style={styles.ProductInnerScreen_wrapper} ref={scrollViewRef}>
       <Carousel
         width={width}
         style={styles.carousel}
@@ -71,8 +107,13 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
           <Text>{params.description}</Text>
         </View>
         <View style={styles.horizontal_row} />
-        <TrendingItems items={featured} navigation={navigation} />
       </View>
+      <TrendingItems
+        items={featured}
+        navigation={navigation}
+        onPress={increment}
+        isLoading={isLoading}
+      />
     </ScrollView>
   )
 }
@@ -86,7 +127,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   carousel: {
-    marginTop: 10,
+    marginTop: 20,
   },
   description: {},
   details: {
