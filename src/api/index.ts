@@ -13,7 +13,7 @@ export const SHOP_API = {
       .then((res) => res.data)
       .catch((err) => console.log(err))
   },
-  getLatestProducts: (limit = 6, page = 1, shopId: string = shopIdTest) => {
+  getLatestProducts: (limit = 20, page = 1, shopId: string = shopIdTest) => {
     return axios
       .get(
         `${fakeUrl}/api/analytics/get-products?period=30&category=&type=new-arrivals&shopId=${shopId}&limit=${limit}&page=${page}`
