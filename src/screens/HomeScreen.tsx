@@ -1,7 +1,7 @@
 import { useFocusEffect } from '@react-navigation/native'
 import { ScrollView, View } from 'native-base'
 import React, { useState } from 'react'
-import { StyleSheet, TouchableOpacity, Text } from 'react-native'
+import { StyleSheet } from 'react-native'
 
 import { fakeData } from '~FakeData'
 import { SHOP_API } from '~api'
@@ -12,7 +12,7 @@ import OfferPosterSlider from '~components/OfferPosterSlider'
 import TopBrands from '~components/TopBrands'
 import Trending from '~components/Trending'
 import TrendingItems from '~components/TrendingItems'
-import { useAuth } from '~hooks'
+// import { useAuth } from '~hooks'
 // import { ProductInnerScreen } from '~screens/ProductInnerScreen'
 
 const { slides, advantages } = fakeData.homeScreen
@@ -22,7 +22,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const [data, setData] = useState([])
   const [latest, setLatest] = useState([])
   // const [page, setPage] = useState(1)
-  const { signOut } = useAuth()
+  //   const { signOut } = useAuth()
 
   useFocusEffect(
     React.useCallback(() => {
@@ -42,9 +42,6 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   )
   return (
     <ScrollView flex={1} style={styles.main_wrapper}>
-      <TouchableOpacity onPress={signOut}>
-        <Text>Sign out</Text>
-      </TouchableOpacity>
       {data.length > 0 && <CircleCategories navigation={navigation} categories={data} />}
       <OfferPosterSlider slides={slides} />
       <Advantages advantages={advantages} />
