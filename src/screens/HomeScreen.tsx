@@ -6,7 +6,7 @@ import { StyleSheet } from 'react-native'
 import { fakeData } from '~FakeData'
 import { SHOP_API } from '~api'
 import Accessories from '~components/Accessories'
-import Advantages from '~components/Advantages'
+//import Advantages from '~components/Advantages'
 import CircleCategories from '~components/CricleCategories'
 import OfferPosterSlider from '~components/OfferPosterSlider'
 import TopBrands from '~components/TopBrands'
@@ -15,7 +15,7 @@ import TrendingItems from '~components/TrendingItems'
 // import { useAuth } from '~hooks'
 // import { ProductInnerScreen } from '~screens/ProductInnerScreen'
 
-const { slides, advantages } = fakeData.homeScreen
+const { slides } = fakeData.homeScreen
 
 export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const { navigation } = props
@@ -44,7 +44,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
     <ScrollView flex={1} style={styles.main_wrapper}>
       {data.length > 0 && <CircleCategories navigation={navigation} categories={data} />}
       <OfferPosterSlider slides={slides} />
-      <Advantages advantages={advantages} />
+      {/*<Advantages advantages={advantages} />*/}
       <TrendingItems navigation={navigation} items={latest} />
       <Trending navigation={navigation} items={latest} />
       <TopBrands navigation={navigation} brands={latest} />
