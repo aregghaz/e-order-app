@@ -12,6 +12,8 @@ import { IFeatured } from '~types/featuredProducts'
 interface ITrendingItems {
   items: IFeatured[]
   navigation: any
+  isCategoryProduct: boolean
+  onPress?: any
 }
 
 const colors = {

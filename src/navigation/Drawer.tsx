@@ -5,7 +5,9 @@ import { CustomDrawer } from '~components/CustomDrawer'
 import { SCREEN } from '~constants'
 import { Header } from '~navigation/Header'
 import { optionForScreen } from '~navigation/HeaderGlobalStyles'
+import { PhoneRegisterStack } from '~navigation/PhoneRegisterStack'
 import { RootNavigator } from '~navigation/RootNavigator'
+import { Verification } from '~navigation/Verification'
 import { CategoryInnerScreen } from '~screens'
 import { CategoryDetailScreen } from '~screens/CategoryDetailScreen'
 import { MenuScreen } from '~screens/MenuScreen'
@@ -51,6 +53,22 @@ export const DrawerNavigator = () => {
         component={ProductInnerScreen}
         options={({ navigation, route }: any) => ({
           headerTitle: () => <Header navigation={navigation} title={route.params.name} />,
+          headerLeft: () => null,
+        })}
+      />
+      <Drawer.Screen
+        name={SCREEN.PHONE_REGISTER}
+        component={PhoneRegisterStack}
+        options={({ navigation, route }: any) => ({
+          headerTitle: () => <Header navigation={navigation} title={route.params.title} />,
+          headerLeft: () => null,
+        })}
+      />
+      <Drawer.Screen
+        name={SCREEN.STACK_VERIFICATION}
+        component={Verification}
+        options={({ navigation, route }: any) => ({
+          headerTitle: () => <Header navigation={navigation} title={route.params.title} />,
           headerLeft: () => null,
         })}
       />

@@ -79,7 +79,7 @@ export const fakeData = {
       children: [
         {
           id: '1',
-          title: 'Log In',
+          title: 'PhoneRegister',
           hasChildren: false,
           children: [],
         },

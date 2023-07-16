@@ -9,16 +9,16 @@ import { getImagePath } from '~api'
 import { SCREEN } from '~constants'
 import { ICategory } from '~types/category'
 
-interface IProps {
-  route: {
-    params: ICategory
-  }
-  navigation: any
-}
+// interface IProps {
+//   route: {
+//     params: ICategory
+//   }
+//   navigation: any
+// }
 
 const locale = 'ru'
 
-export const CategoryInnerScreen: FC<IProps> = ({ route, navigation }) => {
+export const CategoryInnerScreen: FC<any> = ({ route, navigation }) => {
   // const [categories] = useState<ICategory[]>(route.params.children)
   console.log(route.params, 'params in route')
   const categories = route.params.children

@@ -7,16 +7,16 @@ import { View } from 'react-native'
 
 import { SHOP_API } from '~api'
 import TrendingItems from '~components/TrendingItems'
-import { ICategory } from '~types/category'
+//import { ICategory } from '~types/category'
 
-interface IProps {
-  route: {
-    params: ICategory
-  }
-  navigation: any
-}
+// interface IProps {
+//   route: {
+//     params: ICategory
+//   }
+//   navigation: any
+// }
 
-export const CategoryDetailScreen: FC<IProps> = ({ route, navigation }) => {
+export const CategoryDetailScreen: FC<any> = ({ route, navigation }) => {
   const detail = route.params
   const [data, setData] = useState([])
   const [page, setPage] = useState(1)

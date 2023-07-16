@@ -24,29 +24,12 @@ export const RootNavigator: FC = () => {
 
   return (
     <Navigator>
-      <Group key="authorized">
-        {/*FIXME i am not sure this is right!!! check this!!!*/}
-        {/*<Screen*/}
-        {/*  name={SCREEN.PHONE_REGISTER}*/}
-        {/*  component={PhoneRegisterStack}*/}
-        {/*  options={{ headerShown: false }}*/}
-        {/*/>*/}
-        {/*<Screen*/}
-        {/*  name={SCREEN.STACK_VERIFICATION}*/}
-        {/*  component={Verification}*/}
-        {/*  options={{ headerShown: false }}*/}
-        {/*/>*/}
-        {/*FIXME commented to see the sign in screen*/}
+      <Group>
         <Screen
           name={SCREEN.STACK_MAIN_TAB}
           component={BottomTabNavigator}
           options={{ title: t('navigation.screen_titles.main_tab'), headerShown: false }}
         />
-        {/*<Screen*/}
-        {/*  name={SCREEN.STACK_SIGN_IN}*/}
-        {/*  component={SignInScreen}*/}
-        {/*  options={{ title: t('navigation.screen_titles.main_tab'), headerShown: false }}*/}
-        {/*/>*/}
       </Group>
       <Group key="modals" screenOptions={{ presentation: 'modal' }}>
         <Screen
