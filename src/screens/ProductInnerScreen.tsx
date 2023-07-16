@@ -1,44 +1,58 @@
 /**
  * was created by tigran at 02.07.23
  */
+
 import { Ionicons } from '@expo/vector-icons'
 import { useFocusEffect } from '@react-navigation/native'
-import { Image } from 'native-base'
 import React, { FC, useCallback, useEffect, useRef, useState } from 'react'
-import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native'
+import {
+  ActivityIndicator,
+  Dimensions,
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import Carousel from 'react-native-reanimated-carousel'
 
-import { getImagePath, SHOP_API } from '~api'
-import TrendingItems from '~components/TrendingItems'
+import { SHOP_API } from '~api'
+import { ImgOrSvg } from '~components/ImgOrSvg'
+import { SCREEN } from '~constants'
+import { useIncrement } from '~hooks/useIncrement'
 import { IFeatured } from '~types/featuredProducts'
+import { customStyles } from '~utils/style_helpers'
+
+const colors = {
+  grey: '#dee2e6',
+  headingColor: '#212529',
+  borderColor: '#D2D2D2',
+  nameColor: '#646464',
+}
+const renderFooter = ({ isLoading }: any) => {
+  if (!isLoading) return null
+  return (
+    <View>
+      <ActivityIndicator size="large" color={colors.borderColor} />
+    </View>
+  )
+}
 
 export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
   const [featured, setFeatured] = useState<IFeatured[]>([])
-  const [page, setPage] = useState(1)
-  const [hasNext, setHasNext] = useState(true)
   const [isLoading, setIsLoading] = useState(false)
   const scrollViewRef = useRef<any>(null)
+  const [value, addOption] = useIncrement()
   const width = Dimensions.get('window').width
   const params = route.params
   const getAsyncData = async (): Promise<void> => {
     try {
       setIsLoading(true)
-      const featuredData = await SHOP_API.getLatestProducts(10, page)
+      const featuredData = await SHOP_API.getLatestProducts(6, value as number)
       const filteredArr = featuredData.payload.content.filter(
         (item: IFeatured) => item.id !== params.id
       )
-      if (featured.some((item: IFeatured) => item.id === params.id)) {
-        console.log('if')
-        // setFeatured(featured.length > 0 ? featured : filteredArr)
-        setFeatured(filteredArr)
-      } else {
-        console.log('else')
-        setFeatured((featured) => [...featured, ...filteredArr])
-        // setFeatured(featured => [...featured, ...filteredArr])
-      }
-      // setFeatured(filteredArr)
-      // setFeatured(featured => [...featured, ...filteredArr])
-      setHasNext(featuredData.payload.pagination.hasNext)
+      setFeatured((featured) => [...featured, ...filteredArr])
     } catch (err) {
       console.error('Error fetching latest products:', err)
     } finally {
@@ -50,77 +64,86 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
       ;(async () => {
         await getAsyncData()
       })()
-    }, [params.id, page])
+    }, [params.id, value])
   )
   useEffect(() => {
-    // Scroll to the top when the selected product ID changes
     if (scrollViewRef.current) {
-      scrollViewRef.current.scrollTo({ y: 0, animated: true })
+      scrollViewRef.current.scrollToOffset({ offset: 0 })
     }
   }, [params.id])
 
-  const increment = () => {
-    console.log(
-      featured.some((item: IFeatured) => item.id === params.id),
-      '!!!!___!!!!____!!!!'
+  const Header = () => {
+    return (
+      <>
+        <Carousel
+          width={width}
+          style={styles.carousel}
+          height={width}
+          data={params.gallery}
+          renderItem={({ item, index }: any) => {
+            return (
+              <React.Fragment key={index}>
+                <ImgOrSvg item={item} key={index} product="-product" />
+              </React.Fragment>
+            )
+          }}
+        />
+        <View style={styles.inner_wrapper}>
+          <Text style={styles.title}>{params.name}</Text>
+          <Text style={styles.description}>{params.description}</Text>
+          <View style={styles.rating_block}>
+            <Text style={styles.rates}>{params.reward}</Text>
+            <Ionicons name="star" size={16} color="#FFC107" />
+            <View style={styles.slash} />
+            <Text style={styles.rates}>{params.rating} Ratings</Text>
+          </View>
+          <View style={styles.horizontal_row} />
+          <View>
+            <Text style={styles.price}>₽ {params.price}</Text>
+          </View>
+          <View style={styles.horizontal_row} />
+          <View>
+            <Text style={styles.details}>Product Details</Text>
+            <Text>{params.description}</Text>
+          </View>
+          <View style={styles.horizontal_row} />
+          <Text style={styles.heading}>Latest</Text>
+        </View>
+      </>
     )
-    console.log(page, 'page!!!')
-    if (hasNext) {
-      setPage(page + 1)
-    }
   }
 
   return (
-    <ScrollView style={styles.ProductInnerScreen_wrapper} ref={scrollViewRef}>
-      <Carousel
-        width={width}
-        style={styles.carousel}
-        height={width}
-        data={params.gallery}
-        renderItem={({ item, index }: any) => {
-          return (
-            <Image
-              key={index}
-              style={styles.image}
-              src={getImagePath(item?.filename, '-product')}
-              alt={params.name}
-            />
-          )
-        }}
+    <View style={styles.ProductInnerScreen_wrapper}>
+      <FlatList
+        numColumns={2}
+        ref={scrollViewRef}
+        data={featured}
+        ListHeaderComponent={Header}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            key={item.id}
+            style={styles.item}
+            onPress={() => {
+              navigation.navigate(SCREEN.STACK_PRODUCT_INNER, item)
+            }}
+          >
+            <ImgOrSvg item={item} padding={20} product="-product" />
+            <View style={styles.textContainer}>
+              <Text style={styles.name}>{item.name}</Text>
+            </View>
+            <View>
+              <Text style={styles.price}>₽ {item.price}</Text>
+            </View>
+          </TouchableOpacity>
+        )}
+        ListFooterComponent={() => renderFooter(isLoading)}
+        onEndReached={() => addOption(1)}
+        onEndReachedThreshold={0}
       />
-      <View style={styles.inner_wrapper}>
-        <Text style={styles.title}>{params.name}</Text>
-        <Text style={styles.description}>{params.description}</Text>
-        <View style={styles.rating_block}>
-          <Text style={styles.rates}>{params.reward}</Text>
-          <Ionicons name="star" size={16} color="#FFC107" />
-          <View style={styles.slash} />
-          <Text style={styles.rates}>{params.rating} Ratings</Text>
-        </View>
-        <View style={styles.horizontal_row} />
-        <View>
-          <Text style={styles.price}>₽ {params.price}</Text>
-        </View>
-        <View style={styles.horizontal_row} />
-        <View>
-          <Text style={styles.details}>Product Details</Text>
-          <Text>{params.description}</Text>
-        </View>
-        <View style={styles.horizontal_row} />
-      </View>
-      <TrendingItems
-        items={featured}
-        navigation={navigation}
-        onPress={increment}
-        isLoading={isLoading}
-        isCategoryProduct={false}
-      />
-    </ScrollView>
+    </View>
   )
-}
-
-const colors = {
-  grey: '#dee2e6',
 }
 
 const styles = StyleSheet.create({
@@ -135,18 +158,34 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
+  heading: {
+    color: colors.headingColor,
+    fontSize: 20,
+    marginBottom: 10,
+    textAlign: 'center',
+  },
   horizontal_row: {
     backgroundColor: colors.grey,
     height: 1,
     marginVertical: 20,
     width: '100%',
   },
-  image: {
-    aspectRatio: 1,
-    width: '100%',
-  },
   inner_wrapper: {
     paddingHorizontal: 20,
+  },
+  item: {
+    borderRadius: 8,
+    ...customStyles.border(1, 'solid', colors.borderColor),
+    justifyContent: 'flex-start',
+    marginHorizontal: 8,
+    marginVertical: 10,
+    overflow: 'hidden',
+    padding: 10,
+    width: '46%',
+  },
+  name: {
+    color: colors.nameColor,
+    fontWeight: '700',
   },
   price: {
     fontSize: 20,
@@ -171,6 +210,11 @@ const styles = StyleSheet.create({
     height: '100%',
     marginHorizontal: 10,
     width: 1,
+  },
+  textContainer: {
+    alignItems: 'center',
+    flexGrow: 1,
+    justifyContent: 'center',
   },
   title: {
     flex: 1,

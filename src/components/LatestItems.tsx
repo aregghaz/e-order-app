@@ -1,15 +1,13 @@
-import { Image, Text, View } from 'native-base'
+import { Text, View } from 'native-base'
 import { FC } from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 
-import { getImagePath } from '~api'
-// import { SCREEN } from '~constants'
+import { ImgOrSvg } from '~components/ImgOrSvg'
 import { SCREEN } from '~constants'
 import { IFeatured } from '~types/featuredProducts'
+import { customStyles } from '~utils/style_helpers'
 
-// import { getVH } from '~utils/breakpoints'
-
-interface ITrendingItems {
+interface IFeaturedItems {
   items: IFeatured[]
   navigation: any
   isCategoryProduct: boolean
@@ -23,11 +21,11 @@ const colors = {
   nameColor: '#646464',
 }
 
-// const TrendingItems: FC<ITrendingItems> = ({ items }) => {
-const TrendingItems: FC<ITrendingItems> = ({ items, navigation }) => {
+const LatestItems: FC<IFeaturedItems> = ({ items, navigation, isCategoryProduct }) => {
+  const heightOfBlock = isCategoryProduct ? { height: 270 } : { height: 'auto' }
   return (
     <View style={styles.main}>
-      {items.length > 0 && <Text style={styles.heading}>Latest</Text>}
+      {items.length > 0 && !isCategoryProduct && <Text style={styles.heading}>Latest</Text>}
       <View style={styles.container}>
         {items &&
           items.map((item) => {
@@ -35,18 +33,13 @@ const TrendingItems: FC<ITrendingItems> = ({ items, navigation }) => {
             return (
               <TouchableOpacity
                 key={id}
-                style={styles.item}
+                style={[styles.item, heightOfBlock]}
                 onPress={() => {
                   navigation.navigate(SCREEN.STACK_PRODUCT_INNER, item)
                 }}
               >
-                <Image
-                  src={getImagePath(item.gallery?.[0]?.filename, '-product')}
-                  alt={`Trending ${name}`}
-                  style={styles.image}
-                  resizeMode={'cover'}
-                />
-                <View style={styles.textContainer}>
+                <ImgOrSvg item={item} padding={20} product="-product" />
+                <View>
                   <Text style={styles.name}>{name}</Text>
                 </View>
                 <View>
@@ -75,18 +68,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 
-  image: {
-    aspectRatio: 1,
-    width: '100%',
-  },
-
   item: {
-    // alignItems: 'center',
-    borderColor: colors.borderColor,
     borderRadius: 8,
-    borderStyle: 'solid',
-    borderWidth: 1.5,
-    // height: getVH(35),
+    ...customStyles.border(1, 'solid', colors.borderColor),
     justifyContent: 'flex-start',
     marginHorizontal: 2,
     marginVertical: 10,
@@ -105,18 +89,12 @@ const styles = StyleSheet.create({
 
   name: {
     color: colors.nameColor,
-    // fontSize: isMedium ? 18 : 16,
     fontWeight: '700',
   },
   price: {
     flex: 1,
     textAlign: 'left',
   },
-  textContainer: {
-    alignItems: 'center',
-    flexGrow: 1,
-    justifyContent: 'center',
-  },
 })
 
-export default TrendingItems
+export default LatestItems

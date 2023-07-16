@@ -1,29 +1,23 @@
-import { View, Text, Image } from 'native-base'
+import { View, Text } from 'native-base'
 import React, { FC } from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 import Carousel from 'react-native-snap-carousel'
 
-import { getImagePath } from '~api'
+import { ImgOrSvg } from '~components/ImgOrSvg'
 import { SCREEN } from '~constants'
 import { IFeatured } from '~types/featuredProducts'
-import { getVH, getVW, screenWidth } from '~utils/breakpoints'
-
-export type TTrendingItems = {
-  id: number
-  image: string
-  name: string
-}
+import { getVW, screenWidth } from '~utils/breakpoints'
+import { customStyles } from '~utils/style_helpers'
 
 interface ITrending {
   items: IFeatured[]
   navigation: any
 }
 
-// const Trending: FC<ITrending> = ({ name, items }) => {
-const Trending: FC<ITrending> = ({ items, navigation }) => {
+const FeaturedItems: FC<ITrending> = ({ items, navigation }) => {
   return (
     <View style={styles.body}>
-      <Text style={styles.heading}>Featured</Text>
+      {items.length > 0 && <Text style={styles.heading}>Featured</Text>}
       <View style={styles.main}>
         <Carousel
           loop
@@ -42,14 +36,7 @@ const Trending: FC<ITrending> = ({ items, navigation }) => {
                   navigation.navigate(SCREEN.STACK_PRODUCT_INNER, item)
                 }}
               >
-                <Image
-                  src={getImagePath(item.gallery?.[0]?.filename, '-product')}
-                  alt={`Trending ${item.name}`}
-                  style={styles.image}
-                  width={'100%'}
-                  // height={"100%"}
-                  resizeMode={'cover'}
-                />
+                <ImgOrSvg item={item} product="-product" column={1} padding={31} />
                 <View style={styles.textContainer}>
                   <Text style={styles.name}>{item.name}</Text>
                 </View>
@@ -75,31 +62,21 @@ const colors = {
 
 const styles = StyleSheet.create({
   body: {
-    alignItems: 'center',
-    height: getVH(60),
-    paddingTop: 20,
+    marginTop: 20,
     width: '100%',
   },
 
   heading: {
     color: colors.headingColor,
-    fontSize: 22,
+    fontSize: 20,
+    fontWeight: 'bold',
     marginBottom: 20,
+    textAlign: 'center',
   },
-
-  image: {
-    height: '85%',
-    width: '100%',
-  },
-
   item: {
-    borderColor: colors.borderColor,
     borderRadius: 8,
-    borderStyle: 'solid',
-    borderWidth: 1,
-    height: getVH(50),
+    ...customStyles.border(1, 'solid', colors.borderColor),
     padding: 10,
-    width: '100%',
   },
 
   main: {
@@ -124,4 +101,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default Trending
+export default FeaturedItems

@@ -3,9 +3,7 @@ import axios from 'axios'
 export const fakeUrl = 'https://test-api.redro.ru'
 const shopIdTest = `07c1a17d-41ed-49a6-96a0-01db91821db2`
 export const getImagePath = (path: string | null, product = '') =>
-  path
-    ? `${fakeUrl}/api/local-files/get${product}-image/${path}`
-    : 'https://t3.ftcdn.net/jpg/03/45/05/92/360_F_345059232_CPieT8RIWOUk4JqBkkWkIETYAkmz2b75.jpg'
+  `${fakeUrl}/api/local-files/get${product}-image/${path}`
 export const SHOP_API = {
   getCategory() {
     return axios

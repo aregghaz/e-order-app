@@ -1,35 +1,30 @@
-import { View, Text, Image } from 'native-base'
+import { View, Text } from 'native-base'
 import React, { FC } from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 import Carousel from 'react-native-reanimated-carousel'
 
-import { getImagePath } from '~api'
+import { ImgOrSvg } from '~components/ImgOrSvg'
 import { SCREEN } from '~constants'
 import { IFeatured } from '~types/featuredProducts'
 import { getVW, screenWidth } from '~utils/breakpoints'
-
-// export type TBrand = {
-//   id: number
-//   name: string
-//   image: string
-// }
+import { customStyles } from '~utils/style_helpers'
 
 interface ITopBrands {
-  brands: IFeatured[]
+  items: IFeatured[]
   navigation: any
 }
 
-const TopBrands: FC<ITopBrands> = ({ brands, navigation }) => {
+const NewArrivalItems: FC<ITopBrands> = ({ items, navigation }) => {
   return (
     <View style={styles.main}>
-      <Text style={styles.heading}>New arrivals</Text>
+      {items.length > 0 && <Text style={styles.heading}>New arrivals</Text>}
       <Carousel
         loop
         autoPlay
         style={styles.container}
         width={getVW(50)}
-        height={100}
-        data={brands}
+        height={186}
+        data={items}
         autoPlayInterval={2500}
         renderItem={({ item, index }: { item: IFeatured; index: number }) => {
           return (
@@ -40,12 +35,7 @@ const TopBrands: FC<ITopBrands> = ({ brands, navigation }) => {
                 navigation.navigate(SCREEN.STACK_PRODUCT_INNER, item)
               }}
             >
-              <Image
-                style={styles.image}
-                src={getImagePath(item.gallery?.[0]?.filename, '-product')}
-                alt={item.name}
-                resizeMode={'contain'}
-              />
+              <ImgOrSvg item={item} product="-product" padding={16} />
             </TouchableOpacity>
           )
         }}
@@ -72,19 +62,14 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
 
-  image: {
-    flexGrow: 1,
-  },
-
   item: {
     backgroundColor: colors.itemColor,
-    borderColor: colors.borderColor,
     borderRadius: 8,
-    borderStyle: 'solid',
-    borderWidth: 1,
+    ...customStyles.border(1, 'solid', colors.borderColor),
     height: '100%',
     marginHorizontal: 10,
-    width: getVW(45),
+    overflow: 'hidden',
+    padding: 5,
   },
 
   main: {
@@ -94,4 +79,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default TopBrands
+export default NewArrivalItems
