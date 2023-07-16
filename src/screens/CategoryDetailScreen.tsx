@@ -6,7 +6,7 @@ import React, { FC, useCallback, useState } from 'react'
 import { View } from 'react-native'
 
 import { SHOP_API } from '~api'
-import TrendingItems from '~components/TrendingItems'
+import LatestItems from '~components/LatestItems'
 //import { ICategory } from '~types/category'
 
 // interface IProps {
@@ -19,21 +19,17 @@ import TrendingItems from '~components/TrendingItems'
 export const CategoryDetailScreen: FC<any> = ({ route, navigation }) => {
   const detail = route.params
   const [data, setData] = useState([])
-  const [page, setPage] = useState(1)
   useFocusEffect(
     useCallback(() => {
       ;(async () => {
-        const dataProduct = await SHOP_API.getCategoryProducts(detail.id, 20, page)
+        const dataProduct = await SHOP_API.getCategoryProducts(detail.id, 20)
         setData(dataProduct.payload.content.products)
       })()
     }, [detail.id])
   )
-  const increment = () => {
-    setPage(page + 1)
-  }
   return (
     <View>
-      <TrendingItems items={data} navigation={navigation} isCategoryProduct onPress={increment} />
+      <LatestItems items={data} navigation={navigation} isCategoryProduct={true} />
     </View>
   )
 }
