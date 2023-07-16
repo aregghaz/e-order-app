@@ -113,6 +113,7 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
         navigation={navigation}
         onPress={increment}
         isLoading={isLoading}
+        isCategoryProduct={false}
       />
     </ScrollView>
   )

@@ -14,6 +14,7 @@ interface ITrendingItems {
   navigation: any
   isCategoryProduct: boolean
   onPress?: any
+  isLoading?: boolean
 }
 
 const colors = {
