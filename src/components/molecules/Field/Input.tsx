@@ -2,8 +2,8 @@ import { FormControl } from 'native-base'
 import { forwardRef } from 'react'
 import { TextInput } from 'react-native'
 
-import type { FieldInputProps } from './types'
 import { Input as BaseInput } from '../../atoms/Input'
+import type { FieldInputProps } from './types'
 
 import { useMemo } from '~hooks'
 

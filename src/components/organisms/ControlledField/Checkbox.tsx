@@ -1,7 +1,7 @@
 import { Controller, ControllerRenderProps, get } from 'react-hook-form'
 
-import type { ControlledCheckboxProps, RenderInputProps } from './types'
 import { Field } from '../../molecules'
+import type { ControlledCheckboxProps, RenderInputProps } from './types'
 
 import { useCallback } from '~hooks'
 
