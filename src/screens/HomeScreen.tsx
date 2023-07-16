@@ -45,7 +45,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
       {data.length > 0 && <CircleCategories navigation={navigation} categories={data} />}
       <OfferPosterSlider slides={slides} />
       {/*<Advantages advantages={advantages} />*/}
-      <TrendingItems navigation={navigation} items={latest} />
+      <TrendingItems navigation={navigation} items={latest} isCategoryProduct={false} />
       <Trending navigation={navigation} items={latest} />
       <TopBrands navigation={navigation} brands={latest} />
       <Accessories navigation={navigation} accessories={latest} />

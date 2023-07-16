@@ -24,7 +24,7 @@ export const RootNavigator: FC = () => {
 
   return (
     <Navigator>
-      <Group>
+      <Group key="authorized">
         <Screen
           name={SCREEN.STACK_MAIN_TAB}
           component={BottomTabNavigator}

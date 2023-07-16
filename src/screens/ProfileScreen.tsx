@@ -3,11 +3,15 @@
  */
 
 import { Feather } from '@expo/vector-icons'
+import { useFocusEffect } from '@react-navigation/native'
 import { Text, View, ScrollView, Image } from 'native-base'
 import React, { FC, useState } from 'react'
 import { StyleSheet } from 'react-native'
 
 import { fakeData } from '~FakeData'
+import { SCREEN } from '~constants'
+import { useAuth } from '~hooks'
+///import {SHOP_API} from "~api";
 
 // interface IProps {
 //   address: IAddress
@@ -39,8 +43,20 @@ import { fakeData } from '~FakeData'
 // }
 
 type TProfileIcon = 'user' | 'shopping-cart' | 'map-pin' | 'bell' | 'heart' | 'log-out'
-export const ProfileScreen: FC = () => {
+export const ProfileScreen: FC<any> = ({ navigation }) => {
   const [data] = useState(fakeData.profile)
+  const { isSignedIn } = useAuth()
+  useFocusEffect(
+    React.useCallback(() => {
+      ;(async () => {
+        if (!isSignedIn) {
+          navigation.navigate(SCREEN.STACK_SIGN_IN)
+        }
+      })()
+
+      //  return () => clientData();
+    }, [])
+  )
   return (
     <View style={styles.profile_wrapper}>
       <ScrollView>

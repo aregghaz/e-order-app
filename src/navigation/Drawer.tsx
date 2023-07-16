@@ -8,7 +8,7 @@ import { optionForScreen } from '~navigation/HeaderGlobalStyles'
 import { PhoneRegisterStack } from '~navigation/PhoneRegisterStack'
 import { RootNavigator } from '~navigation/RootNavigator'
 import { Verification } from '~navigation/Verification'
-import { CategoryInnerScreen } from '~screens'
+import { CategoryInnerScreen, SignInScreen } from '~screens'
 import { CategoryDetailScreen } from '~screens/CategoryDetailScreen'
 import { MenuScreen } from '~screens/MenuScreen'
 import { ProductInnerScreen } from '~screens/ProductInnerScreen'
@@ -69,6 +69,14 @@ export const DrawerNavigator = () => {
         component={Verification}
         options={({ navigation, route }: any) => ({
           headerTitle: () => <Header navigation={navigation} title={route.params.title} />,
+          headerLeft: () => null,
+        })}
+      />
+      <Drawer.Screen
+        name={SCREEN.STACK_SIGN_IN}
+        component={SignInScreen}
+        options={({ navigation, route }: any) => ({
+          //headerTitle: () => <Header navigation={navigation} title={route.params.title} />,
           headerLeft: () => null,
         })}
       />
