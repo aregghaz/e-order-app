@@ -5,6 +5,7 @@ import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native'
 import { SHOP_API, getImagePath } from '~api'
 import { SCREEN } from '~constants'
 import { ICategory } from '~types/category'
+///import NoImage from "../../assets/svg/NoImage";
 
 const locale = 'ru'
 export const CategoryScreen = (props: ExamplesScreenProps): JSX.Element => {
@@ -47,6 +48,7 @@ export const CategoryScreen = (props: ExamplesScreenProps): JSX.Element => {
                     alt="gweger"
                     style={styles.image}
                   />
+                  {/*<NoImage />*/}
                 </View>
               </TouchableWithoutFeedback>
             )

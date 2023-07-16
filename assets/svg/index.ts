@@ -1,3 +1,3 @@
-import NoImage from './no-image.svg'
-
-export { NoImage }
+// import NoImage from './NoImage'
+//
+// export { NoImage }
