@@ -1,6 +1,6 @@
 import { Image, Text, View } from 'native-base'
 import { FC } from 'react'
-import { ActivityIndicator, FlatList, StyleSheet, TouchableOpacity } from 'react-native'
+import { StyleSheet, TouchableOpacity } from 'react-native'
 
 import { getImagePath } from '~api'
 // import { SCREEN } from '~constants'
@@ -12,9 +12,6 @@ import { IFeatured } from '~types/featuredProducts'
 interface ITrendingItems {
   items: IFeatured[]
   navigation: any
-  isCategoryProduct?: boolean
-  onPress?: () => void
-  isLoading?: boolean
 }
 
 const colors = {
@@ -24,76 +21,50 @@ const colors = {
 }
 
 // const TrendingItems: FC<ITrendingItems> = ({ items }) => {
-const TrendingItems: FC<ITrendingItems> = ({
-  items,
-  navigation,
-  isCategoryProduct,
-  onPress,
-  isLoading,
-}) => {
-  const handleEnd = () => {
-    console.log('worked')
-    if (onPress) {
-      onPress()
-    }
-  }
-  const renderFooter = () => {
-    if (!isLoading) return null
-    return (
-      <View>
-        <ActivityIndicator size="small" />
-      </View>
-    )
-  }
+const TrendingItems: FC<ITrendingItems> = ({ items, navigation }) => {
   return (
     <View style={styles.main}>
-      {items.length > 0 && !isCategoryProduct && <Text style={styles.heading}>Latest</Text>}
-      {/*<View style={styles.container}>*/}
-      {items && (
-        <FlatList
-          numColumns={2}
-          data={items}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              key={item.id}
-              style={styles.item}
-              onPress={() => {
-                navigation.navigate(SCREEN.STACK_PRODUCT_INNER, item)
-              }}
-            >
-              <Image
-                src={getImagePath(item.gallery?.[0]?.filename, '-product')}
-                alt={`Trending ${item.name}`}
-                style={styles.image}
-                resizeMode={'cover'}
-              />
-              <View style={styles.textContainer}>
-                <Text style={styles.name}>{item.name}</Text>
-              </View>
-              <View>
-                <Text style={styles.price}>₽ {item.price}</Text>
-              </View>
-            </TouchableOpacity>
-          )}
-          ListFooterComponent={renderFooter}
-          onEndReached={handleEnd}
-          onEndReachedThreshold={0}
-        />
-      )}
-      {/*</View>*/}
+      {items.length > 0 && <Text style={styles.heading}>Latest</Text>}
+      <View style={styles.container}>
+        {items &&
+          items.map((item) => {
+            const { name, id, price } = item
+            return (
+              <TouchableOpacity
+                key={id}
+                style={styles.item}
+                onPress={() => {
+                  navigation.navigate(SCREEN.STACK_PRODUCT_INNER, item)
+                }}
+              >
+                <Image
+                  src={getImagePath(item.gallery?.[0]?.filename, '-product')}
+                  alt={`Trending ${name}`}
+                  style={styles.image}
+                  resizeMode={'cover'}
+                />
+                <View style={styles.textContainer}>
+                  <Text style={styles.name}>{name}</Text>
+                </View>
+                <View>
+                  <Text style={styles.price}>₽ {price}</Text>
+                </View>
+              </TouchableOpacity>
+            )
+          })}
+      </View>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  // container: {
-  //   flexDirection: 'row',
-  //   flexWrap: 'wrap',
-  //   height: 'auto',
-  //   justifyContent: 'space-between',
-  //   width: '100%',
-  // },
+  container: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    height: 'auto',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
 
   heading: {
     color: colors.headingColor,
@@ -115,7 +86,7 @@ const styles = StyleSheet.create({
     // height: getVH(35),
     justifyContent: 'flex-start',
     marginHorizontal: 2,
-    marginVertical: 20,
+    marginVertical: 10,
     overflow: 'hidden',
     padding: 10,
     width: '48%',
@@ -126,7 +97,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     height: 'auto',
     paddingHorizontal: 10,
-    // paddingTop: 15,
+    paddingTop: 15,
   },
 
   name: {
