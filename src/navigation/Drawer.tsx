@@ -76,7 +76,7 @@ export const DrawerNavigator = () => {
         name={SCREEN.STACK_SIGN_IN}
         component={SignInScreen}
         options={({ navigation, route }: any) => ({
-          //headerTitle: () => <Header navigation={navigation} title={route.params.title} />,
+          headerTitle: () => <Header navigation={navigation} title={'signIn'} />,
           headerLeft: () => null,
         })}
       />
