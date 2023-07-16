@@ -5,6 +5,7 @@ import { Image } from 'native-base'
 import React, { FC } from 'react'
 import { Dimensions, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
+import { getImagePath } from '~api'
 import { SCREEN } from '~constants'
 import { ICategory } from '~types/category'
 
@@ -42,7 +43,8 @@ export const CategoryInnerScreen: FC<IProps> = ({ route, navigation }) => {
               <View>
                 <Image
                   style={styles.image}
-                  src="https://simplot-media.azureedge.net/-/media/feature/simplotfoods/components/data/blog/blog-posts/unicorn-salad.jpg?rev=90dabe21a5984a969e92a632d369e5b9"
+                  src={`${getImagePath(item.mainImage?.filename)}`}
+                  // src="https://simplot-media.azureedge.net/-/media/feature/simplotfoods/components/data/blog/blog-posts/unicorn-salad.jpg?rev=90dabe21a5984a969e92a632d369e5b9"
                   alt={item.name[locale]}
                 />
               </View>
