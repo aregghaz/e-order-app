@@ -5,6 +5,9 @@ import { Feather, Ionicons } from '@expo/vector-icons'
 import React, { FC, useCallback, useState } from 'react'
 import { Dimensions, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 
+import { SHOP_API } from '~api'
+import { SCREEN } from '~constants'
+
 const width = Dimensions.get('window').width - 30
 
 interface IProps {
@@ -17,6 +20,31 @@ export const Header: FC<IProps> = ({ title, navigation }) => {
     navigation.openDrawer()
   }, [navigation])
   const [search, setSearch] = useState(false)
+  const [text, setText] = useState('')
+
+  const handleSearch = (value: string) => {
+    setText(value)
+  }
+
+  const handleRequest = async () => {
+    setSearch(false)
+    setText('')
+    const result = await SHOP_API.getSearchedValues(text)
+    const products = result.payload.content
+    if (products) {
+      // navigation.navigate(SCREEN.DRAWER_ROOT, {
+      //   screen: SCREEN.STACK_MAIN_TAB,
+      //   params: {
+      //     screen: SCREEN.TAB_CATEGORY,
+      //     params: {
+      //       screen: SCREEN.STACK_CATEGORY_SEARCH,
+      //       params: products,
+      //     },
+      //   },
+      // })
+      navigation.navigate(SCREEN.STACK_CATEGORY_SEARCH, products)
+    }
+  }
 
   const goBack = useCallback(() => {
     navigation.goBack()
@@ -25,7 +53,13 @@ export const Header: FC<IProps> = ({ title, navigation }) => {
     <View style={styles.header_wrapper}>
       {search && (
         <View style={styles.search_block}>
-          <TextInput style={styles.search_input} placeholder="Search" />
+          <TextInput
+            style={styles.search_input}
+            value={text}
+            onChangeText={handleSearch}
+            placeholder="Search"
+            onSubmitEditing={handleRequest}
+          />
           <Feather name="x" size={24} style={styles.icons} onPress={() => setSearch(false)} />
         </View>
       )}

@@ -83,6 +83,15 @@ export const SHOP_API = {
       })
       .catch((err) => console.log(err))
   },
+  getSearchedValues: (text: string) => {
+    return axios
+      .post(`${fakeUrl}/api/products/products-search?text=${text}`)
+      .then((res) => {
+        console.log(res.data, 'data in result')
+        return res.data
+      })
+      .catch((err) => console.log(err))
+  },
   /*** Authentication ***/
 
   setPhoneNumberRequest: (phoneNumber: string) => {
