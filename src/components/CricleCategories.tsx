@@ -1,8 +1,8 @@
-import { Image, ScrollView, Text, View } from 'native-base'
+import { ScrollView, Text, View } from 'native-base'
 import { FC } from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 
-import { getImagePath } from '~api'
+import { ImgOrSvg } from '~components/ImgOrSvg'
 import { SCREEN } from '~constants'
 import { ICategory } from '~types/category'
 import { getVW } from '~utils/breakpoints'
@@ -27,23 +27,17 @@ const CircleCategories: FC<ICircleCategories> = ({ categories, navigation }) => 
         style={styles.body}
       >
         {(categories ?? []).map((item) => {
-          const { name, id, mainImage } = item
           return (
-            <View key={id} style={styles.items}>
+            <View key={item.id} style={styles.items}>
               <TouchableOpacity
                 onPress={() => {
                   navigation.navigate(SCREEN.STACK_CATEGORY_INNER, item)
                 }}
                 style={styles.categoryButton}
               >
-                <Image
-                  src={`${getImagePath(mainImage?.filename)}`}
-                  alt={`category ${name}`}
-                  style={styles.image}
-                  // resizeMode={'contain'}
-                />
+                <ImgOrSvg item={item} radius={100} />
                 <View style={styles.textContainer}>
-                  <Text style={styles.text}>{name[local]}</Text>
+                  <Text style={styles.text}>{item.name[local]}</Text>
                 </View>
               </TouchableOpacity>
             </View>
@@ -67,13 +61,6 @@ const styles = StyleSheet.create({
     height: 100,
     padding: 4,
     width: 100,
-  },
-
-  image: {
-    aspectRatio: 1,
-    borderRadius: 50,
-    // resizeMode: 'contain',
-    width: '100%',
   },
 
   items: {

@@ -1,9 +1,9 @@
 /**
  * was created by tigran at 15.07.23
  */
-import { Image } from 'native-base'
+
 import React, { FC } from 'react'
-import { View, StyleSheet, Dimensions } from 'react-native'
+import { View, StyleSheet, Dimensions, Image } from 'react-native'
 
 import { getImagePath } from '~api'
 import { NoImageSvg } from '~components/NoImageSvg'
@@ -15,6 +15,7 @@ interface IProps {
   radius?: number
   padding?: number
   resizeMode?: 'contain' | 'cover' | 'center' | 'stretch'
+  width?: number
 }
 
 const trueImgConfigs = (item: any, product = '') => {
@@ -42,7 +43,7 @@ const trueImgConfigs = (item: any, product = '') => {
       }
   }
 }
-const width = Dimensions.get('window').width
+const dimensionWidth = Dimensions.get('window').width
 export const ImgOrSvg: FC<IProps> = ({
   item,
   product = '',
@@ -50,20 +51,26 @@ export const ImgOrSvg: FC<IProps> = ({
   column = 2,
   padding = 0,
   resizeMode = 'contain',
+  width,
 }) => {
   const correctPadding = padding * 4
-  const divWidth = (width - correctPadding) / column
+  const divWidth = (dimensionWidth - correctPadding) / column
   const { src, alt, filename } = trueImgConfigs(item, product)
   const borderRadius = radius ? { borderRadius: radius } : { borderRadius: 0 }
-  const imgWidth = { width: divWidth }
-  const objectFit = { resizeMode }
+  const imgWidth = { width: width || divWidth }
+  const trueWidth = width ? { width } : { width: '100%' }
   return (
-    <View style={styles.ImgOrSvg_wrapper}>
+    <View>
       {filename ? (
-        <Image style={[styles.image, borderRadius, objectFit]} src={src} alt={alt} />
+        <Image
+          style={[styles.image, borderRadius, trueWidth]}
+          source={{ uri: src }}
+          alt={alt}
+          resizeMode={resizeMode}
+        />
       ) : (
         <View style={[styles.img_wrapper, imgWidth, borderRadius]}>
-          <NoImageSvg width={divWidth} height={divWidth} />
+          <NoImageSvg width={width || divWidth} height={width || divWidth} />
         </View>
       )}
     </View>
@@ -71,12 +78,8 @@ export const ImgOrSvg: FC<IProps> = ({
 }
 
 const styles = StyleSheet.create({
-  ImgOrSvg_wrapper: {
-    flex: 1,
-  },
   image: {
     aspectRatio: 1,
-    width: '100%',
   },
   img_wrapper: {
     overflow: 'hidden',

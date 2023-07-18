@@ -4,6 +4,7 @@ export const SCREEN = {
   STACK_CATEGORY_INNER: 'CategoryInner',
   STACK_CATEGORY_INNER_PAGE: 'CategoryInnerPage',
   STACK_CATEGORY_DETAIL: 'CategoryDetail',
+  STACK_CATEGORY_SEARCH: 'SearchStack',
   STACK_PRODUCT_INNER: 'ProductInner',
   STACK_PROFILE: 'ProfileStack',
   STACK_CONTACT: 'ContactStack',

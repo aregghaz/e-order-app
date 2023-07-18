@@ -6,6 +6,7 @@ import { Header } from '~navigation/Header'
 import { optionForScreen } from '~navigation/HeaderGlobalStyles'
 import { CategoryInnerScreen, CategoryScreen } from '~screens'
 import { CategoryDetailScreen } from '~screens/CategoryDetailScreen'
+// import { CategorySearchScreen } from '~screens/CategorySearchScreen'
 
 const { Navigator, Screen } = createStackNavigator()
 const locale = 'ru'
@@ -18,7 +19,7 @@ export const CategoryStack = (): JSX.Element => {
       <Screen
         name={SCREEN.STACK_CATEGORY}
         component={CategoryScreen}
-        options={({ navigation }) => ({
+        options={({ navigation, route }) => ({
           headerTitle: () => (
             <Header navigation={navigation} title={t('navigation.screen_titles.category')} />
           ),

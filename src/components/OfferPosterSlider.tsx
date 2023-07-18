@@ -1,6 +1,5 @@
-import { Image, View } from 'native-base'
 import React, { FC } from 'react'
-import { GestureResponderEvent, StyleSheet, TouchableOpacity } from 'react-native'
+import { GestureResponderEvent, StyleSheet, TouchableOpacity, Image, View } from 'react-native'
 import Swiper from 'react-native-swiper'
 
 import { getVH, isMedium, isSmall } from '~utils/breakpoints'
@@ -56,7 +55,12 @@ const OfferPosterSlider: FC<IOfferPosterSlider> = ({ slides, navigation }) => {
                 }}
                 style={styles.slide}
               >
-                <Image src={image} alt={'image'} style={styles.image} resizeMode={'cover'} />
+                <Image
+                  source={{ uri: image }}
+                  alt={'image'}
+                  style={styles.image}
+                  resizeMode={'cover'}
+                />
               </TouchableOpacity>
             )
           })}

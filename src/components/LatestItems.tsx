@@ -27,9 +27,9 @@ const LatestItems: FC<IFeaturedItems> = ({ items, navigation, isCategoryProduct 
     <View style={styles.main}>
       {items.length > 0 && !isCategoryProduct && <Text style={styles.heading}>Latest</Text>}
       <View style={styles.container}>
-        {items &&
+        {items && items.length > 0 ? (
           items.map((item) => {
-            const { name, id, price } = item
+            const { name, id, price, views } = item
             return (
               <TouchableOpacity
                 key={id}
@@ -45,9 +45,15 @@ const LatestItems: FC<IFeaturedItems> = ({ items, navigation, isCategoryProduct 
                 <View>
                   <Text style={styles.price}>₽ {price}</Text>
                 </View>
+                <View>
+                  <Text style={styles.price}>views {views}</Text>
+                </View>
               </TouchableOpacity>
             )
-          })}
+          })
+        ) : (
+          <Text style={styles.notFound}>Nothing was found</Text>
+        )}
       </View>
     </View>
   )
@@ -91,8 +97,15 @@ const styles = StyleSheet.create({
     color: colors.nameColor,
     fontWeight: '700',
   },
-  price: {
+  notFound: {
+    alignItems: 'center',
     flex: 1,
+    fontSize: 20,
+    fontWeight: 'bold',
+    justifyContent: 'center',
+    textAlign: 'center',
+  },
+  price: {
     textAlign: 'left',
   },
 })

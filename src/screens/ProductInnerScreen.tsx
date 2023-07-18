@@ -14,7 +14,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import Carousel from 'react-native-reanimated-carousel'
+import Swiper from 'react-native-swiper'
 
 import { SHOP_API } from '~api'
 import { ImgOrSvg } from '~components/ImgOrSvg'
@@ -44,26 +44,25 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
   const scrollViewRef = useRef<any>(null)
   const [value, addOption] = useIncrement()
   const width = Dimensions.get('window').width
-  const params = route.params
-  const getAsyncData = async (): Promise<void> => {
-    try {
-      setIsLoading(true)
-      const featuredData = await SHOP_API.getLatestProducts(6, value as number)
-      const filteredArr = featuredData.payload.content.filter(
-        (item: IFeatured) => item.id !== params.id
-      )
-      setFeatured((featured) => [...featured, ...filteredArr])
-    } catch (err) {
-      console.error('Error fetching latest products:', err)
-    } finally {
-      setIsLoading(false)
-    }
-  }
+  const { params } = route
+
   useFocusEffect(
     useCallback(() => {
-      ;(async () => {
-        await getAsyncData()
-      })()
+      const getAsyncData = async (): Promise<void> => {
+        try {
+          setIsLoading(true)
+          const featuredData = await SHOP_API.getLatestProducts(6, value as number)
+          setFeatured((featured) => [...featured, ...featuredData.payload.content])
+        } catch (err) {
+          console.error('Error fetching latest products:', err)
+        } finally {
+          setIsLoading(false)
+        }
+      }
+      // ;(async () => {
+      // await getAsyncData()
+      getAsyncData()
+      // })()
     }, [params.id, value])
   )
   useEffect(() => {
@@ -75,19 +74,27 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
   const Header = () => {
     return (
       <>
-        <Carousel
+        <Swiper
           width={width}
-          style={styles.carousel}
           height={width}
-          data={params.gallery}
-          renderItem={({ item, index }: any) => {
+          horizontal={true}
+          loop={true}
+          showsPagination={true}
+          scrollEnabled={true}
+          showsButtons={false}
+          autoplay={false}
+          autoplayTimeout={500}
+          autoplayDirection={true}
+          pagingEnabled={true}
+        >
+          {params.gallery.map((item: IFeatured) => {
             return (
-              <React.Fragment key={index}>
-                <ImgOrSvg item={item} key={index} product="-product" />
+              <React.Fragment key={item.id}>
+                <ImgOrSvg item={item} product="-product" />
               </React.Fragment>
             )
-          }}
-        />
+          })}
+        </Swiper>
         <View style={styles.inner_wrapper}>
           <Text style={styles.title}>{params.name}</Text>
           <Text style={styles.description}>{params.description}</Text>
@@ -140,7 +147,7 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
         )}
         ListFooterComponent={() => renderFooter(isLoading)}
         onEndReached={() => addOption(1)}
-        onEndReachedThreshold={0}
+        onEndReachedThreshold={0.5}
       />
     </View>
   )
@@ -149,9 +156,6 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
 const styles = StyleSheet.create({
   ProductInnerScreen_wrapper: {
     flex: 1,
-  },
-  carousel: {
-    marginTop: 20,
   },
   description: {},
   details: {
