@@ -12,7 +12,7 @@ export const SignInScreen = (): JSX.Element => {
   const { signOut } = useAuth()
 
   const goToSignUp = useCallback(() => navigate('SignUp'), [navigate])
-  console.log(isSubmitting, 'isSubmitting')
+
   return (
     <Center p={8} flex={1}>
       <ControlledField.Input

@@ -109,7 +109,6 @@ export const SHOP_API = {
     return axios
       .post(`${fakeUrl}/api/auth/customer-login`, { login: phone, password })
       .then((res) => {
-        console.log(res.data, 'data in result')
         return res.data
       })
       .catch((err) => console.log(err))

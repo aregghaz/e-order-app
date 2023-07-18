@@ -6,6 +6,8 @@ import { isError } from 'react-query'
 
 import { useAuth } from '~hooks'
 import { SignInFormValues } from '~types/authForms'
+// import {Navigation} from "~navigation";
+// import {SCREEN} from "~constants";
 
 const defaultValues: SignInFormValues = {
   // TODO: Reset this values when building production app
@@ -34,7 +36,6 @@ export const useSignInForm = () => {
       setIsSubmitting(true)
       setError('')
       await signIn(data)
-      console.log(data, 'HURURURURURURUUR_____&&&_________')
     } catch (e) {
       if (isError(e)) {
         setError(e.message)

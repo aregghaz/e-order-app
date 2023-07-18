@@ -8,17 +8,17 @@ import { ImgOrSvg } from '~components/ImgOrSvg'
 import { SCREEN } from '~constants'
 import { ICategory } from '~types/category'
 
-interface IProps {
-  route: {
-    params: ICategory
-  }
-  navigation: any
-}
+// interface IProps {
+//   route: {
+//     params: ICategory
+//   }
+//   navigation: any
+// }
 
 const locale = 'ru'
 const width = Dimensions.get('window').width / 2
 const padding = 10
-export const CategoryInnerScreen: FC<IProps> = ({ route, navigation }) => {
+export const CategoryInnerScreen: FC<any> = ({ route, navigation }) => {
   const categories = route.params.children
   const goToDetails = (item: ICategory) => {
     if (item.children.length > 0) {
