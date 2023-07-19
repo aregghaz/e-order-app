@@ -10,7 +10,7 @@ import { RootNavigator } from '~navigation/RootNavigator'
 import { Verification } from '~navigation/Verification'
 import { CategoryInnerScreen, SignInScreen } from '~screens'
 import { CategoryDetailScreen } from '~screens/CategoryDetailScreen'
-// import { CategorySearchScreen } from '~screens/CategorySearchScreen'
+import { CategorySearchScreen } from '~screens/CategorySearchScreen'
 import { MenuScreen } from '~screens/MenuScreen'
 import { ProductInnerScreen } from '~screens/ProductInnerScreen'
 
@@ -89,14 +89,14 @@ export const DrawerNavigator = () => {
           headerLeft: () => null,
         })}
       />
-      {/*<Drawer.Screen*/}
-      {/*  name={SCREEN.STACK_CATEGORY_SEARCH}*/}
-      {/*  component={CategorySearchScreen}*/}
-      {/*  options={({ navigation, route }: any) => ({*/}
-      {/*    headerTitle: () => <Header navigation={navigation} title="search results" />,*/}
-      {/*    headerLeft: () => null,*/}
-      {/*  })}*/}
-      {/*/>*/}
+      <Drawer.Screen
+        name={SCREEN.STACK_CATEGORY_SEARCH}
+        component={CategorySearchScreen}
+        options={({ navigation, route }: any) => ({
+          headerTitle: () => <Header navigation={navigation} title="search results" />,
+          headerLeft: () => null,
+        })}
+      />
     </Drawer.Navigator>
   )
 }
