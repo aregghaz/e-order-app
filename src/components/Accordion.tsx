@@ -50,7 +50,12 @@ export const Accordion: FC<IProps> = ({
     subChildren &&
     subChildren.map((item) => (
       <View key={item.id}>
-        <SubList title={item.title} navigation={navigation} hasChildren={item.hasChildren} />
+        <SubList
+          title={item.title}
+          navigation={navigation}
+          hasChildren={item.hasChildren}
+          handlePress={handlePress}
+        />
       </View>
     ))
   ) : (

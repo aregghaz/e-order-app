@@ -2,7 +2,7 @@
  * was created by tigran at 28.06.23
  */
 import React, { FC } from 'react'
-import { View } from 'react-native'
+import { ScrollView } from 'react-native'
 
 import LatestItems from '~components/LatestItems'
 //import { ICategory } from '~types/category'
@@ -17,8 +17,8 @@ import LatestItems from '~components/LatestItems'
 export const CategorySearchScreen: FC<any> = ({ route, navigation }) => {
   const { products } = route.params
   return (
-    <View>
+    <ScrollView>
       <LatestItems items={products} navigation={navigation} isCategoryProduct={true} />
-    </View>
+    </ScrollView>
   )
 }
