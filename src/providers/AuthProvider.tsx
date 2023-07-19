@@ -3,7 +3,7 @@ import { FC, PropsWithChildren } from 'react'
 import { SHOP_API } from '~api'
 import { AuthContextProvider, AuthContextType } from '~contexts'
 import { useCallback, useEffect, useMemo, useState } from '~hooks'
-import { deleteToken, setToken } from '~services'
+import { deleteToken, getToken, setToken } from '~services'
 import { setUserData } from '~services/UserService'
 import { SignUpFormValues } from '~types/authForms'
 import { wait } from '~utils'
@@ -15,13 +15,13 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   const [isSignedIn, setIsSignedIn] = useState<boolean | null>(null)
 
   useEffect(() => {
-    // const bootstrap = async () => {
-    //   // TODO: This should be moved to backend calls, in this bootstrap function we should fetch user info and not token
-    //   const token = await getToken()
-    //   setIsSignedIn(!!token)
-    // }
-    //
-    // bootstrap()
+    const bootstrap = async () => {
+      // TODO: This should be moved to backend calls, in this bootstrap function we should fetch user info and not token
+      const token = await getToken()
+      setIsSignedIn(!!token)
+    }
+
+    bootstrap()
   }, [])
 
   const signIn: AuthContextType['signIn'] = useCallback(async (data) => {

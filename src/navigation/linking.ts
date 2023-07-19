@@ -21,7 +21,7 @@ export const linking: LinkingOptions<RootStackParamList> = {
       MainTab: {
         screens: {
           HomeStack: {
-            initialRouteName: 'Home',
+            ///   initialRouteName: 'Home',
             screens: {
               Home: '',
               Details: '/details/:id',
