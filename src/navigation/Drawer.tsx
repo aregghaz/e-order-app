@@ -5,10 +5,8 @@ import { CustomDrawer } from '~components/CustomDrawer'
 import { SCREEN } from '~constants'
 import { Header } from '~navigation/Header'
 import { optionForScreen } from '~navigation/HeaderGlobalStyles'
-import { PhoneRegisterStack } from '~navigation/PhoneRegisterStack'
 import { RootNavigator } from '~navigation/RootNavigator'
-import { Verification } from '~navigation/Verification'
-import { CategoryInnerScreen, SignInScreen } from '~screens'
+import { CategoryInnerScreen } from '~screens'
 import { CategoryDetailScreen } from '~screens/CategoryDetailScreen'
 import { CategorySearchScreen } from '~screens/CategorySearchScreen'
 import { MenuScreen } from '~screens/MenuScreen'
@@ -57,30 +55,21 @@ export const DrawerNavigator = () => {
           headerLeft: () => null,
         })}
       />
-      <Drawer.Screen
-        name={SCREEN.PHONE_REGISTER}
-        component={PhoneRegisterStack}
-        options={({ navigation, route }: any) => ({
-          headerTitle: () => <Header navigation={navigation} title={route.params.title} />,
-          headerLeft: () => null,
-        })}
-      />
-      <Drawer.Screen
-        name={SCREEN.STACK_VERIFICATION}
-        component={Verification}
-        options={({ navigation, route }: any) => ({
-          headerTitle: () => <Header navigation={navigation} title={route.params.title} />,
-          headerLeft: () => null,
-        })}
-      />
-      <Drawer.Screen
-        name={SCREEN.STACK_SIGN_IN}
-        component={SignInScreen}
-        options={({ navigation, route }: any) => ({
-          headerTitle: () => <Header navigation={navigation} title={'signIn'} />,
-          headerLeft: () => null,
-        })}
-      />
+      {/*<Drawer.Screen*/}
+      {/*  name={SCREEN.PHONE_REGISTER}*/}
+      {/*  component={PhoneRegisterStack}*/}
+      {/*  options={{ headerShown: false }}*/}
+      {/*/>*/}
+      {/*<Drawer.Screen*/}
+      {/*  name={SCREEN.STACK_VERIFICATION}*/}
+      {/*  component={Verification}*/}
+      {/*  options={{ headerShown: false }}*/}
+      {/*/>*/}
+      {/*<Drawer.Screen*/}
+      {/*  name={SCREEN.STACK_SIGN_IN}*/}
+      {/*  component={SignInScreen}*/}
+      {/*  options={{ headerShown: false }}*/}
+      {/*/>*/}
       <Drawer.Screen
         name={SCREEN.DRAWER_MENU}
         component={MenuScreen}

@@ -3,14 +3,13 @@
  */
 import { useNavigation } from '@react-navigation/native'
 import React, { FC, useState } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import PhoneInput from 'react-native-phone-input'
 
 import { SHOP_API } from '~api'
-// import { ImgOrSvg } from '~components/ImgOrSvg'
 import { CustomButton } from '~components/molecules/CustomButton'
 import { SCREEN } from '~constants'
-// import { NoImage } from 'assets/svg'
+
 export const PhoneRegisterStack: FC = () => {
   const [phoneNumber, setPhoneNumber] = useState('')
   const navigation = useNavigation<any>()
@@ -38,12 +37,9 @@ export const PhoneRegisterStack: FC = () => {
         textProps={{ placeholder: '+37491444444' }}
       />
       <CustomButton title="Registration" onPress={handleButtonPress} />
-      {/*** FIXME open only for auth ***/}
-      {/*<TouchableOpacity onPress={navigation.navigate(SCREEN.STACK_SIGN_IN)}>*/}
-      {/*  <Text>Already have account ?</Text>*/}
-      {/*</TouchableOpacity>*/}
-      {/*<ImgOrSvg />*/}
-      {/*<NoImage height={200} width={200} fill={'red'} />*/}
+      <TouchableOpacity onPress={() => navigation.navigate(SCREEN.STACK_SIGN_IN)}>
+        <Text style={styles.have_account}>Already have account ?</Text>
+      </TouchableOpacity>
     </View>
   )
 }
@@ -59,6 +55,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     paddingHorizontal: 20,
+  },
+  have_account: {
+    marginTop: 20,
   },
   input: {
     borderColor: colors.border,

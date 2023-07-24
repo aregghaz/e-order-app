@@ -35,6 +35,7 @@ export const useSignInForm = () => {
     try {
       setIsSubmitting(true)
       setError('')
+      console.log(data, 'data!!!!!!')
       await signIn(data)
     } catch (e) {
       if (isError(e)) {
