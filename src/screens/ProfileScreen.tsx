@@ -2,49 +2,49 @@
  * was created by tigran at 23.06.23
  */
 
-import { Feather } from '@expo/vector-icons'
 import { useFocusEffect } from '@react-navigation/native'
-import { Text, View, ScrollView, Image } from 'native-base'
 import React, { FC, useState } from 'react'
-import { StyleSheet } from 'react-native'
+import { ScrollView, StyleSheet, Text, View } from 'react-native'
 
-import { fakeData } from '~FakeData'
+import { ImgOrSvg } from '~components/ImgOrSvg'
 import { SCREEN } from '~constants'
 import { useAuth } from '~hooks'
-///import {SHOP_API} from "~api";
+import { getUserData } from '~services/UserService'
 
-// interface IProps {
-//   address: IAddress
-//   birthDate: string
-//   citizenship: string
-//   email: string
-//   fatherName: string
-//   firstName: string
-//   inn: string
-//   issueDate: string
-//   issuedBy: string
-//   lastName: string
-//   passport: string
-// }
-//
-// interface IAddress {
-//   address_1: string,
-//   address_2: string,
-//   city: string,
-//   country: string,
-//   gpsCoordinates: {
-//     latitude: string
-//     longitude: string
-//   }
-//   phoneNumber1: string
-//   phoneNumber2: string
-//   postCode: string,
-//   state: string,
-// }
+interface IProps {
+  person: any
+  address: IAddress
+  birthDate: string
+  citizenship: string
+  email: string
+  fatherName: string
+  firstName: string
+  inn: string
+  issueDate: string
+  issuedBy: string
+  lastName: string
+  passport: string
+}
 
-type TProfileIcon = 'user' | 'shopping-cart' | 'map-pin' | 'bell' | 'heart' | 'log-out'
+interface IAddress {
+  address_1: string
+  address_2: string
+  city: string
+  country: string
+  gpsCoordinates: {
+    latitude: string
+    longitude: string
+  }
+  phoneNumber1: string
+  phoneNumber2: string
+  postCode: string
+  state: string
+}
+
+// type TProfileIcon = 'user' | 'shopping-cart' | 'map-pin' | 'bell' | 'heart' | 'log-out'
 export const ProfileScreen: FC<any> = ({ navigation }) => {
-  const [data] = useState(fakeData.profile)
+  // const [data, setData] = useState(fakeData.profile)
+  const [data, setData] = useState<IProps>({} as IProps)
   const { isSignedIn } = useAuth()
   useFocusEffect(
     React.useCallback(() => {
@@ -52,31 +52,54 @@ export const ProfileScreen: FC<any> = ({ navigation }) => {
         if (!isSignedIn) {
           navigation.navigate(SCREEN.STACK_SIGN_IN)
         }
+        setData(await getUserData())
       })()
 
       //  return () => clientData();
     }, [])
   )
+  console.log(data, 'deeeeeee')
   return (
     <View style={styles.profile_wrapper}>
-      <ScrollView>
-        <View style={styles.avatar_block}>
-          <Image
-            alt="avatar_image"
-            src={'https://codervent.com/mobile/synrok/demo/assets/images/avatars/01.webp'}
-            resizeMode="contain"
-            resizeMethod="resize"
-            style={styles.profileImage}
-          />
-          <Text style={styles.name}>Mickael Clarke</Text>
-        </View>
-        {data.map((elem) => (
-          <View key={elem.id} style={styles.actions}>
-            <Feather name={elem.iconName as TProfileIcon} size={24} style={styles.icons} />
-            <Text>{elem.title}</Text>
+      {data && data.person && data.person.photo && (
+        <ScrollView>
+          <View style={styles.avatar_block}>
+            <View style={styles.profileImage}>
+              <ImgOrSvg item={data} product="photo" radius={50} />
+            </View>
+            <Text style={styles.name}>
+              {data.person?.firstName} {data.person?.lastName}
+            </Text>
           </View>
-        ))}
-      </ScrollView>
+          <View style={styles.icons}>
+            <Text>Email: {data.person.email}</Text>
+          </View>
+          <View style={styles.icons}>
+            <Text>Passport: {data.person.passport}</Text>
+          </View>
+          <View style={styles.icons}>
+            <Text>Phone1 : {data.person.phoneNumber1}</Text>
+          </View>
+          <View style={styles.icons}>
+            <Text>Phone2 : {data.person.phoneNumber2}</Text>
+          </View>
+          <View style={styles.icons}>
+            <Text>Address1 : {data.person.address.address_1}</Text>
+          </View>
+          <View style={styles.icons}>
+            <Text>Address2 : {data.person.address.address_2}</Text>
+          </View>
+          <View style={styles.icons}>
+            <Text>City : {data.person.address.city}</Text>
+          </View>
+          <View style={styles.icons}>
+            <Text>Country : {data.person.address.country}</Text>
+          </View>
+          <View style={styles.icons}>
+            <Text>Postcode : {data.person.address.postCode}</Text>
+          </View>
+        </ScrollView>
+      )}
     </View>
   )
 }
@@ -86,17 +109,17 @@ const colors = {
 }
 
 const styles = StyleSheet.create({
-  actions: {
-    alignItems: 'center',
-    borderColor: colors.border,
-    borderRadius: 8,
-    borderStyle: 'solid',
-    borderWidth: 1,
-    flexDirection: 'row',
-    height: 50,
-    marginVertical: 10,
-    paddingHorizontal: 10,
-  },
+  // actions: {
+  //   alignItems: 'center',
+  //   borderColor: colors.border,
+  //   borderRadius: 8,
+  //   borderStyle: 'solid',
+  //   borderWidth: 1,
+  //   flexDirection: 'row',
+  //   height: 50,
+  //   marginVertical: 10,
+  //   paddingHorizontal: 10,
+  // },
   avatar_block: {
     alignItems: 'center',
     backgroundColor: colors.grey,
@@ -110,7 +133,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   icons: {
-    marginRight: 20,
+    marginTop: 10,
   },
   name: {
     fontWeight: 'bold',

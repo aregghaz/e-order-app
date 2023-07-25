@@ -27,7 +27,7 @@ export async function getUserData(): Promise<IUser | any> {
     return
   }
 
-  return data
+  return JSON.parse(data)
 }
 
 export async function deleteUserData() {

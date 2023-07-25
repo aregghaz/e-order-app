@@ -35,6 +35,12 @@ const trueImgConfigs = (item: any, product = '') => {
           src: getImagePath(item?.filename, '-product'),
         }
       }
+    case 'photo':
+      return {
+        filename: item.person?.photo?.filename,
+        alt: item.person?.firstName,
+        src: getImagePath(item.person?.photo?.filename),
+      }
     default:
       return {
         filename: item.mainImage?.filename,

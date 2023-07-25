@@ -2,15 +2,18 @@
  * was created by tigran at 25.06.23
  */
 
+import { Feather } from '@expo/vector-icons'
 import { DrawerContentScrollView } from '@react-navigation/drawer'
 import { Switch } from 'native-base'
 import React, { FC } from 'react'
-import { Image, StyleSheet, View } from 'react-native'
+import { Image, StyleSheet, View, TouchableOpacity, Text } from 'react-native'
 
 import { fakeData } from '~FakeData'
 import { Accordion, TIcon } from '~components/Accordion'
+import { useAuth } from '~hooks'
 
 export const CustomDrawer: FC = (props: any) => {
+  const { signOut } = useAuth()
   return (
     <View style={styles.sidebar}>
       <View style={styles.infoBlock}>
@@ -39,6 +42,12 @@ export const CustomDrawer: FC = (props: any) => {
             />
           ))}
       </DrawerContentScrollView>
+      <TouchableOpacity onPress={signOut}>
+        <View style={styles.sign_out}>
+          <Feather name="log-out" size={20} />
+          <Text style={styles.sign_out__text}>sign out</Text>
+        </View>
+      </TouchableOpacity>
       <Switch />
     </View>
   )
@@ -71,5 +80,13 @@ const styles = StyleSheet.create({
   sidebar: {
     backgroundColor: colors.white,
     flex: 1,
+  },
+  sign_out: {
+    flexDirection: 'row',
+    paddingLeft: 10,
+    paddingTop: 20,
+  },
+  sign_out__text: {
+    paddingLeft: 10,
   },
 })
