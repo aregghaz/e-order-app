@@ -5,4 +5,5 @@ export const ASYNC_STORAGE_KEYS = {
   // This value is used in `expo-secure-store` package and it can't include '@' and '/'
   USER_TOKEN: 'user_token',
   USER_DATA: 'user_data',
+  SHOP_ID: 'shop_id',
 } as const

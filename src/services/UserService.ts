@@ -22,7 +22,7 @@ export function setUserData(data: IUser) {
 
 export async function getUserData(): Promise<IUser | any> {
   const data = await secureStore.getItem(USER_DATA)
-
+  console.log(data, '_________data in getUserData')
   if (!data) {
     return
   }

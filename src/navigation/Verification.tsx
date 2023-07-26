@@ -35,7 +35,7 @@ export const Verification: FC<IProps> = ({
       const toNumberCode = Number(combineCode)
       const data = await SHOP_API.setVerificationCode(phone, toNumberCode)
       if (data && data.status === 200) {
-        navigation.navigate(SCREEN.STACK_HOME)
+        navigation.navigate(SCREEN.STACK_PASSWORD, { mobile: phone, token: toNumberCode })
       }
     }
   }

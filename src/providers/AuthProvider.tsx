@@ -42,6 +42,7 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   }, [])
 
   const signOut = useCallback(async () => {
+    SHOP_API.signOut()
     console.log('EXIT!!!!!!!!!')
     await deleteToken()
     setIsSignedIn(false)

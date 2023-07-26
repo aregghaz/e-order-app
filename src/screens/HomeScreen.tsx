@@ -11,6 +11,7 @@ import FeaturedItems from '~components/FeaturedItems'
 import LatestItems from '~components/LatestItems'
 import NewArrivalItems from '~components/NewArrivalItems'
 import OfferPosterSlider from '~components/OfferPosterSlider'
+import { ShopComponent } from '~components/ShopComponent'
 
 const { slides } = fakeData.homeScreen
 
@@ -18,13 +19,13 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const { navigation } = props
   const [data, setData] = useState([])
   const [latest, setLatest] = useState([])
-
+  const [shopId, setShopId] = useState('')
   useFocusEffect(
     React.useCallback(() => {
       ;(async () => {
         const getAsyncData = async (): Promise<void> => {
           const categoryData = await SHOP_API.getCategory()
-          const latestData = await SHOP_API.getLatestProducts()
+          const latestData = await SHOP_API.getLatestProducts(shopId)
           setData(categoryData.payload.content)
           setLatest(latestData.payload.content)
         }
@@ -32,10 +33,15 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
       })()
 
       //  return () => clientData();
-    }, [])
+    }, [shopId])
   )
+  const handleChangeShopId = (value: string) => {
+    setShopId(value)
+    console.log(value, '___Value!!!')
+  }
   return (
     <ScrollView flex={1} style={styles.main_wrapper}>
+      <ShopComponent handleChangeShopId={handleChangeShopId} />
       {data.length > 0 && <CircleCategories navigation={navigation} categories={data} />}
       <OfferPosterSlider slides={slides} />
       <LatestItems navigation={navigation} items={latest} isCategoryProduct={false} />

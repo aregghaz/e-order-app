@@ -20,7 +20,6 @@ export const PhoneRegisterStack: FC = () => {
 
   const handleButtonPress = async () => {
     const data = await SHOP_API.setPhoneNumberRequest(phoneNumber)
-    /*FIXME can't find why it shows this error!!!!*/
     navigation.navigate(SCREEN.STACK_VERIFICATION, {
       phone: phoneNumber,
       duration: data.payload.duration,

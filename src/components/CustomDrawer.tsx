@@ -4,29 +4,37 @@
 
 import { Feather } from '@expo/vector-icons'
 import { DrawerContentScrollView } from '@react-navigation/drawer'
-import { Switch } from 'native-base'
-import React, { FC } from 'react'
-import { Image, StyleSheet, View, TouchableOpacity, Text } from 'react-native'
+import { useFocusEffect } from '@react-navigation/native'
+import React, { FC, useState } from 'react'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import { fakeData } from '~FakeData'
 import { Accordion, TIcon } from '~components/Accordion'
+import { ImgOrSvg } from '~components/ImgOrSvg'
 import { useAuth } from '~hooks'
+import { IProps } from '~screens'
+import { getUserData } from '~services/UserService'
+import { customStyles } from '~utils/style_helpers'
 
 export const CustomDrawer: FC = (props: any) => {
-  const { signOut } = useAuth()
+  const { signOut, isSignedIn } = useAuth()
+  const [data, setData] = useState<IProps>({} as IProps)
+  useFocusEffect(
+    React.useCallback(() => {
+      ;(async () => {
+        setData(await getUserData())
+      })()
+    }, [isSignedIn])
+  )
   return (
     <View style={styles.sidebar}>
       <View style={styles.infoBlock}>
         <View style={styles.imageWrapper}>
-          <Image
-            source={{
-              uri: 'https://codervent.com/mobile/synrok/demo/assets/images/avatars/01.webp',
-            }}
-            resizeMode="contain"
-            resizeMethod="resize"
-            style={styles.profileImage}
-          />
+          <ImgOrSvg item={data} product="photo" radius={10} width={68} />
         </View>
+        <Text style={styles.name}>
+          {data.person?.firstName} {data.person?.lastName}
+        </Text>
       </View>
       <DrawerContentScrollView {...props}>
         {/*<DrawerItemList {...props} />*/}
@@ -42,13 +50,18 @@ export const CustomDrawer: FC = (props: any) => {
             />
           ))}
       </DrawerContentScrollView>
-      <TouchableOpacity onPress={signOut}>
+      <TouchableOpacity
+        onPress={() => {
+          props.navigation.closeDrawer()
+          signOut()
+        }}
+      >
         <View style={styles.sign_out}>
           <Feather name="log-out" size={20} />
           <Text style={styles.sign_out__text}>sign out</Text>
         </View>
       </TouchableOpacity>
-      <Switch />
+      {/*<Switch />*/}
     </View>
   )
 }
@@ -56,6 +69,7 @@ export const CustomDrawer: FC = (props: any) => {
 const colors = {
   white: 'white',
   lightDark: '#212529',
+  lightGrey: '#f1f1f1',
 }
 
 const styles = StyleSheet.create({
@@ -67,15 +81,21 @@ const styles = StyleSheet.create({
     width: 80,
   },
   infoBlock: {
+    alignItems: 'center',
     backgroundColor: colors.lightDark,
+    flexDirection: 'row',
     height: 150,
     paddingLeft: 15,
     paddingTop: 50,
   },
-  profileImage: {
-    borderRadius: 10,
-    height: '100%',
-    width: '100%',
+  // profileImage: {
+  //   borderRadius: 10,
+  //   height: '100%',
+  //   width: '100%',
+  // },
+  name: {
+    color: colors.white,
+    paddingLeft: 10,
   },
   sidebar: {
     backgroundColor: colors.white,
@@ -83,8 +103,11 @@ const styles = StyleSheet.create({
   },
   sign_out: {
     flexDirection: 'row',
-    paddingLeft: 10,
-    paddingTop: 20,
+    // paddingLeft: 10,
+    // paddingTop: 20,
+    padding: 10,
+    paddingVertical: 20,
+    ...customStyles.border(1, 'solid', colors.lightGrey),
   },
   sign_out__text: {
     paddingLeft: 10,

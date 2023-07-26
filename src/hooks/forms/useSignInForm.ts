@@ -43,7 +43,7 @@ export const useSignInForm = () => {
       } else {
         setError(t('errors.something_went_wrong'))
       }
-      impactAsync(ImpactFeedbackStyle.Medium)
+      await impactAsync(ImpactFeedbackStyle.Medium)
     } finally {
       setIsSubmitting(false)
     }
