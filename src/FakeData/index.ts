@@ -476,4 +476,30 @@ export const fakeData = {
       iconName: 'log-out',
     },
   ],
+  shopIds: [
+    {
+      id: 1,
+      shopId: 'shop_id_1',
+    },
+    {
+      id: 2,
+      shopId: 'shop_id_2',
+    },
+    {
+      id: 3,
+      shopId: 'shop_id_3',
+    },
+    {
+      id: 4,
+      shopId: 'shop_id_4',
+    },
+    {
+      id: 5,
+      shopId: 'shop_id_5',
+    },
+    {
+      id: 6,
+      shopId: 'shop_id_6',
+    },
+  ],
 }

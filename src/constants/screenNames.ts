@@ -12,6 +12,8 @@ export const SCREEN = {
   STACK_SIGN_UP: 'SignUp',
   STACK_MAIN_TAB: 'MainTab',
   STACK_MAIN_REGISTER: 'MainRegister',
+  STACK_PASSWORD: 'PasswordStack',
+  STACK_ACCOUNT: 'AccountStack',
   STACK_SETTINGS: 'Settings',
   STACK_APPLICATION_INFO: 'ApplicationInfo',
   STACK_NOT_FOUND: 'NotFound',

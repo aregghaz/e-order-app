@@ -5,6 +5,8 @@ import { createStackNavigator } from '@react-navigation/stack'
 import React, { FC } from 'react'
 
 import { SCREEN } from '~constants'
+import { AccountStack } from '~navigation/AccountStack'
+import { PasswordStack } from '~navigation/PasswordStack'
 import { PhoneRegisterStack } from '~navigation/PhoneRegisterStack'
 import { Verification } from '~navigation/Verification'
 import { SignInScreen } from '~screens'
@@ -24,8 +26,18 @@ export const RegistrationAlias: FC = () => {
         options={{ headerShown: false }}
       />
       <Screen
+        name={SCREEN.STACK_PASSWORD}
+        component={PasswordStack}
+        options={{ headerShown: false }}
+      />
+      <Screen
         name={SCREEN.STACK_SIGN_IN}
         component={SignInScreen}
+        options={{ headerShown: false }}
+      />
+      <Screen
+        name={SCREEN.STACK_ACCOUNT}
+        component={AccountStack}
         options={{ headerShown: false }}
       />
     </Navigator>

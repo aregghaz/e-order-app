@@ -7,11 +7,9 @@ import React, { FC, useState } from 'react'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 
 import { ImgOrSvg } from '~components/ImgOrSvg'
-import { SCREEN } from '~constants'
-import { useAuth } from '~hooks'
 import { getUserData } from '~services/UserService'
 
-interface IProps {
+export interface IProps {
   person: any
   address: IAddress
   birthDate: string
@@ -41,65 +39,57 @@ interface IAddress {
   state: string
 }
 
-// type TProfileIcon = 'user' | 'shopping-cart' | 'map-pin' | 'bell' | 'heart' | 'log-out'
-export const ProfileScreen: FC<any> = ({ navigation }) => {
-  // const [data, setData] = useState(fakeData.profile)
+export const ProfileScreen: FC = () => {
   const [data, setData] = useState<IProps>({} as IProps)
-  const { isSignedIn } = useAuth()
   useFocusEffect(
     React.useCallback(() => {
       ;(async () => {
-        if (!isSignedIn) {
-          navigation.navigate(SCREEN.STACK_SIGN_IN)
-        }
         setData(await getUserData())
       })()
-
-      //  return () => clientData();
     }, [])
   )
-  console.log(data, 'deeeeeee')
   return (
     <View style={styles.profile_wrapper}>
-      {data && data.person && data.person.photo && (
+      {data && data.person && (
         <ScrollView>
           <View style={styles.avatar_block}>
             <View style={styles.profileImage}>
-              <ImgOrSvg item={data} product="photo" radius={50} />
+              <ImgOrSvg item={data} product="photo" radius={50} width={100} />
             </View>
             <Text style={styles.name}>
               {data.person?.firstName} {data.person?.lastName}
             </Text>
           </View>
           <View style={styles.icons}>
-            <Text>Email: {data.person.email}</Text>
+            <Text>Email: {data.person?.email}</Text>
           </View>
           <View style={styles.icons}>
-            <Text>Passport: {data.person.passport}</Text>
+            <Text>Passport: {data.person?.passport}</Text>
           </View>
           <View style={styles.icons}>
-            <Text>Phone1 : {data.person.phoneNumber1}</Text>
+            <Text>Phone1 : {data.person?.phoneNumber1}</Text>
           </View>
           <View style={styles.icons}>
-            <Text>Phone2 : {data.person.phoneNumber2}</Text>
+            <Text>Phone2 : {data.person?.phoneNumber2}</Text>
           </View>
           <View style={styles.icons}>
-            <Text>Address1 : {data.person.address.address_1}</Text>
+            <Text>Address1 : {data.person?.address.address_1}</Text>
           </View>
           <View style={styles.icons}>
-            <Text>Address2 : {data.person.address.address_2}</Text>
+            <Text>Address2 : {data.person?.address.address_2}</Text>
           </View>
           <View style={styles.icons}>
-            <Text>City : {data.person.address.city}</Text>
+            <Text>City : {data.person?.address.city}</Text>
           </View>
           <View style={styles.icons}>
-            <Text>Country : {data.person.address.country}</Text>
+            <Text>Country : {data.person?.address.country}</Text>
           </View>
           <View style={styles.icons}>
-            <Text>Postcode : {data.person.address.postCode}</Text>
+            <Text>Postcode : {data.person?.address.postCode}</Text>
           </View>
         </ScrollView>
       )}
+      <Text>Postcode : {data.person?.address.postCode}</Text>
     </View>
   )
 }

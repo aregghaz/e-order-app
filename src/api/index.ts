@@ -11,7 +11,11 @@ export const SHOP_API = {
       .then((res) => res.data)
       .catch((err) => console.log(err))
   },
-  getLatestProducts: (limit = 20, page = 1, shopId: string = shopIdTest) => {
+  getLatestProducts: (shopId: string = shopIdTest, limit = 20, page = 1) => {
+    console.log(
+      `${fakeUrl}/api/analytics/get-products?period=30&category=&type=new-arrivals&shopId=${shopId}&limit=${limit}&page=${page}`,
+      'URL_____'
+    )
     return axios
       .get(
         `${fakeUrl}/api/analytics/get-products?period=30&category=&type=new-arrivals&shopId=${shopId}&limit=${limit}&page=${page}`
@@ -24,7 +28,10 @@ export const SHOP_API = {
       .get(
         `${fakeUrl}/api/analytics/get-products?period=30&category=&type=featured&shopId=${shopId}&limit=${limit}&page=${page}`
       )
-      .then((res) => res.data)
+      .then((res) => {
+        console.log(res, 'TYTYTYTY')
+        return res.data
+      })
       .catch((err) => console.log(err))
   },
   getFeaturedProductsByCategories: (
@@ -93,7 +100,7 @@ export const SHOP_API = {
       .catch((err) => console.log(err))
   },
   /*** Authentication ***/
-
+  /* step 1 */
   setPhoneNumberRequest: (phoneNumber: string) => {
     return axios
       .post(`${fakeUrl}/api/auth/customer-registration`, {
@@ -104,7 +111,7 @@ export const SHOP_API = {
       })
       .catch((err) => console.log(err))
   },
-
+  /* step 2 */
   setVerificationCode: (phoneNumber: string, token: number) => {
     return axios
       .post(`${fakeUrl}/api/auth/confirm-mobile-token`, { mobile: phoneNumber, token })
@@ -114,6 +121,17 @@ export const SHOP_API = {
       })
       .catch((err) => console.log(err))
   },
+  /* step 3 */
+  createCustomerUser: (token: number, phone: string, password: string) => {
+    return axios
+      .post(`${fakeUrl}/api/users/create-customer-user`, { mobile: phone, password, token })
+      .then((res) => {
+        console.log(res.data, '___ RES_DATA ___')
+        return res.data
+      })
+      .catch((err) => console.log(err))
+  },
+  /* step 4 */
   signInRequest: (phone: string, password: string) => {
     return axios
       .post(`${fakeUrl}/api/auth/customer-login`, { login: phone, password })
@@ -121,5 +139,17 @@ export const SHOP_API = {
         return res.data
       })
       .catch((err) => console.log(err))
+  },
+  /* step 5 */
+  createCustomerAccount: () => {
+    return axios
+      .post(`${fakeUrl}/api/customers/create-customer-account`, {})
+      .then((res) => {
+        return res.data
+      })
+      .catch((err) => console.log(err))
+  },
+  signOut: () => {
+    axios.post(`${fakeUrl}/api/auth/signOut`)
   },
 }
