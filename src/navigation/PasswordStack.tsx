@@ -15,7 +15,7 @@ interface IProps {
 
 export const PasswordStack: FC<IProps> = ({ route, navigation }) => {
   const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{10,}$/
-  const token = route?.params?.token
+  const token = route?.params?.token.toString()
   const mobile = route?.params?.mobile
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
@@ -33,8 +33,9 @@ export const PasswordStack: FC<IProps> = ({ route, navigation }) => {
     }
 
     const data = await SHOP_API.createCustomerUser(token, mobile, password)
+    console.log(data, 'iiiiiii')
     if (data && data.status === 200) {
-      navigation.navigate(SCREEN.STACK_SIGN_IN)
+      navigation.navigate(SCREEN.STACK_SIGN_IN, { pass_from: 'passStack' })
     }
   }
   return (

@@ -4,7 +4,7 @@
 import React, { FC } from 'react'
 import { ScrollView } from 'react-native'
 
-import LatestItems from '~components/LatestItems'
+import TopRatedItems from '~components/TopRatedItems'
 //import { ICategory } from '~types/category'
 
 // interface IProps {
@@ -18,7 +18,7 @@ export const CategorySearchScreen: FC<any> = ({ route, navigation }) => {
   const { products } = route.params
   return (
     <ScrollView>
-      <LatestItems items={products} navigation={navigation} isCategoryProduct={true} />
+      <TopRatedItems items={products} navigation={navigation} isCategoryProduct={true} />
     </ScrollView>
   )
 }

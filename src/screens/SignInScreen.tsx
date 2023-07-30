@@ -1,20 +1,31 @@
 import { useNavigation } from '@react-navigation/native'
 import { Button, Center, Text } from 'native-base'
-import { useCallback } from 'react'
+import { FC, useCallback } from 'react'
 import { StyleSheet, TextInput } from 'react-native'
 
 import { ControlledField } from '~components'
 import { SCREEN } from '~constants'
 import { useRef, useSignInForm, useTranslation } from '~hooks'
 
-export const SignInScreen = (): JSX.Element => {
+interface IProps {
+  route: any
+  navigation: any
+}
+
+export const SignInScreen: FC<IProps> = (props): JSX.Element => {
   const { navigate } = useNavigation<any>()
   const { t } = useTranslation()
   const passwordInputRef = useRef<TextInput>(null)
   const { control, errors, submit, isSubmitting } = useSignInForm()
 
   const goToRegister = useCallback(() => navigate(SCREEN.PHONE_REGISTER), [navigate])
-
+  const handleCheckRegister = () => {
+    if (props.route.params && props.route.params.pass_from === 'passStack') {
+      navigate(SCREEN.STACK_ACCOUNT)
+    } else {
+      submit()
+    }
+  }
   return (
     <Center p={8} flex={1}>
       <ControlledField.Input
@@ -54,7 +65,8 @@ export const SignInScreen = (): JSX.Element => {
         isLoading={isSubmitting}
         mb={2}
         mt={6}
-        onPress={submit}
+        // onPress={submit}
+        onPress={handleCheckRegister}
         testID="signInButton"
         style={styles.button}
       >

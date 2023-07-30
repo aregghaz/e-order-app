@@ -21,13 +21,14 @@ const colors = {
   nameColor: '#646464',
 }
 
-const LatestItems: FC<IFeaturedItems> = ({ items, navigation, isCategoryProduct }) => {
+const TopRatedItems: FC<IFeaturedItems> = ({ items, navigation, isCategoryProduct }) => {
   const heightOfBlock = isCategoryProduct ? { height: 270 } : { height: 'auto' }
   return (
     <View style={styles.main}>
-      {items.length > 0 && !isCategoryProduct && <Text style={styles.heading}>Latest</Text>}
+      {items.length > 0 && !isCategoryProduct && <Text style={styles.heading}>Top Rated</Text>}
       <View style={styles.container}>
-        {items && items.length > 0 ? (
+        {items &&
+          items.length > 0 &&
           items.map((item) => {
             const { name, id, price, views } = item
             return (
@@ -50,10 +51,7 @@ const LatestItems: FC<IFeaturedItems> = ({ items, navigation, isCategoryProduct 
                 </View>
               </TouchableOpacity>
             )
-          })
-        ) : (
-          <Text style={styles.notFound}>Nothing was found</Text>
-        )}
+          })}
       </View>
     </View>
   )
@@ -97,17 +95,17 @@ const styles = StyleSheet.create({
     color: colors.nameColor,
     fontWeight: '700',
   },
-  notFound: {
-    alignItems: 'center',
-    flex: 1,
-    fontSize: 20,
-    fontWeight: 'bold',
-    justifyContent: 'center',
-    textAlign: 'center',
-  },
+  // notFound: {
+  //   alignItems: 'center',
+  //   flex: 1,
+  //   fontSize: 20,
+  //   fontWeight: 'bold',
+  //   justifyContent: 'center',
+  //   textAlign: 'center',
+  // },
   price: {
     textAlign: 'left',
   },
 })
 
-export default LatestItems
+export default TopRatedItems

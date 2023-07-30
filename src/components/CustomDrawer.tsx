@@ -28,16 +28,15 @@ export const CustomDrawer: FC = (props: any) => {
   )
   return (
     <View style={styles.sidebar}>
-      <View style={styles.infoBlock}>
-        <View style={styles.imageWrapper}>
-          <ImgOrSvg item={data} product="photo" radius={10} width={68} />
+      {data && (
+        <View style={styles.infoBlock}>
+          <View style={styles.imageWrapper}>
+            <ImgOrSvg item={data} product="photo" radius={10} width={68} />
+          </View>
+          <Text style={styles.name}>{data.person?.firstName + ' ' + data.person?.lastName}</Text>
         </View>
-        <Text style={styles.name}>
-          {data.person?.firstName} {data.person?.lastName}
-        </Text>
-      </View>
+      )}
       <DrawerContentScrollView {...props}>
-        {/*<DrawerItemList {...props} />*/}
         {fakeData.accordion &&
           fakeData.accordion.map((item) => (
             <Accordion

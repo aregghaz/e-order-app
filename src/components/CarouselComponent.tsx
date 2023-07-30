@@ -12,12 +12,13 @@ import { customStyles } from '~utils/style_helpers'
 interface IBestSellerItems {
   items: IFeatured[]
   navigation: any
+  title: string
 }
 
-const BestSellerItems: FC<IBestSellerItems> = ({ items, navigation }) => {
+const CarouselComponent: FC<IBestSellerItems> = ({ items, navigation, title }) => {
   return (
     <View style={styles.main}>
-      {items.length > 0 && <Text style={styles.heading}>Best seller</Text>}
+      {items.length > 0 && <Text style={styles.heading}>{title}</Text>}
       <Carousel
         width={getVW(50)}
         style={styles.container}
@@ -43,6 +44,9 @@ const BestSellerItems: FC<IBestSellerItems> = ({ items, navigation }) => {
                 <View>
                   <Text style={styles.price}>₽ {item.price}</Text>
                 </View>
+                <View>
+                  <Text style={styles.price}>views {item.views}</Text>
+                </View>
               </View>
             </TouchableOpacity>
           )
@@ -61,7 +65,7 @@ const colors = {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     width: screenWidth,
   },
 
@@ -78,15 +82,17 @@ const styles = StyleSheet.create({
     backgroundColor: colors.itemColor,
     borderRadius: 8,
     ...customStyles.border(1, 'solid', colors.borderColor),
-    height: '100%',
+    // height: '100%',
     marginHorizontal: 10,
     padding: 10,
   },
 
   main: {
     alignItems: 'center',
-    height: 350,
-    marginBottom: 50,
+    // height: 370,
+    aspectRatio: 1,
+    // ...customStyles.border(1, 'solid', colors.borderColor),
+    // marginBottom: 50,
     width: '100%',
   },
 
@@ -101,4 +107,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default BestSellerItems
+export default CarouselComponent

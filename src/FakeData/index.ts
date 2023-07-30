@@ -1,3 +1,8 @@
+const idGen = () => {
+  return Math.floor((1 + Math.random()) * 0x10000)
+    .toString(16)
+    .substring(1)
+}
 export const fakeData = {
   accordion: [
     {
@@ -9,6 +14,46 @@ export const fakeData = {
     },
     {
       id: '2',
+      title: 'Shops',
+      iconName: 'shopping-cart',
+      hasChildren: true,
+      children: [
+        {
+          id: '1',
+          title: 'Shop 1',
+          group: 'shop',
+          shop_id: idGen(),
+          hasChildren: false,
+          children: [],
+        },
+        {
+          id: '2',
+          title: 'Shop 2',
+          group: 'shop',
+          shop_id: idGen(),
+          hasChildren: false,
+          children: [],
+        },
+        {
+          id: '3',
+          title: 'Shop 3',
+          group: 'shop',
+          shop_id: idGen(),
+          hasChildren: false,
+          children: [],
+        },
+        {
+          id: '4',
+          title: 'Shop 4',
+          group: 'shop',
+          shop_id: idGen(),
+          hasChildren: false,
+          children: [],
+        },
+      ],
+    },
+    {
+      id: '3',
       title: 'Account',
       iconName: 'user',
       hasChildren: true,
@@ -72,7 +117,7 @@ export const fakeData = {
       ],
     },
     {
-      id: '6',
+      id: '5',
       title: 'Authentication',
       iconName: 'lock',
       hasChildren: true,
@@ -116,7 +161,7 @@ export const fakeData = {
       ],
     },
     {
-      id: '7',
+      id: '6',
       title: 'Customer Reviews',
       iconName: 'star',
       hasChildren: true,
@@ -136,13 +181,13 @@ export const fakeData = {
       ],
     },
     {
-      id: '8',
+      id: '7',
       title: 'About Us',
       iconName: 'smile',
       hasChildren: false,
     },
     {
-      id: '9',
+      id: '8',
       title: 'Contact Us',
       iconName: 'headphones',
       hasChildren: false,
