@@ -41,7 +41,7 @@ export const CategoryScreen = (props: any) => {
                 <View style={styles.category_block__wrapper}>
                   <Text style={styles.synchronized_block}>{category.name[locale]}</Text>
                   <View style={styles.img_wrapper}>
-                    <ImgOrSvg item={category} radius={100} width={100} />
+                    <ImgOrSvg item={category} radius={100} width={100} height={100} />
                   </View>
                 </View>
               </TouchableWithoutFeedback>

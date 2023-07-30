@@ -11,25 +11,14 @@ export const SHOP_API = {
       .then((res) => res.data)
       .catch((err) => console.log(err))
   },
-  getLatestProducts: (shopId: string = shopIdTest, limit = 20, page = 1) => {
-    console.log(
-      `${fakeUrl}/api/analytics/get-products?period=30&category=&type=new-arrivals&shopId=${shopId}&limit=${limit}&page=${page}`,
-      'URL_____'
-    )
-    return axios
-      .get(
-        `${fakeUrl}/api/analytics/get-products?period=30&category=&type=new-arrivals&shopId=${shopId}&limit=${limit}&page=${page}`
-      )
-      .then((res) => res.data)
-      .catch((err) => console.log(err))
-  },
   getFeaturedProducts: (shopId: string = shopIdTest, limit = 20, page = 1) => {
+    console.log(`shopId=${shopId}___SHOP_ID`)
     return axios
       .get(
         `${fakeUrl}/api/analytics/get-products?period=30&category=&type=featured&shopId=${shopId}&limit=${limit}&page=${page}`
       )
       .then((res) => {
-        console.log(res, 'TYTYTYTY')
+        // console.log(res, 'TYTYTYTY')
         return res.data
       })
       .catch((err) => console.log(err))
@@ -126,7 +115,7 @@ export const SHOP_API = {
     return axios
       .post(`${fakeUrl}/api/users/create-customer-user`, { mobile: phone, password, token })
       .then((res) => {
-        console.log(res.data, '___ RES_DATA ___')
+        console.log(res, '___ RES_DATA ___')
         return res.data
       })
       .catch((err) => console.log(err))

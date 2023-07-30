@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-type UseIncrementReturnType = [number, (option: number) => void]
+type UseIncrementReturnType = [number, (option: number) => void, () => void]
 
 export const useIncrement = (): UseIncrementReturnType => {
   const [value, setValue] = useState<number>(1)
@@ -9,5 +9,9 @@ export const useIncrement = (): UseIncrementReturnType => {
     setValue((prevValue) => prevValue + option)
   }
 
-  return [value, addOption]
+  const resetOption = () => {
+    setValue(1)
+  }
+
+  return [value, addOption, resetOption]
 }

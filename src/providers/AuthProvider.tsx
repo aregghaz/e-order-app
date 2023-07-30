@@ -18,7 +18,7 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
     const bootstrap = async () => {
       // TODO: This should be moved to backend calls, in this bootstrap function we should fetch user info and not token
       const token = await getToken()
-      console.log(!!token, '____ TOKEN ____')
+      // console.log(!!token, '____ TOKEN ____')
       setIsSignedIn(!!token)
     }
 
@@ -42,7 +42,8 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   }, [])
 
   const signOut = useCallback(async () => {
-    SHOP_API.signOut()
+    /*FIXME this request gives 401 status code*/
+    // SHOP_API.signOut()
     console.log('EXIT!!!!!!!!!')
     await deleteToken()
     setIsSignedIn(false)

@@ -3,10 +3,10 @@
  */
 import { useFocusEffect } from '@react-navigation/native'
 import React, { FC, useCallback, useState } from 'react'
-import { View } from 'react-native'
+import { ScrollView } from 'react-native'
 
 import { SHOP_API } from '~api'
-import LatestItems from '~components/LatestItems'
+import TopRatedItems from '~components/TopRatedItems'
 //import { ICategory } from '~types/category'
 
 // interface IProps {
@@ -28,8 +28,8 @@ export const CategoryDetailScreen: FC<any> = ({ route, navigation }) => {
     }, [detail.id])
   )
   return (
-    <View>
-      <LatestItems items={data} navigation={navigation} isCategoryProduct={true} />
-    </View>
+    <ScrollView>
+      <TopRatedItems items={data} navigation={navigation} isCategoryProduct={true} />
+    </ScrollView>
   )
 }

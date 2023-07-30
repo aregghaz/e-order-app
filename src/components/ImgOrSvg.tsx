@@ -16,6 +16,7 @@ interface IProps {
   padding?: number
   resizeMode?: 'contain' | 'cover' | 'center' | 'stretch'
   width?: number
+  height?: number
 }
 
 const trueImgConfigs = (item: any, product = '') => {
@@ -58,6 +59,7 @@ export const ImgOrSvg: FC<IProps> = ({
   padding = 0,
   resizeMode = 'contain',
   width,
+  height,
 }) => {
   const correctPadding = padding * 4
   const divWidth = (dimensionWidth - correctPadding) / column
@@ -65,11 +67,12 @@ export const ImgOrSvg: FC<IProps> = ({
   const borderRadius = radius ? { borderRadius: radius } : { borderRadius: 0 }
   const imgWidth = { width: width || divWidth }
   const trueWidth = width ? { width } : { width: '100%' }
+  const trueHeight = height ? { height } : { height: undefined }
   return (
     <View>
       {filename ? (
         <Image
-          style={[styles.image, borderRadius, trueWidth]}
+          style={[styles.image, borderRadius, trueWidth, trueHeight]}
           source={{ uri: src }}
           alt={alt}
           resizeMode={resizeMode}

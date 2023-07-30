@@ -23,9 +23,10 @@ const NewArrivalItems: FC<ITopBrands> = ({ items, navigation }) => {
         autoPlay
         style={styles.container}
         width={getVW(50)}
-        height={186}
+        // height={'auto'}
         data={items}
         autoPlayInterval={2500}
+        // contentContainerCustomStyle={{ flex: 1 }}
         renderItem={({ item, index }: { item: IFeatured; index: number }) => {
           return (
             <TouchableOpacity
@@ -53,6 +54,9 @@ const colors = {
 
 const styles = StyleSheet.create({
   container: {
+    ...customStyles.border(1, 'solid', colors.borderColor),
+    flex: 1,
+    height: 'auto',
     width: screenWidth,
   },
 
@@ -74,7 +78,8 @@ const styles = StyleSheet.create({
 
   main: {
     alignItems: 'center',
-    height: 180,
+    flex: 1,
+    height: 250,
     width: '100%',
   },
 })

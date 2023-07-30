@@ -35,7 +35,7 @@ const CircleCategories: FC<ICircleCategories> = ({ categories, navigation }) => 
                 }}
                 style={styles.categoryButton}
               >
-                <ImgOrSvg item={item} radius={100} />
+                <ImgOrSvg item={item} radius={100} width={90} height={90} />
                 <View style={styles.textContainer}>
                   <Text style={styles.text}>{item.name[local]}</Text>
                 </View>

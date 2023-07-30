@@ -18,6 +18,7 @@ import Swiper from 'react-native-swiper'
 
 import { SHOP_API } from '~api'
 import { ImgOrSvg } from '~components/ImgOrSvg'
+import { NoImageSvg } from '~components/NoImageSvg'
 import { SCREEN } from '~constants'
 import { useIncrement } from '~hooks/useIncrement'
 import { IFeatured } from '~types/featuredProducts'
@@ -29,7 +30,7 @@ const colors = {
   borderColor: '#D2D2D2',
   nameColor: '#646464',
 }
-const renderFooter = ({ isLoading }: any) => {
+const RenderFooter = ({ isLoading }: any) => {
   if (!isLoading) return null
   return (
     <View>
@@ -41,6 +42,7 @@ const renderFooter = ({ isLoading }: any) => {
 export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
   const [featured, setFeatured] = useState<IFeatured[]>([])
   const [isLoading, setIsLoading] = useState(false)
+  const [hasNext, setHasNext] = useState(false)
   const scrollViewRef = useRef<any>(null)
   const [value, addOption] = useIncrement()
   const width = Dimensions.get('window').width
@@ -51,7 +53,8 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
       const getAsyncData = async (): Promise<void> => {
         try {
           setIsLoading(true)
-          const featuredData = await SHOP_API.getLatestProducts(6, value as number)
+          const featuredData = await SHOP_API.getTopDiscounts('', 6, value as number)
+          setHasNext(featuredData.payload.pagination.hasNext)
           setFeatured((featured) => [...featured, ...featuredData.payload.content])
         } catch (err) {
           console.error('Error fetching latest products:', err)
@@ -59,11 +62,8 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
           setIsLoading(false)
         }
       }
-      // ;(async () => {
-      // await getAsyncData()
       getAsyncData()
-      // })()
-    }, [params.id, value])
+    }, [value])
   )
   useEffect(() => {
     if (scrollViewRef.current) {
@@ -71,30 +71,42 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
     }
   }, [params.id])
 
-  const Header = () => {
+  const handleEnd = () => {
+    if (!hasNext) {
+      return null
+    }
+    addOption(1)
+  }
+  console.log(value, '___VALUE')
+
+  const Header = useCallback(() => {
     return (
       <>
-        <Swiper
-          width={width}
-          height={width}
-          horizontal={true}
-          loop={true}
-          showsPagination={true}
-          scrollEnabled={true}
-          showsButtons={false}
-          autoplay={false}
-          autoplayTimeout={500}
-          autoplayDirection={true}
-          pagingEnabled={true}
-        >
-          {params.gallery.map((item: IFeatured) => {
-            return (
-              <React.Fragment key={item.id}>
-                <ImgOrSvg item={item} product="-product" />
-              </React.Fragment>
-            )
-          })}
-        </Swiper>
+        {params.gallery.length > 0 ? (
+          <Swiper
+            width={width}
+            height={width}
+            horizontal={true}
+            loop={true}
+            showsPagination={true}
+            scrollEnabled={true}
+            showsButtons={false}
+            autoplay={false}
+            autoplayTimeout={500}
+            autoplayDirection={true}
+            pagingEnabled={true}
+          >
+            {params.gallery.map((item: IFeatured) => {
+              return (
+                <React.Fragment key={item.id}>
+                  <ImgOrSvg item={item} product="-product" />
+                </React.Fragment>
+              )
+            })}
+          </Swiper>
+        ) : (
+          <NoImageSvg width={width} height={width} />
+        )}
         <View style={styles.inner_wrapper}>
           <Text style={styles.title}>{params.name}</Text>
           <Text style={styles.description}>{params.description}</Text>
@@ -114,11 +126,11 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
             <Text>{params.description}</Text>
           </View>
           <View style={styles.horizontal_row} />
-          <Text style={styles.heading}>Latest</Text>
+          <Text style={styles.heading}>Top Discounts</Text>
         </View>
       </>
     )
-  }
+  }, [params.id])
 
   return (
     <View style={styles.ProductInnerScreen_wrapper}>
@@ -130,7 +142,6 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <TouchableOpacity
-            key={item.id}
             style={styles.item}
             onPress={() => {
               navigation.navigate(SCREEN.STACK_PRODUCT_INNER, item)
@@ -145,8 +156,9 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
             </View>
           </TouchableOpacity>
         )}
-        ListFooterComponent={() => renderFooter(isLoading)}
-        onEndReached={() => addOption(1)}
+        ListFooterComponent={<RenderFooter isLoading={isLoading} />}
+        // onEndReached={() => addOption(1)}
+        onEndReached={handleEnd}
         onEndReachedThreshold={0.5}
       />
     </View>

@@ -52,6 +52,8 @@ export const Accordion: FC<IProps> = ({
       <View key={item.id}>
         <SubList
           title={item.title}
+          group={item.group}
+          shop_id={item.shop_id}
           navigation={navigation}
           hasChildren={item.hasChildren}
           handlePress={handlePress}
@@ -61,6 +63,10 @@ export const Accordion: FC<IProps> = ({
   ) : (
     <></>
   )
+  const handlePressCheck = (title: string) => {
+    handlePress()
+    !hasChildren ? navigation.navigate(findScreenName, { title }) : null
+  }
   /*** checking if there is matching screen name ***/
   const findScreenName = Object.values(SCREEN).find((item) => item === title) || 'Menu'
   // const newStyle = { ...styles.accordion_block, height }
@@ -68,10 +74,11 @@ export const Accordion: FC<IProps> = ({
     <View style={styles.accordion_block}>
       {/*// <View style={newStyle}>*/}
       <TouchableWithoutFeedback
-        onPress={() => {
-          handlePress()
-          !hasChildren ? navigation.navigate(findScreenName, { title }) : null
-        }}
+        // onPress={() => {
+        //   handlePress()
+        //   !hasChildren ? navigation.navigate(findScreenName, { title }) : null
+        // }}
+        onPress={() => handlePressCheck(title)}
       >
         <View>
           <View style={styles.accordion_text__wrapper}>
