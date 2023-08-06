@@ -11642,6 +11642,13 @@
     "prop-types" "^15.6.2"
     "react-native-iphone-x-helper" "^1.0.3"
 
+"react-native-modal-datetime-picker@^17.0.0":
+  "integrity" "sha512-/NFZMlugmd4WnKfNHjWQ5vz7PWfL2ECg8+hH0i661EqunT3+Oulp8a/0BCjNfCy2YEHargeII4T0ztLEe5MsfA=="
+  "resolved" "https://registry.npmjs.org/react-native-modal-datetime-picker/-/react-native-modal-datetime-picker-17.0.0.tgz"
+  "version" "17.0.0"
+  dependencies:
+    "prop-types" "^15.7.2"
+
 "react-native-notificated@^0.0.1-beta.0":
   "integrity" "sha512-6cwVMUWOiW9d7TY+rd9/GfEZrkvUQ3o3zEc1rwlmAPV5tajp7CKEwT8OLRP74w1QY4cUwNP+mxQID9yQXtA8Sw=="
   "resolved" "https://registry.npmjs.org/react-native-notificated/-/react-native-notificated-0.0.1-beta.0.tgz"

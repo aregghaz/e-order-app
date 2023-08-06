@@ -130,9 +130,9 @@ export const SHOP_API = {
       .catch((err) => console.log(err))
   },
   /* step 5 */
-  createCustomerAccount: () => {
+  createCustomerAccount: async (data = {}) => {
     return axios
-      .post(`${fakeUrl}/api/customers/create-customer-account`, {})
+      .post(`${fakeUrl}/api/customers/create-customer-account`, data)
       .then((res) => {
         return res.data
       })
