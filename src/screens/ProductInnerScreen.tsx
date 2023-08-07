@@ -180,7 +180,12 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
           />
         </View>
         <View style={styles.btn_wrapper}>
-          <CustomButton title="Add To Cart" padding={10} onPress={handleAddToCart} />
+          <CustomButton
+            title="Add To Cart"
+            padding={10}
+            onPress={handleAddToCart}
+            background="black"
+          />
         </View>
       </View>
     </View>
