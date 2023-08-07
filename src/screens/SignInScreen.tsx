@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native'
 import { Button, Center, Text } from 'native-base'
 import { FC, useCallback } from 'react'
-import { StyleSheet, TextInput } from 'react-native'
+import { StyleSheet, TextInput, TouchableOpacity } from 'react-native'
 
 import { ControlledField } from '~components'
 import { SCREEN } from '~constants'
@@ -20,11 +20,7 @@ export const SignInScreen: FC<IProps> = (props): JSX.Element => {
 
   const goToRegister = useCallback(() => navigate(SCREEN.PHONE_REGISTER), [navigate])
   const handleCheckRegister = () => {
-    if (props.route.params && props.route.params.pass_from === 'passStack') {
-      navigate(SCREEN.STACK_ACCOUNT)
-    } else {
-      submit()
-    }
+    submit()
   }
   return (
     <Center p={8} flex={1}>
@@ -42,6 +38,7 @@ export const SignInScreen: FC<IProps> = (props): JSX.Element => {
         placeholder={t('common.phone_placeholder')}
         returnKeyType="next"
         testID="phoneInput"
+        keyboardType={'phone-pad'}
       />
       <ControlledField.Input
         autoCapitalize="none"
@@ -60,11 +57,17 @@ export const SignInScreen: FC<IProps> = (props): JSX.Element => {
         testID="passwordInput"
         type="password"
       />
+      <TouchableOpacity
+        style={styles.forgot_password_btn}
+        onPress={() => navigate(SCREEN.STACK_FORGOT_PASSWORD)}
+      >
+        <Text style={styles.forgot_password}>Forgot password ?</Text>
+      </TouchableOpacity>
       <Button
         isDisabled={isSubmitting}
         isLoading={isSubmitting}
         mb={2}
-        mt={6}
+        mt={4}
         // onPress={submit}
         onPress={handleCheckRegister}
         testID="signInButton"
@@ -85,5 +88,12 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: colors.black,
     width: '100%',
+  },
+  forgot_password: {
+    textDecorationLine: 'underline',
+  },
+  forgot_password_btn: {
+    marginLeft: 'auto',
+    marginTop: 10,
   },
 })

@@ -15,7 +15,7 @@ interface IProps {
 
 export const Verification: FC<IProps> = ({
   route: {
-    params: { phone, duration, handleResend },
+    params: { phone, duration, reset },
   },
   navigation,
 }) => {
@@ -29,20 +29,28 @@ export const Verification: FC<IProps> = ({
   const [pin3, setPin3] = useState('')
   const [pin4, setPin4] = useState('')
   const [countdown, setCountdown] = useState(duration)
+
+  const handleResend = async () => {
+    const resend = await SHOP_API.resendConfirmation(phone)
+    setCountdown(resend.payload.duration)
+  }
   const handleVerify = async () => {
     const combineCode = pin1 + pin2 + pin3 + pin4
     if (combineCode.trim().length === 4) {
       const toNumberCode = Number(combineCode)
       const data = await SHOP_API.setVerificationCode(phone, toNumberCode)
       if (data && data.status === 200) {
-        navigation.navigate(SCREEN.STACK_PASSWORD, { mobile: phone, token: toNumberCode })
+        navigation.navigate(SCREEN.STACK_PASSWORD, { mobile: phone, token: toNumberCode, reset })
       }
     }
   }
 
   const resendCode = () => {
     if (countdown === 0) {
-      setCountdown(360)
+      setPin1('')
+      setPin2('')
+      setPin3('')
+      setPin4('')
       handleResend()
     }
   }

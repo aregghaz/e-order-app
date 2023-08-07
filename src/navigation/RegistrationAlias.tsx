@@ -6,6 +6,7 @@ import React, { FC } from 'react'
 
 import { SCREEN } from '~constants'
 import { AccountStack } from '~navigation/AccountStack'
+import { ForgotPasswordStack } from '~navigation/ForgotPasswordStack'
 import { PasswordStack } from '~navigation/PasswordStack'
 import { PhoneRegisterStack } from '~navigation/PhoneRegisterStack'
 import { Verification } from '~navigation/Verification'
@@ -38,6 +39,11 @@ export const RegistrationAlias: FC = () => {
       <Screen
         name={SCREEN.STACK_ACCOUNT}
         component={AccountStack}
+        options={{ headerShown: false }}
+      />
+      <Screen
+        name={SCREEN.STACK_FORGOT_PASSWORD}
+        component={ForgotPasswordStack}
         options={{ headerShown: false }}
       />
     </Navigator>

@@ -43,7 +43,7 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const signOut = useCallback(async () => {
     /*FIXME this request gives 401 status code*/
-    // SHOP_API.signOut()
+    // await SHOP_API.signOut();
     console.log('EXIT!!!!!!!!!')
     await deleteToken()
     setIsSignedIn(false)

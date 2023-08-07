@@ -17,6 +17,8 @@ import { ICategory } from '~types/category'
 
 const locale = 'ru'
 const width = Dimensions.get('window').width / 2
+// const height = Dimensions.get("window").height;
+
 const padding = 10
 export const CategoryInnerScreen: FC<any> = ({ route, navigation }) => {
   const categories = route.params.children
@@ -29,7 +31,7 @@ export const CategoryInnerScreen: FC<any> = ({ route, navigation }) => {
   }
   const numColumns = 2
   return (
-    <View>
+    <View style={styles.main_wrapper}>
       <FlatList
         numColumns={numColumns}
         data={categories}
@@ -43,6 +45,7 @@ export const CategoryInnerScreen: FC<any> = ({ route, navigation }) => {
           </TouchableOpacity>
         )}
       />
+      {/*<CustomTabBar />*/}
     </View>
   )
 }
@@ -53,10 +56,14 @@ const styles = StyleSheet.create({
     padding,
     width,
   },
+  main_wrapper: {
+    paddingVertical: 10,
+    // height: height - 100,
+  },
   title: {
     fontWeight: 'bold',
     paddingHorizontal: 10,
-    paddingVertical: 10,
+    // paddingVertical: 10,
     textAlign: 'center',
   },
 })
