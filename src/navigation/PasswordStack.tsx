@@ -17,6 +17,7 @@ export const PasswordStack: FC<IProps> = ({ route, navigation }) => {
   const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{10,}$/
   const token = route?.params?.token.toString()
   const mobile = route?.params?.mobile
+  const reset = route?.params?.reset
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const handleSubmit = async () => {
@@ -31,21 +32,30 @@ export const PasswordStack: FC<IProps> = ({ route, navigation }) => {
       )
       return
     }
+    let data
+    if (reset) {
+      data = await SHOP_API.resetPassword(token, mobile, password)
+    } else {
+      data = await SHOP_API.createCustomerUser(token, mobile, password)
+    }
 
-    const data = await SHOP_API.createCustomerUser(token, mobile, password)
     console.log(data, 'iiiiiii')
+    alert(`${password} === ${confirmPassword}`)
     if (data && data.status === 200) {
-      navigation.navigate(SCREEN.STACK_SIGN_IN, { pass_from: 'passStack' })
+      if (reset) {
+        navigation.navigate(SCREEN.STACK_SIGN_IN)
+      } else {
+        navigation.navigate(SCREEN.STACK_ACCOUNT)
+      }
     }
   }
   return (
     <View style={styles.PasswordStack_wrapper}>
       <TextInput
         style={styles.input}
-        // onChangeText={setPassword}
         onChangeText={setPassword}
         value={password}
-        placeholder="Password"
+        placeholder={reset ? 'New Password' : 'Password'}
         secureTextEntry
       />
       <TextInput
@@ -55,7 +65,7 @@ export const PasswordStack: FC<IProps> = ({ route, navigation }) => {
         placeholder="Confirm Password"
         secureTextEntry
       />
-      <CustomButton title="Create Password" onPress={handleSubmit} />
+      <CustomButton title={reset ? 'Change Password' : 'Create Password'} onPress={handleSubmit} />
     </View>
   )
 }

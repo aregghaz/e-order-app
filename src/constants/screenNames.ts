@@ -17,6 +17,8 @@ export const SCREEN = {
   STACK_SETTINGS: 'Settings',
   STACK_APPLICATION_INFO: 'ApplicationInfo',
   STACK_NOT_FOUND: 'NotFound',
+  STACK_VERIFICATION: 'VerifyCode',
+  STACK_FORGOT_PASSWORD: 'ForgotPassword',
   TAB_HOME: 'Home',
   TAB_CATEGORY: 'Category',
   TAB_PROFILE: 'Profile',
@@ -24,5 +26,4 @@ export const SCREEN = {
   DRAWER_MENU: 'Menu',
   DRAWER_ROOT: 'Root',
   PHONE_REGISTER: 'PhoneRegister',
-  STACK_VERIFICATION: 'VerifyCode',
 }

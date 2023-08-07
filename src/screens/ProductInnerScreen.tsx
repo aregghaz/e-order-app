@@ -19,6 +19,7 @@ import Swiper from 'react-native-swiper'
 import { SHOP_API } from '~api'
 import { ImgOrSvg } from '~components/ImgOrSvg'
 import { NoImageSvg } from '~components/NoImageSvg'
+import { CustomButton } from '~components/molecules/CustomButton'
 import { SCREEN } from '~constants'
 import { useIncrement } from '~hooks/useIncrement'
 import { IFeatured } from '~types/featuredProducts'
@@ -77,7 +78,14 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
     }
     addOption(1)
   }
-  console.log(value, '___VALUE')
+
+  const handleAddToCart = async () => {
+    console.log(params.id)
+    const data = params.properties.unit[0]
+    console.log(data, '___data!!!')
+
+    // await SHOP_API.addToCart()
+  }
 
   const Header = useCallback(() => {
     return (
@@ -161,6 +169,25 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
         onEndReached={handleEnd}
         onEndReachedThreshold={0.5}
       />
+      <View style={styles.fix_footer}>
+        <View style={styles.btn_wrapper}>
+          <CustomButton
+            title="Wishlist"
+            padding={10}
+            color="black"
+            border="grey"
+            onPress={() => alert(5)}
+          />
+        </View>
+        <View style={styles.btn_wrapper}>
+          <CustomButton
+            title="Add To Cart"
+            padding={10}
+            onPress={handleAddToCart}
+            background="black"
+          />
+        </View>
+      </View>
     </View>
   )
 }
@@ -169,10 +196,22 @@ const styles = StyleSheet.create({
   ProductInnerScreen_wrapper: {
     flex: 1,
   },
+  btn_wrapper: {
+    marginHorizontal: 5,
+    width: '45%',
+  },
   description: {},
   details: {
     fontSize: 20,
     fontWeight: 'bold',
+  },
+  fix_footer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    height: 70,
+    // paddingHorizontal: 20,
+    justifyContent: 'center',
+    ...customStyles.border(1, 'solid', colors.borderColor),
   },
   heading: {
     color: colors.headingColor,

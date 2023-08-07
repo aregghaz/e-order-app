@@ -30,9 +30,9 @@ export const CustomTabBar: FC<IProps> = (props) => {
 
 const colors = {
   grey: '#e5e5e5',
+  white: 'white',
 }
 const width50 = Dimensions.get('window').width / 2
-
 const styles = StyleSheet.create({
   border_right: {
     borderColor: colors.grey,
@@ -49,12 +49,16 @@ const styles = StyleSheet.create({
   },
   custom_bottom_nav: {
     alignItems: 'center',
+    backgroundColor: colors.white,
     borderColor: colors.grey,
     borderStyle: 'solid',
     borderTopWidth: 1,
+    bottom: 0,
     flexDirection: 'row',
     height: 70,
+    position: 'absolute',
     width: '100%',
+    zIndex: 1,
   },
   text_gap: {
     marginLeft: 10,

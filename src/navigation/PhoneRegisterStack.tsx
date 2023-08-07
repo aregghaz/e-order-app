@@ -23,7 +23,7 @@ export const PhoneRegisterStack: FC = () => {
     navigation.navigate(SCREEN.STACK_VERIFICATION, {
       phone: phoneNumber,
       duration: data.payload.duration,
-      handleResend: handleButtonPress,
+      // handleResend: handleButtonPress,
     })
   }
 
