@@ -2,36 +2,34 @@
  * was created by tigran at 28.06.23
  */
 import React, { FC } from 'react'
-import { ScrollView, StyleSheet, Text } from 'react-native'
+import { ScrollView, StyleSheet, Text, View } from 'react-native'
 
 import TopRatedItems from '~components/TopRatedItems'
-//import { ICategory } from '~types/category'
-
-// interface IProps {
-//   route: {
-//     params: ICategory
-//   }
-//   navigation: any
-// }
 
 export const CategorySearchScreen: FC<any> = ({ route, navigation }) => {
   const { products } = route.params
   console.log(products, 'pppp')
   return (
-    <ScrollView contentContainerStyle={styles.center_text}>
+    <ScrollView>
       {products.length > 0 ? (
         <TopRatedItems items={products} navigation={navigation} isCategoryProduct={true} />
       ) : (
-        <Text>Nothing found</Text>
+        <View style={styles.text_wrapper}>
+          <Text style={styles.text}>Nothing found</Text>
+        </View>
       )}
     </ScrollView>
   )
 }
 
 const styles = StyleSheet.create({
-  center_text: {
+  text: {
+    fontWeight: 'bold',
+  },
+  text_wrapper: {
     alignItems: 'center',
     flex: 1,
     justifyContent: 'center',
+    marginTop: 20,
   },
 })
