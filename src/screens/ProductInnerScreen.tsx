@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
   Dimensions,
   FlatList,
+  Pressable,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -30,6 +31,8 @@ const colors = {
   headingColor: '#212529',
   borderColor: '#D2D2D2',
   nameColor: '#646464',
+  activeColor: '#2a7581',
+  activeText: 'white',
 }
 const RenderFooter = ({ isLoading }: any) => {
   if (!isLoading) return null
@@ -44,10 +47,14 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
   const [featured, setFeatured] = useState<IFeatured[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [hasNext, setHasNext] = useState(false)
+  const [selectedOption, setSelectedOption] = useState<null | any>(null)
   const scrollViewRef = useRef<any>(null)
   const [value, addOption] = useIncrement()
   const width = Dimensions.get('window').width
   const { params } = route
+  const activeItemRef = useRef()
+
+  const activeBorder = { backgroundColor: colors.headingColor, color: colors.activeText }
 
   useFocusEffect(
     useCallback(() => {
@@ -71,20 +78,29 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
       scrollViewRef.current.scrollToOffset({ offset: 0 })
     }
   }, [params.id])
-
+  const handleSelect = (elem: any) => {
+    activeItemRef.current = elem.refId
+    setSelectedOption(elem)
+  }
   const handleEnd = () => {
     if (!hasNext) {
       return null
     }
     addOption(1)
   }
-
   const handleAddToCart = async () => {
-    console.log(params.id)
-    const data = params.properties.unit[0]
+    const data = {
+      properties: {
+        unit: selectedOption,
+      },
+      shop: '',
+      productId: params.id,
+      quantity: 1,
+    }
     console.log(data, '___data!!!')
 
-    // await SHOP_API.addToCart()
+    const add = await SHOP_API.addToCart(data)
+    console.log(add, '___add!!!')
   }
 
   const Header = useCallback(() => {
@@ -127,6 +143,18 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
           <View style={styles.horizontal_row} />
           <View>
             <Text style={styles.price}>₽ {params.price}</Text>
+          </View>
+          <View style={styles.each}>
+            {params.properties.unit.length > 0 &&
+              params.properties.unit.map((el: any) => (
+                <Pressable onPress={() => handleSelect(el)} key={el.refId}>
+                  <Text
+                    style={[styles.each_btn, activeItemRef.current === el.refId && activeBorder]}
+                  >
+                    {el.contents} {el.name}
+                  </Text>
+                </Pressable>
+              ))}
           </View>
           <View style={styles.horizontal_row} />
           <View>
@@ -204,6 +232,18 @@ const styles = StyleSheet.create({
   details: {
     fontSize: 20,
     fontWeight: 'bold',
+  },
+  each: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  each_btn: {
+    ...customStyles.border(1, 'solid', colors.borderColor),
+    borderRadius: 4,
+    marginRight: 10,
+    marginTop: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
   },
   fix_footer: {
     alignItems: 'center',
