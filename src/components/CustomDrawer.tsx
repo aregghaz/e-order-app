@@ -28,7 +28,7 @@ export const CustomDrawer: FC = (props: any) => {
   )
   return (
     <View style={styles.sidebar}>
-      {data && (
+      {isSignedIn && data && (
         <View style={styles.infoBlock}>
           <View style={styles.imageWrapper}>
             <ImgOrSvg item={data} product="photo" radius={10} width={68} />

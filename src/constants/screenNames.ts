@@ -19,6 +19,7 @@ export const SCREEN = {
   STACK_NOT_FOUND: 'NotFound',
   STACK_VERIFICATION: 'VerifyCode',
   STACK_FORGOT_PASSWORD: 'ForgotPassword',
+  STACK_WISHLIST: 'Wishlist',
   TAB_HOME: 'Home',
   TAB_CATEGORY: 'Category',
   TAB_PROFILE: 'Profile',

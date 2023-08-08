@@ -89,7 +89,6 @@ export const ProfileScreen: FC = () => {
           </View>
         </ScrollView>
       )}
-      <Text>Postcode : {data.person?.address.postCode}</Text>
     </View>
   )
 }

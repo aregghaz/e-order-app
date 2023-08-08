@@ -52,7 +52,7 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
   const [value, addOption] = useIncrement()
   const width = Dimensions.get('window').width
   const { params } = route
-  const activeItemRef = useRef()
+  const activeItemRef = useRef(null)
 
   const activeBorder = { backgroundColor: colors.headingColor, color: colors.activeText }
 
@@ -74,6 +74,8 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
     }, [value])
   )
   useEffect(() => {
+    activeItemRef.current = null
+    setSelectedOption(null)
     if (scrollViewRef.current) {
       scrollViewRef.current.scrollToOffset({ offset: 0 })
     }
