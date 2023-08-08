@@ -1,5 +1,5 @@
 import { createDrawerNavigator } from '@react-navigation/drawer'
-import { useCallback } from 'react'
+import React, { useCallback } from 'react'
 
 import { CustomDrawer } from '~components/CustomDrawer'
 import { SCREEN } from '~constants'
@@ -11,6 +11,7 @@ import { CategoryDetailScreen } from '~screens/CategoryDetailScreen'
 import { CategorySearchScreen } from '~screens/CategorySearchScreen'
 import { MenuScreen } from '~screens/MenuScreen'
 import { ProductInnerScreen } from '~screens/ProductInnerScreen'
+import { WishlistScreen } from '~screens/WishlistScreen'
 
 const locale = 'ru'
 
@@ -52,6 +53,14 @@ export const DrawerNavigator = () => {
         component={ProductInnerScreen}
         options={({ navigation, route }: any) => ({
           headerTitle: () => <Header navigation={navigation} title={route.params.name} />,
+          headerLeft: () => null,
+        })}
+      />
+      <Drawer.Screen
+        name={SCREEN.STACK_WISHLIST}
+        component={WishlistScreen}
+        options={({ navigation, route }: any) => ({
+          headerTitle: () => <Header navigation={navigation} title={'Wishlist'} />,
           headerLeft: () => null,
         })}
       />

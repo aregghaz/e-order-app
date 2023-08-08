@@ -46,6 +46,10 @@ export const Header: FC<IProps> = ({ title, navigation }) => {
     }
   }
 
+  const handleWishlist = () => {
+    navigation.navigate(SCREEN.STACK_WISHLIST)
+  }
+
   const goBack = useCallback(() => {
     navigation.goBack()
   }, [navigation])
@@ -79,12 +83,7 @@ export const Header: FC<IProps> = ({ title, navigation }) => {
           <Feather name="search" size={25} style={styles.icons} onPress={() => setSearch(true)} />
         </TouchableOpacity>
         <TouchableOpacity>
-          <Feather
-            name="heart"
-            size={25}
-            style={styles.icons}
-            // onPress={}
-          />
+          <Feather name="heart" size={25} style={styles.icons} onPress={handleWishlist} />
         </TouchableOpacity>
         <TouchableOpacity>
           <Feather
