@@ -6,7 +6,7 @@ import { SCREEN } from '~constants'
 import { Header } from '~navigation/Header'
 import { optionForScreen } from '~navigation/HeaderGlobalStyles'
 import { RootNavigator } from '~navigation/RootNavigator'
-import { CategoryInnerScreen } from '~screens'
+import { CategoryInnerScreen, SignInScreen } from '~screens'
 import { CategoryDetailScreen } from '~screens/CategoryDetailScreen'
 import { CategorySearchScreen } from '~screens/CategorySearchScreen'
 import { MenuScreen } from '~screens/MenuScreen'
@@ -74,11 +74,12 @@ export const DrawerNavigator = () => {
       {/*  component={Verification}*/}
       {/*  options={{ headerShown: false }}*/}
       {/*/>*/}
-      {/*<Drawer.Screen*/}
-      {/*  name={SCREEN.STACK_SIGN_IN}*/}
-      {/*  component={SignInScreen}*/}
-      {/*  options={{ headerShown: false }}*/}
-      {/*/>*/}
+      <Drawer.Screen
+        name={SCREEN.STACK_SIGN_IN}
+        component={SignInScreen}
+        ///  options={{ headerShown: false }}
+        ///  options={{ headerShown: false }}
+      />
       <Drawer.Screen
         name={SCREEN.DRAWER_MENU}
         component={MenuScreen}

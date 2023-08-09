@@ -7,6 +7,8 @@ import React, { FC, useState } from 'react'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 
 import { ImgOrSvg } from '~components/ImgOrSvg'
+import { SCREEN } from '~constants'
+import { useAuth } from '~hooks'
 import { getUserData } from '~services/UserService'
 
 export interface IProps {
@@ -39,15 +41,21 @@ interface IAddress {
   state: string
 }
 
-export const ProfileScreen: FC = () => {
+export const ProfileScreen: FC = ({ navigation }: any) => {
   const [data, setData] = useState<IProps>({} as IProps)
+  const { isSignedIn } = useAuth()
+  // const {
+  //   navigation: { navigate },
+  // } = props
   useFocusEffect(
     React.useCallback(() => {
       ;(async () => {
-        setData(await getUserData())
+        console.log(isSignedIn, 'isSignedIn')
+        isSignedIn ? setData(await getUserData()) : navigation.navigate(SCREEN.STACK_SIGN_IN)
       })()
-    }, [])
+    }, [isSignedIn])
   )
+
   return (
     <View style={styles.profile_wrapper}>
       {data && data.person && (

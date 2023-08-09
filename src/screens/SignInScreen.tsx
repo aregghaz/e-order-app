@@ -1,11 +1,11 @@
 import { useNavigation } from '@react-navigation/native'
 import { Button, Center, Text } from 'native-base'
-import { FC, useCallback } from 'react'
+import { FC, useCallback, useEffect } from 'react'
 import { StyleSheet, TextInput, TouchableOpacity } from 'react-native'
 
 import { ControlledField } from '~components'
 import { SCREEN } from '~constants'
-import { useRef, useSignInForm, useTranslation } from '~hooks'
+import { useAuth, useRef, useSignInForm, useTranslation } from '~hooks'
 
 interface IProps {
   route: any
@@ -17,11 +17,16 @@ export const SignInScreen: FC<IProps> = (props): JSX.Element => {
   const { t } = useTranslation()
   const passwordInputRef = useRef<TextInput>(null)
   const { control, errors, submit, isSubmitting } = useSignInForm()
-
+  const { isSignedIn } = useAuth()
   const goToRegister = useCallback(() => navigate(SCREEN.PHONE_REGISTER), [navigate])
   const handleCheckRegister = () => {
     submit()
   }
+
+  useEffect(() => {
+    console.log(isSignedIn, '33333')
+    navigate(SCREEN.DRAWER_ROOT)
+  }, [isSignedIn])
   return (
     <Center p={8} flex={1}>
       <ControlledField.Input

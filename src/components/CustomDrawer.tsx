@@ -11,6 +11,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { fakeData } from '~FakeData'
 import { Accordion, TIcon } from '~components/Accordion'
 import { ImgOrSvg } from '~components/ImgOrSvg'
+import { SCREEN } from '~constants'
 import { useAuth } from '~hooks'
 import { IProps } from '~screens'
 import { getUserData } from '~services/UserService'
@@ -22,10 +23,14 @@ export const CustomDrawer: FC = (props: any) => {
   useFocusEffect(
     React.useCallback(() => {
       ;(async () => {
-        setData(await getUserData())
+        //////FIXME SHOULD ADD FAKE DATA
+        isSignedIn ? setData(await getUserData()) : ''
       })()
     }, [isSignedIn])
   )
+  // useEffect(() => {
+  //     isSignedIn ?  setData(await getUserData()) : setData({})
+  // }, [isSignedIn])
   return (
     <View style={styles.sidebar}>
       {isSignedIn && data && (
@@ -53,6 +58,7 @@ export const CustomDrawer: FC = (props: any) => {
         onPress={() => {
           props.navigation.closeDrawer()
           signOut()
+          props.navigation.navigate(SCREEN.STACK_SIGN_IN)
         }}
       >
         <View style={styles.sign_out}>

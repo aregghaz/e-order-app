@@ -35,16 +35,12 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
     const res = await SHOP_API.signInRequest(data.phone, data.password)
     await setUserData(res.payload.user.customer)
     await setToken(res.payload.token.accessToken)
-    /// navigation.navigate({key:"MainTab"})
-
-    console.log(res.payload.user.customer, 'aaaa')
     setIsSignedIn(true)
   }, [])
 
   const signOut = useCallback(async () => {
     /*FIXME this request gives 401 status code*/
-    // await SHOP_API.signOut();
-    console.log('EXIT!!!!!!!!!')
+    /// await SHOP_API.signOut();
     await deleteToken()
     setIsSignedIn(false)
   }, [])
