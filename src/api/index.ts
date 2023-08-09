@@ -203,7 +203,25 @@ export const SHOP_API = {
     return axios
       .post(`${fakeUrl}/api/shopping-cart/add-to-cart`, data)
       .then((res) => {
-        console.log(res.data, 'addToCart')
+        console.log(res.status, '________addToCart')
+        return res.data
+      })
+      .catch((err) => console.log(err))
+  },
+
+  getShopCarts: async () => {
+    return axios
+      .get(`${fakeUrl}/api/shopping-cart/get-shopping-carts`)
+      .then((res) => {
+        return res.data
+      })
+      .catch((err) => console.log(err))
+  },
+  deleteShopCart: async (id: string) => {
+    return axios
+      .delete(`${fakeUrl}/api/shopping-cart/delete-shopping-cart/${id}`)
+      .then((res) => {
+        console.log(res, '__DELETE__REQ')
         return res.data
       })
       .catch((err) => console.log(err))
@@ -215,7 +233,6 @@ export const SHOP_API = {
     return axios
       .get(`${fakeUrl}/api/shops/get-shops`)
       .then((res) => {
-        console.log(res.data, '99999')
         return res.data
       })
       .catch((err) => console.log(err))
