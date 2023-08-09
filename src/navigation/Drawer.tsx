@@ -1,6 +1,9 @@
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import React, { useCallback } from 'react'
 
+import { PhoneRegisterStack } from './PhoneRegisterStack'
+import { Verification } from './Verification'
+
 import { CustomDrawer } from '~components/CustomDrawer'
 import { SCREEN } from '~constants'
 import { Header } from '~navigation/Header'
@@ -69,22 +72,36 @@ export const DrawerNavigator = () => {
       {/*  component={PhoneRegisterStack}*/}
       {/*  options={{ headerShown: false }}*/}
       {/*/>*/}
-      {/*<Drawer.Screen*/}
-      {/*  name={SCREEN.STACK_VERIFICATION}*/}
-      {/*  component={Verification}*/}
-      {/*  options={{ headerShown: false }}*/}
-      {/*/>*/}
+
       <Drawer.Screen
         name={SCREEN.STACK_SIGN_IN}
         component={SignInScreen}
-        ///  options={{ headerShown: false }}
-        ///  options={{ headerShown: false }}
+        options={({ navigation, route }: any) => ({
+          headerTitle: () => <Header navigation={navigation} title={'loginin'} />,
+          headerLeft: () => null,
+        })}
+      />
+      <Drawer.Screen
+        name={SCREEN.PHONE_REGISTER}
+        component={PhoneRegisterStack}
+        options={({ navigation, route }: any) => ({
+          headerTitle: () => <Header navigation={navigation} title={'loginin'} />,
+          headerLeft: () => null,
+        })}
       />
       <Drawer.Screen
         name={SCREEN.DRAWER_MENU}
         component={MenuScreen}
         options={({ navigation, route }: any) => ({
           headerTitle: () => <Header navigation={navigation} title={route.params.title} />,
+          headerLeft: () => null,
+        })}
+      />
+      <Drawer.Screen
+        name={SCREEN.STACK_VERIFICATION}
+        component={Verification}
+        options={({ navigation, route }: any) => ({
+          headerTitle: () => <Header navigation={navigation} title={'Verification'} />,
           headerLeft: () => null,
         })}
       />
