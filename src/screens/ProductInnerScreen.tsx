@@ -55,13 +55,17 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
   const activeItemRef = useRef(null)
 
   const activeBorder = { backgroundColor: colors.headingColor, color: colors.activeText }
-
+  const options = {
+    shopId: null,
+    page: value,
+    limit: 6,
+  }
   useFocusEffect(
     useCallback(() => {
       const getAsyncData = async (): Promise<void> => {
         try {
           setIsLoading(true)
-          const featuredData = await SHOP_API.getTopDiscounts('', 6, value as number)
+          const featuredData = await SHOP_API.getTopDiscounts(options)
           setHasNext(featuredData.payload.pagination.hasNext)
           setFeatured((featured) => [...featured, ...featuredData.payload.content])
         } catch (err) {
@@ -91,18 +95,21 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
     addOption(1)
   }
   const handleAddToCart = async () => {
+    delete selectedOption.productId
+    console.log(selectedOption, 'select option!!!')
     const data = {
       properties: {
         unit: selectedOption,
       },
-      shop: '',
+      shop: '07c1a17d-41ed-49a6-96a0-01db91821db2',
+      // shop: "",
       productId: params.id,
       quantity: 1,
     }
     console.log(data, '___data!!!')
 
     const add = await SHOP_API.addToCart(data)
-    console.log(add, '___add!!!')
+    console.log(add.payload, '___add!!!')
   }
 
   const Header = useCallback(() => {

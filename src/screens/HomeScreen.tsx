@@ -15,6 +15,11 @@ import { getShopId } from '~services/ShopService'
 
 const { slides } = fakeData.homeScreen
 
+const options = {
+  shopId: null,
+  page: null,
+  limit: null,
+}
 export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const { navigation } = props
   const [categories, setCategories] = useState([])
@@ -38,7 +43,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
         const getAsyncData = async (): Promise<void> => {
           const categoryData = await SHOP_API.getCategory()
           setCategories(categoryData.payload.content)
-          const topDiscountData = await SHOP_API.getTopDiscounts(shopId)
+          const topDiscountData = await SHOP_API.getTopDiscounts(options)
           setTopDiscount(topDiscountData.payload.content)
           // const featuredData = await SHOP_API.getFeaturedProducts(shopId)
           // setFeatured(featuredData.payload.content)
