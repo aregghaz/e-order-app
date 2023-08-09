@@ -37,8 +37,9 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
       ;(async () => {
         const getAsyncData = async (): Promise<void> => {
           const categoryData = await SHOP_API.getCategory()
+          console.log(categoryData, 'categoryData')
           setCategories(categoryData.payload.content)
-          const topDiscountData = await SHOP_API.getTopDiscounts(shopId)
+          const topDiscountData = await SHOP_API.getTopDiscounts()
           setTopDiscount(topDiscountData.payload.content)
           // const featuredData = await SHOP_API.getFeaturedProducts(shopId)
           // setFeatured(featuredData.payload.content)
