@@ -1,5 +1,6 @@
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import React, { useCallback } from 'react'
+import { Text } from 'react-native'
 
 import { PhoneRegisterStack } from './PhoneRegisterStack'
 import { Verification } from './Verification'
@@ -77,16 +78,18 @@ export const DrawerNavigator = () => {
         name={SCREEN.STACK_SIGN_IN}
         component={SignInScreen}
         options={({ navigation, route }: any) => ({
-          headerTitle: () => <Header navigation={navigation} title={'loginin'} />,
-          headerLeft: () => null,
+          // headerTitle: () => <Header navigation={navigation} title={'login'} />,
+          headerTitle: () => <Text>Login</Text>,
+          // headerLeft: () => null,
         })}
       />
       <Drawer.Screen
         name={SCREEN.PHONE_REGISTER}
         component={PhoneRegisterStack}
         options={({ navigation, route }: any) => ({
-          headerTitle: () => <Header navigation={navigation} title={'loginin'} />,
-          headerLeft: () => null,
+          // headerTitle: () => <Header navigation={navigation} title={'login'} />,
+          headerTitle: () => <Text>Registration</Text>,
+          // headerLeft: () => null,
         })}
       />
       <Drawer.Screen

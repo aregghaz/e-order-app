@@ -2,6 +2,13 @@ import axios from 'axios'
 
 import { getToken } from '~services'
 
+interface IOptions {
+  shopId: string | null
+  page: number | null
+  limit: number | null
+  categoryId?: number | string | null
+}
+
 export const fakeUrl = 'https://test-api.redro.ru'
 const shopIdTest = `07c1a17d-41ed-49a6-96a0-01db91821db2`
 export const getImagePath = (path: string | null, product = '') =>
@@ -13,11 +20,15 @@ export const SHOP_API = {
       .then((res) => res.data)
       .catch((err) => console.log(err))
   },
-  getFeaturedProducts: async (shopId: string = shopIdTest, limit = 20, page = 1) => {
+  getFeaturedProducts: async (options: IOptions) => {
+    const { shopId = shopIdTest, limit = 20, page = 1 } = options
+    const trueShopId = shopId ? shopId : shopIdTest
+    const trueLimit = limit ? limit : 20
+    const truePage = page ? page : 1
     console.log(`shopId=${shopId}___SHOP_ID`)
     return axios
       .get(
-        `${fakeUrl}/api/analytics/get-products?period=30&category=&type=featured&shopId=${shopId}&limit=${limit}&page=${page}`
+        `${fakeUrl}/api/analytics/get-products?period=30&category=&type=featured&shopId=${trueShopId}&limit=${trueLimit}&page=${truePage}`
       )
       .then((res) => {
         // console.log(res, 'TYTYTYTY')
@@ -25,47 +36,63 @@ export const SHOP_API = {
       })
       .catch((err) => console.log(err))
   },
-  getFeaturedProductsByCategories: async (
-    categoryId: number | string,
-    shopId: string = shopIdTest,
-    limit = 20,
-    page = 1
-  ) => {
+  getFeaturedProductsByCategories: async (options: IOptions) => {
+    const { shopId = shopIdTest, limit = 20, page = 1, categoryId } = options
+    const trueShopId = shopId ? shopId : shopIdTest
+    const trueLimit = limit ? limit : 20
+    const truePage = page ? page : 1
+    const trueCategoryId = categoryId ? categoryId : ''
     return axios
       .get(
-        `${fakeUrl}/api/analytics/get-products?period=30&category=${categoryId}&type=featured&shopId=${shopId}&limit=${limit}&page=${page}`
+        `${fakeUrl}/api/analytics/get-products?period=30&category=${trueCategoryId}&type=featured&shopId=${trueShopId}&limit=${trueLimit}&page=${truePage}`
       )
       .then((res) => res.data)
       .catch((err) => console.log(err))
   },
-  getNewArrivals: async (shopId: string = shopIdTest, limit = 20, page = 1) => {
+  getNewArrivals: async (options: IOptions) => {
+    const { shopId = shopIdTest, limit = 20, page = 1 } = options
+    const trueShopId = shopId ? shopId : shopIdTest
+    const trueLimit = limit ? limit : 20
+    const truePage = page ? page : 1
     return axios
       .get(
-        `${fakeUrl}/api/analytics/get-products?period=30&category=&type=new-arrivals&shopId=${shopId}&limit=${limit}&page=${page}`
+        `${fakeUrl}/api/analytics/get-products?period=30&category=&type=new-arrivals&shopId=${trueShopId}&limit=${trueLimit}&page=${truePage}`
       )
       .then((res) => res.data)
       .catch((err) => console.log(err))
   },
-  getBestSeller: async (shopId: string = shopIdTest, limit = 20, page = 1) => {
+  getBestSeller: async (options: IOptions) => {
+    const { shopId = shopIdTest, limit = 20, page = 1 } = options
+    const trueShopId = shopId ? shopId : shopIdTest
+    const trueLimit = limit ? limit : 20
+    const truePage = page ? page : 1
     return axios
       .get(
-        `${fakeUrl}/api/analytics/get-products?period=30&category=&type=best-seller&shopId=${shopId}&limit=${limit}&page=${page}`
+        `${fakeUrl}/api/analytics/get-products?period=30&category=&type=best-seller&shopId=${trueShopId}&limit=${trueLimit}&page=${truePage}`
       )
       .then((res) => res.data)
       .catch((err) => console.log(err))
   },
-  getTopRated: async (shopId: string = shopIdTest, limit = 20, page = 1) => {
+  getTopRated: async (options: IOptions) => {
+    const { shopId = shopIdTest, limit = 20, page = 1 } = options
+    const trueShopId = shopId ? shopId : shopIdTest
+    const trueLimit = limit ? limit : 20
+    const truePage = page ? page : 1
     return axios
       .get(
-        `${fakeUrl}/api/analytics/get-products?period=30&category=&type=top-rated&shopId=${shopId}&limit=${limit}&page=${page}`
+        `${fakeUrl}/api/analytics/get-products?period=30&category=&type=top-rated&shopId=${trueShopId}&limit=${trueLimit}&page=${truePage}`
       )
       .then((res) => res.data)
       .catch((err) => console.log(err))
   },
-  getTopDiscounts: async (shopId: string = shopIdTest, limit = 20, page = 1) => {
+  getTopDiscounts: async (options: IOptions) => {
+    const { shopId = shopIdTest, limit = 20, page = 1 } = options
+    const trueShopId = shopId ? shopId : shopIdTest
+    const trueLimit = limit ? limit : 20
+    const truePage = page ? page : 1
     return axios
       .get(
-        `${fakeUrl}/api/analytics/get-products?period=30&category=&type=top-discounts&shopId=${shopId}&limit=${limit}&page=${page}`
+        `${fakeUrl}/api/analytics/get-products?period=30&category=&type=top-discounts&shopId=${trueShopId}&limit=${trueLimit}&page=${truePage}`
       )
       .then((res) => res.data)
       .catch((err) => console.log(err))
