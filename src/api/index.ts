@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+import { getToken } from '~services'
+
 export const fakeUrl = 'https://test-api.redro.ru'
 const shopIdTest = `07c1a17d-41ed-49a6-96a0-01db91821db2`
 export const getImagePath = (path: string | null, product = '') =>
@@ -175,6 +177,18 @@ export const SHOP_API = {
       .post(`${fakeUrl}/api/shopping-cart/add-to-cart`, data)
       .then((res) => {
         console.log(res.data, 'addToCart')
+        return res.data
+      })
+      .catch((err) => console.log(err))
+  },
+
+  getShopsData: async () => {
+    const tokenUSer = await getToken()
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
+    return axios
+      .get(`${fakeUrl}/api/shops/get-shops`)
+      .then((res) => {
+        console.log(res.data, '99999')
         return res.data
       })
       .catch((err) => console.log(err))
