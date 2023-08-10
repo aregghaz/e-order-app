@@ -200,6 +200,8 @@ export const SHOP_API = {
   },
   /*** ADD to Cart ***/
   addToCart: async (data: any) => {
+    const tokenUSer = await getToken()
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
     return axios
       .post(`${fakeUrl}/api/shopping-cart/add-to-cart`, data)
       .then((res) => {
@@ -217,14 +219,23 @@ export const SHOP_API = {
       })
       .catch((err) => console.log(err))
   },
-  deleteShopCart: async (id: string) => {
+  deleteShopCartID: async (id: string) => {
     return axios
       .delete(`${fakeUrl}/api/shopping-cart/delete-shopping-cart/${id}`)
       .then((res) => {
-        console.log(res, '__DELETE__REQ')
+        console.log(res.data, '__DELETED Successfully')
         return res.data
       })
-      .catch((err) => console.log(err))
+      .catch((err) => console.log('Error while deleting', err))
+  },
+  deleteFromCart: async (shoppingCartId: string, itemId: string) => {
+    return axios
+      .delete(`${fakeUrl}/api/shopping-cart/delete-from-cart/${shoppingCartId}/${itemId}`)
+      .then((res) => {
+        console.log(res.data, '__DELETED Successfully')
+        return res.data
+      })
+      .catch((err) => console.log('Error while deleting', err))
   },
 
   getShopsData: async () => {

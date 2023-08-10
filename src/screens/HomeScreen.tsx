@@ -42,7 +42,6 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
       ;(async () => {
         const getAsyncData = async (): Promise<void> => {
           const categoryData = await SHOP_API.getCategory()
-          console.log(categoryData, 'categoryData')
           setCategories(categoryData.payload.content)
           const topDiscountData = await SHOP_API.getTopDiscounts(options)
           setTopDiscount(topDiscountData.payload.content)
@@ -59,6 +58,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
       })()
     }, [shopId])
   )
+
   return (
     <ScrollView flex={1} style={styles.main_wrapper}>
       {categories.length > 0 && (

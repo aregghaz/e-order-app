@@ -2,7 +2,7 @@
  * was created by tigran at 01.07.23
  */
 import React, { FC } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import { SCREEN } from '~constants'
 import { setShopId } from '~services/ShopService'

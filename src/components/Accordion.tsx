@@ -48,18 +48,27 @@ export const Accordion: FC<IProps> = ({
   const chevronStyle = { transform: [{ rotate: rotateValue }] }
   const childrenElements = hasChildren ? (
     subChildren &&
-    subChildren.map((item) => (
-      <View key={item.id}>
-        <SubList
-          title={item.title}
-          group={item.group}
-          shop_id={item.shop_id}
-          navigation={navigation}
-          hasChildren={item.hasChildren}
-          handlePress={handlePress}
-        />
-      </View>
-    ))
+    subChildren.map((item) => {
+      // if(item.hasOwnProperty("companyName")) {
+      if (Object.prototype.hasOwnProperty.call(item, 'companyName')) {
+        item.title = item.shopName
+        item.group = 'shop'
+        item.shop_id = item.id
+        item.hasChildren = false
+      }
+      return (
+        <View key={item.id}>
+          <SubList
+            title={item.title}
+            group={item.group}
+            shop_id={item.shop_id}
+            navigation={navigation}
+            hasChildren={item.hasChildren}
+            handlePress={handlePress}
+          />
+        </View>
+      )
+    })
   ) : (
     <></>
   )

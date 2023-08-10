@@ -27,7 +27,6 @@ const colors = {
 }
 
 const OfferPosterSlider: FC<IOfferPosterSlider> = ({ slides, navigation }) => {
-  console.log(slides, 'slides!!!')
   return (
     <View style={styles.body}>
       <View style={styles.container}>
