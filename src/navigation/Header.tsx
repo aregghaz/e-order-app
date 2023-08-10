@@ -2,11 +2,13 @@
  * was created by tigran at 24.06.23
  */
 import { Feather, Ionicons } from '@expo/vector-icons'
+import { useFocusEffect } from '@react-navigation/native'
 import React, { FC, useCallback, useState } from 'react'
 import { Dimensions, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 
 import { SHOP_API } from '~api'
 import { SCREEN } from '~constants'
+import { useAuth } from '~hooks'
 
 const width = Dimensions.get('window').width - 30
 
@@ -16,11 +18,33 @@ interface IProps {
 }
 
 export const Header: FC<IProps> = ({ title, navigation }) => {
+  const [search, setSearch] = useState(false)
+  const [text, setText] = useState('')
+  const [countIndicator, setCountIndicator] = useState<null | number>(null)
+  const { isSignedIn } = useAuth()
+  // useEffect(() => {
+  //   const getShopCartCount = async () => {
+  //
+  //     const count = await SHOP_API.getShopCarts();
+  //     setCountIndicator( () => count.payload.content.length)
+  //   };
+  //   getShopCartCount()
+  // }, [countIndicator]);
+  useFocusEffect(
+    useCallback(() => {
+      const getShopCartCount = async () => {
+        const count = await SHOP_API.getShopCarts()
+        if (count) {
+          setCountIndicator(() => count.payload.content.length)
+        }
+      }
+      getShopCartCount()
+    }, [countIndicator])
+  )
+  console.log(countIndicator, 'countIndicatorcountIndicator')
   const handleOpenMenu = useCallback(() => {
     navigation.openDrawer()
   }, [navigation])
-  const [search, setSearch] = useState(false)
-  const [text, setText] = useState('')
 
   const handleSearch = (value: string) => {
     setText(value)
@@ -47,7 +71,18 @@ export const Header: FC<IProps> = ({ title, navigation }) => {
   }
 
   const handleWishlist = () => {
-    navigation.navigate(SCREEN.STACK_WISHLIST)
+    if (!isSignedIn) {
+      navigation.navigate(SCREEN.STACK_SIGN_IN)
+    } else {
+      navigation.navigate(SCREEN.STACK_WISHLIST)
+    }
+  }
+  const handleShopCart = () => {
+    if (!isSignedIn) {
+      navigation.navigate(SCREEN.STACK_SIGN_IN)
+    } else {
+      navigation.navigate(SCREEN.STACK_SHOP_CART)
+    }
   }
 
   const goBack = useCallback(() => {
@@ -85,13 +120,13 @@ export const Header: FC<IProps> = ({ title, navigation }) => {
         <TouchableOpacity>
           <Feather name="heart" size={25} style={styles.icons} onPress={handleWishlist} />
         </TouchableOpacity>
-        <TouchableOpacity>
-          <Feather
-            name="shopping-bag"
-            size={25}
-            style={styles.icons}
-            // onPress={}
-          />
+        <TouchableOpacity style={styles.cart_wrapper}>
+          <Feather name="shopping-bag" size={25} style={styles.icons} onPress={handleShopCart} />
+          {isSignedIn && countIndicator && countIndicator > 0 && (
+            <View style={styles.cart_bandage}>
+              <Text style={styles.indicator}>{countIndicator}</Text>
+            </View>
+          )}
         </TouchableOpacity>
       </View>
     </View>
@@ -100,9 +135,25 @@ export const Header: FC<IProps> = ({ title, navigation }) => {
 
 const colors = {
   white: 'white',
+  red: 'red',
 }
 
 const styles = StyleSheet.create({
+  cart_bandage: {
+    alignItems: 'center',
+    backgroundColor: colors.red,
+    borderRadius: 30,
+    height: 23,
+    justifyContent: 'center',
+    position: 'absolute',
+    right: -2,
+    top: -10,
+    width: 23,
+  },
+  cart_wrapper: {
+    position: 'relative',
+    // ...customStyles.border(1, "solid", "red")
+  },
   font: {
     alignItems: 'center',
     flexDirection: 'row',
@@ -125,6 +176,9 @@ const styles = StyleSheet.create({
   },
   icons: {
     marginHorizontal: 8,
+  },
+  indicator: {
+    color: colors.white,
   },
   is_back: {
     alignItems: 'center',

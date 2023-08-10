@@ -9,7 +9,7 @@ import React, { FC, useState } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import { fakeData } from '~FakeData'
-import { SHOP_API } from '~api'
+// import { SHOP_API } from '~api'
 import { Accordion, TIcon } from '~components/Accordion'
 import { ImgOrSvg } from '~components/ImgOrSvg'
 import { SCREEN } from '~constants'
@@ -31,8 +31,7 @@ export const CustomDrawer: FC = (props: any) => {
     }, [isSignedIn])
   )
   const getShops = async () => {
-    const asd = await SHOP_API.getShopsData()
-    console.log(asd, 'aaaa')
+    // const asd = await SHOP_API.getShopsData()
   }
   return (
     <View style={styles.sidebar}>

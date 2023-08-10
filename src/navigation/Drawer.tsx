@@ -7,14 +7,17 @@ import { Verification } from './Verification'
 
 import { CustomDrawer } from '~components/CustomDrawer'
 import { SCREEN } from '~constants'
+import { ForgotPasswordStack } from '~navigation/ForgotPasswordStack'
 import { Header } from '~navigation/Header'
 import { optionForScreen } from '~navigation/HeaderGlobalStyles'
+import { PasswordStack } from '~navigation/PasswordStack'
 import { RootNavigator } from '~navigation/RootNavigator'
 import { CategoryInnerScreen, SignInScreen } from '~screens'
 import { CategoryDetailScreen } from '~screens/CategoryDetailScreen'
 import { CategorySearchScreen } from '~screens/CategorySearchScreen'
 import { MenuScreen } from '~screens/MenuScreen'
 import { ProductInnerScreen } from '~screens/ProductInnerScreen'
+import { ShopCartScreen } from '~screens/ShopCartScreen'
 import { WishlistScreen } from '~screens/WishlistScreen'
 
 const locale = 'ru'
@@ -68,6 +71,14 @@ export const DrawerNavigator = () => {
           headerLeft: () => null,
         })}
       />
+      <Drawer.Screen
+        name={SCREEN.STACK_SHOP_CART}
+        component={ShopCartScreen}
+        options={({ navigation, route }: any) => ({
+          headerTitle: () => <Header navigation={navigation} title={'Shopping Cart'} />,
+          headerLeft: () => null,
+        })}
+      />
       {/*<Drawer.Screen*/}
       {/*  name={SCREEN.PHONE_REGISTER}*/}
       {/*  component={PhoneRegisterStack}*/}
@@ -80,6 +91,24 @@ export const DrawerNavigator = () => {
         options={({ navigation, route }: any) => ({
           // headerTitle: () => <Header navigation={navigation} title={'login'} />,
           headerTitle: () => <Text>Login</Text>,
+          // headerLeft: () => null,
+        })}
+      />
+      <Drawer.Screen
+        name={SCREEN.STACK_FORGOT_PASSWORD}
+        component={ForgotPasswordStack}
+        options={({ navigation, route }: any) => ({
+          // headerTitle: () => <Header navigation={navigation} title={'login'} />,
+          headerTitle: () => <Text>Forgot Password</Text>,
+          // headerLeft: () => null,
+        })}
+      />
+      <Drawer.Screen
+        name={SCREEN.STACK_PASSWORD}
+        component={PasswordStack}
+        options={({ navigation, route }: any) => ({
+          // headerTitle: () => <Header navigation={navigation} title={'login'} />,
+          headerTitle: () => <Text>Change Password</Text>,
           // headerLeft: () => null,
         })}
       />

@@ -22,6 +22,7 @@ import { ImgOrSvg } from '~components/ImgOrSvg'
 import { NoImageSvg } from '~components/NoImageSvg'
 import { CustomButton } from '~components/molecules/CustomButton'
 import { SCREEN } from '~constants'
+import { useAuth } from '~hooks'
 import { useIncrement } from '~hooks/useIncrement'
 import { IFeatured } from '~types/featuredProducts'
 import { customStyles } from '~utils/style_helpers'
@@ -53,7 +54,7 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
   const width = Dimensions.get('window').width
   const { params } = route
   const activeItemRef = useRef(null)
-
+  const { isSignedIn } = useAuth()
   const activeBorder = { backgroundColor: colors.headingColor, color: colors.activeText }
   const options = {
     shopId: null,
@@ -95,6 +96,9 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
     addOption(1)
   }
   const handleAddToCart = async () => {
+    if (!isSignedIn) {
+      navigation.navigate(SCREEN.STACK_SIGN_IN)
+    }
     delete selectedOption.productId
     console.log(selectedOption, 'select option!!!')
     const data = {
@@ -109,7 +113,10 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
     console.log(data, '___data!!!')
 
     const add = await SHOP_API.addToCart(data)
-    console.log(add.payload, '___add!!!')
+    if (!add) {
+      alert('Please sign in before add to cart')
+    }
+    console.log(add, '___add!!!')
   }
 
   const Header = useCallback(() => {
