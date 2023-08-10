@@ -24,6 +24,7 @@ import { CustomButton } from '~components/molecules/CustomButton'
 import { SCREEN } from '~constants'
 import { useAuth } from '~hooks'
 import { useIncrement } from '~hooks/useIncrement'
+import { getShopId } from '~services/ShopService'
 import { IFeatured } from '~types/featuredProducts'
 import { customStyles } from '~utils/style_helpers'
 
@@ -49,6 +50,7 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
   const [isLoading, setIsLoading] = useState(false)
   const [hasNext, setHasNext] = useState(false)
   const [selectedOption, setSelectedOption] = useState<null | any>(null)
+  const [shopId, setShopId] = useState('')
   const scrollViewRef = useRef<any>(null)
   const [value, addOption] = useIncrement()
   const width = Dimensions.get('window').width
@@ -61,6 +63,13 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
     page: value,
     limit: 6,
   }
+  useEffect(() => {
+    const getFetchID = async () => {
+      const getID = await getShopId()
+      setShopId(getID)
+    }
+    getFetchID()
+  }, [shopId])
   useFocusEffect(
     useCallback(() => {
       const getAsyncData = async (): Promise<void> => {
@@ -85,6 +94,7 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
       scrollViewRef.current.scrollToOffset({ offset: 0 })
     }
   }, [params.id])
+
   const handleSelect = (elem: any) => {
     activeItemRef.current = elem.refId
     setSelectedOption(elem)
@@ -100,17 +110,14 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
       navigation.navigate(SCREEN.STACK_SIGN_IN)
     }
     delete selectedOption.productId
-    console.log(selectedOption, 'select option!!!')
     const data = {
       properties: {
         unit: selectedOption,
       },
-      shop: '07c1a17d-41ed-49a6-96a0-01db91821db2',
-      // shop: "",
+      shop: shopId,
       productId: params.id,
       quantity: 1,
     }
-    console.log(data, '___data!!!')
 
     const add = await SHOP_API.addToCart(data)
     if (!add) {

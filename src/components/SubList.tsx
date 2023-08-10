@@ -2,7 +2,7 @@
  * was created by tigran at 01.07.23
  */
 import React, { FC } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import { SCREEN } from '~constants'
 import { setShopId } from '~services/ShopService'
@@ -27,12 +27,12 @@ export const SubList: FC<IProps> = ({
 }) => {
   const handlePressCheck = async (title: string, group: string, shop_id: string) => {
     if (group === 'shop') {
-      navigation.navigate(SCREEN.STACK_MAIN_TAB, { title })
+      // navigation.navigate(SCREEN.STACK_MAIN_TAB, { title })
       handlePress()
       await setShopId(shop_id)
       // navigation.navigate(SCREEN.DRAWER_MENU, { title })
       console.log(shop_id, 'PPPPPPP')
-      // navigation.closeDrawer()
+      navigation.closeDrawer()
     } else {
       handlePress()
       !hasChildren ? navigation.navigate(findScreenName, { title }) : null

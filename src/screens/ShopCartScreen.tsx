@@ -11,13 +11,7 @@ import { customStyles } from '~utils/style_helpers'
 
 export const ShopCartScreen: FC = () => {
   const [carts, setCarts] = useState<null | any>([])
-  // useEffect(() => {
-  //  const getShopCarts = async () => {
-  //    const data = await SHOP_API.getShopCarts()
-  //    setCarts(data.payload.content)
-  //   }
-  //   getShopCarts()
-  // }, []);
+  const [trigger, setTrigger] = useState(false)
   useFocusEffect(
     useCallback(() => {
       const getShopCarts = async () => {
@@ -25,28 +19,32 @@ export const ShopCartScreen: FC = () => {
         setCarts(data.payload.content)
       }
       getShopCarts()
-    }, [])
+    }, [trigger])
   )
 
-  const handleDelete = async (id: string) => {
-    const del = await SHOP_API.deleteShopCart(id)
-    console.log(del, 'delel')
+  const handleDelete = async (IDS: any) => {
+    await SHOP_API.deleteFromCart(IDS.cartItemID, IDS.itemId)
+    setTrigger(!trigger)
   }
 
-  console.log(carts, 'CARTS')
   return (
     <>
       <ScrollView>
         <View style={styles.ShopCartScreen_wrapper}>
-          {carts.length > 0 &&
+          {carts.length > 0 ? (
             carts.map((item: any, index: number) => {
               return (
                 <React.Fragment key={index}>
                   {/*<Text>{item?.cartTotal}</Text>*/}
-                  <CartItems elem={item.cartItems} onDelete={handleDelete} itemId={item.id} />
+                  <CartItems elem={item.cartItems} onDelete={handleDelete} cartItemId={item.id} />
                 </React.Fragment>
               )
-            })}
+            })
+          ) : (
+            <View style={styles.no_product}>
+              <Text>There is no products here</Text>
+            </View>
+          )}
         </View>
       </ScrollView>
       <View style={styles.btn_wrapper}>
@@ -56,11 +54,12 @@ export const ShopCartScreen: FC = () => {
   )
 }
 
-const CartItems = ({ elem, onDelete, itemId }: any) => {
+const CartItems = ({ elem, onDelete, cartItemId }: any) => {
   return (
     <>
       {elem &&
         elem.map((item: any, index: number) => {
+          console.log(item, 'item!!!')
           return (
             <View key={index} style={styles.cart_wrapper}>
               {/*<View style={styles.image_wrapper}>*/}
@@ -72,7 +71,15 @@ const CartItems = ({ elem, onDelete, itemId }: any) => {
                 <Text>Price: {item.price}</Text>
                 <Text>Reward: {item.reward}</Text>
                 <Text>Discount {item.discount} %</Text>
-                <Pressable style={styles.delete_wrapper} onPress={() => onDelete(itemId)}>
+                <Pressable
+                  style={styles.delete_wrapper}
+                  onPress={() =>
+                    onDelete({
+                      cartItemID: cartItemId,
+                      itemId: item.id,
+                    })
+                  }
+                >
                   <Text style={styles.delete}>Delete</Text>
                 </Pressable>
               </View>
@@ -124,5 +131,9 @@ const styles = StyleSheet.create({
   },
   delete_wrapper: {
     marginVertical: 4,
+  },
+  no_product: {
+    alignItems: 'center',
+    marginTop: 20,
   },
 })

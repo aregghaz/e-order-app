@@ -10,6 +10,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import { fakeData } from '~FakeData'
 // import { SHOP_API } from '~api'
+import { SHOP_API } from '~api'
 import { Accordion, TIcon } from '~components/Accordion'
 import { ImgOrSvg } from '~components/ImgOrSvg'
 import { SCREEN } from '~constants'
@@ -21,18 +22,21 @@ import { customStyles } from '~utils/style_helpers'
 export const CustomDrawer: FC = (props: any) => {
   const { signOut, isSignedIn } = useAuth()
   const [data, setData] = useState<IProps>({} as IProps)
+  const [shops, setShops] = useState<any>([])
+
   useFocusEffect(
     React.useCallback(() => {
-      ;(async () => {
+      const getData = async () => {
         //////FIXME SHOULD ADD FAKE DATA
         isSignedIn ? setData(await getUserData()) : ''
-        getShops()
-      })()
+        const shopData = await SHOP_API.getShopsData()
+        setShops(shopData.payload.content)
+      }
+      getData()
     }, [isSignedIn])
   )
-  const getShops = async () => {
-    // const asd = await SHOP_API.getShopsData()
-  }
+
+  // console.log(shops.payload.content[0].id, "+++++++_________++++++++++")
   return (
     <View style={styles.sidebar}>
       {isSignedIn && data && (
@@ -45,16 +49,22 @@ export const CustomDrawer: FC = (props: any) => {
       )}
       <DrawerContentScrollView {...props}>
         {fakeData.accordion &&
-          fakeData.accordion.map((item) => (
-            <Accordion
-              key={item.id}
-              title={item.title}
-              iconName={item.iconName as TIcon}
-              subChildren={item.children}
-              hasChildren={item.hasChildren}
-              navigation={props.navigation}
-            />
-          ))}
+          fakeData.accordion.map((item) => {
+            if (item.title === 'Shops') {
+              item.children = shops
+              item.hasChildren = true
+            }
+            return (
+              <Accordion
+                key={item.id}
+                title={item.title}
+                iconName={item.iconName as TIcon}
+                subChildren={item.children}
+                hasChildren={item.hasChildren}
+                navigation={props.navigation}
+              />
+            )
+          })}
       </DrawerContentScrollView>
       <TouchableOpacity
         onPress={() => {
