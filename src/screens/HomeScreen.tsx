@@ -1,6 +1,6 @@
 import { useFocusEffect } from '@react-navigation/native'
 import { ScrollView, View } from 'native-base'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { StyleSheet } from 'react-native'
 
 import { fakeData } from '~FakeData'
@@ -30,35 +30,35 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   // const [topRated, setTopRated] = useState([])
   const [shopId, setShopId] = useState('')
 
-  useEffect(() => {
-    const getFetchID = async () => {
-      const getID = await getShopId()
-      setShopId(getID)
-    }
-    getFetchID()
-  }, [shopId])
+  // useEffect(() => {
+  //   const getFetchID = async () => {
+  //     const getID = await getShopId();
+  //     setShopId(getID);
+  //   };
+  //   getFetchID();
+  // }, [shopId]);
   useFocusEffect(
     useCallback(() => {
-      ;(async () => {
-        const getAsyncData = async (): Promise<void> => {
-          const categoryData = await SHOP_API.getCategory()
-          setCategories(categoryData.payload.content)
-          const topDiscountData = await SHOP_API.getTopDiscounts(options)
-          setTopDiscount(topDiscountData.payload.content)
-          // const featuredData = await SHOP_API.getFeaturedProducts(shopId)
-          // setFeatured(featuredData.payload.content)
-          // const newArrivalsData = await SHOP_API.getNewArrivals(shopId)
-          // setNewArrival(newArrivalsData.payload.content)
-          // const bestSellerData = await SHOP_API.getBestSeller(shopId)
-          // setBestSeller(bestSellerData.payload.content)
-          // const topRatedData = await SHOP_API.getTopRated(shopId)
-          // setTopRated(topRatedData.payload.content)
-        }
-        await getAsyncData()
-      })()
+      const getAsyncData = async (): Promise<void> => {
+        const categoryData = await SHOP_API.getCategory()
+        setCategories(categoryData.payload.content)
+        const topDiscountData = await SHOP_API.getTopDiscounts(options)
+        setTopDiscount(topDiscountData.payload.content)
+        // const featuredData = await SHOP_API.getFeaturedProducts(shopId)
+        // setFeatured(featuredData.payload.content)
+        // const newArrivalsData = await SHOP_API.getNewArrivals(shopId)
+        // setNewArrival(newArrivalsData.payload.content)
+        // const bestSellerData = await SHOP_API.getBestSeller(shopId)
+        // setBestSeller(bestSellerData.payload.content)
+        // const topRatedData = await SHOP_API.getTopRated(shopId)
+        // setTopRated(topRatedData.payload.content)
+        const getID = await getShopId()
+        setShopId(getID)
+      }
+      getAsyncData()
     }, [shopId])
   )
-
+  console.log(shopId, '__SHOP_ID')
   return (
     <ScrollView flex={1} style={styles.main_wrapper}>
       {categories.length > 0 && (

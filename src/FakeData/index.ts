@@ -20,31 +20,7 @@ export const fakeData = {
       children: [
         {
           id: '1',
-          title: 'Shop 1',
-          group: 'shop',
-          shop_id: idGen(),
-          hasChildren: false,
-          children: [],
-        },
-        {
-          id: '2',
-          title: 'Shop 2',
-          group: 'shop',
-          shop_id: idGen(),
-          hasChildren: false,
-          children: [],
-        },
-        {
-          id: '3',
-          title: 'Shop 3',
-          group: 'shop',
-          shop_id: idGen(),
-          hasChildren: false,
-          children: [],
-        },
-        {
-          id: '4',
-          title: 'Shop 4',
+          title: 'Shops List',
           group: 'shop',
           shop_id: idGen(),
           hasChildren: false,

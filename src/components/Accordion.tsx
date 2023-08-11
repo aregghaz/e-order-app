@@ -50,12 +50,12 @@ export const Accordion: FC<IProps> = ({
     subChildren &&
     subChildren.map((item) => {
       // if(item.hasOwnProperty("companyName")) {
-      if (Object.prototype.hasOwnProperty.call(item, 'companyName')) {
-        item.title = item.shopName
-        item.group = 'shop'
-        item.shop_id = item.id
-        item.hasChildren = false
-      }
+      // if (Object.prototype.hasOwnProperty.call(item, 'companyName')) {
+      //   item.title = item.shopName
+      //   item.group = 'shop'
+      //   item.shop_id = item.id
+      //   item.hasChildren = false
+      // }
       return (
         <View key={item.id}>
           <SubList
