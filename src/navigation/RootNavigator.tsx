@@ -2,20 +2,13 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { FC } from 'react'
 
 // import { BottomTabNavigator } from './BottomTabNavigator'
-
 import { SCREEN } from '~constants'
 import { useTranslation } from '~hooks'
 // import { PhoneRegisterStack } from '~navigation/PhoneRegisterStack'
 // import { Verification } from '~navigation/Verification'
 import { BottomTabNavigator } from '~navigation/BottomTabNavigator'
 //import { RegistrationAlias } from '~navigation/RegistrationAlias'
-import {
-  /// ApplicationInfoScreen,
-  NotFoundScreen,
-  // SettingsScreen,
-  // SignInScreen,
-  // SignUpScreen,
-} from '~screens'
+import { NotFoundScreen } from '~screens'
 
 const { Navigator, Screen, Group } = createStackNavigator()
 

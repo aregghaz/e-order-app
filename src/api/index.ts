@@ -237,12 +237,23 @@ export const SHOP_API = {
       })
       .catch((err) => console.log('Error while deleting', err))
   },
-
+  /*SHOPS*/
   getShopsData: async () => {
     const tokenUSer = await getToken()
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
     return axios
       .get(`${fakeUrl}/api/shops/get-shops`)
+      .then((res) => {
+        return res.data
+      })
+      .catch((err) => console.log(err))
+  },
+
+  createShops: async (body: any) => {
+    const tokenUSer = await getToken()
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
+    return axios
+      .post(`${fakeUrl}/api/shops/create-shops`, body)
       .then((res) => {
         return res.data
       })

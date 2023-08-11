@@ -15,9 +15,11 @@ import { RootNavigator } from '~navigation/RootNavigator'
 import { CategoryInnerScreen, SignInScreen } from '~screens'
 import { CategoryDetailScreen } from '~screens/CategoryDetailScreen'
 import { CategorySearchScreen } from '~screens/CategorySearchScreen'
+import { CreateStoreScreen } from '~screens/CreateStoreScreen'
 import { MenuScreen } from '~screens/MenuScreen'
 import { ProductInnerScreen } from '~screens/ProductInnerScreen'
 import { ShopCartScreen } from '~screens/ShopCartScreen'
+import { ShopListScreen } from '~screens/ShopListScreen'
 import { WishlistScreen } from '~screens/WishlistScreen'
 
 const locale = 'ru'
@@ -76,6 +78,22 @@ export const DrawerNavigator = () => {
         component={ShopCartScreen}
         options={({ navigation, route }: any) => ({
           headerTitle: () => <Header navigation={navigation} title={'Shopping Cart'} />,
+          headerLeft: () => null,
+        })}
+      />
+      <Drawer.Screen
+        name={SCREEN.STACK_SHOP_LIST}
+        component={ShopListScreen}
+        options={({ navigation, route }: any) => ({
+          headerTitle: () => <Header navigation={navigation} title={'Shops'} />,
+          headerLeft: () => null,
+        })}
+      />
+      <Drawer.Screen
+        name={SCREEN.STACK_CREATE_STORE}
+        component={CreateStoreScreen}
+        options={({ navigation, route }: any) => ({
+          headerTitle: () => <Header navigation={navigation} title={'Create Store'} />,
           headerLeft: () => null,
         })}
       />
