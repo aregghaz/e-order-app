@@ -41,7 +41,6 @@ export const ShopListScreen: FC = () => {
       <ScrollView>
         {shops &&
           shops.map((item: any) => {
-            console.log(item, 'ITEM')
             return (
               <Pressable key={item.id} onPress={() => handleSetShopId(item.id)}>
                 <View key={item.id} style={styles.box}>

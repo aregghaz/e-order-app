@@ -23,6 +23,8 @@ export const SCREEN = {
   STACK_WISHLIST: 'Wishlist',
   STACK_SHOP_CART: 'ShopCart',
   STACK_SHOP_LIST: 'ShopList',
+  STACK_ORDER_LIST: 'OrderList',
+  STACK_ORDER_INNER: 'OrderDetails',
   TAB_HOME: 'Home',
   TAB_CATEGORY: 'Category',
   TAB_PROFILE: 'Profile',

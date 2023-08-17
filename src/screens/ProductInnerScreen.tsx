@@ -70,7 +70,6 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
         try {
           setIsLoading(true)
           const getID = await getShopId()
-          console.log(getID, 'getIDgetIDgetID')
           setShopId(getID)
           const featuredData = await SHOP_API.getTopDiscounts(options)
           setHasNext(featuredData.payload.pagination.hasNext)

@@ -29,70 +29,6 @@ export const fakeData = {
       ],
     },
     {
-      id: '3',
-      title: 'Account',
-      iconName: 'user',
-      hasChildren: true,
-      children: [
-        {
-          id: '1',
-          title: 'Profile',
-          hasChildren: false,
-          children: [],
-        },
-        {
-          id: '2',
-          title: 'My Orders',
-          hasChildren: false,
-          children: [],
-        },
-        {
-          id: '3',
-          title: 'My Profile',
-          hasChildren: false,
-          children: [],
-        },
-        {
-          id: '4',
-          title: 'Addresses',
-          hasChildren: false,
-          children: [],
-        },
-        {
-          id: '5',
-          title: 'Notification',
-          hasChildren: false,
-          children: [],
-        },
-      ],
-    },
-    {
-      id: '4',
-      title: 'Payment',
-      iconName: 'credit-card',
-      hasChildren: true,
-      children: [
-        {
-          id: '1',
-          title: 'Payment Method',
-          hasChildren: false,
-          children: [],
-        },
-        {
-          id: '2',
-          title: 'Payment Error',
-          hasChildren: false,
-          children: [],
-        },
-        {
-          id: '3',
-          title: 'Payment Completed',
-          hasChildren: false,
-          children: [],
-        },
-      ],
-    },
-    {
       id: '5',
       title: 'Authentication',
       iconName: 'lock',
@@ -137,28 +73,8 @@ export const fakeData = {
       ],
     },
     {
-      id: '6',
-      title: 'Customer Reviews',
-      iconName: 'star',
-      hasChildren: true,
-      children: [
-        {
-          id: '1',
-          title: 'Ratings & Reviews',
-          hasChildren: false,
-          children: [],
-        },
-        {
-          id: '2',
-          title: 'Write a Review',
-          hasChildren: false,
-          children: [],
-        },
-      ],
-    },
-    {
       id: '7',
-      title: 'About Us',
+      title: 'OrderList',
       iconName: 'smile',
       hasChildren: false,
     },

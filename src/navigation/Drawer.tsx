@@ -17,6 +17,8 @@ import { CategoryDetailScreen } from '~screens/CategoryDetailScreen'
 import { CategorySearchScreen } from '~screens/CategorySearchScreen'
 import { CreateStoreScreen } from '~screens/CreateStoreScreen'
 import { MenuScreen } from '~screens/MenuScreen'
+import { OrderInnerScreen } from '~screens/OrderInnerScreen'
+import { OrderListScreen } from '~screens/OrderListScreen'
 import { ProductInnerScreen } from '~screens/ProductInnerScreen'
 import { ShopCartScreen } from '~screens/ShopCartScreen'
 import { ShopListScreen } from '~screens/ShopListScreen'
@@ -160,6 +162,22 @@ export const DrawerNavigator = () => {
         component={CategorySearchScreen}
         options={({ navigation, route }: any) => ({
           headerTitle: () => <Header navigation={navigation} title="search results" />,
+          headerLeft: () => null,
+        })}
+      />
+      <Drawer.Screen
+        name={SCREEN.STACK_ORDER_LIST}
+        component={OrderListScreen}
+        options={({ navigation, route }: any) => ({
+          headerTitle: () => <Header navigation={navigation} title={'OrderList'} />,
+          headerLeft: () => null,
+        })}
+      />
+      <Drawer.Screen
+        name={SCREEN.STACK_ORDER_INNER}
+        component={OrderInnerScreen}
+        options={({ navigation, route }: any) => ({
+          headerTitle: () => <Header navigation={navigation} title={'OrderDetails'} />,
           headerLeft: () => null,
         })}
       />

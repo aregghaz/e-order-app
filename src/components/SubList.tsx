@@ -30,8 +30,6 @@ export const SubList: FC<IProps> = ({
       navigation.navigate(SCREEN.STACK_SHOP_LIST, { title })
       handlePress()
       await setShopId(shop_id)
-      // navigation.navigate(SCREEN.DRAWER_MENU, { title })
-      // console.log(shop_id, 'PPPPPPP')
       navigation.closeDrawer()
     } else {
       handlePress()
@@ -41,13 +39,7 @@ export const SubList: FC<IProps> = ({
   /*** checking if there is matching screen name ***/
   const findScreenName = Object.values(SCREEN).find((item) => item === title) || 'Menu'
   return (
-    <TouchableOpacity
-      // onPress={() => {
-      //   !hasChildren ? navigation.navigate(findScreenName, { title }) : null
-      //   handlePress()
-      // }}
-      onPress={() => handlePressCheck(title, group!, shop_id!)}
-    >
+    <TouchableOpacity onPress={() => handlePressCheck(title, group!, shop_id!)}>
       <View style={styles.SubList_wrapper}>
         <Text>{title}</Text>
       </View>

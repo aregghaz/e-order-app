@@ -11,6 +11,7 @@ interface IOptions {
 
 export const fakeUrl = 'https://test-api.redro.ru'
 const shopIdTest = `07c1a17d-41ed-49a6-96a0-01db91821db2`
+
 export const getImagePath = (path: string | null, product = '') =>
   `${fakeUrl}/api/local-files/get${product}-image/${path}`
 export const SHOP_API = {
@@ -212,7 +213,6 @@ export const SHOP_API = {
   },
 
   getShopCarts: async (shopId: string) => {
-    console.log(`${fakeUrl}/api/shopping-cart/get-shopping-carts?shopId=${shopId}`)
     return axios
       .get(`${fakeUrl}/api/shopping-cart/get-shopping-carts?shopId=${shopId}`)
       .then((res) => {
@@ -220,11 +220,32 @@ export const SHOP_API = {
       })
       .catch((err) => console.log(err))
   },
+  /**** Order Api ****/
+  getOrders: async () => {
+    const tokenUSer = await getToken()
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
+    return axios
+      .get(`${fakeUrl}/api/orders/get-orders`)
+      .then((res) => {
+        return res.data
+      })
+      .catch((err) => console.log(err))
+  },
+  getOrdersDetails: async (id: string) => {
+    const tokenUSer = await getToken()
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
+    return axios
+      .get(`${fakeUrl}/api/orders/get-order/${id}`)
+      .then((res) => {
+        return res.data
+      })
+      .catch((err) => console.log(err))
+  },
+  /**** end orders ****/
   deleteShopCartID: async (id: string) => {
     return axios
       .delete(`${fakeUrl}/api/shopping-cart/delete-shopping-cart/${id}`)
       .then((res) => {
-        console.log(res.data, '__DELETED Successfully')
         return res.data
       })
       .catch((err) => console.log('Error while deleting', err))
@@ -233,7 +254,6 @@ export const SHOP_API = {
     return axios
       .delete(`${fakeUrl}/api/shopping-cart/delete-from-cart/${shoppingCartId}/${itemId}`)
       .then((res) => {
-        console.log(res.data, '__DELETED Successfully')
         return res.data
       })
       .catch((err) => console.log('Error while deleting', err))

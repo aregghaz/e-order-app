@@ -1,6 +1,3 @@
-/**
- * was created by tigran at 25.06.23
- */
 import { Feather } from '@expo/vector-icons'
 import React, { FC, useCallback, useState } from 'react'
 import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native'
@@ -41,7 +38,6 @@ export const Accordion: FC<IProps> = ({
     if (rotateState) {
       setRotateValue('0deg')
     } else {
-      // rotateRefValue.current = '-90deg'
       setRotateValue('-90deg')
     }
   }, [rotateState])
@@ -49,13 +45,6 @@ export const Accordion: FC<IProps> = ({
   const childrenElements = hasChildren ? (
     subChildren &&
     subChildren.map((item) => {
-      // if(item.hasOwnProperty("companyName")) {
-      // if (Object.prototype.hasOwnProperty.call(item, 'companyName')) {
-      //   item.title = item.shopName
-      //   item.group = 'shop'
-      //   item.shop_id = item.id
-      //   item.hasChildren = false
-      // }
       return (
         <View key={item.id}>
           <SubList
@@ -78,17 +67,9 @@ export const Accordion: FC<IProps> = ({
   }
   /*** checking if there is matching screen name ***/
   const findScreenName = Object.values(SCREEN).find((item) => item === title) || 'Menu'
-  // const newStyle = { ...styles.accordion_block, height }
   return (
     <View style={styles.accordion_block}>
-      {/*// <View style={newStyle}>*/}
-      <TouchableWithoutFeedback
-        // onPress={() => {
-        //   handlePress()
-        //   !hasChildren ? navigation.navigate(findScreenName, { title }) : null
-        // }}
-        onPress={() => handlePressCheck(title)}
-      >
+      <TouchableWithoutFeedback onPress={() => handlePressCheck(title)}>
         <View>
           <View style={styles.accordion_text__wrapper}>
             <View style={styles.sidebar_icon__block}>
