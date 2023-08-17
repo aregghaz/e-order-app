@@ -7,6 +7,7 @@
         "simulator": true
       }
     },
+
     "qa": {
       "developmentClient": true,
       "distribution": "internal"

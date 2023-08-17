@@ -4,7 +4,7 @@ import { secureStore } from '~utils'
 const { SHOP_ID } = ASYNC_STORAGE_KEYS
 
 export async function setShopId(id: string, callback?: (newShopId: string) => void) {
-  console.log(id, '__ID')
+  console.log(JSON.stringify(id), '__ID')
   return secureStore.setItem(SHOP_ID, JSON.stringify(id)).then(() => {
     // If a callback function is provided, call it with the new shop ID
     if (callback) {
@@ -15,7 +15,7 @@ export async function setShopId(id: string, callback?: (newShopId: string) => vo
 
 export async function getShopId(): Promise<string> {
   const id = await secureStore.getItem(SHOP_ID)
-  console.log(id, 'ID in getShopId')
+  ///console.log(id, 'ID in getShopId')
   if (!id) return ''
   return JSON.parse(id)
 }

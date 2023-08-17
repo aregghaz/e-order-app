@@ -63,18 +63,15 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
     page: value,
     limit: 6,
   }
-  useEffect(() => {
-    const getFetchID = async () => {
-      const getID = await getShopId()
-      setShopId(getID)
-    }
-    getFetchID()
-  }, [shopId])
+
   useFocusEffect(
     useCallback(() => {
       const getAsyncData = async (): Promise<void> => {
         try {
           setIsLoading(true)
+          const getID = await getShopId()
+          console.log(getID, 'getIDgetIDgetID')
+          setShopId(getID)
           const featuredData = await SHOP_API.getTopDiscounts(options)
           setHasNext(featuredData.payload.pagination.hasNext)
           setFeatured((featured) => [...featured, ...featuredData.payload.content])
@@ -109,6 +106,7 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
     if (!isSignedIn) {
       navigation.navigate(SCREEN.STACK_SIGN_IN)
     }
+    console.log(selectedOption, 'shopIdshopIdshopId')
     delete selectedOption.productId
     const data = {
       properties: {
@@ -169,8 +167,8 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
           </View>
           <View style={styles.each}>
             {params.properties.unit.length > 0 &&
-              params.properties.unit.map((el: any) => (
-                <Pressable onPress={() => handleSelect(el)} key={el.refId}>
+              params.properties.unit.map((el: any, index: number) => (
+                <Pressable onPress={() => handleSelect(el)} key={index}>
                   <Text
                     style={[styles.each_btn, activeItemRef.current === el.refId && activeBorder]}
                   >

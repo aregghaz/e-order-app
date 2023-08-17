@@ -1,7 +1,7 @@
 {
-  "name": "@kacgrzes/expo-template",
+  "name": "e-order-app",
   "version": "1.2.0",
-  "description": "Expo template ready to develop mobile apps",
+  "description": "e-order-app",
   "keywords": [
     "expo",
     "template",
@@ -12,17 +12,17 @@
     "eslint",
     "prettier"
   ],
-  "homepage": "https://github.com/kacgrzes/expo-typescript-template",
+  "homepage": "https://beta.redro.ru/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kacgrzes/expo-typescript-template.git"
+    "url": "https://github.com/aregghaz/e-order-app.git"
   },
   "bugs": {
-    "url": "https://github.com/kacgrzes/expo-typescript-template/issues"
+    "url": "https://github.com/aregghaz/e-order-app/issues"
   },
-  "author": "Kacper Grzeszczyk",
+  "author": "Areg Ghazaryan",
   "license": "MIT",
-  "main": "src/index.tsx",
+  "main": "index.js",
   "scripts": {
     "start": "expo start --dev-client",
     "start:fast": "EXPO_USE_EXOTIC=1 expo start --clear",
@@ -66,7 +66,7 @@
     "@react-navigation/stack": "^6.2.1",
     "@types/react-native-snap-carousel": "^3.8.5",
     "axios": "^1.4.0",
-    "expo": "^48.0.20",
+    "expo": "~48.0.18",
     "expo-app-loading": "~2.1.0",
     "expo-application": "~5.1.1",
     "expo-asset": "~8.9.1",

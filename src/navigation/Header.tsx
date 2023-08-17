@@ -17,6 +17,7 @@ import {
 import { SHOP_API } from '~api'
 import { SCREEN } from '~constants'
 import { useAuth } from '~hooks'
+import { getShopId } from '~services/ShopService'
 
 const width = Dimensions.get('window').width - 30
 
@@ -34,9 +35,13 @@ export const Header: FC<IProps> = ({ title, navigation }) => {
   useFocusEffect(
     useCallback(() => {
       const getShopCartCount = async () => {
-        const count = await SHOP_API.getShopCarts()
-        if (count) {
-          setCountIndicator(count.payload.content.length)
+        const getID = await getShopId()
+        if (getID) {
+          const count = await SHOP_API.getShopCarts(getID)
+
+          if (count) {
+            setCountIndicator(count.payload.content.length)
+          }
         }
       }
       getShopCartCount()

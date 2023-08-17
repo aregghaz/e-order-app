@@ -7,6 +7,7 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 
 import { SHOP_API } from '~api'
 import { CustomButton } from '~components/molecules/CustomButton'
+import { getShopId } from '~services/ShopService'
 import { customStyles } from '~utils/style_helpers'
 
 export const ShopCartScreen: FC = () => {
@@ -15,8 +16,12 @@ export const ShopCartScreen: FC = () => {
   useFocusEffect(
     useCallback(() => {
       const getShopCarts = async () => {
-        const data = await SHOP_API.getShopCarts()
-        setCarts(data.payload.content)
+        const getID = await getShopId()
+
+        if (getID !== undefined) {
+          const data = await SHOP_API.getShopCarts(getID)
+          setCarts(data.payload.content)
+        }
       }
       getShopCarts()
     }, [trigger])
@@ -59,7 +64,6 @@ const CartItems = ({ elem, onDelete, cartItemId }: any) => {
     <>
       {elem &&
         elem.map((item: any, index: number) => {
-          console.log(item, 'item!!!')
           return (
             <View key={index} style={styles.cart_wrapper}>
               {/*<View style={styles.image_wrapper}>*/}

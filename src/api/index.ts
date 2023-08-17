@@ -211,9 +211,10 @@ export const SHOP_API = {
       .catch((err) => console.log(err))
   },
 
-  getShopCarts: async () => {
+  getShopCarts: async (shopId: string) => {
+    console.log(`${fakeUrl}/api/shopping-cart/get-shopping-carts?shopId=${shopId}`)
     return axios
-      .get(`${fakeUrl}/api/shopping-cart/get-shopping-carts`)
+      .get(`${fakeUrl}/api/shopping-cart/get-shopping-carts?shopId=${shopId}`)
       .then((res) => {
         return res.data
       })

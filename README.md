@@ -1,21 +1,8 @@
 ![Logo](assets/logo.png)
 
-[![MIT License](https://img.shields.io/npm/l/@kacgrzes/expo-template?style=flat-square)](https://github.com/tterb/atomic-design-ui/blob/master/LICENSEs)
-[![MIT License](https://img.shields.io/npm/v/@kacgrzes/expo-template?style=flat-square)](https://img.shields.io/npm/v/@kacgrzes/expo-template?style=flat-square)
-[![MIT License](https://img.shields.io/npm/dt/@kacgrzes/expo-template?style=flat-square)](https://img.shields.io/npm/dt/@kacgrzes/expo-template?style=flat-square)
-[![MIT License](https://img.shields.io/github/stars/kacgrzes/expo-typescript-template?style=flat-square)](https://img.shields.io/github/stars/kacgrzes/expo-typescript-template?style=flat-square)
-
-# @kacgrzes/expo-template
-
 This is a template to be used with expo. It includes all the necessary stuff to start working with expo framework. It has the most popular packages included so it's easier to start coding the app itself without all the necessary boilerplate setup. It has:
 
 Version in the `package.json` is one to one the latest expo on which the template was tested.
-
-## Features
-
-[![MIT License](https://img.shields.io/npm/types/@kacgrzes/expo-template?style=flat-square)](https://img.shields.io/npm/types/@kacgrzes/expo-template?style=flat-square)
-[![MIT License](https://img.shields.io/github/package-json/dependency-version/kacgrzes/expo-typescript-template/expo?style=flat-square)](https://img.shields.io/github/package-json/dependency-version/kacgrzes/expo-typescript-template/expo?style=flat-square)
-[![MIT License](https://img.shields.io/github/package-json/dependency-version/kacgrzes/expo-typescript-template/@react-navigation/native?style=flat-square)](https://img.shields.io/github/package-json/dependency-version/kacgrzes/expo-typescript-template/@react-navigation/native?style=flat-square)
 
 - TypeScript support
 - Expo
@@ -40,30 +27,14 @@ Version in the `package.json` is one to one the latest expo on which the templat
 
 See all the details in the documentation.
 
-## Screenshots
-
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
-
 ## Installation
 
 Init expo with this template using:
-
-```bash
-  expo init --template=@kacgrzes/expo-template <name of your app>
-```
 
 ### Working with designer in your project
 
 Expo template, you are going to use - bundles native-base ui lib out of the box.
 To have the best starting experience in your project - write a dm to your designer that they should use [NativeBase Figma Design Kit](https://www.figma.com/community/file/1050753649783931446)
-
-## Documentation
-
-[Documentation](https://linktodocumentation)
-
-## Demo
-
-Insert gif or link to demo
 
 ## Roadmap
 
@@ -83,7 +54,7 @@ Please adhere to this project's `code of conduct`.
 Clone the project
 
 ```bash
-  git clone https://github.com/kacgrzes/expo-typescript-template.git
+  git clone https://github.com/aregghaz/e-order-app.git
 ```
 
 Go to the project directory
@@ -110,9 +81,4 @@ Start the expo server
 
 ## Feedback
 
-If you have any feedback, please reach out to me at kacgrzes@gmail.com
-
-## Contributors
-
-- [@kacgrzes](https://www.github.com/kacgrzes)
-- [@MateuszRostkowski](https://www.github.com/MateuszRostkowski)
+If you have any feedback, please reach out to me at aregghaz@gmail.com
