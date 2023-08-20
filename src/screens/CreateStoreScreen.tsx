@@ -308,6 +308,7 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderWidth: 1,
     padding: 10,
+
     width: '100%',
   },
   title: {

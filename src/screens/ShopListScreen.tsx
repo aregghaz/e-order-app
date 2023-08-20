@@ -7,6 +7,7 @@ import React, { FC, useState } from 'react'
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 
 import { SHOP_API } from '~api'
+import { CustomButton } from '~components/molecules/CustomButton'
 import { SCREEN } from '~constants'
 import { setShopId } from '~services/ShopService'
 import { customStyles } from '~utils/style_helpers'
@@ -36,6 +37,10 @@ export const ShopListScreen: FC = () => {
     })
   }
 
+  const handleOnPress = () => {
+    console.log('111')
+  }
+
   return (
     <View style={styles.ShopListScreen_wrapper}>
       <ScrollView>
@@ -49,6 +54,26 @@ export const ShopListScreen: FC = () => {
                   <View style={styles.hr} />
                   <Text>Delivery Address : {item.deliveryAddress.address_1}</Text>
                   <Text>Phone : {item.deliveryAddress.phoneNumber1}</Text>
+                  <View style={styles.buttonsContainer}>
+                    <CustomButton
+                      title="изменить"
+                      width={150}
+                      padding={15}
+                      border="grey"
+                      background="white"
+                      color="red"
+                      onPress={handleOnPress}
+                    />
+                    <CustomButton
+                      title="удалить"
+                      width={150}
+                      padding={15}
+                      border="grey"
+                      background="white"
+                      color="red"
+                      onPress={handleOnPress}
+                    />
+                  </View>
                 </View>
               </Pressable>
             )
@@ -92,6 +117,15 @@ const styles = StyleSheet.create({
     minHeight: 100,
     padding: 5,
     ...customStyles.border(1, 'solid', colors.borderColor),
+  },
+  buttonsContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 15,
+    justifyContent: 'center',
+    margin: 5,
+    padding: 10,
+    // backgroundColor: colors.background,
   },
   footer: {
     backgroundColor: colors.background,
