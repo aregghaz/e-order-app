@@ -280,4 +280,15 @@ export const SHOP_API = {
       })
       .catch((err) => console.log(err))
   },
+  /*  Partnerships  */
+  get: async () => {
+    const tokenUSer = await getToken()
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
+    return axios
+      .get(`${fakeUrl}/api/partnerships/get-partnerships`)
+      .then((res) => {
+        return res.data
+      })
+      .catch((err) => console.log(err))
+  },
 }

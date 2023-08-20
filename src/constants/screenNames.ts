@@ -32,4 +32,5 @@ export const SCREEN = {
   DRAWER_MENU: 'Menu',
   DRAWER_ROOT: 'Root',
   PHONE_REGISTER: 'PhoneRegister',
+  PARTNER_SHIP: 'ParthnerShip',
 }

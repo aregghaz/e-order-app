@@ -19,6 +19,7 @@ import { CreateStoreScreen } from '~screens/CreateStoreScreen'
 import { MenuScreen } from '~screens/MenuScreen'
 import { OrderInnerScreen } from '~screens/OrderInnerScreen'
 import { OrderListScreen } from '~screens/OrderListScreen'
+import { PrtnerShipScreen } from '~screens/PartnerShipScreen'
 import { ProductInnerScreen } from '~screens/ProductInnerScreen'
 import { ShopCartScreen } from '~screens/ShopCartScreen'
 import { ShopListScreen } from '~screens/ShopListScreen'
@@ -178,6 +179,14 @@ export const DrawerNavigator = () => {
         component={OrderInnerScreen}
         options={({ navigation, route }: any) => ({
           headerTitle: () => <Header navigation={navigation} title={'OrderDetails'} />,
+          headerLeft: () => null,
+        })}
+      />
+      <Drawer.Screen
+        name={SCREEN.PARTNER_SHIP}
+        component={PrtnerShipScreen}
+        options={({ navigation, route }: any) => ({
+          headerTitle: () => <Header navigation={navigation} title={'ParthnerShip'} />,
           headerLeft: () => null,
         })}
       />
