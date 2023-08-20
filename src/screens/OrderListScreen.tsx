@@ -41,8 +41,8 @@ export const OrderListScreen: FC = () => {
           orders.map((order: IOorder) => (
             <Pressable key={order.id} onPress={() => handlerGetOrder(order.id)}>
               <View key={order.id} style={styles.box}>
-                <Text style={styles.title}>orderNumber : {order.orderNumber}</Text>
-                <Text style={styles.text_h2}>status : {order.status}</Text>
+                <Text style={styles.title}>orderNumbe222222r : {order.orderNumber}</Text>
+                <Text style={styles.text_h2}>status2222222 : {order.status}</Text>
                 <View style={styles.hr} />
                 <Text>createdAt : {timestampToDate(order.createdAt)}</Text>
                 <Text>orderTotal : {order.orderTotal} ₽</Text>

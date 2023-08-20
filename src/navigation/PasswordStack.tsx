@@ -39,8 +39,6 @@ export const PasswordStack: FC<IProps> = ({ route, navigation }) => {
       data = await SHOP_API.createCustomerUser(token, mobile, password)
     }
 
-    console.log(data, 'iiiiiii')
-    alert(`${password} === ${confirmPassword}`)
     if (data && data.status === 200) {
       if (reset) {
         navigation.navigate(SCREEN.STACK_SIGN_IN)
