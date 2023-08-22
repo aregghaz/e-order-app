@@ -1,7 +1,7 @@
 /**
  * was created by tigran at 11.08.23
  */
-import { useNavigation } from '@react-navigation/native'
+import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import React, { FC, useState } from 'react'
 import { View, Text, StyleSheet, ScrollView, TextInput } from 'react-native'
 
@@ -9,7 +9,8 @@ import { SHOP_API } from '~api'
 import { CustomButton } from '~components/molecules/CustomButton'
 import { SCREEN } from '~constants'
 
-export const CreateStoreScreen: FC = () => {
+export const UpdateShopScreen: FC = ({ route }: any) => {
+  const id = route.params
   const navigation = useNavigation<any>()
   /*shop*/
   const [shopName, setShopName] = useState('')
@@ -50,6 +51,29 @@ export const CreateStoreScreen: FC = () => {
   /*Legal phone 2*/
   const [deliveryPhone_2, setDeliveryPhone_2] = useState('')
   const [deliveryPhoneError_2] = useState('')
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const getData = async () => {
+        const data = await SHOP_API.getShop(id)
+        console.log(data, 'datadatadata')
+        setTax(data.payload.taxId)
+        setShopName(data.payload.shopName)
+        setCompanyName(data.payload.companyName)
+        setLegalAddress(data.payload.legalAddress.address_1)
+        setLegalApartment(data.payload.legalAddress.address_2)
+        setLegalPostCode(data.payload.legalAddress.postCode)
+        setLegalPhone_1(data.payload.legalAddress.phoneNumber1)
+        setLegalPhone_2(data.payload.legalAddress.phoneNumber2)
+        setDeliveryAddress(data.payload.deliveryAddress.address_1)
+        setDeliveryApartment(data.payload.deliveryAddress.address_2)
+        setDeliveryPostCode(data.payload.deliveryAddress.postCode)
+        setDeliveryPhone_1(data.payload.deliveryAddress.phoneNumber1)
+        setDeliveryPhone_2(data.payload.deliveryAddress.phoneNumber2)
+      }
+      getData()
+    }, [])
+  )
 
   const handleSave = async () => {
     let isValid = true
@@ -114,7 +138,7 @@ export const CreateStoreScreen: FC = () => {
 
     if (isValid) {
       try {
-        await SHOP_API.createShops(body)
+        await SHOP_API.updateShops(id, body)
         navigation.navigate(SCREEN.DRAWER_ROOT, {
           screen: SCREEN.STACK_MAIN_TAB,
         })
@@ -122,23 +146,6 @@ export const CreateStoreScreen: FC = () => {
         console.log(err)
       }
     }
-    resetValues()
-  }
-
-  const resetValues = () => {
-    setShopName('')
-    setTax('')
-    setCompanyName('')
-    setLegalAddress('')
-    setLegalApartment('')
-    setLegalPostCode('')
-    setLegalPhone_1('')
-    setLegalPhone_2('')
-    setDeliveryAddress('')
-    setDeliveryApartment('')
-    setDeliveryPostCode('')
-    setDeliveryPhone_1('')
-    setDeliveryPhone_2('')
   }
 
   return (
@@ -149,10 +156,10 @@ export const CreateStoreScreen: FC = () => {
             style={styles.input}
             onChangeText={(value) => {
               setShopName(value)
-              setShopNameError(value.trim() === '' ? 'this field is required' : '')
+              setShopNameError(value.trim() === '' ? 'Обязательное поле.' : '')
             }}
             value={shopName}
-            placeholder="Shop Name*"
+            placeholder="Название магазина*"
           />
           <Text style={styles.errorText}>{shopNameError}</Text>
         </>
@@ -161,10 +168,10 @@ export const CreateStoreScreen: FC = () => {
             style={styles.input}
             onChangeText={(value) => {
               setTax(value)
-              setTaxError(value.trim() === '' ? 'this field is required' : '')
+              setTaxError(value.trim() === '' ? 'Обязательное поле.' : '')
             }}
             value={tax}
-            placeholder="Tax*"
+            placeholder="ИНН*"
           />
           <Text style={styles.errorText}>{taxError}</Text>
         </>
@@ -173,23 +180,23 @@ export const CreateStoreScreen: FC = () => {
             style={styles.input}
             onChangeText={(value) => {
               setCompanyName(value)
-              setCompanyNameError(value.trim() === '' ? 'this field is required' : '')
+              setCompanyNameError(value.trim() === '' ? 'Обязательное поле.' : '')
             }}
             value={companyName}
-            placeholder="Company Name*"
+            placeholder="Название компании*"
           />
           <Text style={styles.errorText}>{companyNameError}</Text>
         </>
-        <Text style={styles.title}>Legal address</Text>
+        <Text style={styles.title}>Юридический адрес</Text>
         <>
           <TextInput
             style={styles.input}
             onChangeText={(value) => {
               setLegalAddress(value)
-              setLegalAddressError(value.trim() === '' ? 'this field is required' : '')
+              setLegalAddressError(value.trim() === '' ? 'Обязательное поле.' : '')
             }}
             value={legalAddress}
-            placeholder="Address*"
+            placeholder="Адрес*"
           />
           <Text style={styles.errorText}>{legalAddressError}</Text>
         </>
@@ -198,7 +205,7 @@ export const CreateStoreScreen: FC = () => {
             style={styles.input}
             onChangeText={setLegalApartment}
             value={legalApartment}
-            placeholder="Apt, unit, building, floor, etc."
+            placeholder="Квартира, блок, здание, этаж и т. д."
           />
           <Text style={styles.errorText}>{legalApartmentError}</Text>
         </>
@@ -207,7 +214,7 @@ export const CreateStoreScreen: FC = () => {
             style={styles.input}
             onChangeText={setLegalPostCode}
             value={legalPostCode}
-            placeholder="Post Code"
+            placeholder="Почтовый индекс"
           />
           <Text style={styles.errorText}>{legalPostCodeError}</Text>
         </>
@@ -216,7 +223,7 @@ export const CreateStoreScreen: FC = () => {
             style={styles.input}
             onChangeText={setLegalPhone_1}
             value={legalPhone_1}
-            placeholder="Phone Number"
+            placeholder="Номер телефона"
           />
           <Text style={styles.errorText}>{legalPhoneError_1}</Text>
         </>
@@ -225,20 +232,20 @@ export const CreateStoreScreen: FC = () => {
             style={styles.input}
             onChangeText={setLegalPhone_2}
             value={legalPhone_2}
-            placeholder="Secondary Phone Number"
+            placeholder="Доп. номер телефона"
           />
           <Text style={styles.errorText}>{legalPhoneError_2}</Text>
         </>
-        <Text style={styles.title}>Delivery address</Text>
+        <Text style={styles.title}>Адрес доставки</Text>
         <>
           <TextInput
             style={styles.input}
             onChangeText={(value) => {
               setDeliveryAddress(value)
-              setDeliveryAddressError(value.trim() === '' ? 'this field is required' : '')
+              setDeliveryAddressError(value.trim() === '' ? 'Обязательное поле.' : '')
             }}
             value={deliveryAddress}
-            placeholder="Address*"
+            placeholder="Адрес*"
           />
           <Text style={styles.errorText}>{deliveryAddressError}</Text>
         </>
@@ -247,7 +254,7 @@ export const CreateStoreScreen: FC = () => {
             style={styles.input}
             onChangeText={setDeliveryApartment}
             value={deliveryApartment}
-            placeholder="Apt, unit, building, floor, etc."
+            placeholder="Квартира, блок, здание, этаж и т. д."
           />
           <Text style={styles.errorText}>{deliveryApartmentError}</Text>
         </>
@@ -256,7 +263,7 @@ export const CreateStoreScreen: FC = () => {
             style={styles.input}
             onChangeText={setDeliveryPostCode}
             value={deliveryPostCode}
-            placeholder="Post Code"
+            placeholder="Почтовый индекс"
           />
           <Text style={styles.errorText}>{deliveryPostCodeError}</Text>
         </>
@@ -265,7 +272,7 @@ export const CreateStoreScreen: FC = () => {
             style={styles.input}
             onChangeText={setDeliveryPhone_1}
             value={deliveryPhone_1}
-            placeholder="Phone Number"
+            placeholder="Номер телефона"
           />
           <Text style={styles.errorText}>{deliveryPhoneError_1}</Text>
         </>
@@ -274,11 +281,11 @@ export const CreateStoreScreen: FC = () => {
             style={styles.input}
             onChangeText={setDeliveryPhone_2}
             value={deliveryPhone_2}
-            placeholder="Secondary Phone Number"
+            placeholder="Доп. номер телефона"
           />
           <Text style={styles.errorText}>{deliveryPhoneError_2}</Text>
         </>
-        <CustomButton title="Save" onPress={handleSave} />
+        <CustomButton title=" Сохранить " onPress={handleSave} />
       </View>
     </ScrollView>
   )

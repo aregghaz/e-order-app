@@ -79,6 +79,12 @@ export const fakeData = {
       hasChildren: false,
     },
     {
+      id: '9',
+      title: 'ParthnerShip',
+      iconName: 'smile',
+      hasChildren: false,
+    },
+    {
       id: '8',
       title: 'Contact Us',
       iconName: 'headphones',

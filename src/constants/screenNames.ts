@@ -15,6 +15,7 @@ export const SCREEN = {
   STACK_PASSWORD: 'PasswordStack',
   STACK_ACCOUNT: 'AccountStack',
   STACK_CREATE_STORE: 'CreateStore',
+  STACK_UPDATE_STORE: 'UpdateStore',
   STACK_SETTINGS: 'Settings',
   STACK_APPLICATION_INFO: 'ApplicationInfo',
   STACK_NOT_FOUND: 'NotFound',
@@ -33,4 +34,6 @@ export const SCREEN = {
   DRAWER_ROOT: 'Root',
   PHONE_REGISTER: 'PhoneRegister',
   PARTNER_SHIP: 'ParthnerShip',
+  ADD_PARTNERSHIP: 'AddPrtnerShip',
+  CHECKOUT: 'Checkout',
 }

@@ -14,6 +14,7 @@ import { customStyles } from '~utils/style_helpers'
 
 export const ShopListScreen: FC = () => {
   const [shops, setShops] = useState<any>([])
+  const [load, setLoad] = useState<boolean>(false)
   const navigation = useNavigation<any>()
 
   useFocusEffect(
@@ -23,7 +24,7 @@ export const ShopListScreen: FC = () => {
         setShops(shopData.payload.content)
       }
       getData()
-    }, [])
+    }, [load])
   )
 
   const handleAddShop = () => {
@@ -37,8 +38,13 @@ export const ShopListScreen: FC = () => {
     })
   }
 
-  const handleOnPress = () => {
-    console.log('111')
+  const handleUpdate = (id: string) => {
+    navigation.navigate(SCREEN.STACK_UPDATE_STORE, id)
+  }
+  const handleDelete = async (id: string) => {
+    console.log(id, 'idid')
+    await SHOP_API.deleteShop(id)
+    setLoad(!load)
   }
 
   return (
@@ -62,7 +68,7 @@ export const ShopListScreen: FC = () => {
                       border="grey"
                       background="white"
                       color="red"
-                      onPress={handleOnPress}
+                      onPress={() => handleUpdate(item.id)}
                     />
                     <CustomButton
                       title="удалить"
@@ -71,7 +77,7 @@ export const ShopListScreen: FC = () => {
                       border="grey"
                       background="white"
                       color="red"
-                      onPress={handleOnPress}
+                      onPress={() => handleDelete(item.id)}
                     />
                   </View>
                 </View>
@@ -129,7 +135,7 @@ const styles = StyleSheet.create({
   },
   footer: {
     backgroundColor: colors.background,
-    height: 100,
+    // height: 60,
   },
   hr: {
     ...customStyles.border(1, 'solid', colors.borderColor),

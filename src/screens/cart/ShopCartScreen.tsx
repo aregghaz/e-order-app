@@ -3,21 +3,23 @@
  */
 import { useFocusEffect } from '@react-navigation/native'
 import React, { FC, useCallback, useState } from 'react'
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, View } from 'react-native'
 
 import { SHOP_API } from '~api'
+import { CartItems } from '~components/CartItem'
 import { CustomButton } from '~components/molecules/CustomButton'
+import { SCREEN } from '~constants'
 import { getShopId } from '~services/ShopService'
 import { customStyles } from '~utils/style_helpers'
 
-export const ShopCartScreen: FC = () => {
+export const ShopCartScreen: FC = ({ navigation }: any) => {
   const [carts, setCarts] = useState<null | any>([])
   const [trigger, setTrigger] = useState(false)
   useFocusEffect(
     useCallback(() => {
       const getShopCarts = async () => {
         const getID = await getShopId()
-
+        console.log(getID, 'getIDgetID')
         if (getID !== undefined) {
           const data = await SHOP_API.getShopCarts(getID)
           setCarts(data.payload.content)
@@ -31,7 +33,9 @@ export const ShopCartScreen: FC = () => {
     await SHOP_API.deleteFromCart(IDS.cartItemID, IDS.itemId)
     setTrigger(!trigger)
   }
-
+  const handlerCheckOut = () => {
+    navigation.navigate(SCREEN.CHECKOUT)
+  }
   return (
     <>
       <ScrollView>
@@ -41,7 +45,12 @@ export const ShopCartScreen: FC = () => {
               return (
                 <React.Fragment key={index}>
                   {/*<Text>{item?.cartTotal}</Text>*/}
-                  <CartItems elem={item.cartItems} onDelete={handleDelete} cartItemId={item.id} />
+                  <CartItems
+                    isDelete={true}
+                    elem={item.cartItems}
+                    onDelete={handleDelete}
+                    cartItemId={item.id}
+                  />
                 </React.Fragment>
               )
             })
@@ -53,43 +62,8 @@ export const ShopCartScreen: FC = () => {
         </View>
       </ScrollView>
       <View style={styles.btn_wrapper}>
-        <CustomButton title={'Go To Checkout'} onPress={() => alert(12)} />
+        <CustomButton title={'Go To Checkout'} onPress={() => handlerCheckOut()} />
       </View>
-    </>
-  )
-}
-
-const CartItems = ({ elem, onDelete, cartItemId }: any) => {
-  return (
-    <>
-      {elem &&
-        elem.map((item: any, index: number) => {
-          return (
-            <View key={index} style={styles.cart_wrapper}>
-              {/*<View style={styles.image_wrapper}>*/}
-
-              {/*</View>*/}
-              <View>
-                <Text>{item.product.productName}</Text>
-                <Text>Qty: {item.quantity}</Text>
-                <Text>Price: {item.price}</Text>
-                <Text>Reward: {item.reward}</Text>
-                <Text>Discount {item.discount} %</Text>
-                <Pressable
-                  style={styles.delete_wrapper}
-                  onPress={() =>
-                    onDelete({
-                      cartItemID: cartItemId,
-                      itemId: item.id,
-                    })
-                  }
-                >
-                  <Text style={styles.delete}>Delete</Text>
-                </Pressable>
-              </View>
-            </View>
-          )
-        })}
     </>
   )
 }
@@ -112,30 +86,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  cart_wrapper: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    margin: 10,
-    padding: 10,
-    ...customStyles.border(1, 'solid', colors.borderColor),
-    borderRadius: 4,
-  },
+
   // image_wrapper: {
   //   ...customStyles.border(1, "solid", colors.borderColor),
   //   width: 100,
   //   height: 100,
   //   marginRight: 10
   // },
-  delete: {
-    ...customStyles.border(1, 'solid', colors.red),
-    borderRadius: 4,
-    color: colors.red,
-    textAlign: 'center',
-    width: 80,
-  },
-  delete_wrapper: {
-    marginVertical: 4,
-  },
+
   no_product: {
     alignItems: 'center',
     marginTop: 20,

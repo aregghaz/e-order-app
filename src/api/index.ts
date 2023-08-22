@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 import { getToken } from '~services'
+import { IShopDetails } from '~types/shop'
 
 interface IOptions {
   shopId: string | null
@@ -270,22 +271,103 @@ export const SHOP_API = {
       .catch((err) => console.log(err))
   },
 
-  createShops: async (body: any) => {
+  createShops: async (body: IShopDetails) => {
     const tokenUSer = await getToken()
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
     return axios
-      .post(`${fakeUrl}/api/shops/create-shops`, body)
+      .post(`${fakeUrl}/api/shops/update-shops`, body)
+      .then((res) => {
+        return res.data
+      })
+      .catch((err) => console.log(err))
+  },
+  updateShops: async (id: string, body: IShopDetails) => {
+    const tokenUSer = await getToken()
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
+    return axios
+      .patch(`${fakeUrl}/api/shops/update-shops/${id}`, body)
+      .then((res) => {
+        return res.data
+      })
+      .catch((err) => console.log(err))
+  },
+  deleteShop: async (id: string) => {
+    const tokenUSer = await getToken()
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
+    console.log(`${fakeUrl}/api/shops/delete-shops/${id}`)
+    return axios
+      .delete(`${fakeUrl}/api/shops/delete-shops/${id}`)
+      .then((res) => {
+        return res.data
+      })
+      .catch((err) => console.log(err))
+  },
+  getShop: async (id: string) => {
+    const tokenUSer = await getToken()
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
+    return axios
+      .get(`${fakeUrl}/api/shops/get-shops/${id}`)
       .then((res) => {
         return res.data
       })
       .catch((err) => console.log(err))
   },
   /*  Partnerships  */
-  get: async () => {
+  get: async (id: string) => {
     const tokenUSer = await getToken()
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
     return axios
-      .get(`${fakeUrl}/api/partnerships/get-partnerships`)
+      .get(`${fakeUrl}/api/partnerships/get-partnerships?shopId=${id}`)
+      .then((res) => {
+        return res.data
+      })
+      .catch((err) => console.log(err))
+  },
+  getSingleData: async (id: string) => {
+    const tokenUSer = await getToken()
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
+    return axios
+      .get(`${fakeUrl}/api/partnerships/get-partnership/${id}`)
+      .then((res) => {
+        return res.data
+      })
+      .catch((err) => console.log(err))
+  },
+  delete: async (id: string) => {
+    const tokenUSer = await getToken()
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
+    return axios
+      .delete(`${fakeUrl}/api/partnerships/delete-partnership/${id}`)
+      .then((res) => {
+        return res.data
+      })
+      .catch((err) => console.log(err))
+  },
+  searchParthner: async (id: string, page: number) => {
+    const tokenUSer = await getToken()
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
+    return axios
+      .get(`${fakeUrl}/api/suppliers/get-suppliers?shopId=${id}&page=${page}`)
+      .then((res) => {
+        return res.data
+      })
+      .catch((err) => console.log(err))
+  },
+  addParthner: async (supId: string, shopId: string) => {
+    const tokenUSer = await getToken()
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
+    return axios
+      .post(`${fakeUrl}/api/partnerships/send-request/${supId}/${shopId}`)
+      .then((res) => {
+        return res.data
+      })
+      .catch((err) => console.log(err))
+  },
+  getShopReq: async (id: string) => {
+    const tokenUSer = await getToken()
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
+    return axios
+      .get(`${fakeUrl}/api/partnerships/send-requests?shopId=${id}`)
       .then((res) => {
         return res.data
       })

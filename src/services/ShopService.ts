@@ -15,7 +15,6 @@ export async function setShopId(id: string, callback?: (newShopId: string) => vo
 
 export async function getShopId(): Promise<string> {
   const id = await secureStore.getItem(SHOP_ID)
-  ///console.log(id, 'ID in getShopId')
   if (!id) return ''
   return JSON.parse(id)
 }

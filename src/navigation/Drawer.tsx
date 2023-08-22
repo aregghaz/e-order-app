@@ -15,15 +15,18 @@ import { RootNavigator } from '~navigation/RootNavigator'
 import { CategoryInnerScreen, SignInScreen } from '~screens'
 import { CategoryDetailScreen } from '~screens/CategoryDetailScreen'
 import { CategorySearchScreen } from '~screens/CategorySearchScreen'
-import { CreateStoreScreen } from '~screens/CreateStoreScreen'
 import { MenuScreen } from '~screens/MenuScreen'
 import { OrderInnerScreen } from '~screens/OrderInnerScreen'
 import { OrderListScreen } from '~screens/OrderListScreen'
-import { PrtnerShipScreen } from '~screens/PartnerShipScreen'
 import { ProductInnerScreen } from '~screens/ProductInnerScreen'
-import { ShopCartScreen } from '~screens/ShopCartScreen'
-import { ShopListScreen } from '~screens/ShopListScreen'
 import { WishlistScreen } from '~screens/WishlistScreen'
+import { CheckOutScreen } from '~screens/cart/CheckOutScreen'
+import { ShopCartScreen } from '~screens/cart/ShopCartScreen'
+import { AddPrtnerShipScreen } from '~screens/panthers/AddPrtnerShipScreen'
+import { PrtnerShipScreen } from '~screens/panthers/PartnerShipScreen'
+import { CreateStoreScreen } from '~screens/shops/CreateStoreScreen'
+import { ShopListScreen } from '~screens/shops/ShopListScreen'
+import { UpdateShopScreen } from '~screens/shops/UpdateShopScreen'
 
 const locale = 'ru'
 
@@ -85,6 +88,14 @@ export const DrawerNavigator = () => {
         })}
       />
       <Drawer.Screen
+        name={SCREEN.CHECKOUT}
+        component={CheckOutScreen}
+        options={({ navigation, route }: any) => ({
+          headerTitle: () => <Header navigation={navigation} title={'Checkout'} />,
+          headerLeft: () => null,
+        })}
+      />
+      <Drawer.Screen
         name={SCREEN.STACK_SHOP_LIST}
         component={ShopListScreen}
         options={({ navigation, route }: any) => ({
@@ -100,11 +111,14 @@ export const DrawerNavigator = () => {
           headerLeft: () => null,
         })}
       />
-      {/*<Drawer.Screen*/}
-      {/*  name={SCREEN.PHONE_REGISTER}*/}
-      {/*  component={PhoneRegisterStack}*/}
-      {/*  options={{ headerShown: false }}*/}
-      {/*/>*/}
+      <Drawer.Screen
+        name={SCREEN.STACK_UPDATE_STORE}
+        component={UpdateShopScreen}
+        options={({ navigation, route }: any) => ({
+          headerTitle: () => <Header navigation={navigation} title={'Update Store'} />,
+          headerLeft: () => null,
+        })}
+      />
 
       <Drawer.Screen
         name={SCREEN.STACK_SIGN_IN}
@@ -187,6 +201,14 @@ export const DrawerNavigator = () => {
         component={PrtnerShipScreen}
         options={({ navigation, route }: any) => ({
           headerTitle: () => <Header navigation={navigation} title={'ParthnerShip'} />,
+          headerLeft: () => null,
+        })}
+      />
+      <Drawer.Screen
+        name={SCREEN.ADD_PARTNERSHIP}
+        component={AddPrtnerShipScreen}
+        options={({ navigation, route }: any) => ({
+          headerTitle: () => <Header navigation={navigation} title={'AddPrtnerShip'} />,
           headerLeft: () => null,
         })}
       />
