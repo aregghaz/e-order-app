@@ -142,11 +142,11 @@ export const SHOP_API = {
       .catch((err) => console.log(err))
   },
   /* step 3 */
-  createCustomerUser: async (token: number, phone: string, password: string) => {
+  createCustomerUser: async (token: string, phone: string, password: string) => {
     return axios
       .post(`${fakeUrl}/api/users/create-customer-user`, { mobile: phone, password, token })
       .then((res) => {
-        console.log(res, '___ RES_DATA ___')
+        console.log(res, '22222')
         return res.data
       })
       .catch((err) => console.log(err))
@@ -221,6 +221,14 @@ export const SHOP_API = {
       })
       .catch((err) => console.log(err))
   },
+  getShopCart: async (shopId: string) => {
+    return axios
+      .get(`${fakeUrl}/api/shopping-cart/shopping-cart/${shopId}`)
+      .then((res) => {
+        return res.data
+      })
+      .catch((err) => console.log(err))
+  },
   /**** Order Api ****/
   getOrders: async () => {
     const tokenUSer = await getToken()
@@ -238,6 +246,18 @@ export const SHOP_API = {
     return axios
       .get(`${fakeUrl}/api/orders/get-order/${id}`)
       .then((res) => {
+        return res.data
+      })
+      .catch((err) => console.log(err))
+  },
+  createOrder: async (body: { shoppingCart: string; comment: string }) => {
+    console.log(body, 'body')
+    const tokenUSer = await getToken()
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
+    return axios
+      .post(`${fakeUrl}/api/orders/create-order`, body)
+      .then((res) => {
+        console.log(res, 'resresres')
         return res.data
       })
       .catch((err) => console.log(err))

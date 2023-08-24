@@ -24,7 +24,7 @@ import { CustomButton } from '~components/molecules/CustomButton'
 import { SCREEN } from '~constants'
 import { useAuth } from '~hooks'
 import { useIncrement } from '~hooks/useIncrement'
-import { getShopId } from '~services/ShopService'
+import { getShopId, notification } from '~services/ShopService'
 import { IFeatured } from '~types/featuredProducts'
 import { customStyles } from '~utils/style_helpers'
 
@@ -70,10 +70,13 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
         try {
           setIsLoading(true)
           const getID = await getShopId()
+          console.log(getID, 'getIDgetID')
           setShopId(getID)
-          const featuredData = await SHOP_API.getTopDiscounts(options)
-          setHasNext(featuredData.payload.pagination.hasNext)
-          setFeatured((featured) => [...featured, ...featuredData.payload.content])
+          if (getID) {
+            const featuredData = await SHOP_API.getTopDiscounts(options)
+            setHasNext(featuredData.payload.pagination.hasNext)
+            setFeatured((featured) => [...featured, ...featuredData.payload.content])
+          }
         } catch (err) {
           console.error('Error fetching latest products:', err)
         } finally {
@@ -105,7 +108,9 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
     if (!isSignedIn) {
       navigation.navigate(SCREEN.STACK_SIGN_IN)
     }
-    console.log(selectedOption, 'shopIdshopIdshopId')
+    if (!selectedOption) {
+      return notification('Виберите вложение')
+    }
     delete selectedOption.productId
     const data = {
       properties: {
@@ -120,7 +125,8 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
     if (!add) {
       alert('Please sign in before add to cart')
     }
-    console.log(add, '___add!!!')
+    notification('Добавлено в корзину')
+    /// console.log(add, '___add!!!')
   }
 
   const Header = useCallback(() => {
@@ -164,7 +170,9 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
           <View>
             <Text style={styles.price}>₽ {params.price}</Text>
           </View>
+          <View style={styles.horizontal_row} />
           <View style={styles.each}>
+            <Text>Вложение</Text>
             {params.properties.unit.length > 0 &&
               params.properties.unit.map((el: any, index: number) => (
                 <Pressable onPress={() => handleSelect(el)} key={index}>
@@ -176,6 +184,7 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
                 </Pressable>
               ))}
           </View>
+
           <View style={styles.horizontal_row} />
           <View>
             <Text style={styles.details}>Product Details</Text>

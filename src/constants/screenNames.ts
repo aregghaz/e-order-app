@@ -36,4 +36,5 @@ export const SCREEN = {
   PARTNER_SHIP: 'ParthnerShip',
   ADD_PARTNERSHIP: 'AddPrtnerShip',
   CHECKOUT: 'Checkout',
+  PROFILE_EDIT: 'ProfileEdit',
 }

@@ -9,7 +9,7 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { SHOP_API } from '~api'
 import { CustomButton } from '~components/molecules/CustomButton'
 import { SCREEN } from '~constants'
-import { setShopId } from '~services/ShopService'
+import { notification, setShopId } from '~services/ShopService'
 import { customStyles } from '~utils/style_helpers'
 
 export const ShopListScreen: FC = () => {
@@ -42,9 +42,10 @@ export const ShopListScreen: FC = () => {
     navigation.navigate(SCREEN.STACK_UPDATE_STORE, id)
   }
   const handleDelete = async (id: string) => {
-    console.log(id, 'idid')
     await SHOP_API.deleteShop(id)
     setLoad(!load)
+
+    notification('Удалено')
   }
 
   return (

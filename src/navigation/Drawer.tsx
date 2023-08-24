@@ -12,7 +12,7 @@ import { Header } from '~navigation/Header'
 import { optionForScreen } from '~navigation/HeaderGlobalStyles'
 import { PasswordStack } from '~navigation/PasswordStack'
 import { RootNavigator } from '~navigation/RootNavigator'
-import { CategoryInnerScreen, SignInScreen } from '~screens'
+import { CategoryInnerScreen, ProfileScreen, SignInScreen } from '~screens'
 import { CategoryDetailScreen } from '~screens/CategoryDetailScreen'
 import { CategorySearchScreen } from '~screens/CategorySearchScreen'
 import { MenuScreen } from '~screens/MenuScreen'
@@ -209,6 +209,14 @@ export const DrawerNavigator = () => {
         component={AddPrtnerShipScreen}
         options={({ navigation, route }: any) => ({
           headerTitle: () => <Header navigation={navigation} title={'AddPrtnerShip'} />,
+          headerLeft: () => null,
+        })}
+      />
+      <Drawer.Screen
+        name={SCREEN.PROFILE_EDIT}
+        component={ProfileScreen}
+        options={({ navigation, route }: any) => ({
+          headerTitle: () => <Header navigation={navigation} title={'ProfileEdit'} />,
           headerLeft: () => null,
         })}
       />

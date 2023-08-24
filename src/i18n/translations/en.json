@@ -1,4 +1,11 @@
 {
+  "shop": {
+    "shop": "SHOP",
+    "supplier": "SUPPLIER"
+  },
+  "order": {
+    "confirmOrder": "Оформить заказ"
+  },
   "errors": {
     "screen_not_found": "NotFound screen",
     "something_went_wrong": "Something went wrong"

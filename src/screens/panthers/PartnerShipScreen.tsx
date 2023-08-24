@@ -11,7 +11,7 @@ import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-nati
 import { SHOP_API } from '~api'
 import { CustomButton } from '~components/molecules/CustomButton'
 import { SCREEN } from '~constants'
-import { getShopId } from '~services/ShopService'
+import { getShopId, notification } from '~services/ShopService'
 import { customStyles } from '~utils/style_helpers'
 
 export const PrtnerShipScreen: FC = () => {
@@ -44,13 +44,13 @@ export const PrtnerShipScreen: FC = () => {
   const handleOnPress = async (id: string) => {
     await SHOP_API.delete(id)
     setLoading(true)
+    notification('Удалено')
   }
   const handleAddSuplier = async () => {
     navigation.navigate(SCREEN.ADD_PARTNERSHIP)
   }
   const handlerGetPartner = async (id: string) => {
     const data = await SHOP_API.getSingleData(id)
-    console.log(data.payload, 'data.payloaddata.payloaddata.payloads')
     setModalData(data.payload)
     setModalVisible(!modalVisible)
   }
@@ -61,7 +61,13 @@ export const PrtnerShipScreen: FC = () => {
           {shops.length > 0 && (
             <Select
               selectedValue={selectedShops}
-              minWidth="200"
+              minWidth="250"
+              height="50"
+              borderColor="#781F19"
+              marginTop="3"
+              color="#000"
+              letterSpacing="1"
+              fontSize="17"
               accessibilityLabel="Choose Service"
               placeholder="Choose Service"
               _selectedItem={{
@@ -110,28 +116,30 @@ export const PrtnerShipScreen: FC = () => {
       <View style={styles.ShopListScreen_wrapper}>
         <Text>Запросы на партнерство</Text>
         <ScrollView>
-          {shopsReq &&
-            shopsReq.map((item: any) => {
-              return (
-                <View key={item.id} style={styles.box}>
-                  <Pressable onPress={() => handlerGetPartner(item.id)}>
-                    <Text style={styles.title}>{item.supplier.companyName}</Text>
-                    <Text style={styles.text_h2}>Название магазина: {item.shop.shopName}</Text>
-                  </Pressable>
-                  <View style={styles.buttonsContainer}>
-                    <CustomButton
-                      title="Удалить"
-                      width={150}
-                      padding={15}
-                      border="grey"
-                      background="white"
-                      color="red"
-                      onPress={() => handleOnPress(item.id)}
-                    />
+          <View style={styles.partnersContainer}>
+            {shopsReq &&
+              shopsReq.map((item: any) => {
+                return (
+                  <View key={item.id} style={styles.box}>
+                    <Pressable onPress={() => handlerGetPartner(item.id)}>
+                      <Text style={styles.title}>{item.supplier.companyName}</Text>
+                      <Text style={styles.text_h2}>Название магазина: {item.shop.shopName}</Text>
+                    </Pressable>
+                    <View style={styles.buttonsContainer}>
+                      <CustomButton
+                        title="Удалить"
+                        width={150}
+                        padding={10}
+                        border="grey"
+                        background="white"
+                        color="red"
+                        onPress={() => handleOnPress(item.id)}
+                      />
+                    </View>
                   </View>
-                </View>
-              )
-            })}
+                )
+              })}
+          </View>
         </ScrollView>
       </View>
       <View style={styles.footer}>
@@ -194,7 +202,6 @@ const styles = StyleSheet.create({
     flex: 1,
     position: 'relative',
   },
-
   add_btn: {
     alignItems: 'center',
     backgroundColor: colors.black,
@@ -208,10 +215,10 @@ const styles = StyleSheet.create({
   },
   box: {
     borderRadius: 5,
-    margin: 10,
+    margin: 15,
     minHeight: 100,
-
     padding: 5,
+    width: 170,
     ...customStyles.border(1, 'solid', colors.borderColor),
   },
   button: {
@@ -225,7 +232,7 @@ const styles = StyleSheet.create({
     gap: 15,
     justifyContent: 'center',
     margin: 5,
-    padding: 10,
+    padding: 5,
     // backgroundColor: colors.background,
   },
 
@@ -236,7 +243,6 @@ const styles = StyleSheet.create({
 
     // marginTop: 22,
   },
-
   footer: {
     backgroundColor: colors.background,
     // height: 60,
@@ -268,7 +274,10 @@ const styles = StyleSheet.create({
   // buttonClose: {
   //     backgroundColor: '#fffff',
   // },
-
+  partnersContainer: {
+    flexDirection: 'row',
+    // backgroundColor: colors.black,
+  },
   textStyle: {
     // color: 'white',
     fontWeight: 'bold',

@@ -1,11 +1,11 @@
 import React from 'react'
-import { Pressable, View, Text, StyleSheet } from 'react-native'
+import { Pressable, View, Text, StyleSheet, ScrollView } from 'react-native'
 
 import { customStyles } from '~utils/style_helpers'
 
 export const CartItems = ({ elem, onDelete, cartItemId, isDelete }: any) => {
   return (
-    <>
+    <ScrollView>
       {elem &&
         elem.map((item: any, index: number) => {
           return (
@@ -34,7 +34,7 @@ export const CartItems = ({ elem, onDelete, cartItemId, isDelete }: any) => {
             </View>
           )
         })}
-    </>
+    </ScrollView>
   )
 }
 const colors = {
@@ -45,20 +45,27 @@ const colors = {
 const styles = StyleSheet.create({
   cart_wrapper: {
     alignItems: 'center',
-    flexDirection: 'row',
-    margin: 10,
+    flexDirection: 'column',
+    marginHorizontal: 35,
+    marginVertical: 3,
     padding: 10,
     ...customStyles.border(1, 'solid', colors.borderColor),
     borderRadius: 4,
   },
   delete: {
-    ...customStyles.border(1, 'solid', colors.red),
+    ...customStyles.border(1, 'solid', '#781F19'),
     borderRadius: 4,
     color: colors.red,
+    height: 25,
+    letterSpacing: 1,
+    padding: 2,
     textAlign: 'center',
-    width: 80,
+    width: 150,
   },
   delete_wrapper: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
     marginVertical: 4,
   },
 })

@@ -11,6 +11,7 @@ import { registerRootComponent } from 'expo'
 import { StyleSheet } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { QueryClientProvider, QueryClient } from 'react-query'
+import { AlertNotificationRoot } from 'react-native-alert-notification'
 
 import { AppLoading } from '~components'
 import { theme, nativeBaseConfig } from '~constants'
@@ -39,7 +40,9 @@ const App = () => {
             <AppLoading>
               <GestureHandlerRootView style={styles.gestureHandlerRootView}>
                 <BottomSheetModalProvider>
-                  <Navigation />
+                  <AlertNotificationRoot>
+                    <Navigation />
+                  </AlertNotificationRoot>
                 </BottomSheetModalProvider>
               </GestureHandlerRootView>
             </AppLoading>

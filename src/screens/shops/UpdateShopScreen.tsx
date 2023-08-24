@@ -8,6 +8,7 @@ import { View, Text, StyleSheet, ScrollView, TextInput } from 'react-native'
 import { SHOP_API } from '~api'
 import { CustomButton } from '~components/molecules/CustomButton'
 import { SCREEN } from '~constants'
+import { notification } from '~services/ShopService'
 
 export const UpdateShopScreen: FC = ({ route }: any) => {
   const id = route.params
@@ -56,7 +57,6 @@ export const UpdateShopScreen: FC = ({ route }: any) => {
     React.useCallback(() => {
       const getData = async () => {
         const data = await SHOP_API.getShop(id)
-        console.log(data, 'datadatadata')
         setTax(data.payload.taxId)
         setShopName(data.payload.shopName)
         setCompanyName(data.payload.companyName)
@@ -139,6 +139,7 @@ export const UpdateShopScreen: FC = ({ route }: any) => {
     if (isValid) {
       try {
         await SHOP_API.updateShops(id, body)
+        notification('Обновлено')
         navigation.navigate(SCREEN.DRAWER_ROOT, {
           screen: SCREEN.STACK_MAIN_TAB,
         })

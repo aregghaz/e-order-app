@@ -8,6 +8,7 @@ import { View, Text, StyleSheet, ScrollView, TextInput } from 'react-native'
 import { SHOP_API } from '~api'
 import { CustomButton } from '~components/molecules/CustomButton'
 import { SCREEN } from '~constants'
+import { notification } from '~services/ShopService'
 
 export const CreateStoreScreen: FC = () => {
   const navigation = useNavigation<any>()
@@ -115,6 +116,7 @@ export const CreateStoreScreen: FC = () => {
     if (isValid) {
       try {
         await SHOP_API.createShops(body)
+        notification('Сохранено')
         navigation.navigate(SCREEN.DRAWER_ROOT, {
           screen: SCREEN.STACK_MAIN_TAB,
         })

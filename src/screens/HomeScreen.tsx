@@ -13,7 +13,7 @@ import NewArrivalItems from '~components/NewArrivalItems'
 import OfferPosterSlider from '~components/OfferPosterSlider'
 import TopDiscountItems from '~components/TopDiscountItems'
 import TopRatedItems from '~components/TopRatedItems'
-import { getShopId } from '~services/ShopService'
+import { getShopId, setShopId } from '~services/ShopService'
 
 const { slides } = fakeData.homeScreen
 
@@ -30,18 +30,17 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const [newArrival, setNewArrival] = useState([])
   const [bestSeller, setBestSeller] = useState([])
   const [topRated, setTopRated] = useState([])
-  const [shopId, setShopId] = useState('')
+  const [shopId, setShopDefaultId] = useState('')
 
-  // useEffect(() => {
-  //   const getFetchID = async () => {
-  //     const getID = await getShopId();
-  //     setShopId(getID);
-  //   };
-  //   getFetchID();
-  // }, [shopId]);
   useFocusEffect(
     useCallback(() => {
       const getAsyncData = async (): Promise<void> => {
+        const getID = await getShopId()
+        if (getID && getID.length < 10) {
+          const shopData = await SHOP_API.getShopsData()
+          await setShopId(shopData.payload.content[0].id)
+          setShopDefaultId(shopData.payload.content[0].id)
+        }
         const categoryData = await SHOP_API.getCategory()
         setCategories(categoryData.payload.content)
         const topDiscountData = await SHOP_API.getTopDiscounts(options)
@@ -54,13 +53,12 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
         setBestSeller(bestSellerData.payload.content)
         const topRatedData = await SHOP_API.getTopRated(options)
         setTopRated(topRatedData.payload.content)
-        const getID = await getShopId()
-        setShopId(getID)
+
+        setShopDefaultId(getID)
       }
       getAsyncData()
     }, [shopId])
   )
-  console.log(shopId, '__SHOP_ID')
   return (
     <ScrollView flex={1} style={styles.main_wrapper}>
       {categories.length > 0 && (

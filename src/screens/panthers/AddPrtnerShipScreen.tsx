@@ -4,7 +4,7 @@ import { ActivityIndicator, FlatList, StyleSheet, Text, View } from 'react-nativ
 
 import { SHOP_API } from '~api'
 import { CustomButton } from '~components/molecules/CustomButton'
-import { getShopId } from '~services/ShopService'
+import { getShopId, notification } from '~services/ShopService'
 import { customStyles } from '~utils/style_helpers'
 
 export const AddPrtnerShipScreen: FC = () => {
@@ -19,8 +19,6 @@ export const AddPrtnerShipScreen: FC = () => {
     React.useCallback(() => {
       const getData = async () => {
         const getID = await getShopId()
-        console.log(getID.length, 'stexxxx')
-
         if (getID !== undefined && getID.length > 10) {
           const data = await SHOP_API.searchParthner(getID, 1)
           setSuppliers(data.payload.content)
@@ -32,11 +30,12 @@ export const AddPrtnerShipScreen: FC = () => {
   )
   const handleOnPress = async (id: string) => {
     const getID = await getShopId()
-    console.log(getID, 'getID')
+
     if (getID !== undefined) {
       SHOP_API.addParthner(id, getID)
       setPage(1)
       setLoading(!loding)
+      notification('Добавлено')
     }
   }
 

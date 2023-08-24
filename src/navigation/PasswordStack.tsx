@@ -1,23 +1,36 @@
-/**
- * was created by tigran at 26.07.23
- */
-import React, { FC, useState } from 'react'
+import { useFocusEffect, useNavigation } from '@react-navigation/native'
+import React, { FC, useCallback, useState } from 'react'
 import { StyleSheet, TextInput, View } from 'react-native'
 
 import { SHOP_API } from '~api'
 import { CustomButton } from '~components/molecules/CustomButton'
 import { SCREEN } from '~constants'
+import { getToken } from '~services'
 
 interface IProps {
   route: any
   navigation: any
 }
 
-export const PasswordStack: FC<IProps> = ({ route, navigation }) => {
+export const PasswordStack: FC<IProps> = ({ route }) => {
   const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{10,}$/
-  const token = route?.params?.token.toString()
+  const [token, setToken] = useState<any>('')
+
+  useFocusEffect(
+    useCallback(() => {
+      const getTokenData = async () => {
+        const tokenUSer = await getToken()
+        ///    console.log(tokenUSer,'tokenUSertokenUSertokenUSer')
+        setToken(tokenUSer)
+        ////   console.log(carts, 'carts')
+      }
+      getTokenData()
+    }, [])
+  )
+
   const mobile = route?.params?.mobile
   const reset = route?.params?.reset
+  const navigation = useNavigation<any>()
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const handleSubmit = async () => {
@@ -25,7 +38,6 @@ export const PasswordStack: FC<IProps> = ({ route, navigation }) => {
       alert('Passwords do not match')
       return
     }
-
     if (!regex.test(password)) {
       alert(
         'Password must contain at least one lowercase letter, one uppercase letter, and one digit, and be at least 10 characters long'
@@ -33,14 +45,15 @@ export const PasswordStack: FC<IProps> = ({ route, navigation }) => {
       return
     }
     let data
-    if (reset) {
+    console.log(reset, 'resetreset')
+    if (reset != undefined) {
       data = await SHOP_API.resetPassword(token, mobile, password)
     } else {
-      data = await SHOP_API.createCustomerUser(token, mobile, password)
+      data = await SHOP_API.createCustomerUser('1111', mobile, password)
     }
 
-    if (data && data.status === 200) {
-      if (reset) {
+    if (data) {
+      if (reset != 'undefined') {
         navigation.navigate(SCREEN.STACK_SIGN_IN)
       } else {
         navigation.navigate(SCREEN.STACK_ACCOUNT)

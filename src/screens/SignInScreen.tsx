@@ -24,7 +24,6 @@ export const SignInScreen: FC<IProps> = (props): JSX.Element => {
   }
 
   useEffect(() => {
-    console.log(isSignedIn, '33333')
     navigate(SCREEN.DRAWER_ROOT)
   }, [isSignedIn])
   return (
