@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 import { getToken } from '~services'
+import { IProfile } from '~types/authForms'
 import { IShopDetails } from '~types/shop'
 
 interface IOptions {
@@ -145,6 +146,15 @@ export const SHOP_API = {
   createCustomerUser: async (token: string, phone: string, password: string) => {
     return axios
       .post(`${fakeUrl}/api/users/create-customer-user`, { mobile: phone, password, token })
+      .then((res) => {
+        console.log(res, '22222')
+        return res.data
+      })
+      .catch((err) => console.log(err))
+  },
+  fillingCustomerUser: async (body: IProfile) => {
+    return axios
+      .post(`${fakeUrl}/api/users/create-customer-account`, body)
       .then((res) => {
         console.log(res, '22222')
         return res.data

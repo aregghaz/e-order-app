@@ -1,0 +1,364 @@
+import { useNavigation } from '@react-navigation/native'
+import React, { FC, useState } from 'react'
+import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
+
+import { SHOP_API } from '~api'
+import { CustomButton } from '~components/molecules/CustomButton'
+import { SCREEN } from '~constants'
+import { notification } from '~services/ShopService'
+
+export const ProfileEditScreen: FC = () => {
+  const navigation = useNavigation<any>()
+  /*Name*/
+  const [name, setName] = useState('')
+  const [nameError, setNameError] = useState('')
+  const [lastname, setLastName] = useState('')
+  const [lastnameError, setLastNameError] = useState('')
+  const [fatherName, setFatherName] = useState('')
+  const [fatherNameError, setFatherNameError] = useState('')
+  /* dob*/
+  const [dob, setDob] = useState('')
+  const [dobError, setDobError] = useState('')
+
+  /*** Legal address ***/
+  const [legalAddress, setLegalAddress] = useState('')
+  const [legalAddressError, setLegalAddressError] = useState('')
+  /*Legal Apt unit*/
+  const [legalApartment, setLegalApartment] = useState('')
+  const [legalApartmentError, setlLegalApartmentError] = useState('')
+  /*Legal Post Code */
+  const [legalPostCode, setLegalPostCode] = useState('')
+  const [legalPostCodeError, setLegalPostCodeError] = useState('')
+  /*Legal phone  1*/
+  const [legalPhone_1, setLegalPhone_1] = useState('')
+  const [legalPhoneError_1, setLegalPhoneError_1] = useState('')
+  /*Legal phone 2*/
+  ///  const [legalPhone_2, setLegalPhone_2] = useState('')
+  /// const [legalPhoneError_2] = useState('')
+
+  /*passport data */
+  const [cityzen, setCityzen] = useState('')
+  const [cityzenError, setCityzenError] = useState('')
+  const [passport, setPassport] = useState('')
+  /// const [passportError, setpPassportError] = useState('')
+  const [whoGive, setWhoGive] = useState('')
+  ///  const [whoGiveError, setWhoGiveError] = useState('')
+  const [expireData, setExpireData] = useState('')
+  /// const [expireDataError, setExpireDataError] = useState('')
+
+  const [iih, setIih] = useState('')
+  const [iihError, setIihError] = useState('')
+  const [email, setEmail] = useState('')
+  const [emailError, setEmailError] = useState('')
+
+  const handleSave = async () => {
+    let isValid = true
+
+    if (name.trim() === '') {
+      setNameError('Обязательное поле.')
+      isValid = false
+    }
+    if (lastname.trim() === '') {
+      setLastNameError('Обязательное поле.')
+      isValid = false
+    }
+
+    if (dob.trim() === '') {
+      setDobError('Обязательное поле.')
+      isValid = false
+    }
+
+    if (legalAddress.trim() === '') {
+      setLegalAddressError('Обязательное поле.')
+      isValid = false
+    }
+    if (legalApartment.trim() === '') {
+      setlLegalApartmentError('Обязательное поле.')
+      isValid = false
+    }
+    if (legalPostCode.trim() === '') {
+      setLegalPostCodeError('Обязательное поле.')
+      isValid = false
+    }
+    if (legalPhone_1.trim() === '') {
+      setLegalPhoneError_1('Обязательное поле.')
+      isValid = false
+    }
+
+    if (iih.trim() === '') {
+      setIihError('Обязательное поле.')
+      isValid = false
+    }
+    if (email.trim() === '') {
+      setEmail('Обязательное поле.')
+      isValid = false
+    }
+
+    const body = {
+      firstName: name,
+      lastName: lastname,
+      fatherName,
+      address: {
+        // "country": "string",
+        // "state": "string",
+        // "city": "string",
+        address_1: legalAddress,
+        address_2: legalApartment,
+        postCode: legalPostCode,
+        phoneNumber1: legalPhone_1,
+        ///phoneNumber2: legalPhone_2,
+        // "gpsCoordinates": {
+        //     "latitude": "string",
+        //     "longitude": "string"
+        // }
+      },
+      inn: iih,
+      birthDate: dob,
+      citizenship: {
+        citizenship: cityzen,
+        passport,
+        issuedBy: whoGive,
+        issueDate: expireData,
+        // "passportPhoto": [
+        //     {
+        //         "id": "string",
+        //         "originalName": "string",
+        //         "filename": "string",
+        //         "path": "string",
+        //         "mimetype": "string",
+        //         "size": 0,
+        //         "order": 0,
+        //         "createdAt": "2023-08-25T09:12:24.462Z",
+        //         "updatedAt": "2023-08-25T09:12:24.462Z"
+        //     }
+        // ]
+      },
+      email,
+      // "photo": {
+      //     "id": "string",
+      //     "originalName": "string",
+      //     "filename": "string",
+      //     "path": "string",
+      //     "mimetype": "string",
+      //     "size": 0,
+      //     "order": 0,
+      //     "createdAt": "2023-08-25T09:12:24.462Z",
+      //     "updatedAt": "2023-08-25T09:12:24.462Z"
+      // }
+    }
+
+    if (isValid) {
+      try {
+        await SHOP_API.fillingCustomerUser(body)
+        notification('Сохранено')
+        navigation.navigate(SCREEN.DRAWER_ROOT, {
+          screen: SCREEN.STACK_MAIN_TAB,
+        })
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    resetValues()
+  }
+
+  const resetValues = () => {
+    // setShopName('')
+    // setTax('')
+    // setCompanyName('')
+    // setLegalAddress('')
+    // setLegalApartment('')
+    // setLegalPostCode('')
+    // setLegalPhone_1('')
+    // setLegalPhone_2('')
+    // setDeliveryAddress('')
+    // setDeliveryApartment('')
+    // setDeliveryPostCode('')
+    // setDeliveryPhone_1('')
+    // setDeliveryPhone_2('')
+  }
+
+  return (
+    <ScrollView contentContainerStyle={styles.CreateStoreScreen_wrapper}>
+      <View style={styles.innerWrapper}>
+        <>
+          <TextInput
+            style={styles.input}
+            onChangeText={(value) => {
+              setName(value)
+              setNameError(value.trim() === '' ? 'Обязательное поле.' : '')
+            }}
+            value={name}
+            placeholder="Имя*"
+          />
+          <Text style={styles.errorText}>{nameError}</Text>
+        </>
+        <>
+          <TextInput
+            style={styles.input}
+            onChangeText={(value) => {
+              setLastName(value)
+              setLastNameError(value.trim() === '' ? 'Обязательное поле.' : '')
+            }}
+            value={lastname}
+            placeholder="Отчество*"
+          />
+          <Text style={styles.errorText}>{lastnameError}</Text>
+        </>
+        <>
+          <TextInput
+            style={styles.input}
+            onChangeText={(value) => {
+              setFatherName(value)
+              setFatherNameError(value.trim() === '' ? 'Обязательное поле.' : '')
+            }}
+            value={fatherName}
+            placeholder="Отчество"
+          />
+          <Text style={styles.errorText}>{fatherNameError}</Text>
+        </>
+        <>
+          <TextInput
+            style={styles.input}
+            onChangeText={(value) => {
+              setDob(value)
+              setDobError(value.trim() === '' ? 'Обязательное поле.' : '')
+            }}
+            value={dob}
+            placeholder="Дата рождения"
+          />
+          <Text style={styles.errorText}>{dobError}</Text>
+        </>
+        <>
+          <TextInput
+            style={styles.input}
+            onChangeText={(value) => {
+              setLegalAddress(value)
+              setLegalAddressError(value.trim() === '' ? 'Обязательное поле.' : '')
+            }}
+            value={legalAddress}
+            placeholder="Адрес*"
+          />
+          <Text style={styles.errorText}>{legalAddressError}</Text>
+        </>
+        <>
+          <TextInput
+            style={styles.input}
+            onChangeText={setLegalApartment}
+            value={legalApartment}
+            placeholder="Квартира, блок, здание, этаж и т. д."
+          />
+          <Text style={styles.errorText}>{legalApartmentError}</Text>
+        </>
+        <>
+          <TextInput
+            style={styles.input}
+            onChangeText={setLegalPostCode}
+            value={legalPostCode}
+            placeholder="Почтовый индекс"
+          />
+          <Text style={styles.errorText}>{legalPostCodeError}</Text>
+        </>
+        <>
+          <TextInput
+            style={styles.input}
+            onChangeText={setLegalPhone_1}
+            value={legalPhone_1}
+            placeholder="Номер телефона"
+          />
+          <Text style={styles.errorText}>{legalPhoneError_1}</Text>
+        </>
+
+        <>
+          <TextInput
+            style={styles.input}
+            onChangeText={(value) => {
+              setCityzen(value)
+              setCityzenError(value.trim() === '' ? 'Обязательное поле.' : '')
+            }}
+            value={cityzen}
+            placeholder="Гражданство"
+          />
+          <Text style={styles.errorText}>{cityzenError}</Text>
+        </>
+        <>
+          <TextInput
+            style={styles.input}
+            onChangeText={setPassport}
+            value={passport}
+            placeholder="Номер паспорта"
+          />
+          {/*<Text style={styles.errorText}>{passportError}</Text>*/}
+        </>
+        <>
+          <TextInput
+            style={styles.input}
+            onChangeText={setExpireData}
+            value={expireData}
+            placeholder="Дата выдачи паспорта"
+          />
+          {/*<Text style={styles.errorText}>{expireDataError}</Text>*/}
+        </>
+        <>
+          <TextInput
+            style={styles.input}
+            onChangeText={setWhoGive}
+            value={whoGive}
+            placeholder="Орган, выдавший документ"
+          />
+          {/*<Text style={styles.errorText}>{whoGiveError}</Text>*/}
+        </>
+        <>
+          <TextInput
+            style={styles.input}
+            onChangeText={setIih}
+            value={iih}
+            placeholder="Доп. номер телефона"
+          />
+          <Text style={styles.errorText}>{iihError}</Text>
+        </>
+        <>
+          <TextInput
+            style={styles.input}
+            onChangeText={(value) => {
+              setEmail(value)
+              setEmailError(value.trim() === '' ? 'Обязательное поле.' : '')
+            }}
+            value={email}
+            placeholder="Адрес электронной почты"
+          />
+          <Text style={styles.errorText}>{emailError}</Text>
+        </>
+        <CustomButton title=" Сохранить " onPress={handleSave} />
+      </View>
+    </ScrollView>
+  )
+}
+
+const colors = {
+  border: '#ddd',
+  red: 'red',
+}
+
+const styles = StyleSheet.create({
+  CreateStoreScreen_wrapper: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+  },
+  errorText: {
+    color: colors.red,
+    marginBottom: 5,
+  },
+  innerWrapper: {
+    paddingVertical: 20,
+  },
+  input: {
+    borderColor: colors.border,
+    borderRadius: 8,
+    borderStyle: 'solid',
+    borderWidth: 1,
+    padding: 10,
+
+    width: '100%',
+  },
+})
