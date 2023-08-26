@@ -31,11 +31,11 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
     // console.log(res.payload.user.customer,'22222222222')
 
     if (!res.payload.user.customer) {
-      //    navigation.navigate(SCREEN.STACK_HOME)
+      await setUserData(res.payload.user)
       await setToken(res.payload.token.accessToken)
       setIsSignedIn(true)
     } else {
-      await setUserData(res.payload.user.customer)
+      await setUserData(res.payload.user)
       await setToken(res.payload.token.accessToken)
       setIsSignedIn(true)
     }
@@ -43,7 +43,8 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const signOut = useCallback(async () => {
     /*FIXME this request gives 401 status code*/
-    /// await SHOP_API.signOut();
+
+    // await SHOP_API.signOut();
     await deleteToken()
     setIsSignedIn(false)
   }, [])

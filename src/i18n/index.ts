@@ -24,7 +24,7 @@ i18n
     // to see the differences between v4 and v3.
     compatibilityJSON: 'v3',
     resources,
-    fallbackLng: 'en',
+    fallbackLng: 'ru',
     react: {
       useSuspense: false,
     },

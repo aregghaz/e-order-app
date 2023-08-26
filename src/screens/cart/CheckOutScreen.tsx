@@ -9,10 +9,11 @@ import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
 import { SHOP_API } from '~api'
 import { CartItems } from '~components/CartItem'
 import { CustomButton } from '~components/molecules/CustomButton'
+import { SCREEN } from '~constants'
 import { notification } from '~services/ShopService'
 import { customStyles } from '~utils/style_helpers'
 
-export const CheckOutScreen: FC = ({ route }: any) => {
+export const CheckOutScreen: FC = ({ route, navigation }: any) => {
   const [carts, setCarts] = useState<any>({
     totalReward: 0.0,
     cartTotal: 0.0,
@@ -52,6 +53,7 @@ export const CheckOutScreen: FC = ({ route }: any) => {
     console.log('presss')
     const data = await SHOP_API.createOrder({ shoppingCart: id, comment })
     if (data) {
+      navigation.navigate(SCREEN.STACK_MAIN_TAB)
       notification('Ваш заказ успешно размещен')
     }
   }

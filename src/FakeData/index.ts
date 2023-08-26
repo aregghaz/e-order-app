@@ -13,7 +13,7 @@ export const fakeData = {
       children: [],
     },
     {
-      id: '2',
+      id: '3',
       iconName: 'shopping-cart',
       title: 'ShopList',
       group: 'shop',
@@ -35,7 +35,7 @@ export const fakeData = {
         },
         {
           id: '2',
-          title: 'PasswordStack',
+          title: 'ChangePassword',
           hasChildren: false,
           children: [],
         },
@@ -60,7 +60,7 @@ export const fakeData = {
       hasChildren: false,
     },
     {
-      id: '8',
+      id: '2',
       title: 'Contact Us',
       iconName: 'headphones',
       hasChildren: false,

@@ -38,22 +38,40 @@ export const CustomDrawer: FC = (props: any) => {
           <View style={styles.imageWrapper}>
             <ImgOrSvg item={data} product="photo" radius={10} width={68} />
           </View>
-          <Text style={styles.name}>{data.person?.firstName + ' ' + data.person?.lastName}</Text>
+          <Text style={styles.name}>
+            {data.customer?.person?.firstName + ' ' + data.customer?.person?.lastName}
+          </Text>
         </View>
       )}
       <DrawerContentScrollView {...props}>
         {fakeData.accordion &&
-          fakeData.accordion.map((item) => {
-            return (
-              <Accordion
-                key={item.id}
-                title={item.title}
-                iconName={item.iconName as TIcon}
-                subChildren={item.children}
-                hasChildren={item.hasChildren}
-                navigation={props.navigation}
-              />
-            )
+          fakeData.accordion.map((item: any) => {
+            // var checkMenu = false
+            if (isSignedIn) {
+              return (
+                <Accordion
+                  key={item.id}
+                  title={item.title}
+                  iconName={item.iconName as TIcon}
+                  subChildren={item.children}
+                  hasChildren={item.hasChildren}
+                  navigation={props.navigation}
+                />
+              )
+            } else {
+              return (
+                item.id <= '2' && (
+                  <Accordion
+                    key={item.id}
+                    title={item.title}
+                    iconName={item.iconName as TIcon}
+                    subChildren={item.children}
+                    hasChildren={item.hasChildren}
+                    navigation={props.navigation}
+                  />
+                )
+              )
+            }
           })}
       </DrawerContentScrollView>
       <TouchableOpacity

@@ -163,6 +163,17 @@ export const SHOP_API = {
       })
       .catch((err) => console.log(err))
   },
+  updateCustomerUser: async (body: IProfile, id: string) => {
+    const tokenUSer = await getToken()
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
+    return axios
+      .patch(`${fakeUrl}/api/customers/update-customer/${id}`, body)
+      .then((res) => {
+        console.log(res, '22222')
+        return res.data
+      })
+      .catch((err) => console.log(err))
+  },
   /* step 4 */
   signInRequest: async (phone: string, password: string) => {
     return axios
@@ -192,11 +203,23 @@ export const SHOP_API = {
       .catch((err) => console.log(err))
   },
   resetPassword: async (token: number, phone: string, password: string) => {
+    const tokenUSer = await getToken()
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
     return axios
       .post(`${fakeUrl}/api/auth/customer-reset-password`, { mobile: phone, password, token })
       .then((res) => {
         console.log(res, '___ RES_DATA ___')
         return res
+      })
+      .catch((err) => console.log(err))
+  },
+  changePassword: async (currentPassword: string, newPassword: string) => {
+    const tokenUSer = await getToken()
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
+    return axios
+      .post(`${fakeUrl}/api/users/change-password`, { currentPassword, newPassword })
+      .then((res) => {
+        return res.config
       })
       .catch((err) => console.log(err))
   },

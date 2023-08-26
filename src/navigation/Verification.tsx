@@ -36,11 +36,17 @@ export const Verification: FC<IProps> = ({
   }
   const handleVerify = async () => {
     const combineCode = pin1 + pin2 + pin3 + pin4
+    console.log(pin1 + pin2 + pin3 + pin4, 'combineCode')
     if (combineCode.trim().length === 4) {
       const toNumberCode = Number(combineCode)
       const data = await SHOP_API.setVerificationCode(phone, toNumberCode)
       if (data && data.status === 200) {
-        navigation.navigate(SCREEN.STACK_PASSWORD, { mobile: phone, token: toNumberCode, reset })
+        navigation.navigate(SCREEN.STACK_PASSWORD, {
+          mobile: phone,
+          token: toNumberCode,
+          reset,
+          type: false,
+        })
       }
     }
   }
@@ -55,6 +61,10 @@ export const Verification: FC<IProps> = ({
     }
   }
   useEffect(() => {
+    // setPin1('')
+    // setPin2('')
+    // setPin3('')
+    // setPin4('')
     const interval = setInterval(() => {
       if (countdown > 0) {
         setCountdown(countdown - 1)

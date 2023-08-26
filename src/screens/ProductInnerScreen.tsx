@@ -71,6 +71,7 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
     useCallback(() => {
       const getAsyncData = async (): Promise<void> => {
         try {
+          setSelectedOption(null)
           setIsLoading(true)
           const getID = await getShopId()
           console.log(getID, 'getIDgetID')

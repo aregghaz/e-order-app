@@ -4,6 +4,7 @@ import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native'
 
 import { SubList } from '~components/SubList'
 import { SCREEN } from '~constants'
+//import { useAuth } from '~hooks'
 
 export type TIcon =
   | 'home'
@@ -33,6 +34,7 @@ export const Accordion: FC<IProps> = ({
 }) => {
   const [rotateState, setRotateState] = useState(false)
   const [rotateValue, setRotateValue] = useState('0deg')
+
   const handlePress = useCallback(() => {
     setRotateState(!rotateState)
     if (rotateState) {

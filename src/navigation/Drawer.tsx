@@ -24,6 +24,7 @@ import { CheckOutScreen } from '~screens/cart/CheckOutScreen'
 import { ShopCartScreen } from '~screens/cart/ShopCartScreen'
 import { AddPrtnerShipScreen } from '~screens/panthers/AddPrtnerShipScreen'
 import { PrtnerShipScreen } from '~screens/panthers/PartnerShipScreen'
+import { ChangePasswordScreen } from '~screens/profile/ChangePasswordScreen'
 import { CreateStoreScreen } from '~screens/shops/CreateStoreScreen'
 import { ShopListScreen } from '~screens/shops/ShopListScreen'
 import { UpdateShopScreen } from '~screens/shops/UpdateShopScreen'
@@ -217,6 +218,14 @@ export const DrawerNavigator = () => {
         component={ProfileEditScreen}
         options={({ navigation, route }: any) => ({
           headerTitle: () => <Header navigation={navigation} title={'ProfileEdit'} />,
+          headerLeft: () => null,
+        })}
+      />
+      <Drawer.Screen
+        name={SCREEN.CHANGE_PASSWORD}
+        component={ChangePasswordScreen}
+        options={({ navigation, route }: any) => ({
+          headerTitle: () => <Header navigation={navigation} title={'ChangePassword'} />,
           headerLeft: () => null,
         })}
       />

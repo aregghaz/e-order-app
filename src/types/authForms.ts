@@ -63,3 +63,20 @@ export interface IProfile {
   //     "updatedAt": "2023-08-25T09:12:24.462Z"
   // }
 }
+export const IPropsData = {
+  customer: {
+    person: '',
+    address: {},
+    birthDate: '',
+    citizenship: '',
+    email: '',
+    fatherName: '',
+    firstName: '',
+    inn: '',
+    issueDate: '',
+    issuedBy: '',
+    lastName: '',
+    passport: '',
+  },
+  id: '',
+}

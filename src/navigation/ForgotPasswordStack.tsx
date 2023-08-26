@@ -9,7 +9,7 @@ import { SHOP_API } from '~api'
 import { CustomButton } from '~components/molecules/CustomButton'
 import { SCREEN } from '~constants'
 
-export const ForgotPasswordStack: FC = () => {
+export const ForgotPasswordStack: FC = ({ route }: any) => {
   const [number, setNumber] = useState('')
   const { navigate } = useNavigation<any>()
   const handleVerify = async () => {

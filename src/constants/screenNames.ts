@@ -37,4 +37,5 @@ export const SCREEN = {
   ADD_PARTNERSHIP: 'AddPrtnerShip',
   CHECKOUT: 'Checkout',
   PROFILE_EDIT: 'ProfileEdit',
+  CHANGE_PASSWORD: 'ChangePassword',
 }

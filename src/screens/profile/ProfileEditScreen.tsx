@@ -1,15 +1,19 @@
-import { useNavigation } from '@react-navigation/native'
-import React, { FC, useState } from 'react'
+import { useFocusEffect, useNavigation } from '@react-navigation/native'
+import React, { FC, useCallback, useState } from 'react'
 import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
 
 import { SHOP_API } from '~api'
 import { CustomButton } from '~components/molecules/CustomButton'
 import { SCREEN } from '~constants'
 import { notification } from '~services/ShopService'
+import { getUserData } from '~services/UserService'
 
-export const ProfileEditScreen: FC = () => {
+export const ProfileEditScreen: FC = ({ route }: any) => {
+  const { type } = route.params
   const navigation = useNavigation<any>()
+
   /*Name*/
+  const [id, setId] = useState('')
   const [name, setName] = useState('')
   const [nameError, setNameError] = useState('')
   const [lastname, setLastName] = useState('')
@@ -25,13 +29,13 @@ export const ProfileEditScreen: FC = () => {
   const [legalAddressError, setLegalAddressError] = useState('')
   /*Legal Apt unit*/
   const [legalApartment, setLegalApartment] = useState('')
-  const [legalApartmentError, setlLegalApartmentError] = useState('')
+  // const [legalApartmentError, setlLegalApartmentError] = useState('')
   /*Legal Post Code */
   const [legalPostCode, setLegalPostCode] = useState('')
-  const [legalPostCodeError, setLegalPostCodeError] = useState('')
+  ///  const [legalPostCodeError, setLegalPostCodeError] = useState('')
   /*Legal phone  1*/
   const [legalPhone_1, setLegalPhone_1] = useState('')
-  const [legalPhoneError_1, setLegalPhoneError_1] = useState('')
+  ///  const [legalPhoneError_1, setLegalPhoneError_1] = useState('')
   /*Legal phone 2*/
   ///  const [legalPhone_2, setLegalPhone_2] = useState('')
   /// const [legalPhoneError_2] = useState('')
@@ -51,6 +55,34 @@ export const ProfileEditScreen: FC = () => {
   const [email, setEmail] = useState('')
   const [emailError, setEmailError] = useState('')
 
+  useFocusEffect(
+    useCallback(() => {
+      const getAsyncData = async (): Promise<void> => {
+        const pesdonalData = await getUserData()
+        console.log(pesdonalData, 'wsss')
+        if (pesdonalData.customer) {
+          setId(pesdonalData.customer.id)
+          setName(pesdonalData.customer.person.firstName)
+          setLastName(pesdonalData.customer.person.lastName)
+          setFatherName(pesdonalData.customer.person.fatherName)
+          setDob(pesdonalData.customer.person.birthDate)
+          setLegalAddress(pesdonalData.customer.person.address.address_1)
+          setLegalApartment(pesdonalData.customer.person.address.address_2)
+          setLegalPostCode(pesdonalData.customer.person.address.postCode)
+          setLegalPhone_1(pesdonalData.customer.person.address.phoneNumber1)
+          setCityzen(pesdonalData.customer.person.citizenship)
+          setPassport(pesdonalData.customer.person.passport)
+          setWhoGive(pesdonalData.customer.person.issuedBy)
+          setExpireData(pesdonalData.customer.person.issueDate)
+          setIih(pesdonalData.customer.person.inn)
+          setEmail(pesdonalData.customer.person.email)
+        }
+      }
+      if (type) {
+        getAsyncData()
+      }
+    }, [])
+  )
   const handleSave = async () => {
     let isValid = true
 
@@ -68,22 +100,22 @@ export const ProfileEditScreen: FC = () => {
       isValid = false
     }
 
-    if (legalAddress.trim() === '') {
-      setLegalAddressError('Обязательное поле.')
-      isValid = false
-    }
-    if (legalApartment.trim() === '') {
-      setlLegalApartmentError('Обязательное поле.')
-      isValid = false
-    }
-    if (legalPostCode.trim() === '') {
-      setLegalPostCodeError('Обязательное поле.')
-      isValid = false
-    }
-    if (legalPhone_1.trim() === '') {
-      setLegalPhoneError_1('Обязательное поле.')
-      isValid = false
-    }
+    // if (legalAddress.trim() === '') {
+    //     setLegalAddressError('Обязательное поле.')
+    //     isValid = false
+    // }
+    // if (legalApartment.trim() === '') {
+    //     setlLegalApartmentError('Обязательное поле.')
+    //     isValid = false
+    // }
+    // if (legalPostCode.trim() === '') {
+    //     setLegalPostCodeError('Обязательное поле.')
+    //     isValid = false
+    // }
+    // if (legalPhone_1.trim() === '') {
+    //     setLegalPhoneError_1('Обязательное поле.')
+    //     isValid = false
+    // }
 
     if (iih.trim() === '') {
       setIihError('Обязательное поле.')
@@ -146,18 +178,18 @@ export const ProfileEditScreen: FC = () => {
       //     "updatedAt": "2023-08-25T09:12:24.462Z"
       // }
     }
-    console.log(body)
+    console.log(id, type, 'body')
     if (isValid) {
-      await SHOP_API.fillingCustomerUser(body)
-      // console.log(asd)
-      try {
-        notification('Сохранено')
-        navigation.navigate(SCREEN.DRAWER_ROOT, {
-          screen: SCREEN.STACK_MAIN_TAB,
-        })
-      } catch (err) {
-        console.log(err)
+      if (type) {
+        await SHOP_API.updateCustomerUser(body, id)
+      } else {
+        await SHOP_API.fillingCustomerUser(body)
+        // console.log(asd)
       }
+      notification('Сохранено')
+      navigation.navigate(SCREEN.DRAWER_ROOT, {
+        screen: SCREEN.STACK_MAIN_TAB,
+      })
     }
     resetValues()
   }
@@ -201,7 +233,7 @@ export const ProfileEditScreen: FC = () => {
               setLastNameError(value.trim() === '' ? 'Обязательное поле.' : '')
             }}
             value={lastname}
-            placeholder="Отчество*"
+            placeholder="Фамилия*"
           />
           <Text style={styles.errorText}>{lastnameError}</Text>
         </>
@@ -248,7 +280,7 @@ export const ProfileEditScreen: FC = () => {
             value={legalApartment}
             placeholder="Квартира, блок, здание, этаж и т. д."
           />
-          <Text style={styles.errorText}>{legalApartmentError}</Text>
+          {/*<Text style={styles.errorText}>{legalApartmentError}</Text>*/}
         </>
         <>
           <TextInput
@@ -257,7 +289,7 @@ export const ProfileEditScreen: FC = () => {
             value={legalPostCode}
             placeholder="Почтовый индекс"
           />
-          <Text style={styles.errorText}>{legalPostCodeError}</Text>
+          {/*<Text style={styles.errorText}>{legalPostCodeError}</Text>*/}
         </>
         <>
           <TextInput
@@ -266,7 +298,7 @@ export const ProfileEditScreen: FC = () => {
             value={legalPhone_1}
             placeholder="Номер телефона"
           />
-          <Text style={styles.errorText}>{legalPhoneError_1}</Text>
+          {/*<Text style={styles.errorText}>{legalPhoneError_1}</Text>*/}
         </>
 
         <>
@@ -313,10 +345,10 @@ export const ProfileEditScreen: FC = () => {
             style={styles.input}
             onChangeText={(value) => {
               setIih(value)
-              setIih(value.trim() === '' ? 'Обязательное поле.' : '')
+              setIihError(value.trim() === '' ? 'Обязательное поле.' : '')
             }}
             value={iih}
-            placeholder="IIh"
+            placeholder="IIh*"
           />
           <Text style={styles.errorText}>{iihError}</Text>
         </>

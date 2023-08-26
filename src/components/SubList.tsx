@@ -26,11 +26,16 @@ export const SubList: FC<IProps> = ({
   shop_id,
 }) => {
   const handlePressCheck = async (title: string, group: string, shop_id: string) => {
+    console.log(title, 'title')
     if (group === 'shop') {
       navigation.navigate(SCREEN.STACK_SHOP_LIST, { title })
       handlePress()
       await setShopId(shop_id)
       navigation.closeDrawer()
+    } else if (title === 'ProfileEdit') {
+      navigation.navigate(SCREEN.PROFILE_EDIT, { title, type: 'edit' })
+    } else if (title === 'PasswordStack') {
+      navigation.navigate(SCREEN.STACK_PASSWORD, { title, reset: true })
     } else {
       handlePress()
       !hasChildren ? navigation.navigate(findScreenName, { title }) : null

@@ -10,20 +10,24 @@ import { ImgOrSvg } from '~components/ImgOrSvg'
 import { SCREEN } from '~constants'
 import { useAuth } from '~hooks'
 import { getUserData } from '~services/UserService'
+import { IPropsData } from '~types/authForms'
 
 export interface IProps {
-  person: any
-  address: IAddress
-  birthDate: string
-  citizenship: string
-  email: string
-  fatherName: string
-  firstName: string
-  inn: string
-  issueDate: string
-  issuedBy: string
-  lastName: string
-  passport: string
+  customer: {
+    person: any
+    address: IAddress
+    birthDate: string
+    citizenship: string
+    email: string
+    fatherName: string
+    firstName: string
+    inn: string
+    issueDate: string
+    issuedBy: string
+    lastName: string
+    passport: string
+  }
+  id: string
 }
 
 interface IAddress {
@@ -42,7 +46,7 @@ interface IAddress {
 }
 
 export const ProfileScreen: FC = ({ navigation }: any) => {
-  const [data, setData] = useState<IProps>({} as IProps)
+  const [data, setData] = useState<any>(IPropsData)
   const { isSignedIn } = useAuth()
   // const {
   //   navigation: { navigate },
@@ -51,13 +55,13 @@ export const ProfileScreen: FC = ({ navigation }: any) => {
     React.useCallback(() => {
       ;(async () => {
         if (isSignedIn) {
+          // setData(IPropsData)
           const data = await getUserData()
-          console.log(!data)
-          if (!data) {
-            console.log(!data)
-            navigation.navigate(SCREEN.PROFILE_EDIT)
+          console.log(!data.customer, 'data')
+          if (!data.customer) {
+            navigation.navigate(SCREEN.PROFILE_EDIT, { type: false })
           } else {
-            setData(data)
+            setData(data.customer)
           }
         } else {
           navigation.navigate(SCREEN.STACK_SIGN_IN)

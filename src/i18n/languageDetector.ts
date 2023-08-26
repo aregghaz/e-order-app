@@ -16,14 +16,11 @@ const languageDetector: LanguageDetectorAsyncModule = {
         if (language) {
           return callback(language)
         }
-
         const { locale } = await Localization.getLocalizationAsync()
-
         return callback(locale)
       })
     } catch {
       const { locale } = await Localization.getLocalizationAsync()
-
       return callback(locale)
     }
   },
