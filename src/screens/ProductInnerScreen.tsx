@@ -15,6 +15,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
+import { ALERT_TYPE } from 'react-native-alert-notification'
 import Swiper from 'react-native-swiper'
 
 import { SHOP_API } from '~api'
@@ -22,7 +23,7 @@ import { ImgOrSvg } from '~components/ImgOrSvg'
 import { NoImageSvg } from '~components/NoImageSvg'
 import { CustomButton } from '~components/molecules/CustomButton'
 import { SCREEN } from '~constants'
-import { useAuth } from '~hooks'
+import { useAuth, useTranslation } from '~hooks'
 import { useIncrement } from '~hooks/useIncrement'
 import { getShopId, notification } from '~services/ShopService'
 import { IFeatured } from '~types/featuredProducts'
@@ -57,6 +58,8 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
   const { params } = route
   const activeItemRef = useRef(null)
   const { isSignedIn } = useAuth()
+  const { t } = useTranslation()
+
   const activeBorder = { backgroundColor: colors.headingColor, color: colors.activeText }
   const options = {
     shopId: null,
@@ -106,27 +109,30 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
   }
   const handleAddToCart = async () => {
     if (!isSignedIn) {
+      notification(t('notification.signIn'), ALERT_TYPE.WARNING)
       navigation.navigate(SCREEN.STACK_SIGN_IN)
-    }
-    if (!selectedOption) {
-      return notification('Виберите вложение')
-    }
-    delete selectedOption.productId
-    const data = {
-      properties: {
-        unit: selectedOption,
-      },
-      shop: shopId,
-      productId: params.id,
-      quantity: 1,
-    }
+    } else {
+      if (!selectedOption) {
+        notification(t('notification.chose_unit'), ALERT_TYPE.WARNING)
+      } else {
+        delete selectedOption.productId
+        const data = {
+          properties: {
+            unit: selectedOption,
+          },
+          shop: shopId,
+          productId: params.id,
+          quantity: 1,
+        }
 
-    const add = await SHOP_API.addToCart(data)
-    if (!add) {
-      alert('Please sign in before add to cart')
+        const add = await SHOP_API.addToCart(data)
+        if (!add) {
+          notification('SOMETHING WRONG', ALERT_TYPE.DANGER)
+        } else {
+          notification('Добавлено в корзину')
+        }
+      }
     }
-    notification('Добавлено в корзину')
-    /// console.log(add, '___add!!!')
   }
 
   const Header = useCallback(() => {

@@ -153,8 +153,10 @@ export const SHOP_API = {
       .catch((err) => console.log(err))
   },
   fillingCustomerUser: async (body: IProfile) => {
+    const tokenUSer = await getToken()
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
     return axios
-      .post(`${fakeUrl}/api/users/create-customer-account`, body)
+      .post(`${fakeUrl}/api/customers/create-customer-account`, body)
       .then((res) => {
         console.log(res, '22222')
         return res.data
@@ -217,7 +219,6 @@ export const SHOP_API = {
     return axios
       .post(`${fakeUrl}/api/shopping-cart/add-to-cart`, data)
       .then((res) => {
-        console.log(res.status, '________addToCart')
         return res.data
       })
       .catch((err) => console.log(err))

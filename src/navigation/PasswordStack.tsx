@@ -5,7 +5,7 @@ import { StyleSheet, TextInput, View } from 'react-native'
 import { SHOP_API } from '~api'
 import { CustomButton } from '~components/molecules/CustomButton'
 import { SCREEN } from '~constants'
-import { getToken } from '~services'
+import { getToken, setToken } from '~services'
 
 interface IProps {
   route: any
@@ -14,15 +14,15 @@ interface IProps {
 
 export const PasswordStack: FC<IProps> = ({ route }) => {
   const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{10,}$/
-  const [token, setToken] = useState<any>('')
+  const [tokenData, setTokenData] = useState<any>('')
 
   useFocusEffect(
     useCallback(() => {
       const getTokenData = async () => {
         const tokenUSer = await getToken()
         ///    console.log(tokenUSer,'tokenUSertokenUSertokenUSer')
-        setToken(tokenUSer)
-        ////   console.log(carts, 'carts')
+        setTokenData(tokenUSer)
+        // ////   console.log(carts, 'carts')
       }
       getTokenData()
     }, [])
@@ -47,17 +47,22 @@ export const PasswordStack: FC<IProps> = ({ route }) => {
     let data
     console.log(reset, 'resetreset')
     if (reset != undefined) {
-      data = await SHOP_API.resetPassword(token, mobile, password)
+      data = await SHOP_API.resetPassword(tokenData, mobile, password)
     } else {
       data = await SHOP_API.createCustomerUser('1111', mobile, password)
     }
-
+    console.log(data, 'datadata')
     if (data) {
-      if (reset != 'undefined') {
-        navigation.navigate(SCREEN.STACK_SIGN_IN)
-      } else {
-        navigation.navigate(SCREEN.STACK_ACCOUNT)
-      }
+      const token = data.payload.token.accessToken
+      console.log(token, 'token')
+      await setToken(token)
+      navigation.navigate(SCREEN.PROFILE_EDIT)
+
+      // if (reset != 'undefined') {
+      //   navigation.navigate(SCREEN.STACK_SIGN_IN)
+      // } else {
+      //   navigation.navigate(SCREEN.PROFILE_EDIT)
+      // }
     }
   }
   return (

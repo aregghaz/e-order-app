@@ -26,9 +26,9 @@ export async function deleteShopId() {
   if (!id) return
   return secureStore.removeItem(SHOP_ID)
 }
-export async function notification(text: string) {
+export async function notification(text: string, type: any = ALERT_TYPE.SUCCESS) {
   return Toast.show({
-    type: ALERT_TYPE.SUCCESS,
+    type,
     title: text,
     // textBody: 'Успешно удалено из Магазинов!',
   })

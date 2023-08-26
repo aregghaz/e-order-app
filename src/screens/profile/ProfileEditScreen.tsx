@@ -146,10 +146,11 @@ export const ProfileEditScreen: FC = () => {
       //     "updatedAt": "2023-08-25T09:12:24.462Z"
       // }
     }
-
+    console.log(body)
     if (isValid) {
+      await SHOP_API.fillingCustomerUser(body)
+      // console.log(asd)
       try {
-        await SHOP_API.fillingCustomerUser(body)
         notification('Сохранено')
         navigation.navigate(SCREEN.DRAWER_ROOT, {
           screen: SCREEN.STACK_MAIN_TAB,
@@ -310,9 +311,12 @@ export const ProfileEditScreen: FC = () => {
         <>
           <TextInput
             style={styles.input}
-            onChangeText={setIih}
+            onChangeText={(value) => {
+              setIih(value)
+              setIih(value.trim() === '' ? 'Обязательное поле.' : '')
+            }}
             value={iih}
-            placeholder="Доп. номер телефона"
+            placeholder="IIh"
           />
           <Text style={styles.errorText}>{iihError}</Text>
         </>
@@ -320,6 +324,7 @@ export const ProfileEditScreen: FC = () => {
           <TextInput
             style={styles.input}
             onChangeText={(value) => {
+              console.log(value, 'valuevalue')
               setEmail(value)
               setEmailError(value.trim() === '' ? 'Обязательное поле.' : '')
             }}

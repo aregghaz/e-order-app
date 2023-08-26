@@ -7,10 +7,6 @@ import { deleteToken, getToken, setToken } from '~services'
 import { setUserData } from '~services/UserService'
 import { SignUpFormValues } from '~types/authForms'
 import { wait } from '~utils'
-// import { Navigation } from '~navigation'
-// import {SCREEN} from "~constants";
-// import { useNavigation } from '@react-navigation/native';
-
 export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   const [isSignedIn, setIsSignedIn] = useState<boolean | null>(null)
 
@@ -26,16 +22,23 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   }, [])
 
   const signIn: AuthContextType['signIn'] = useCallback(async (data) => {
-    ///  const navigation = useNavigation();
-
+    /// const navigation = useNavigation<any>();
     // Errors are handled on UI side
     // if you want to stop this function with error just throw new Error.
     // Remember to pass readable error message for user, because this error will be displayed for him
     await wait(500)
     const res = await SHOP_API.signInRequest(data.phone, data.password)
-    await setUserData(res.payload.user.customer)
-    await setToken(res.payload.token.accessToken)
-    setIsSignedIn(true)
+    // console.log(res.payload.user.customer,'22222222222')
+
+    if (!res.payload.user.customer) {
+      //    navigation.navigate(SCREEN.STACK_HOME)
+      await setToken(res.payload.token.accessToken)
+      setIsSignedIn(true)
+    } else {
+      await setUserData(res.payload.user.customer)
+      await setToken(res.payload.token.accessToken)
+      setIsSignedIn(true)
+    }
   }, [])
 
   const signOut = useCallback(async () => {

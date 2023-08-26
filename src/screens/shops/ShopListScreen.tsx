@@ -4,7 +4,9 @@
 import { Feather } from '@expo/vector-icons'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import React, { FC, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { ALERT_TYPE } from 'react-native-alert-notification'
 
 import { SHOP_API } from '~api'
 import { CustomButton } from '~components/molecules/CustomButton'
@@ -16,6 +18,7 @@ export const ShopListScreen: FC = () => {
   const [shops, setShops] = useState<any>([])
   const [load, setLoad] = useState<boolean>(false)
   const navigation = useNavigation<any>()
+  const { t } = useTranslation()
 
   useFocusEffect(
     React.useCallback(() => {
@@ -31,8 +34,9 @@ export const ShopListScreen: FC = () => {
     navigation.navigate(SCREEN.STACK_CREATE_STORE)
   }
 
-  const handleSetShopId = async (id: string) => {
+  const handleSetShopId = async (id: string, name: string) => {
     await setShopId(id)
+    notification(t('notification.change_shop') + name, ALERT_TYPE.WARNING)
     navigation.navigate(SCREEN.DRAWER_ROOT, {
       screen: SCREEN.STACK_MAIN_TAB,
     })
@@ -54,7 +58,7 @@ export const ShopListScreen: FC = () => {
         {shops &&
           shops.map((item: any) => {
             return (
-              <Pressable key={item.id} onPress={() => handleSetShopId(item.id)}>
+              <Pressable key={item.id} onPress={() => handleSetShopId(item.id, item.shopName)}>
                 <View key={item.id} style={styles.box}>
                   <Text style={styles.title}>{item.companyName}</Text>
                   <Text style={styles.text_h2}>{item.shopName}</Text>

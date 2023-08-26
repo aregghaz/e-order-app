@@ -50,8 +50,18 @@ export const ProfileScreen: FC = ({ navigation }: any) => {
   useFocusEffect(
     React.useCallback(() => {
       ;(async () => {
-        console.log(isSignedIn, 'isSignedIn')
-        isSignedIn ? setData(await getUserData()) : navigation.navigate(SCREEN.STACK_SIGN_IN)
+        if (isSignedIn) {
+          const data = await getUserData()
+          console.log(!data)
+          if (!data) {
+            console.log(!data)
+            navigation.navigate(SCREEN.PROFILE_EDIT)
+          } else {
+            setData(data)
+          }
+        } else {
+          navigation.navigate(SCREEN.STACK_SIGN_IN)
+        }
       })()
     }, [isSignedIn])
   )

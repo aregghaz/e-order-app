@@ -14,6 +14,14 @@
     "invalid_email_format": "Incorrect e-mail address",
     "required": "This field is required"
   },
+  "notification" : {
+    "signIn" : "To add to cart, please login",
+    "chose_unit" : "Choose an attachment",
+    "add_cart" : "Добавлено в корзину",
+    "change_shop" : "The shop changed to "
+
+  },
+
   "navigation": {
     "prevent_go_back_alert": {
       "title": "Discard changes?",
