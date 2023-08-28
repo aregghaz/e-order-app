@@ -1,12 +1,14 @@
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import React, { FC, useCallback, useState } from 'react'
 import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
+import DateTimePickerModal from 'react-native-modal-datetime-picker'
 
 import { SHOP_API } from '~api'
 import { CustomButton } from '~components/molecules/CustomButton'
 import { SCREEN } from '~constants'
 import { notification } from '~services/ShopService'
 import { getUserData } from '~services/UserService'
+import { timestampToDate } from '~utils/dateTimeFormat'
 
 export const ProfileEditScreen: FC = ({ route }: any) => {
   const { type } = route.params
@@ -59,7 +61,7 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
     useCallback(() => {
       const getAsyncData = async (): Promise<void> => {
         const pesdonalData = await getUserData()
-        console.log(pesdonalData, 'wsss')
+        console.log(pesdonalData.customer.person.citizenship, '324324')
         if (pesdonalData.customer) {
           setId(pesdonalData.customer.id)
           setName(pesdonalData.customer.person.firstName)
@@ -70,10 +72,10 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
           setLegalApartment(pesdonalData.customer.person.address.address_2)
           setLegalPostCode(pesdonalData.customer.person.address.postCode)
           setLegalPhone_1(pesdonalData.customer.person.address.phoneNumber1)
-          setCityzen(pesdonalData.customer.person.citizenship)
-          setPassport(pesdonalData.customer.person.passport)
-          setWhoGive(pesdonalData.customer.person.issuedBy)
-          setExpireData(pesdonalData.customer.person.issueDate)
+          setCityzen(pesdonalData.customer.person.citizenship.citizenship)
+          setPassport(pesdonalData.customer.person.citizenship.passport)
+          setWhoGive(pesdonalData.customer.person.citizenship.issuedBy)
+          setExpireData(pesdonalData.customer.person.citizenship.issueDate)
           setIih(pesdonalData.customer.person.inn)
           setEmail(pesdonalData.customer.person.email)
         }
@@ -131,18 +133,15 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
       lastName: lastname,
       fatherName,
       address: {
-        // "country": "string",
-        // "state": "string",
-        // "city": "string",
+        country: 'Armenia',
+        state: 'Yerevan',
+        city: 'Yerevan',
         address_1: legalAddress,
         address_2: legalApartment,
         postCode: legalPostCode,
         phoneNumber1: legalPhone_1,
         ///phoneNumber2: legalPhone_2,
-        // "gpsCoordinates": {
-        //     "latitude": "string",
-        //     "longitude": "string"
-        // }
+        gpsCoordinates: { latitude: 53.46114099999999, longitude: -2.245531 },
       },
       inn: iih,
       birthDate: dob,
@@ -178,7 +177,8 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
       //     "updatedAt": "2023-08-25T09:12:24.462Z"
       // }
     }
-    console.log(id, type, 'body')
+    ///console.log(isValid,type,id,'111111')
+    console.log(id, 'body')
     if (isValid) {
       if (type) {
         await SHOP_API.updateCustomerUser(body, id)
@@ -191,24 +191,38 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
         screen: SCREEN.STACK_MAIN_TAB,
       })
     }
-    resetValues()
+    // resetValues()
+  }
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false)
+
+  const showDatePicker = () => {
+    setDatePickerVisibility(true)
   }
 
-  const resetValues = () => {
-    // setShopName('')
-    // setTax('')
-    // setCompanyName('')
-    // setLegalAddress('')
-    // setLegalApartment('')
-    // setLegalPostCode('')
-    // setLegalPhone_1('')
-    // setLegalPhone_2('')
-    // setDeliveryAddress('')
-    // setDeliveryApartment('')
-    // setDeliveryPostCode('')
-    // setDeliveryPhone_1('')
-    // setDeliveryPhone_2('')
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false)
   }
+
+  const handleConfirm = (date: any) => {
+    setDob(date)
+    console.warn('A date has been picked: ', date)
+    hideDatePicker()
+  }
+  // const resetValues = () => {
+  //   // setShopName('')
+  //   // setTax('')
+  //   // setCompanyName('')
+  //   // setLegalAddress('')
+  //   // setLegalApartment('')
+  //   // setLegalPostCode('')
+  //   // setLegalPhone_1('')
+  //   // setLegalPhone_2('')
+  //   // setDeliveryAddress('')
+  //   // setDeliveryApartment('')
+  //   // setDeliveryPostCode('')
+  //   // setDeliveryPhone_1('')
+  //   // setDeliveryPhone_2('')
+  // }
 
   return (
     <ScrollView contentContainerStyle={styles.CreateStoreScreen_wrapper}>
@@ -253,13 +267,22 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
           <TextInput
             style={styles.input}
             onChangeText={(value) => {
-              setDob(value)
               setDobError(value.trim() === '' ? 'Обязательное поле.' : '')
             }}
-            value={dob}
+            onPressIn={showDatePicker}
+            value={timestampToDate(dob)}
+            editable={false}
             placeholder="Дата рождения"
           />
+
           <Text style={styles.errorText}>{dobError}</Text>
+
+          <DateTimePickerModal
+            isVisible={isDatePickerVisible}
+            mode="date"
+            onConfirm={(date) => handleConfirm(date)}
+            onCancel={hideDatePicker}
+          />
         </>
         <>
           <TextInput
@@ -273,34 +296,35 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
           />
           <Text style={styles.errorText}>{legalAddressError}</Text>
         </>
-        <>
-          <TextInput
-            style={styles.input}
-            onChangeText={setLegalApartment}
-            value={legalApartment}
-            placeholder="Квартира, блок, здание, этаж и т. д."
-          />
-          {/*<Text style={styles.errorText}>{legalApartmentError}</Text>*/}
-        </>
-        <>
-          <TextInput
-            style={styles.input}
-            onChangeText={setLegalPostCode}
-            value={legalPostCode}
-            placeholder="Почтовый индекс"
-          />
-          {/*<Text style={styles.errorText}>{legalPostCodeError}</Text>*/}
-        </>
-        <>
-          <TextInput
-            style={styles.input}
-            onChangeText={setLegalPhone_1}
-            value={legalPhone_1}
-            placeholder="Номер телефона"
-          />
-          {/*<Text style={styles.errorText}>{legalPhoneError_1}</Text>*/}
-        </>
-
+        <View style={styles.inputsContainer}>
+          <>
+            <TextInput
+              style={styles.input}
+              onChangeText={setLegalApartment}
+              value={legalApartment}
+              placeholder="Квартира, блок, здание, этаж и т. д."
+            />
+            {/*<Text style={styles.errorText}>{legalApartmentError}</Text>*/}
+          </>
+          <>
+            <TextInput
+              style={styles.input}
+              onChangeText={setLegalPostCode}
+              value={legalPostCode}
+              placeholder="Почтовый индекс"
+            />
+            {/*<Text style={styles.errorText}>{legalPostCodeError}</Text>*/}
+          </>
+          <>
+            <TextInput
+              style={styles.input}
+              onChangeText={setLegalPhone_1}
+              value={legalPhone_1}
+              placeholder="Номер телефона"
+            />
+            {/*<Text style={styles.errorText}>{legalPhoneError_1}</Text>*/}
+          </>
+        </View>
         <>
           <TextInput
             style={styles.input}
@@ -313,33 +337,35 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
           />
           <Text style={styles.errorText}>{cityzenError}</Text>
         </>
-        <>
-          <TextInput
-            style={styles.input}
-            onChangeText={setPassport}
-            value={passport}
-            placeholder="Номер паспорта"
-          />
-          {/*<Text style={styles.errorText}>{passportError}</Text>*/}
-        </>
-        <>
-          <TextInput
-            style={styles.input}
-            onChangeText={setExpireData}
-            value={expireData}
-            placeholder="Дата выдачи паспорта"
-          />
-          {/*<Text style={styles.errorText}>{expireDataError}</Text>*/}
-        </>
-        <>
-          <TextInput
-            style={styles.input}
-            onChangeText={setWhoGive}
-            value={whoGive}
-            placeholder="Орган, выдавший документ"
-          />
-          {/*<Text style={styles.errorText}>{whoGiveError}</Text>*/}
-        </>
+        <View style={styles.inputsContainer}>
+          <>
+            <TextInput
+              style={styles.input}
+              onChangeText={setPassport}
+              value={passport}
+              placeholder="Номер паспорта"
+            />
+            {/*<Text style={styles.errorText}>{passportError}</Text>*/}
+          </>
+          <>
+            <TextInput
+              style={styles.input}
+              onChangeText={setExpireData}
+              value={expireData}
+              placeholder="Дата выдачи паспорта"
+            />
+            {/*<Text style={styles.errorText}>{expireDataError}</Text>*/}
+          </>
+          <>
+            <TextInput
+              style={styles.input}
+              onChangeText={setWhoGive}
+              value={whoGive}
+              placeholder="Орган, выдавший документ"
+            />
+            {/*<Text style={styles.errorText}>{whoGiveError}</Text>*/}
+          </>
+        </View>
         <>
           <TextInput
             style={styles.input}
@@ -378,16 +404,22 @@ const colors = {
 
 const styles = StyleSheet.create({
   CreateStoreScreen_wrapper: {
-    flexGrow: 1,
+    // flexGrow: 1,
     justifyContent: 'center',
     paddingHorizontal: 20,
+    // backgroundColor: 'red'
   },
   errorText: {
     color: colors.red,
     marginBottom: 5,
+    // backgroundColor: 'red',
   },
   innerWrapper: {
+    alignItems: 'center',
+    flexDirection: 'column',
+    justifyContent: 'center',
     paddingVertical: 20,
+    // gap: 20,
   },
   input: {
     borderColor: colors.border,
@@ -395,7 +427,16 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderWidth: 1,
     padding: 10,
-
     width: '100%',
+  },
+
+  inputsContainer: {
+    flexDirection: 'column',
+    /// width: '100%',
+    //  alignItems: 'center',
+    //  // backgroundColor: 'red',
+    //  justifyContent: 'center',
+    gap: 20,
+    paddingBottom: 15,
   },
 })

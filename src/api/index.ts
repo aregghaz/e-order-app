@@ -158,7 +158,7 @@ export const SHOP_API = {
     return axios
       .post(`${fakeUrl}/api/customers/create-customer-account`, body)
       .then((res) => {
-        console.log(res, '22222')
+        console.log(res, '111111')
         return res.data
       })
       .catch((err) => console.log(err))
@@ -169,7 +169,7 @@ export const SHOP_API = {
     return axios
       .patch(`${fakeUrl}/api/customers/update-customer/${id}`, body)
       .then((res) => {
-        console.log(res, '22222')
+        console.log(res.data, '77777777')
         return res.data
       })
       .catch((err) => console.log(err))
@@ -422,6 +422,18 @@ export const SHOP_API = {
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
     return axios
       .get(`${fakeUrl}/api/partnerships/send-requests?shopId=${id}`)
+      .then((res) => {
+        return res.data
+      })
+      .catch((err) => console.log(err))
+  },
+
+  /* wish list  */
+  getWishList: async () => {
+    const tokenUSer = await getToken()
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
+    return axios
+      .get(`${fakeUrl}/api/favorite-products-lists/get-favorite-lists?limit=100`)
       .then((res) => {
         return res.data
       })

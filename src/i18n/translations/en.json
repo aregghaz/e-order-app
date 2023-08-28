@@ -20,16 +20,15 @@
     "add_cart": "Добавлено в корзину",
     "change_shop": "The shop changed to "
   },
-  "password" : {
-    "oldPassword" : "Old password",
-    "newPassword" : "New password",
-    "confirmPassword" : "Confirm Password",
-    "changePassword" : "Change Password",
-    "doNotMatch" : "Passwords do not match",
-    "passError" : "Password must contain at least one lowercase letter, one uppercase letter, and one digit, and be at least 10 characters long",
+  "password": {
+    "oldPassword": "Old password",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm Password",
+    "changePassword": "Change Password",
+    "doNotMatch": "Passwords do not match",
+    "passError": "Password must contain at least one lowercase letter, one uppercase letter, and one digit, and be at least 10 characters long",
     "required": "Old password field is required",
     "passwordChanged": "Password changed"
-
   },
   "navigation": {
     "prevent_go_back_alert": {

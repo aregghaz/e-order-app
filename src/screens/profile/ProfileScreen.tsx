@@ -45,7 +45,7 @@ interface IAddress {
   state: string
 }
 
-export const ProfileScreen: FC = ({ navigation }: any) => {
+export const ProfileScreen: FC = ({ route, navigation }: any) => {
   const [data, setData] = useState<any>(IPropsData)
   const { isSignedIn } = useAuth()
   // const {
@@ -55,9 +55,9 @@ export const ProfileScreen: FC = ({ navigation }: any) => {
     React.useCallback(() => {
       ;(async () => {
         if (isSignedIn) {
-          // setData(IPropsData)
+          /// setData(IPropsData)
           const data = await getUserData()
-          console.log(!data.customer, 'data')
+          console.log(data.customer.person.firstName, data.customer.person.lastName, 'data')
           if (!data.customer) {
             navigation.navigate(SCREEN.PROFILE_EDIT, { type: false })
           } else {
@@ -67,6 +67,7 @@ export const ProfileScreen: FC = ({ navigation }: any) => {
           navigation.navigate(SCREEN.STACK_SIGN_IN)
         }
       })()
+      return () => setData(IPropsData)
     }, [isSignedIn])
   )
 

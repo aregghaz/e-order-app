@@ -84,6 +84,8 @@ export const CheckOutScreen: FC = ({ route, navigation }: any) => {
         <View style={styles.inputBox}>
           <TextInput
             style={styles.input}
+            placeholder={'comments'}
+            placeholderTextColor={'black'}
             multiline={true}
             numberOfLines={4}
             onChangeText={(text) => {
@@ -94,11 +96,17 @@ export const CheckOutScreen: FC = ({ route, navigation }: any) => {
         </View>
       </View>
       <View style={styles.btn_wrapper}>
-        <View style={styles.orderView}>
-          <Text>Бонус за заказ : {carts.totalReward.toFixed(2)}</Text>
-          <Text>Итоговая сумма : {carts.cartTotal.toFixed(2)} </Text>
+        <View style={styles.orderViewContainer}>
+          <View style={styles.orderView}>
+            <Text>Бонус за заказ : {carts.totalReward.toFixed(2)}</Text>
+            <Text>Итоговая сумма : {carts.cartTotal.toFixed(2)} </Text>
+          </View>
         </View>
-        <CustomButton title={t('order.confirmOrder')} onPress={() => handlerCheckOut()} />
+        <CustomButton
+          width={340}
+          title={t('order.confirmOrder')}
+          onPress={() => handlerCheckOut()}
+        />
       </View>
     </>
   )
@@ -131,6 +139,7 @@ const styles = StyleSheet.create({
   },
   boxContainer: {
     // height: 30,
+    ///  width: '100%',
     // backgroundColor: "black",
     alignItems: 'center',
     flexDirection: 'row',
@@ -139,10 +148,11 @@ const styles = StyleSheet.create({
   },
 
   btn_wrapper: {
-    alignItems: 'flex-end',
-    justifyContent: 'flex-end',
+    alignItems: 'center',
+    justifyContent: 'center',
     padding: 10,
-    // ...customStyles.border(1, 'solid', colors.borderColor),
+    // backgroundColor: 'red',
+    // ...customsStyles.border(1, 'solid', colors.borderColor),
   },
   // no_product: {
   //     alignItems: 'center',
@@ -151,25 +161,33 @@ const styles = StyleSheet.create({
   input: {
     // backgroundColor: 'grey'
     minHeight: 80,
-    width: 349,
+    minWidth: '100%',
     ...customStyles.border(1, 'solid', colors.borderColor),
-    marginHorizontal: 11,
+    fontSize: 16,
     marginVertical: 4,
   },
   inputBox: {
     paddingVertical: 3,
+    // width: '100%',
   },
-
   orderView: {
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
     marginBottom: 10,
+    // backgroundColor: 'red',
+  },
+  orderViewContainer: {
+    alignItems: 'flex-end',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    width: 340,
   },
   parentBox: {
+    alignItems: 'flex-start',
     display: 'flex',
-    // flexDirection: 'row',
+    justifyContent: 'center',
     ...customStyles.border(1, 'solid', colors.borderColor),
-    // backgroundColor: 'red',
+    gap: 7,
     paddingVertical: 10,
   },
 })

@@ -27,20 +27,26 @@ export const ShopCartScreen: FC = ({ navigation }: any) => {
   const [loding, setLoading] = useState(true)
   useFocusEffect(
     useCallback(() => {
+      setCarts([])
       const getShopCarts = async () => {
         const getID = await getShopId()
         if (getID !== undefined) {
+          console.log(getID, 'getIDgetIDgetID')
           const data = await SHOP_API.getShopCarts(getID)
-          const item = data.payload.content
-          setSelectedShops(item[0].id)
-          setCarData({
-            selectedShops: item[0].supplier.companyName,
-            shop: item[0].shop.shopName,
-            total: item[0].cartTotal,
-            totalReward: item[0].totalReward,
-          })
-          setCarts(item[0].cartItems)
-          setData(item)
+
+          if (data) {
+            console.log(data, '333333')
+            const item = data.payload.content
+            setSelectedShops(item[0].id)
+            setCarData({
+              selectedShops: item[0].supplier.companyName,
+              shop: item[0].shop.shopName,
+              total: item[0].cartTotal,
+              totalReward: item[0].totalReward,
+            })
+            setCarts(item[0].cartItems)
+            setData(item)
+          }
         }
       }
       getShopCarts()
@@ -50,6 +56,7 @@ export const ShopCartScreen: FC = ({ navigation }: any) => {
   useEffect(() => {
     const bootstrap = async () => {
       data.map((item: any) => {
+        console.log(data, 'datadata')
         if (item.id === selectedShops) {
           setCarData({
             selectedShops: item.supplier.companyName,
@@ -131,13 +138,15 @@ export const ShopCartScreen: FC = ({ navigation }: any) => {
         </View>
       </>
       <View style={styles.btn_wrapper}>
-        <View style={styles.orderView}>
-          <Text> Итоги: </Text>
-          <View style={styles.hr} />
-          <Text>Поставщик: {carData.selectedShops}</Text>
-          <Text>Магазин: {carData.shop} </Text>
-          <Text>Бонус за заказ : {carData.totalReward.toFixed(2)}</Text>
-          <Text>Итоговая сумма : {carData.total.toFixed(2)} </Text>
+        <View style={styles.orderViewContainer}>
+          <View style={styles.orderView}>
+            <Text> Итоги: </Text>
+            <View style={styles.hr} />
+            <Text>Поставщик: {carData.selectedShops}</Text>
+            <Text>Магазин: {carData.shop} </Text>
+            <Text>Бонус за заказ : {carData.totalReward.toFixed(2)}</Text>
+            <Text>Итоговая сумма : {carData.total.toFixed(2)} </Text>
+          </View>
         </View>
         <CustomButton
           width={340}
@@ -160,13 +169,10 @@ const colors = {
 
 const styles = StyleSheet.create({
   ShopCartScreen_wrapper: {
-    // alignItems: "center",
     alignItems: 'center',
     flex: 1,
-
     flexDirection: 'column',
     justifyContent: 'center',
-
     // backgroundColor: 'red'
   },
   ShopListScreen_wrapper: {
@@ -174,12 +180,12 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   btn_wrapper: {
-    height: 170,
-    paddingHorizontal: 10,
-    paddingVertical: 6,
+    height: 180,
+    paddingVertical: 10,
     ...customStyles.border(1, 'solid', colors.borderColor),
-    alignItems: 'flex-end',
+    alignItems: 'center',
     // justifyContent: 'flex-end',
+    // backgroundColor: 'red',
   },
   hr: {
     ...customStyles.border(1, 'solid', colors.borderColor),
@@ -197,11 +203,17 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   orderView: {
+    // width: 340,
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
     marginBottom: 10,
+    // backgroundColor: 'red',
   },
-
+  orderViewContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    width: 340,
+  },
   scrollView: {
     marginTop: 68,
   },

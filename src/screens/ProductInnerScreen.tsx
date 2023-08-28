@@ -9,9 +9,11 @@ import {
   ActivityIndicator,
   Dimensions,
   FlatList,
+  Modal,
   Pressable,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native'
@@ -52,12 +54,15 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
   const [hasNext, setHasNext] = useState(false)
   const [selectedOption, setSelectedOption] = useState<null | any>(null)
   const [shopId, setShopId] = useState('')
+  const [wishList, setWishList] = useState<any>([])
   const scrollViewRef = useRef<any>(null)
   const [value, addOption] = useIncrement()
   const width = Dimensions.get('window').width
   const { params } = route
   const activeItemRef = useRef(null)
   const { isSignedIn } = useAuth()
+  const [modalVisible, setModalVisible] = useState(false)
+  const [wishListName, setWishListName] = useState('')
   const { t } = useTranslation()
 
   const activeBorder = { backgroundColor: colors.headingColor, color: colors.activeText }
@@ -74,7 +79,6 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
           setSelectedOption(null)
           setIsLoading(true)
           const getID = await getShopId()
-          console.log(getID, 'getIDgetID')
           setShopId(getID)
           if (getID) {
             const featuredData = await SHOP_API.getTopDiscounts(options)
@@ -134,6 +138,12 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
         }
       }
     }
+  }
+
+  const handlerOpenModal = async () => {
+    const wishListData = await SHOP_API.getWishList()
+    setWishList(wishListData.payload.content)
+    setModalVisible(!modalVisible)
   }
 
   const Header = useCallback(() => {
@@ -240,7 +250,7 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
             padding={10}
             color="black"
             border="grey"
-            onPress={() => alert(5)}
+            onPress={() => handlerOpenModal()}
           />
         </View>
         <View style={styles.btn_wrapper}>
@@ -251,6 +261,45 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
             background="black"
           />
         </View>
+      </View>
+      <View style={styles.centeredView}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            setModalVisible(!modalVisible)
+          }}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Pressable style={styles.button} onPress={() => setModalVisible(!modalVisible)}>
+                <Text style={styles.textStyle}>X</Text>
+              </Pressable>
+              <View>
+                {wishList.map((item: any) => {
+                  console.log(item)
+                })}
+              </View>
+              <View style={styles.create_wish_list}>
+                <TextInput
+                  onChangeText={(value) => {
+                    setWishListName(value)
+                  }}
+                  value={wishListName}
+                  placeholder="Отчество"
+                />
+                <CustomButton
+                  title=" Создать список  "
+                  padding={10}
+                  color="black"
+                  border="grey"
+                  onPress={() => handlerOpenModal()}
+                />
+              </View>
+            </View>
+          </View>
+        </Modal>
       </View>
     </View>
   )
@@ -263,6 +312,22 @@ const styles = StyleSheet.create({
   btn_wrapper: {
     marginHorizontal: 5,
     width: '45%',
+  },
+  button: {
+    borderRadius: 20,
+    elevation: 2,
+    padding: 10,
+  },
+  centeredView: {
+    // flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+
+    // marginTop: 22,
+  },
+  create_wish_list: {
+    alignItems: 'flex-start',
+    flexDirection: 'row',
   },
   description: {},
   details: {
@@ -314,6 +379,25 @@ const styles = StyleSheet.create({
     padding: 10,
     width: '46%',
   },
+  modalView: {
+    alignItems: 'flex-start',
+    backgroundColor: colors.activeText,
+    borderRadius: 20,
+    elevation: 5,
+    marginHorizontal: 20,
+    marginTop: 150,
+
+    padding: 35,
+    //
+    // ///  shadowColor: '#000',
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 2,
+    // },
+    // shadowOpacity: 0.25,
+    //
+    // shadowRadius: 4,
+  },
   name: {
     color: colors.nameColor,
     fontWeight: '700',
@@ -346,6 +430,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexGrow: 1,
     justifyContent: 'center',
+  },
+  textStyle: {
+    // color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   title: {
     flex: 1,

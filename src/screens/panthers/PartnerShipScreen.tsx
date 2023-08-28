@@ -254,10 +254,13 @@ const styles = StyleSheet.create({
   },
   modalView: {
     alignItems: 'flex-start',
+    backgroundColor: colors.black,
     borderRadius: 20,
+
     elevation: 5,
-    margin: 20,
-    ///   backgroundColor: 'white',
+
+    marginHorizontal: 20,
+    marginTop: 150,
 
     padding: 35,
 
