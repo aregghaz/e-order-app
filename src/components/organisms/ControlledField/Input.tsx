@@ -2,8 +2,8 @@ import { forwardRef, useCallback } from 'react'
 import { Controller, get } from 'react-hook-form'
 import { TextInput } from 'react-native'
 
-import type { ControlledInputProps, RenderInputProps } from './types'
 import { Field } from '../../molecules'
+import type { ControlledInputProps, RenderInputProps } from './types'
 
 export const Input = forwardRef<TextInput, ControlledInputProps>(
   ({ control, name, errors, rules, children, ...props }, ref) => {
