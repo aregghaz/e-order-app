@@ -15,6 +15,6 @@ export const checkAge = (date: Date | string) => {
   const ageDifference = currentDate - birthDateTimestamp
 
   const millisecondsPerYear = 365 * 24 * 60 * 60 * 1000
-  console.log(Math.floor(ageDifference / millisecondsPerYear), 'OOOOOOOOOOOOOOOOOOOOOOOOOOOOO')
+
   return Math.floor(ageDifference / millisecondsPerYear)
 }
