@@ -7,3 +7,14 @@ export const timestampToDate = (date: Date | string) => {
 
   return `${day}/${monthFormatted}/${year}`
 }
+
+export const checkAge = (date: Date | string) => {
+  const birthDate = new Date(date)
+  const currentDate = new Date().getTime()
+  const birthDateTimestamp = birthDate.getTime()
+  const ageDifference = currentDate - birthDateTimestamp
+
+  const millisecondsPerYear = 365 * 24 * 60 * 60 * 1000
+  console.log(Math.floor(ageDifference / millisecondsPerYear), 'OOOOOOOOOOOOOOOOOOOOOOOOOOOOO')
+  return Math.floor(ageDifference / millisecondsPerYear)
+}

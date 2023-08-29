@@ -54,7 +54,7 @@ const colors = {
 
 const styles = StyleSheet.create({
   container: {
-    ...customStyles.border(1, 'solid', colors.borderColor),
+    // ...customStyles.border(1, 'solid', colors.borderColor),
     flex: 1,
     height: 'auto',
     width: screenWidth,

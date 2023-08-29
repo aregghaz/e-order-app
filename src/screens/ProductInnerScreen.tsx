@@ -2,7 +2,7 @@
  * was created by tigran at 02.07.23
  */
 
-import { Ionicons } from '@expo/vector-icons'
+import { Feather, Ionicons } from '@expo/vector-icons'
 import { useFocusEffect } from '@react-navigation/native'
 import React, { FC, useCallback, useEffect, useRef, useState } from 'react'
 import {
@@ -11,6 +11,7 @@ import {
   FlatList,
   Modal,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -29,6 +30,7 @@ import { useAuth, useTranslation } from '~hooks'
 import { useIncrement } from '~hooks/useIncrement'
 import { getShopId, notification } from '~services/ShopService'
 import { IFeatured } from '~types/featuredProducts'
+import { screenHeight, screenWidth } from '~utils/breakpoints'
 import { customStyles } from '~utils/style_helpers'
 
 const colors = {
@@ -38,6 +40,9 @@ const colors = {
   nameColor: '#646464',
   activeColor: '#2a7581',
   activeText: 'white',
+  opacity: '#00000056',
+  white: 'white',
+  red: '#EF8781',
 }
 const RenderFooter = ({ isLoading }: any) => {
   if (!isLoading) return null
@@ -144,6 +149,9 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
     const wishListData = await SHOP_API.getWishList()
     setWishList(wishListData.payload.content)
     setModalVisible(!modalVisible)
+    setWishListName('')
+    console.log(wishListData, 'wishListData!')
+    console.log(wishList, 'whishlist!')
   }
 
   const Header = useCallback(() => {
@@ -262,45 +270,62 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
           />
         </View>
       </View>
-      <View style={styles.centeredView}>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            setModalVisible(!modalVisible)
-          }}
-        >
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <Pressable style={styles.button} onPress={() => setModalVisible(!modalVisible)}>
-                <Text style={styles.textStyle}>X</Text>
-              </Pressable>
-              <View>
-                {wishList.map((item: any) => {
-                  console.log(item)
-                })}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible)
+        }}
+      >
+        <View style={styles.modalView}>
+          <View style={styles.cover}>
+            <View style={styles.modal_content}>
+              <View style={styles.modal_header}>
+                <Text style={styles.textStyle}>Список избранных</Text>
+                <Pressable onPress={() => setModalVisible(!modalVisible)}>
+                  <Text>
+                    <Feather name="x" size={24} color="black" />
+                  </Text>
+                </Pressable>
               </View>
-              <View style={styles.create_wish_list}>
-                <TextInput
-                  onChangeText={(value) => {
-                    setWishListName(value)
-                  }}
-                  value={wishListName}
-                  placeholder="Отчество"
-                />
-                <CustomButton
-                  title=" Создать список  "
-                  padding={10}
-                  color="black"
-                  border="grey"
-                  onPress={() => handlerOpenModal()}
-                />
+              <View style={styles.wish_list}>
+                <ScrollView>
+                  <View>
+                    {wishList.length > 0 ? (
+                      wishList.map((item: any) => {
+                        console.log(item)
+                      })
+                    ) : (
+                      <View>
+                        <Text style={styles.wish_list_text}>Список избранных пуст</Text>
+                      </View>
+                    )}
+                  </View>
+                </ScrollView>
+              </View>
+              <View>
+                <View style={styles.list_text}>
+                  <Text>Создать новый список</Text>
+                </View>
+                <View style={styles.create_wish_list}>
+                  <TextInput
+                    style={styles.input_BG}
+                    onChangeText={(value) => {
+                      setWishListName(value)
+                    }}
+                    value={wishListName}
+                    placeholder="Отчество"
+                  />
+                  <Pressable style={styles.button} onPress={() => handlerOpenModal()}>
+                    <Text style={styles.button_text}>Создать список</Text>
+                  </Pressable>
+                </View>
               </View>
             </View>
           </View>
-        </Modal>
-      </View>
+        </View>
+      </Modal>
     </View>
   )
 }
@@ -314,20 +339,30 @@ const styles = StyleSheet.create({
     width: '45%',
   },
   button: {
-    borderRadius: 20,
-    elevation: 2,
-    padding: 10,
+    backgroundColor: colors.red,
+    marginLeft: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
   },
-  centeredView: {
-    // flex: 1,
+  button_text: {
+    color: colors.white,
+  },
+  cover: {
     alignItems: 'center',
+    backgroundColor: colors.opacity,
+    height: screenHeight,
     justifyContent: 'center',
-
-    // marginTop: 22,
+    left: 0,
+    position: 'absolute',
+    top: 0,
+    width: screenWidth,
   },
   create_wish_list: {
-    alignItems: 'flex-start',
+    alignItems: 'center',
+    backgroundColor: colors.white,
     flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 10,
   },
   description: {},
   details: {
@@ -350,7 +385,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     height: 70,
-    // paddingHorizontal: 20,
     justifyContent: 'center',
     ...customStyles.border(1, 'solid', colors.borderColor),
   },
@@ -369,6 +403,12 @@ const styles = StyleSheet.create({
   inner_wrapper: {
     paddingHorizontal: 20,
   },
+  input_BG: {
+    backgroundColor: colors.borderColor,
+    height: '100%',
+    paddingHorizontal: 10,
+    width: 180,
+  },
   item: {
     borderRadius: 8,
     ...customStyles.border(1, 'solid', colors.borderColor),
@@ -379,24 +419,27 @@ const styles = StyleSheet.create({
     padding: 10,
     width: '46%',
   },
+  list_text: {
+    paddingLeft: 10,
+    paddingTop: 10,
+  },
   modalView: {
     alignItems: 'flex-start',
-    backgroundColor: colors.activeText,
-    borderRadius: 20,
+    backgroundColor: colors.white,
     elevation: 5,
-    marginHorizontal: 20,
-    marginTop: 150,
-
     padding: 35,
-    //
-    // ///  shadowColor: '#000',
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 2,
-    // },
-    // shadowOpacity: 0.25,
-    //
-    // shadowRadius: 4,
+  },
+  modal_content: {
+    backgroundColor: colors.white,
+    maxHeight: screenHeight - 200,
+    position: 'absolute',
+    width: '90%',
+  },
+  modal_header: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 10,
   },
   name: {
     color: colors.nameColor,
@@ -432,13 +475,24 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   textStyle: {
-    // color: 'white',
+    fontSize: 16,
     fontWeight: 'bold',
-    textAlign: 'center',
   },
   title: {
     flex: 1,
     fontSize: 20,
+    fontWeight: 'bold',
+  },
+  wish_list: {
+    borderBottomColor: colors.grey,
+    borderBottomWidth: 1,
+    borderTopColor: colors.grey,
+    borderTopWidth: 1,
+    paddingLeft: 40,
+    paddingVertical: 20,
+  },
+  wish_list_text: {
+    fontSize: 17,
     fontWeight: 'bold',
   },
 })

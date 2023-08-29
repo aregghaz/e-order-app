@@ -8,11 +8,13 @@ import { CustomButton } from '~components/molecules/CustomButton'
 import { SCREEN } from '~constants'
 import { notification } from '~services/ShopService'
 import { getUserData } from '~services/UserService'
-import { timestampToDate } from '~utils/dateTimeFormat'
+import { timestampToDate, checkAge } from '~utils/dateTimeFormat'
 
 export const ProfileEditScreen: FC = ({ route }: any) => {
   const { type } = route.params
   const navigation = useNavigation<any>()
+
+  // const [validAge, setValidAge] = useState(false);
 
   /*Name*/
   const [id, setId] = useState('')
@@ -86,6 +88,7 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
     }, [])
   )
   const handleSave = async () => {
+    console.log(dob, 'DOB')
     let isValid = true
 
     if (name.trim() === '') {
@@ -102,22 +105,11 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
       isValid = false
     }
 
-    // if (legalAddress.trim() === '') {
-    //     setLegalAddressError('Обязательное поле.')
-    //     isValid = false
-    // }
-    // if (legalApartment.trim() === '') {
-    //     setlLegalApartmentError('Обязательное поле.')
-    //     isValid = false
-    // }
-    // if (legalPostCode.trim() === '') {
-    //     setLegalPostCodeError('Обязательное поле.')
-    //     isValid = false
-    // }
-    // if (legalPhone_1.trim() === '') {
-    //     setLegalPhoneError_1('Обязательное поле.')
-    //     isValid = false
-    // }
+    const validAge = checkAge(dob)
+    if (validAge < 18) {
+      setDobError('Bам не 18.')
+      isValid = false
+    }
 
     if (iih.trim() === '') {
       setIihError('Обязательное поле.')
@@ -432,11 +424,11 @@ const styles = StyleSheet.create({
 
   inputsContainer: {
     flexDirection: 'column',
-    /// width: '100%',
+    gap: 20,
     //  alignItems: 'center',
     //  // backgroundColor: 'red',
     //  justifyContent: 'center',
-    gap: 20,
     paddingBottom: 15,
+    width: '100%',
   },
 })
