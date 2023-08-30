@@ -1,9 +1,11 @@
+import { Feather } from '@expo/vector-icons'
 import { View, Text } from 'native-base'
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 import Carousel from 'react-native-reanimated-carousel'
 
 import { ImgOrSvg } from '~components/ImgOrSvg'
+import { ModalWishList } from '~components/ModalWishList'
 import { SCREEN } from '~constants'
 import { IFeatured } from '~types/featuredProducts'
 import { getVW, screenWidth } from '~utils/breakpoints'
@@ -15,33 +17,52 @@ interface ITopBrands {
 }
 
 const NewArrivalItems: FC<ITopBrands> = ({ items, navigation }) => {
+  const [modalVisible, setModalVisible] = useState(false)
+  const [productId, setProductId] = useState('')
   return (
-    <View style={styles.main}>
-      {items.length > 0 && <Text style={styles.heading}>New arrivals</Text>}
-      <Carousel
-        loop
-        autoPlay
-        style={styles.container}
-        width={getVW(50)}
-        // height={'auto'}
-        data={items}
-        autoPlayInterval={2500}
-        // contentContainerCustomStyle={{ flex: 1 }}
-        renderItem={({ item, index }: { item: IFeatured; index: number }) => {
-          return (
-            <TouchableOpacity
-              key={index}
-              style={styles.item}
-              onPress={() => {
-                navigation.navigate(SCREEN.STACK_PRODUCT_INNER, item)
-              }}
-            >
-              <ImgOrSvg item={item} product="-product" padding={16} />
-            </TouchableOpacity>
-          )
-        }}
+    <>
+      <View style={styles.main}>
+        {items.length > 0 && <Text style={styles.heading}>New arrivals</Text>}
+        <Carousel
+          loop
+          autoPlay
+          style={styles.container}
+          width={getVW(50)}
+          // height={'auto'}
+          data={items}
+          autoPlayInterval={2500}
+          // contentContainerCustomStyle={{ flex: 1 }}
+          renderItem={({ item, index }: { item: IFeatured; index: number }) => {
+            return (
+              <TouchableOpacity
+                key={index}
+                style={styles.item}
+                onPress={() => {
+                  navigation.navigate(SCREEN.STACK_PRODUCT_INNER, item)
+                }}
+              >
+                <Feather
+                  onPress={() => {
+                    setModalVisible(true)
+                    setProductId(item.id)
+                  }}
+                  style={styles.heart}
+                  name="heart"
+                  size={20}
+                  color="darkslategrey"
+                />
+                <ImgOrSvg item={item} product="-product" padding={16} />
+              </TouchableOpacity>
+            )
+          }}
+        />
+      </View>
+      <ModalWishList
+        productId={productId}
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
       />
-    </View>
+    </>
   )
 }
 
@@ -66,9 +87,17 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
 
+  heart: {
+    position: 'absolute',
+    right: 5,
+    top: 5,
+    zIndex: 1,
+  },
+
   item: {
     backgroundColor: colors.itemColor,
     borderRadius: 8,
+    position: 'relative',
     ...customStyles.border(1, 'solid', colors.borderColor),
     height: '100%',
     marginHorizontal: 10,
