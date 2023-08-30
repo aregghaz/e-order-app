@@ -1,9 +1,11 @@
+import { Feather } from '@expo/vector-icons'
 import { View, Text } from 'native-base'
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 import Carousel from 'react-native-snap-carousel'
 
 import { ImgOrSvg } from '~components/ImgOrSvg'
+import { ModalWishList } from '~components/ModalWishList'
 import { SCREEN } from '~constants'
 import { IFeatured } from '~types/featuredProducts'
 import { getVW, screenWidth } from '~utils/breakpoints'
@@ -15,6 +17,8 @@ interface ITrending {
 }
 
 const FeaturedItems: FC<ITrending> = ({ items, navigation }) => {
+  const [modalVisible, setModalVisible] = useState(false)
+  const [productId, setProductId] = useState('')
   return (
     <View style={styles.body}>
       {items.length > 0 && <Text style={styles.heading}>Featured</Text>}
@@ -36,6 +40,16 @@ const FeaturedItems: FC<ITrending> = ({ items, navigation }) => {
                   navigation.navigate(SCREEN.STACK_PRODUCT_INNER, item)
                 }}
               >
+                <Feather
+                  onPress={() => {
+                    setModalVisible(true)
+                    setProductId(item.id)
+                  }}
+                  style={styles.heart}
+                  name="heart"
+                  size={20}
+                  color="darkslategrey"
+                />
                 <ImgOrSvg item={item} product="-product" column={1} padding={31} />
                 <View style={styles.textContainer}>
                   <Text style={styles.name}>{item.name}</Text>
@@ -50,6 +64,11 @@ const FeaturedItems: FC<ITrending> = ({ items, navigation }) => {
           itemWidth={getVW(75)}
         />
       </View>
+      <ModalWishList
+        productId={productId}
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+      />
     </View>
   )
 }
@@ -73,8 +92,16 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: 'center',
   },
+  heart: {
+    position: 'absolute',
+    right: 5,
+    top: 5,
+    zIndex: 1,
+  },
+
   item: {
     borderRadius: 8,
+    position: 'relative',
     ...customStyles.border(1, 'solid', colors.borderColor),
     padding: 10,
   },
@@ -95,7 +122,6 @@ const styles = StyleSheet.create({
   swiper: {
     flexGrow: 1,
   },
-
   textContainer: {
     flexGrow: 1,
   },

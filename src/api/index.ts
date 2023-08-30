@@ -429,6 +429,44 @@ export const SHOP_API = {
   },
 
   /* wish list  */
+
+  createWishList: async (name: string) => {
+    const tokenUSer = await getToken()
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
+    return axios
+      .post(`${fakeUrl}/api/favorite-products-lists/create-favorite-list`, { name })
+      .then((res) => {
+        return res.data
+      })
+      .catch((err) => console.log(err))
+  },
+
+  addToWishList: async (productId: string, id: string) => {
+    const tokenUSer = await getToken()
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
+    return axios
+      .put(
+        `${fakeUrl}/api/favorite-products-lists/add-favorite-product?id=${id}&productId=${productId}`
+      )
+      .then((res) => {
+        return res.data
+      })
+      .catch((err) => console.log(err))
+  },
+
+  removeFromWishList: async (productId: string, id: string) => {
+    const tokenUSer = await getToken()
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
+    return axios
+      .put(
+        `${fakeUrl}/api/favorite-products-lists/remove-favorite-product?id=${id}&productId=${productId}`
+      )
+      .then((res) => {
+        return res.data
+      })
+      .catch((err) => console.log(err))
+  },
+
   getWishList: async () => {
     const tokenUSer = await getToken()
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer

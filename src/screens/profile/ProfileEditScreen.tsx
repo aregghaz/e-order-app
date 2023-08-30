@@ -1,6 +1,6 @@
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import React, { FC, useCallback, useState } from 'react'
-import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
+import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
 
 import { SHOP_API } from '~api'
@@ -50,7 +50,7 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
   const [passport, setPassport] = useState('')
   /// const [passportError, setpPassportError] = useState('')
   const [whoGive, setWhoGive] = useState('')
-  ///  const [whoGiveError, setWhoGiveError] = useState('')
+  // const [whoGiveError, setWhoGiveError] = useState("");
   const [expireData, setExpireData] = useState('')
   /// const [expireDataError, setExpireDataError] = useState('')
 
@@ -117,6 +117,15 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
     }
     if (email.trim() === '') {
       setEmail('Обязательное поле.')
+      isValid = false
+    }
+
+    if (whoGive.trim() === '') {
+      setWhoGive('Обязательное поле.')
+      isValid = false
+    }
+    if (whoGive.trim().length > 200) {
+      setWhoGive('Разрешено максимум 200 символов.')
       isValid = false
     }
 
@@ -255,13 +264,13 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
           />
           <Text style={styles.errorText}>{fatherNameError}</Text>
         </>
-        <>
+        <Pressable style={styles.date_wrapper} onPress={showDatePicker}>
           <TextInput
             style={styles.input}
             onChangeText={(value) => {
               setDobError(value.trim() === '' ? 'Обязательное поле.' : '')
             }}
-            onPressIn={showDatePicker}
+            // onPressIn={showDatePicker}
             value={timestampToDate(dob)}
             editable={false}
             placeholder="Дата рождения"
@@ -275,7 +284,7 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
             onConfirm={(date) => handleConfirm(date)}
             onCancel={hideDatePicker}
           />
-        </>
+        </Pressable>
         <>
           <TextInput
             style={styles.input}
@@ -374,7 +383,6 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
           <TextInput
             style={styles.input}
             onChangeText={(value) => {
-              console.log(value, 'valuevalue')
               setEmail(value)
               setEmailError(value.trim() === '' ? 'Обязательное поле.' : '')
             }}
@@ -396,22 +404,21 @@ const colors = {
 
 const styles = StyleSheet.create({
   CreateStoreScreen_wrapper: {
-    // flexGrow: 1,
     justifyContent: 'center',
     paddingHorizontal: 20,
-    // backgroundColor: 'red'
+  },
+  date_wrapper: {
+    width: '100%',
   },
   errorText: {
     color: colors.red,
     marginBottom: 5,
-    // backgroundColor: 'red',
   },
   innerWrapper: {
     alignItems: 'center',
     flexDirection: 'column',
     justifyContent: 'center',
     paddingVertical: 20,
-    // gap: 20,
   },
   input: {
     borderColor: colors.border,
@@ -425,9 +432,6 @@ const styles = StyleSheet.create({
   inputsContainer: {
     flexDirection: 'column',
     gap: 20,
-    //  alignItems: 'center',
-    //  // backgroundColor: 'red',
-    //  justifyContent: 'center',
     paddingBottom: 15,
     width: '100%',
   },
