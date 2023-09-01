@@ -2,7 +2,7 @@
  * was created by tigran at 09.08.23
  */
 import { useFocusEffect } from '@react-navigation/native'
-import { Box, Center, CheckIcon, Select } from 'native-base'
+import { CheckIcon, Select } from 'native-base'
 import React, { FC, useCallback, useEffect, useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
@@ -80,63 +80,50 @@ export const ShopCartScreen: FC = ({ navigation }: any) => {
 
   return (
     <>
-      <>
-        <View style={styles.ShopCartScreen_wrapper}>
-          <View style={styles.ShopListScreen_wrapper}>
-            <Center>
-              <Box maxW="300">
-                {carts.length > 0 && (
-                  <Select
-                    selectedValue={selectedShops}
-                    minWidth="250"
-                    height="50"
-                    borderColor="#781F19"
-                    marginTop="3"
-                    color="#000"
-                    letterSpacing="1"
-                    fontSize="17"
-                    accessibilityLabel="Choose Service"
-                    placeholder="Choose Service"
-                    _selectedItem={{
-                      bg: 'teal.600',
-                      endIcon: <CheckIcon size="5" />,
-                    }}
-                    mt={1}
-                    onValueChange={(itemValue) => {
-                      setSelectedShops(itemValue)
-                      setLoading(!loding)
-                    }}
-                  >
-                    {data.map((item: any) => {
-                      return (
-                        <Select.Item
-                          label={item.supplier.companyName}
-                          key={item.id}
-                          value={item.id}
-                        />
-                      )
-                    })}
-                  </Select>
-                )}
-              </Box>
-            </Center>
-          </View>
-          <View style={styles.scrollView}>
-            {carts.length > 0 ? (
-              <CartItems
-                isDelete={true}
-                elem={carts}
-                onDelete={handleDelete}
-                cartItemId={carts.id}
-              />
-            ) : (
-              <View style={styles.no_product}>
-                <Text>There is no products here</Text>
-              </View>
+      <View style={styles.ShopCartScreen_wrapper}>
+        <View style={styles.ShopListScreen_wrapper}>
+          <View style={styles.select_wrapper}>
+            {carts.length > 0 && (
+              <Select
+                selectedValue={selectedShops}
+                minWidth="360"
+                height="50"
+                borderColor="#CCC"
+                marginY="2"
+                color="#000"
+                letterSpacing="1"
+                fontSize="17"
+                accessibilityLabel="Choose Service"
+                placeholder="Choose Service"
+                _selectedItem={{
+                  bg: 'teal.600',
+                  endIcon: <CheckIcon size="5" />,
+                }}
+                mt={1}
+                onValueChange={(itemValue) => {
+                  setSelectedShops(itemValue)
+                  setLoading(!loding)
+                }}
+              >
+                {data.map((item: any) => {
+                  return (
+                    <Select.Item label={item.supplier.companyName} key={item.id} value={item.id} />
+                  )
+                })}
+              </Select>
             )}
           </View>
         </View>
-      </>
+        <View style={styles.scrollView}>
+          {carts.length > 0 ? (
+            <CartItems isDelete={true} elem={carts} onDelete={handleDelete} cartItemId={carts.id} />
+          ) : (
+            <View style={styles.no_product}>
+              <Text>There is no products here</Text>
+            </View>
+          )}
+        </View>
+      </View>
       <View style={styles.btn_wrapper}>
         <View style={styles.orderViewContainer}>
           <View style={styles.orderView}>
@@ -169,28 +156,26 @@ const colors = {
 
 const styles = StyleSheet.create({
   ShopCartScreen_wrapper: {
-    alignItems: 'center',
-    flex: 1,
-    flexDirection: 'column',
     justifyContent: 'center',
-    // backgroundColor: 'red'
   },
   ShopListScreen_wrapper: {
     flex: 1,
     position: 'relative',
   },
   btn_wrapper: {
-    height: 180,
     paddingVertical: 10,
     ...customStyles.border(1, 'solid', colors.borderColor),
     alignItems: 'center',
-    // justifyContent: 'flex-end',
-    // backgroundColor: 'red',
   },
+
   hr: {
     ...customStyles.border(1, 'solid', colors.borderColor),
     marginVertical: 3,
     width: 200,
+  },
+  no_product: {
+    alignItems: 'center',
+    marginTop: 20,
   },
   // image_wrapper: {
   //   ...customStyles.border(1, "solid", colors.borderColor),
@@ -198,10 +183,6 @@ const styles = StyleSheet.create({
   //   height: 100,
   //   marginRight: 10
   // },
-  no_product: {
-    alignItems: 'center',
-    marginTop: 20,
-  },
   orderView: {
     // width: 340,
     alignItems: 'flex-start',
@@ -216,5 +197,8 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     marginTop: 68,
+  },
+  select_wrapper: {
+    alignItems: 'center',
   },
 })

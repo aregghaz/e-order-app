@@ -11,6 +11,7 @@ import { CartItems } from '~components/CartItem'
 import { CustomButton } from '~components/molecules/CustomButton'
 import { SCREEN } from '~constants'
 import { notification } from '~services/ShopService'
+import { screenWidth } from '~utils/breakpoints'
 import { customStyles } from '~utils/style_helpers'
 
 export const CheckOutScreen: FC = ({ route, navigation }: any) => {
@@ -50,11 +51,10 @@ export const CheckOutScreen: FC = ({ route, navigation }: any) => {
   )
 
   const handlerCheckOut = async () => {
-    console.log('presss')
     const data = await SHOP_API.createOrder({ shoppingCart: id, comment })
     if (data) {
       navigation.navigate(SCREEN.STACK_MAIN_TAB)
-      notification('Ваш заказ успешно размещен')
+      await notification('Ваш заказ успешно размещен')
     }
   }
   return (
@@ -87,7 +87,6 @@ export const CheckOutScreen: FC = ({ route, navigation }: any) => {
             multiline={true}
             numberOfLines={4}
             onChangeText={(text) => {
-              console.log(text, 'texttexttext')
               setComment(text)
             }}
           />
@@ -116,23 +115,21 @@ const colors = {
 }
 
 const styles = StyleSheet.create({
-  ShopCartScreen_wrapper: {
-    // alignItems: "flex-start",
-    // flex: 1,
-    // justifyContent: "flex-start"
-  },
+  ShopCartScreen_wrapper: {},
   box: {
+    borderRadius: 4,
     flexDirection: 'column',
     paddingHorizontal: 15,
+    // width: 180,
     paddingVertical: 5,
-    width: 168,
+    width: screenWidth / 2 - 22,
     ...customStyles.border(1, 'solid', colors.borderColor),
   },
   boxContainer: {
-    alignItems: 'center',
     flexDirection: 'row',
     gap: 12,
     justifyContent: 'center',
+    marginHorizontal: 15,
   },
 
   btn_wrapper: {
@@ -141,13 +138,16 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   input: {
-    minHeight: 80,
+    minHeight: 40,
     minWidth: '100%',
+    paddingHorizontal: 15,
     ...customStyles.border(1, 'solid', colors.borderColor),
+    borderRadius: 4,
     fontSize: 16,
     marginVertical: 4,
   },
   inputBox: {
+    paddingHorizontal: 15,
     paddingVertical: 3,
   },
   orderView: {
