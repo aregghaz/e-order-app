@@ -19,6 +19,7 @@ import {
 import { SHOP_API } from '~api'
 import { notification } from '~services/ShopService'
 import { screenHeight, screenWidth } from '~utils/breakpoints'
+import { findTheExactElement, IWishlist } from '~utils/helper'
 
 const colors = {
   grey: '#dee2e6',
@@ -39,9 +40,8 @@ interface IProps {
 }
 
 export const ModalWishList: FC<IProps> = ({ setModalVisible, modalVisible, productId }) => {
-  const [wishList, setWishList] = useState<any>([])
-  const [wishListName, setWishListName] = useState('')
-
+  const [wishList, setWishList] = useState<IWishlist[]>([])
+  const [wishListName, setWishListName] = useState<string>('')
   useFocusEffect(
     useCallback(() => {
       const getWishListData = async () => {
@@ -49,16 +49,19 @@ export const ModalWishList: FC<IProps> = ({ setModalVisible, modalVisible, produ
         setWishList(wishListData.payload.content)
       }
       getWishListData()
-    }, [])
+    }, [wishList])
   )
 
   const handleToggleWishList = async (productId: string, id: string) => {
-    if (wishList?.products?.includes(productId)) {
+    const hasProduct = findTheExactElement(wishList, id, productId)
+
+    if (hasProduct) {
       await SHOP_API.removeFromWishList(productId, id)
+      await notification('Успешно удален из списка')
     } else {
       await SHOP_API.addToWishList(productId, id)
+      await notification('Успешно добавлено в список')
     }
-    await notification('Успешно добавлено в список')
   }
 
   const handlerOpenModal = async () => {
@@ -95,7 +98,7 @@ export const ModalWishList: FC<IProps> = ({ setModalVisible, modalVisible, produ
               <ScrollView>
                 <KeyboardAvoidingView>
                   {wishList.length > 0 ? (
-                    wishList.map((item: any) => {
+                    wishList.map((item: IWishlist) => {
                       return (
                         <View key={item.id} style={styles.wish_list_item__block}>
                           <Checkbox

@@ -403,6 +403,7 @@ export const SHOP_API = {
     return axios
       .get(`${fakeUrl}/api/suppliers/get-suppliers?shopId=${id}&page=${page}`)
       .then((res) => {
+        console.log(res.data, ' SEARCH PARTNER')
         return res.data
       })
       .catch((err) => console.log(err))
@@ -413,6 +414,7 @@ export const SHOP_API = {
     return axios
       .post(`${fakeUrl}/api/partnerships/send-request/${supId}/${shopId}`)
       .then((res) => {
+        console.log(res.data, 'res data')
         return res.data
       })
       .catch((err) => console.log(err))
@@ -449,7 +451,6 @@ export const SHOP_API = {
         `${fakeUrl}/api/favorite-products-lists/add-favorite-product?id=${id}&productId=${productId}`
       )
       .then((res) => {
-        console.log(res.data, 'ADD')
         return res.data
       })
       .catch((err) => console.log(err))
@@ -463,7 +464,7 @@ export const SHOP_API = {
         `${fakeUrl}/api/favorite-products-lists/remove-favorite-product?id=${id}&productId=${productId}`
       )
       .then((res) => {
-        console.log(res.data, 'REMOVE')
+        console.log(res.data, '__REMOVED__')
         return res.data
       })
       .catch((err) => console.log(err))
@@ -474,7 +475,6 @@ export const SHOP_API = {
     return axios
       .delete(`${fakeUrl}/api/favorite-products-lists/delete-favorite-list/${id}`)
       .then((res) => {
-        console.log(res.data, 'Deleted')
         return res.data
       })
       .catch((err) => console.log(err))
@@ -485,7 +485,6 @@ export const SHOP_API = {
     return axios
       .put(`${fakeUrl}/api/favorite-products-lists/update-favorite-list/${id}`, { name: value })
       .then((res) => {
-        console.log(res.data, 'updated')
         return res.data
       })
       .catch((err) => console.log(err))

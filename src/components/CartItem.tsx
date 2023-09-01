@@ -45,8 +45,8 @@ const colors = {
 const styles = StyleSheet.create({
   cart_wrapper: {
     flexDirection: 'column',
-    marginHorizontal: 35,
-    marginVertical: 3,
+    marginHorizontal: 15,
+    marginVertical: 10,
     padding: 10,
     ...customStyles.border(1, 'solid', colors.borderColor),
     borderRadius: 4,
@@ -55,9 +55,9 @@ const styles = StyleSheet.create({
     ...customStyles.border(1, 'solid', '#781F19'),
     borderRadius: 4,
     color: colors.red,
-    height: 25,
+    // height: 25,
     letterSpacing: 1,
-    padding: 2,
+    paddingVertical: 10,
     textAlign: 'center',
     width: 150,
   },
