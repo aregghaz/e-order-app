@@ -44,7 +44,6 @@ const colors = {
 
 const styles = StyleSheet.create({
   cart_wrapper: {
-    alignItems: 'center',
     flexDirection: 'column',
     marginHorizontal: 35,
     marginVertical: 3,

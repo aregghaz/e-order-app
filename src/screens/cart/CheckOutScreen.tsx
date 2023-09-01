@@ -61,9 +61,7 @@ export const CheckOutScreen: FC = ({ route, navigation }: any) => {
     <>
       <ScrollView>
         <View style={styles.ShopCartScreen_wrapper}>
-          <React.Fragment key={123123}>
-            <CartItems elem={carts.cartItems} isDelete={false} cartItemId={123123213} />
-          </React.Fragment>
+          <CartItems elem={carts.cartItems} isDelete={false} cartItemId={123123213} />
         </View>
       </ScrollView>
       <View style={styles.parentBox}>
@@ -119,28 +117,18 @@ const colors = {
 
 const styles = StyleSheet.create({
   ShopCartScreen_wrapper: {
-    // alignItems: "center",
-    flex: 1,
-    justifyContent: 'center',
+    // alignItems: "flex-start",
+    // flex: 1,
+    // justifyContent: "flex-start"
   },
   box: {
-    /// width:"48%",
     flexDirection: 'column',
-    // height: 30,
     paddingHorizontal: 15,
     paddingVertical: 5,
     width: 168,
-
     ...customStyles.border(1, 'solid', colors.borderColor),
-    /// width:"48%",
-    ///float:'left',
-    // marginRight:25
-    // backgroundColor: "red"
   },
   boxContainer: {
-    // height: 30,
-    ///  width: '100%',
-    // backgroundColor: "black",
     alignItems: 'center',
     flexDirection: 'row',
     gap: 12,
@@ -151,15 +139,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 10,
-    // backgroundColor: 'red',
-    // ...customsStyles.border(1, 'solid', colors.borderColor),
   },
-  // no_product: {
-  //     alignItems: 'center',
-  //     marginTop: 20,
-  // },
   input: {
-    // backgroundColor: 'grey'
     minHeight: 80,
     minWidth: '100%',
     ...customStyles.border(1, 'solid', colors.borderColor),
@@ -168,13 +149,11 @@ const styles = StyleSheet.create({
   },
   inputBox: {
     paddingVertical: 3,
-    // width: '100%',
   },
   orderView: {
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
     marginBottom: 10,
-    // backgroundColor: 'red',
   },
   orderViewContainer: {
     alignItems: 'flex-end',
