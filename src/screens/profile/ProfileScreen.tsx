@@ -55,7 +55,6 @@ export const ProfileScreen: FC = ({ route, navigation }: any) => {
     React.useCallback(() => {
       ;(async () => {
         if (isSignedIn) {
-          /// setData(IPropsData)
           const data = await getUserData()
           console.log(data.customer.person.firstName, data.customer.person.lastName, 'data')
           if (!data.customer) {

@@ -198,8 +198,10 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
             <Text style={styles.price}>₽ {params.price}</Text>
           </View>
           <View style={styles.horizontal_row} />
-          <View style={styles.each}>
+          <View>
             <Text>Вложение</Text>
+          </View>
+          <View style={styles.each}>
             {params.properties.unit.length > 0 &&
               params.properties.unit.map((el: any, index: number) => (
                 <Pressable onPress={() => handleSelect(el)} key={index}>

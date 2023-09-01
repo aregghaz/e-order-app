@@ -449,6 +449,7 @@ export const SHOP_API = {
         `${fakeUrl}/api/favorite-products-lists/add-favorite-product?id=${id}&productId=${productId}`
       )
       .then((res) => {
+        console.log(res.data, 'ADD')
         return res.data
       })
       .catch((err) => console.log(err))
@@ -462,6 +463,29 @@ export const SHOP_API = {
         `${fakeUrl}/api/favorite-products-lists/remove-favorite-product?id=${id}&productId=${productId}`
       )
       .then((res) => {
+        console.log(res.data, 'REMOVE')
+        return res.data
+      })
+      .catch((err) => console.log(err))
+  },
+  deleteWishListItem: async (id: string) => {
+    const tokenUSer = await getToken()
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
+    return axios
+      .delete(`${fakeUrl}/api/favorite-products-lists/delete-favorite-list/${id}`)
+      .then((res) => {
+        console.log(res.data, 'Deleted')
+        return res.data
+      })
+      .catch((err) => console.log(err))
+  },
+  updateWishListItem: async (id: string, value: string) => {
+    const tokenUSer = await getToken()
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
+    return axios
+      .put(`${fakeUrl}/api/favorite-products-lists/update-favorite-list/${id}`, { name: value })
+      .then((res) => {
+        console.log(res.data, 'updated')
         return res.data
       })
       .catch((err) => console.log(err))

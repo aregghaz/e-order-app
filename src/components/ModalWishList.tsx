@@ -3,6 +3,7 @@
  */
 import { Feather } from '@expo/vector-icons'
 import { useFocusEffect } from '@react-navigation/native'
+import { Checkbox } from 'native-base'
 import React, { FC, useCallback, useState } from 'react'
 import {
   KeyboardAvoidingView,
@@ -51,8 +52,12 @@ export const ModalWishList: FC<IProps> = ({ setModalVisible, modalVisible, produ
     }, [])
   )
 
-  const handleAddToWishList = async (productId: string, id: string) => {
-    await SHOP_API.addToWishList(productId, id)
+  const handleToggleWishList = async (productId: string, id: string) => {
+    if (wishList?.products?.includes(productId)) {
+      await SHOP_API.removeFromWishList(productId, id)
+    } else {
+      await SHOP_API.addToWishList(productId, id)
+    }
     await notification('Успешно добавлено в список')
   }
 
@@ -92,14 +97,14 @@ export const ModalWishList: FC<IProps> = ({ setModalVisible, modalVisible, produ
                   {wishList.length > 0 ? (
                     wishList.map((item: any) => {
                       return (
-                        <Pressable
-                          key={item.id}
-                          onPress={() => handleAddToWishList(productId, item.id)}
-                        >
-                          <View style={styles.wish_list_item__block}>
-                            <Text>{item.name}</Text>
-                          </View>
-                        </Pressable>
+                        <View key={item.id} style={styles.wish_list_item__block}>
+                          <Checkbox
+                            value={item.id}
+                            onChange={() => handleToggleWishList(productId, item.id)}
+                            accessibilityLabel={item.name}
+                          />
+                          <Text style={styles.checkbox_text}>{item.name}</Text>
+                        </View>
                       )
                     })
                   ) : (
@@ -147,6 +152,9 @@ const styles = StyleSheet.create({
   button_text: {
     color: colors.white,
   },
+  checkbox_text: {
+    marginLeft: 5,
+  },
   cover: {
     alignItems: 'center',
     backgroundColor: colors.opacity,
@@ -166,7 +174,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.borderColor,
     height: '100%',
     paddingHorizontal: 10,
-    width: 180,
+    // width: 180
+    width: '50%',
   },
   list_text: {
     paddingLeft: 10,
@@ -209,6 +218,7 @@ const styles = StyleSheet.create({
     paddingTop: 50,
   },
   wish_list_item__block: {
+    flexDirection: 'row',
     paddingVertical: 5,
   },
   wish_list_text: {

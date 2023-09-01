@@ -5,4 +5,14 @@ export const customStyles = {
     borderStyle: style,
     borderColor: color,
   }),
+  borderBottom: (width: number, style: TBorderStyles, color: string) => ({
+    borderBottomWidth: width,
+    borderBottomStyle: style,
+    borderBottomColor: color,
+  }),
+  borderTop: (width: number, style: TBorderStyles, color: string) => ({
+    borderTopWidth: width,
+    borderTopStyle: style,
+    borderTopColor: color,
+  }),
 }
