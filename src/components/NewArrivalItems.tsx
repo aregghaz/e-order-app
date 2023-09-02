@@ -14,15 +14,16 @@ import { customStyles } from '~utils/style_helpers'
 interface ITopBrands {
   items: IFeatured[]
   navigation: any
+  title: string
 }
 
-const NewArrivalItems: FC<ITopBrands> = ({ items, navigation }) => {
+const NewArrivalItems: FC<ITopBrands> = ({ items, navigation,title }) => {
   const [modalVisible, setModalVisible] = useState(false)
   const [productId, setProductId] = useState('')
   return (
     <>
       <View style={styles.main}>
-        {items.length > 0 && <Text style={styles.heading}>New arrivals</Text>}
+        {items.length > 0 && <Text style={styles.heading}>{title}</Text>}
         <Carousel
           loop
           autoPlay
@@ -74,6 +75,7 @@ const colors = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+
     height: 'auto',
     width: screenWidth,
   },

@@ -68,9 +68,10 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
       <TopRatedItems navigation={navigation} items={topRated} isCategoryProduct={false} />
       <FeaturedItems navigation={navigation} items={featured} />
       <TopDiscountItems navigation={navigation} items={topDiscount} />
-      <NewArrivalItems navigation={navigation} items={newArrival} />
+      <NewArrivalItems navigation={navigation} title={'New Arrival'} items={newArrival} />
+      <NewArrivalItems navigation={navigation} title={'Best Seller'} items={bestSeller} />
       {/*<CarouselComponent navigation={navigation} items={newArrival} title="New Arrivals" />*/}
-      <BestSellerItems navigation={navigation} items={bestSeller} />
+      {/*<BestSellerItems navigation={navigation} items={bestSeller} />*/}
       {/*<CarouselComponent navigation={navigation} items={bestSeller} title="Best Seller" />*/}
       <View style={styles.dummy}></View>
     </ScrollView>
@@ -83,6 +84,7 @@ const styles = StyleSheet.create({
   },
 
   main_wrapper: {
+    height:'auto',
     paddingVertical: 20,
   },
 })

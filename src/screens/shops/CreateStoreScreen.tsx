@@ -4,6 +4,7 @@
 import { useNavigation } from '@react-navigation/native'
 import React, { FC, useState } from 'react'
 import { View, Text, StyleSheet, ScrollView, TextInput } from 'react-native'
+import { ALERT_TYPE } from 'react-native-alert-notification'
 
 import { SHOP_API } from '~api'
 import { CustomButton } from '~components/molecules/CustomButton'
@@ -115,16 +116,22 @@ export const CreateStoreScreen: FC = () => {
 
     if (isValid) {
       try {
-        await SHOP_API.createShops(body)
-        notification('Сохранено')
-        navigation.navigate(SCREEN.DRAWER_ROOT, {
-          screen: SCREEN.STACK_MAIN_TAB,
-        })
+        console.log(body,'bodybody')
+        const data = await SHOP_API.createShops(body)
+        console.log(data,'datadatadata')
+        if(data){
+          notification('Сохранено')
+          navigation.navigate(SCREEN.DRAWER_ROOT, {
+            screen: SCREEN.STACK_MAIN_TAB,
+          })
+        }else{
+          notification('SOMETHING WRONG', ALERT_TYPE.DANGER)
+        }
       } catch (err) {
         console.log(err)
       }
     }
-    resetValues()
+    ///ASDASDSAresetValues()
   }
 
   const resetValues = () => {

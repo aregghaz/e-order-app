@@ -50,7 +50,7 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
   const [passport, setPassport] = useState('')
   /// const [passportError, setpPassportError] = useState('')
   const [whoGive, setWhoGive] = useState('')
-  // const [whoGiveError, setWhoGiveError] = useState("");
+   const [whoGiveError, setWhoGiveError] = useState("");
   const [expireData, setExpireData] = useState('')
   /// const [expireDataError, setExpireDataError] = useState('')
 
@@ -88,7 +88,6 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
     }, [])
   )
   const handleSave = async () => {
-    console.log(dob, 'DOB')
     let isValid = true
 
     if (name.trim() === '') {
@@ -100,34 +99,32 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
       isValid = false
     }
 
-    if (dob.trim() === '') {
-      setDobError('Обязательное поле.')
-      isValid = false
-    }
+    // if (dob.trim() === '') {
+    //   setDobError('Обязательное поле.')
+    //   isValid = false
+    // }
 
-    const validAge = checkAge(dob)
-    if (validAge < 18) {
-      setDobError('Bам не 18.')
-      isValid = false
-    }
+    // const validAge = checkAge(dob)
+    // console.log(validAge,'validAgevalidAge')
+    // if (validAge < 18) {
+    //   setDobError('Bам не 18.')
+    //   isValid = false
+    // }
 
     if (iih.trim() === '') {
       setIihError('Обязательное поле.')
       isValid = false
     }
     if (email.trim() === '') {
-      setEmail('Обязательное поле.')
+      setEmailError('Обязательное поле.')
       isValid = false
     }
 
-    if (whoGive.trim() === '') {
-      setWhoGive('Обязательное поле.')
-      isValid = false
-    }
-    if (whoGive.trim().length > 200) {
-      setWhoGive('Разрешено максимум 200 символов.')
-      isValid = false
-    }
+    // if (whoGive.trim() === '') {
+    //   setWhoGiveError('Обязательное поле.')
+    //   isValid = false
+    // }
+
 
     const body = {
       firstName: name,
@@ -179,13 +176,13 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
       // }
     }
     ///console.log(isValid,type,id,'111111')
-    console.log(id, 'body')
+    console.log(type, isValid,'1111111111111')
     if (isValid) {
       if (type) {
         await SHOP_API.updateCustomerUser(body, id)
       } else {
-        await SHOP_API.fillingCustomerUser(body)
-        // console.log(asd)
+       const asd =  await SHOP_API.fillingCustomerUser(body)
+         console.log(asd,'11111')
       }
       notification('Сохранено')
       navigation.navigate(SCREEN.DRAWER_ROOT, {
@@ -206,7 +203,6 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
 
   const handleConfirm = (date: any) => {
     setDob(date)
-    console.warn('A date has been picked: ', date)
     hideDatePicker()
   }
   // const resetValues = () => {
@@ -264,13 +260,13 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
           />
           <Text style={styles.errorText}>{fatherNameError}</Text>
         </>
-        <Pressable style={styles.date_wrapper} onPress={showDatePicker}>
+        <>
           <TextInput
             style={styles.input}
             onChangeText={(value) => {
               setDobError(value.trim() === '' ? 'Обязательное поле.' : '')
             }}
-            // onPressIn={showDatePicker}
+            onPressIn={showDatePicker}
             value={timestampToDate(dob)}
             editable={false}
             placeholder="Дата рождения"
@@ -284,7 +280,7 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
             onConfirm={(date) => handleConfirm(date)}
             onCancel={hideDatePicker}
           />
-        </Pressable>
+        </>
         <>
           <TextInput
             style={styles.input}
