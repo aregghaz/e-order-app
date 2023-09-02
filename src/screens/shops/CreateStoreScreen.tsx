@@ -116,15 +116,15 @@ export const CreateStoreScreen: FC = () => {
 
     if (isValid) {
       try {
-        console.log(body,'bodybody')
+        console.log(body, 'bodybody')
         const data = await SHOP_API.createShops(body)
-        console.log(data,'datadatadata')
-        if(data){
+        console.log(data, 'datadatadata')
+        if (data) {
           notification('Сохранено')
           navigation.navigate(SCREEN.DRAWER_ROOT, {
             screen: SCREEN.STACK_MAIN_TAB,
           })
-        }else{
+        } else {
           notification('SOMETHING WRONG', ALERT_TYPE.DANGER)
         }
       } catch (err) {

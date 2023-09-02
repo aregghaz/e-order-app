@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
   },
 
   main_wrapper: {
-    height:'auto',
+    height: 'auto',
     paddingVertical: 20,
   },
 })

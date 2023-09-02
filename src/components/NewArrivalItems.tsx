@@ -17,7 +17,7 @@ interface ITopBrands {
   title: string
 }
 
-const NewArrivalItems: FC<ITopBrands> = ({ items, navigation,title }) => {
+const NewArrivalItems: FC<ITopBrands> = ({ items, navigation, title }) => {
   const [modalVisible, setModalVisible] = useState(false)
   const [productId, setProductId] = useState('')
   return (

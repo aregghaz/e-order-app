@@ -50,7 +50,7 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
   const [passport, setPassport] = useState('')
   /// const [passportError, setpPassportError] = useState('')
   const [whoGive, setWhoGive] = useState('')
-   const [whoGiveError, setWhoGiveError] = useState("");
+  const [whoGiveError, setWhoGiveError] = useState('')
   const [expireData, setExpireData] = useState('')
   /// const [expireDataError, setExpireDataError] = useState('')
 
@@ -125,7 +125,6 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
     //   isValid = false
     // }
 
-
     const body = {
       firstName: name,
       lastName: lastname,
@@ -176,13 +175,13 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
       // }
     }
     ///console.log(isValid,type,id,'111111')
-    console.log(type, isValid,'1111111111111')
+    console.log(type, isValid, '1111111111111')
     if (isValid) {
       if (type) {
         await SHOP_API.updateCustomerUser(body, id)
       } else {
-       const asd =  await SHOP_API.fillingCustomerUser(body)
-         console.log(asd,'11111')
+        const asd = await SHOP_API.fillingCustomerUser(body)
+        console.log(asd, '11111')
       }
       notification('Сохранено')
       navigation.navigate(SCREEN.DRAWER_ROOT, {
