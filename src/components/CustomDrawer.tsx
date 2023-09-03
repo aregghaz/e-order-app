@@ -2,7 +2,7 @@
  * was created by tigran at 25.06.23
  */
 
-import { Feather } from '@expo/vector-icons'
+import { Feather, FontAwesome5 } from '@expo/vector-icons'
 import { DrawerContentScrollView } from '@react-navigation/drawer'
 import { useFocusEffect } from '@react-navigation/native'
 import React, { FC, useState } from 'react'
@@ -36,7 +36,7 @@ export const CustomDrawer: FC = (props: any) => {
       {isSignedIn && data && (
         <View style={styles.infoBlock}>
           <View style={styles.imageWrapper}>
-            <ImgOrSvg item={data} product="photo" radius={10} width={68} />
+            <ImgOrSvg item={data.customer} product="photo" radius={10} width={68} />
           </View>
           <Text style={styles.name}>
             {data.customer?.person?.firstName + ' ' + data.customer?.person?.lastName}
@@ -46,7 +46,6 @@ export const CustomDrawer: FC = (props: any) => {
       <DrawerContentScrollView {...props}>
         {fakeData.accordion &&
           fakeData.accordion.map((item: any) => {
-            // var checkMenu = false
             if (isSignedIn) {
               return (
                 <Accordion
@@ -82,8 +81,17 @@ export const CustomDrawer: FC = (props: any) => {
         }}
       >
         <View style={styles.sign_out}>
-          <Feather name="log-out" size={20} />
-          <Text style={styles.sign_out__text}>sign out</Text>
+          {isSignedIn ? (
+            <>
+              <Feather name="log-out" size={20} />
+              <Text style={styles.sign_out__text}>Sign Out</Text>
+            </>
+          ) : (
+            <>
+              <FontAwesome5 name="user-circle" size={20} />
+              <Text style={styles.sign_out__text}>Sign In</Text>
+            </>
+          )}
         </View>
       </TouchableOpacity>
       {/*<Switch />*/}

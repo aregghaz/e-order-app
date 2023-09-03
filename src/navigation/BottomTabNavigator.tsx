@@ -1,6 +1,6 @@
 import { Feather } from '@expo/vector-icons'
 import { BottomTabNavigationOptions, createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { FC } from 'react'
+import React, { FC } from 'react'
 
 import { CategoryStack } from './CategoryStack'
 import { ContactStack } from './ContactStack'
@@ -18,7 +18,6 @@ type ScreenOptions = (params: BottomTabScreenProps) => BottomTabNavigationOption
 export const BottomTabNavigator: FC = () => {
   const { t } = useTranslation()
   const { tabBarTheme } = useNavigationTheme()
-
   const screenOptions = useCallback<ScreenOptions>(
     ({ route }) => ({
       tabBarIcon: ({ color, size }) => {
@@ -35,8 +34,6 @@ export const BottomTabNavigator: FC = () => {
         } else {
           iconName = 'alert-triangle'
         }
-
-        // You can return any component that you like here!
         return <Feather name={iconName} size={size} color={color} />
       },
       headerShown: false,

@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 import { getToken } from '~services'
+import { notification } from '~services/ShopService'
 import { IProfile } from '~types/authForms'
 import { IShopDetails } from '~types/shop'
 
@@ -28,7 +29,7 @@ export const SHOP_API = {
     const trueShopId = shopId ? shopId : shopIdTest
     const trueLimit = limit ? limit : 20
     const truePage = page ? page : 1
-    console.log(`shopId=${shopId}___SHOP_ID`)
+    // console.log(`shopId=${shopId}___SHOP_ID`)
     return axios
       .get(
         `${fakeUrl}/api/analytics/get-products?period=30&category=&type=featured&shopId=${trueShopId}&limit=${trueLimit}&page=${truePage}`
@@ -464,12 +465,13 @@ export const SHOP_API = {
         `${fakeUrl}/api/favorite-products-lists/remove-favorite-product?id=${id}&productId=${productId}`
       )
       .then((res) => {
-        console.log(res.data, '__REMOVED__')
+        notification('Успешно удален из списка')
         return res.data
       })
       .catch((err) => console.log(err))
   },
   deleteWishListItem: async (id: string) => {
+    console.log(id, 'id')
     const tokenUSer = await getToken()
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
     return axios

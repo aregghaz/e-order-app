@@ -6,6 +6,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import { SCREEN } from '~constants'
 import { setShopId } from '~services/ShopService'
+import { ScreenNameChanger } from '~utils/helper'
 
 interface IProps {
   title: string
@@ -41,8 +42,7 @@ export const SubList: FC<IProps> = ({
       !hasChildren ? navigation.navigate(findScreenName, { title }) : null
     }
   }
-  /*** checking if there is matching screen name ***/
-  const findScreenName = Object.values(SCREEN).find((item) => item === title) || 'Menu'
+  const findScreenName = ScreenNameChanger(title)
   return (
     <TouchableOpacity onPress={() => handlePressCheck(title, group!, shop_id!)}>
       <View style={styles.SubList_wrapper}>

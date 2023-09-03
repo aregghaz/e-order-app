@@ -177,7 +177,7 @@ export const DrawerNavigator = () => {
         name={SCREEN.STACK_CATEGORY_SEARCH}
         component={CategorySearchScreen}
         options={({ navigation, route }: any) => ({
-          headerTitle: () => <Header navigation={navigation} title="search results" />,
+          headerTitle: () => <Header navigation={navigation} title="Search Results" />,
           headerLeft: () => null,
         })}
       />
@@ -185,7 +185,7 @@ export const DrawerNavigator = () => {
         name={SCREEN.STACK_ORDER_LIST}
         component={OrderListScreen}
         options={({ navigation, route }: any) => ({
-          headerTitle: () => <Header navigation={navigation} title={'OrderList'} />,
+          headerTitle: () => <Header navigation={navigation} title={'Orders'} />,
           headerLeft: () => null,
         })}
       />
@@ -193,7 +193,7 @@ export const DrawerNavigator = () => {
         name={SCREEN.STACK_ORDER_INNER}
         component={OrderInnerScreen}
         options={({ navigation, route }: any) => ({
-          headerTitle: () => <Header navigation={navigation} title={'OrderDetails'} />,
+          headerTitle: () => <Header navigation={navigation} title={'Order Details'} />,
           headerLeft: () => null,
         })}
       />
@@ -201,7 +201,7 @@ export const DrawerNavigator = () => {
         name={SCREEN.PARTNER_SHIP}
         component={PrtnerShipScreen}
         options={({ navigation, route }: any) => ({
-          headerTitle: () => <Header navigation={navigation} title={'ParthnerShip'} />,
+          headerTitle: () => <Header navigation={navigation} title={'Partners'} />,
           headerLeft: () => null,
         })}
       />
@@ -209,7 +209,7 @@ export const DrawerNavigator = () => {
         name={SCREEN.ADD_PARTNERSHIP}
         component={AddPrtnerShipScreen}
         options={({ navigation, route }: any) => ({
-          headerTitle: () => <Header navigation={navigation} title={'AddPrtnerShip'} />,
+          headerTitle: () => <Header navigation={navigation} title={'Add Partners'} />,
           headerLeft: () => null,
         })}
       />
@@ -217,7 +217,7 @@ export const DrawerNavigator = () => {
         name={SCREEN.PROFILE_EDIT}
         component={ProfileEditScreen}
         options={({ navigation, route }: any) => ({
-          headerTitle: () => <Header navigation={navigation} title={'ProfileEdit'} />,
+          headerTitle: () => <Header navigation={navigation} title={'Edit Profile'} />,
           headerLeft: () => null,
         })}
       />
@@ -225,7 +225,7 @@ export const DrawerNavigator = () => {
         name={SCREEN.CHANGE_PASSWORD}
         component={ChangePasswordScreen}
         options={({ navigation, route }: any) => ({
-          headerTitle: () => <Header navigation={navigation} title={'ChangePassword'} />,
+          headerTitle: () => <Header navigation={navigation} title={'Change Password'} />,
           headerLeft: () => null,
         })}
       />

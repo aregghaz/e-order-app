@@ -39,10 +39,8 @@ const WishListProducts: FC<IWishListProductProps> = ({
   handleRemoveProductFromWishlist,
   itemId,
 }) => {
-  console.log(products, 'products')
   return (
     <View>
-      <View style={styles.hr} />
       {products?.length > 0 &&
         products.map((item: IWishlistProduct) => {
           return (
@@ -88,6 +86,7 @@ export const WishlistScreen: FC = () => {
   const [foundList, setFoundList] = useState<null | IWishlist>(null)
   const [modalVisible, setModalVisible] = useState<boolean>(false)
   const [edit, setEdit] = useState<boolean>(false)
+  const [refreshTrigger, setRefreshTrigger] = useState<boolean>(false)
   const [id, setId] = useState<string>('')
   const [value, setValue] = useState<string>('')
   const { isSignedIn } = useAuth()
@@ -106,10 +105,11 @@ export const WishlistScreen: FC = () => {
         }
       }
       getWishListData()
-    }, [wishList, foundList])
+    }, [wishList, refreshTrigger, foundList])
   )
 
   const handleLoadProducts = (id: string) => {
+    setId(id)
     const filteredListItem = wishList.find((item: IWishlist) => item.id === id)
     if (!filteredListItem) return false
     setFoundList(filteredListItem)
@@ -117,7 +117,8 @@ export const WishlistScreen: FC = () => {
 
   const handleRemoveProductFromWishlist = async (productId: string, id: string) => {
     await SHOP_API.removeFromWishList(productId, id)
-    await notification('Успешно удален из списка')
+    handleLoadProducts(id)
+    setRefreshTrigger(!refreshTrigger)
   }
 
   const handleSetID = (id: string) => {
@@ -138,43 +139,44 @@ export const WishlistScreen: FC = () => {
 
   return (
     <View style={styles.WishlistScreen_wrapper}>
+      <View style={styles.scroll_style__wrapper}>
+        {wishList.length > 0 ? (
+          <ScrollView horizontal={true} contentContainerStyle={styles.scroll_style}>
+            {wishList.length > 0 &&
+              wishList.map((item: IWishlist) => {
+                const activeMenu = foundList && item.id === foundList?.id
+                return (
+                  <Pressable
+                    key={item.id}
+                    style={[styles.wishlist_name, activeMenu ? styles.active : styles.passive]}
+                    onPress={() => handleLoadProducts(item.id)}
+                  >
+                    <View style={styles.wishlist_item__wrapper}>
+                      <Text>
+                        {item.name} ( {item.products.length} )
+                      </Text>
+                      <Entypo
+                        name="dots-three-vertical"
+                        size={18}
+                        color="black"
+                        onPress={() => {
+                          setModalVisible(true)
+                          handleSetID(item.id)
+                        }}
+                      />
+                    </View>
+                  </Pressable>
+                )
+              })}
+          </ScrollView>
+        ) : (
+          <View style={styles.no_products}>
+            <Text>There are no products yet</Text>
+          </View>
+        )}
+      </View>
       <ScrollView>
         <View>
-          <View style={styles.scroll_style__wrapper}>
-            <ScrollView horizontal={true} contentContainerStyle={styles.scroll_style}>
-              {wishList.length > 0 ? (
-                wishList.map((item: IWishlist) => {
-                  const activeMenu = foundList && item.id === foundList?.id
-                  return (
-                    <Pressable
-                      key={item.id}
-                      style={[styles.wishlist_name, activeMenu ? styles.active : styles.passive]}
-                      onPress={() => handleLoadProducts(item.id)}
-                    >
-                      <View style={styles.wishlist_item__wrapper}>
-                        <Text>
-                          {item.name} ( {item.products.length} )
-                        </Text>
-                        <Entypo
-                          name="dots-three-vertical"
-                          size={18}
-                          color="black"
-                          onPress={() => {
-                            setModalVisible(true)
-                            handleSetID(item.id)
-                          }}
-                        />
-                      </View>
-                    </Pressable>
-                  )
-                })
-              ) : (
-                <View style={styles.no_products}>
-                  <Text>There are no products yet</Text>
-                </View>
-              )}
-            </ScrollView>
-          </View>
           {wishList.length > 0 && foundList && Object.keys(foundList).length > 0 && (
             <WishListProducts
               products={foundList.products}
@@ -249,10 +251,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: screenWidth,
   },
-  hr: {
-    ...customStyles.borderBottom(1, 'solid', colors.borderColor),
-    width: '100%',
-  },
   icon: {
     marginVertical: 10,
   },
@@ -279,9 +277,10 @@ const styles = StyleSheet.create({
   },
   no_products: {
     alignItems: 'center',
-    height: screenHeight - 200,
+    height: screenHeight,
     justifyContent: 'center',
     width: screenWidth,
+    // ...customStyles.border(1, 'solid', colors.borderColor),
   },
   passive: {},
   product_wrapper: {
@@ -298,7 +297,8 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   scroll_style__wrapper: {
-    marginHorizontal: 10,
+    paddingHorizontal: 10,
+    ...customStyles.borderBottom(1, 'solid', colors.borderColor),
   },
   text: {
     borderRadius: 4,

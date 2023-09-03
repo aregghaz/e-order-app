@@ -39,3 +39,15 @@ export const SCREEN = {
   PROFILE_EDIT: 'ProfileEdit',
   CHANGE_PASSWORD: 'ChangePassword',
 }
+
+export const MENUS = {
+  HOME: 'Home',
+  SHOP_LIST: 'Shop List',
+  PROFILE: 'Profile',
+  PERSONAL_INFO: 'Personal Info',
+  CHANGE_PASSWORD: 'Change Password',
+  EDIT_PROFILE: 'Edit Profile',
+  ORDER_LIST: 'Order List',
+  PARTNERS: 'Partners',
+  CONTACT_US: 'Contact Us',
+}

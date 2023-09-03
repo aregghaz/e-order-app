@@ -3,7 +3,8 @@ import React, { FC, useCallback, useState } from 'react'
 import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native'
 
 import { SubList } from '~components/SubList'
-import { SCREEN } from '~constants'
+// import { SCREEN } from '~constants'
+import { ScreenNameChanger } from '~utils/helper'
 //import { useAuth } from '~hooks'
 
 export type TIcon =
@@ -67,8 +68,7 @@ export const Accordion: FC<IProps> = ({
     handlePress()
     !hasChildren ? navigation.navigate(findScreenName, { title }) : null
   }
-  /*** checking if there is matching screen name ***/
-  const findScreenName = Object.values(SCREEN).find((item) => item === title) || 'Menu'
+  const findScreenName = ScreenNameChanger(title)
   return (
     <View style={styles.accordion_block}>
       <TouchableWithoutFeedback onPress={() => handlePressCheck(title)}>
