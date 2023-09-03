@@ -1,3 +1,5 @@
+import { MENUS } from '~constants'
+
 const idGen = () => {
   return Math.floor((1 + Math.random()) * 0x10000)
     .toString(16)
@@ -7,7 +9,7 @@ export const fakeData = {
   accordion: [
     {
       id: '1',
-      title: 'Home',
+      title: MENUS.HOME,
       iconName: 'home',
       hasChildren: false,
       children: [],
@@ -15,7 +17,7 @@ export const fakeData = {
     {
       id: '3',
       iconName: 'shopping-cart',
-      title: 'ShopList',
+      title: MENUS.SHOP_LIST,
       group: 'shop',
       shop_id: idGen(),
       hasChildren: false,
@@ -23,25 +25,25 @@ export const fakeData = {
     },
     {
       id: '5',
-      title: 'Profile',
+      title: MENUS.PROFILE,
       iconName: 'lock',
       hasChildren: true,
       children: [
         {
           id: '1',
-          title: 'PersonalData',
+          title: MENUS.PERSONAL_INFO,
           hasChildren: false,
           children: [],
         },
         {
           id: '2',
-          title: 'ChangePassword',
+          title: MENUS.CHANGE_PASSWORD,
           hasChildren: false,
           children: [],
         },
         {
           id: '3',
-          title: 'ProfileEdit',
+          title: MENUS.EDIT_PROFILE,
           hasChildren: false,
           children: [],
         },
@@ -49,19 +51,19 @@ export const fakeData = {
     },
     {
       id: '7',
-      title: 'OrderList',
-      iconName: 'smile',
+      title: MENUS.ORDER_LIST,
+      iconName: 'list',
       hasChildren: false,
     },
     {
       id: '9',
-      title: 'ParthnerShip',
-      iconName: 'smile',
+      title: MENUS.PARTNERS,
+      iconName: 'users',
       hasChildren: false,
     },
     {
       id: '2',
-      title: 'Contact Us',
+      title: MENUS.CONTACT_US,
       iconName: 'headphones',
       hasChildren: false,
     },

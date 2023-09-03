@@ -52,11 +52,10 @@ export const ShopCartScreen: FC = ({ navigation }: any) => {
       getShopCarts()
     }, [trigger])
   )
-
+  console.log(carts, 'carts')
   useEffect(() => {
     const bootstrap = async () => {
       data.map((item: any) => {
-        console.log(data, 'datadata')
         if (item.id === selectedShops) {
           setCarData({
             selectedShops: item.supplier.companyName,
@@ -91,6 +90,7 @@ export const ShopCartScreen: FC = ({ navigation }: any) => {
                 borderColor="#CCC"
                 marginY="2"
                 color="#000"
+                background="red"
                 letterSpacing="1"
                 fontSize="17"
                 accessibilityLabel="Choose Service"
@@ -116,7 +116,13 @@ export const ShopCartScreen: FC = ({ navigation }: any) => {
         </View>
         <View style={styles.scrollView}>
           {carts.length > 0 ? (
-            <CartItems isDelete={true} elem={carts} onDelete={handleDelete} cartItemId={carts.id} />
+            // <CartItems isDelete={true} elem={carts} onDelete={handleDelete} cartItemId={carts.id} />
+            <CartItems
+              isDelete={true}
+              elem={carts}
+              onDelete={handleDelete}
+              cartItemId={selectedShops}
+            />
           ) : (
             <View style={styles.no_product}>
               <Text>There is no products here</Text>
@@ -166,6 +172,8 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     ...customStyles.border(1, 'solid', colors.borderColor),
     alignItems: 'center',
+    // position: 'absolute',
+    // bottom: 0,
   },
 
   hr: {
