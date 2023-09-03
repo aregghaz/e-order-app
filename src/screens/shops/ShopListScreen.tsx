@@ -66,7 +66,11 @@ export const ShopListScreen: FC = () => {
               <Pressable key={item.id} onPress={() => handleSetShopId(item.id, item.shopName)}>
                 <View key={item.id} style={styles.box}>
                   <View style={styles.checkbox}>
-                    <Checkbox isChecked={item.id === shopID} value={item.id} />
+                    <Checkbox
+                      isChecked={item.id === shopID}
+                      value={item.id}
+                      accessibilityLabel={item.name}
+                    />
                   </View>
                   <Text style={styles.title}>{item.companyName}</Text>
                   <Text style={styles.text_h2}>{item.shopName}</Text>

@@ -37,16 +37,18 @@ export const CartItems = ({ elem, onDelete, cartItemId, isDelete }: any) => {
                     >
                       <Text style={styles.delete}>Delete</Text>
                     </Pressable>
-                    <InputNumber
-                      value={value}
-                      min={1}
-                      onChange={async (e) => {
-                        setValue(e)
-                        /*** FIXME I don't understand which id to pass to this request!!!! ***/
-                        // await handleUpdateQuantity(item.id)
-                        await handleUpdateQuantity(cartItemId)
-                      }}
-                    />
+                    <View style={styles.incrementor}>
+                      <InputNumber
+                        value={value}
+                        min={1}
+                        onChange={async (e) => {
+                          setValue(e)
+                          /*** FIXME I don't understand which id to pass to this request!!!! ***/
+                          // await handleUpdateQuantity(item.id)
+                          await handleUpdateQuantity(cartItemId)
+                        }}
+                      />
+                    </View>
                   </View>
                 )}
               </View>
@@ -65,7 +67,11 @@ const styles = StyleSheet.create({
   buttons_wrapper: {
     alignItems: 'center',
     flexDirection: 'row',
+    flex: 1,
     gap: 20,
+    // ...customStyles.border(1, 'solid', colors.borderColor),
+    justifyContent: 'space-between',
+    marginTop: 10,
   },
   cart_wrapper: {
     flexDirection: 'column',
@@ -76,17 +82,19 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   delete: {
-    borderRadius: 4,
     color: colors.red,
     letterSpacing: 1,
     textAlign: 'center',
   },
   delete_wrapper: {
-    ...customStyles.border(1, 'solid', '#781F19'),
+    ...customStyles.border(1, 'solid', colors.borderColor),
     alignItems: 'center',
     borderRadius: 4,
     marginVertical: 4,
-    paddingVertical: 5,
+    paddingVertical: 4,
     width: 140,
+  },
+  incrementor: {
+    height: 30,
   },
 })

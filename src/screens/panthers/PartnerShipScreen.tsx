@@ -62,7 +62,7 @@ export const PrtnerShipScreen: FC = () => {
         {shops.length > 0 && (
           <Select
             selectedValue={selectedShops}
-            minWidth="360"
+            minWidth="100%"
             height="50"
             borderColor="#CCC"
             marginTop="3"
@@ -310,6 +310,7 @@ const styles = StyleSheet.create({
 
   select_wrapper: {
     alignItems: 'center',
+    paddingHorizontal: 15,
   },
 
   textStyle: {
