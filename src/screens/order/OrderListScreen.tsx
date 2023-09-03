@@ -1,3 +1,4 @@
+import { MaterialIcons } from '@expo/vector-icons'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import React, { FC, useCallback, useState } from 'react'
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
@@ -6,6 +7,7 @@ import { SHOP_API } from '~api'
 import { SCREEN } from '~constants'
 import { timestampToDate } from '~utils/dateTimeFormat'
 import { customStyles } from '~utils/style_helpers'
+
 interface IOorder {
   id: string
   orderTotal: number
@@ -41,12 +43,17 @@ export const OrderListScreen: FC = () => {
           orders.map((order: IOorder) => (
             <Pressable key={order.id} onPress={() => handlerGetOrder(order.id)}>
               <View key={order.id} style={styles.box}>
-                <Text style={styles.title}>orderNumbe222222r : {order.orderNumber}</Text>
-                <Text style={styles.text_h2}>status2222222 : {order.status}</Text>
+                <View style={styles.header_text}>
+                  <Text style={styles.title}>order number : {order.orderNumber}</Text>
+                  <Text style={styles.text_h2}>status : {order.status}</Text>
+                </View>
                 <View style={styles.hr} />
                 <Text>createdAt : {timestampToDate(order.createdAt)}</Text>
                 <Text>orderTotal : {order.orderTotal} ₽</Text>
                 <Text>rewardTotal : {order.rewardTotal}</Text>
+                <View style={styles.list_icon}>
+                  <MaterialIcons name="list-alt" size={30} color="black" />
+                </View>
               </View>
             </Pressable>
           ))}
@@ -72,11 +79,20 @@ const styles = StyleSheet.create({
     margin: 10,
     minHeight: 100,
     padding: 5,
+    position: 'relative',
     ...customStyles.border(1, 'solid', colors.borderColor),
+  },
+  header_text: {
+    marginRight: 45,
   },
   hr: {
     ...customStyles.border(1, 'solid', colors.borderColor),
     marginVertical: 5,
+  },
+  list_icon: {
+    position: 'absolute',
+    right: 10,
+    top: 10,
   },
   text_h2: {
     fontWeight: 'bold',
