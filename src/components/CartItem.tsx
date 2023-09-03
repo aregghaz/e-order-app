@@ -1,9 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Pressable, View, Text, StyleSheet, ScrollView } from 'react-native'
 
+import { SHOP_API } from '~api'
+import InputNumber from '~components/molecules/InputNumber'
 import { customStyles } from '~utils/style_helpers'
 
 export const CartItems = ({ elem, onDelete, cartItemId, isDelete }: any) => {
+  const [value, setValue] = useState<number>(1)
+
+  const handleUpdateQuantity = async (id: string) => {
+    await SHOP_API.updateCartQuantity(id, value)
+  }
   return (
     <ScrollView>
       {elem &&
@@ -18,17 +25,29 @@ export const CartItems = ({ elem, onDelete, cartItemId, isDelete }: any) => {
                 <Text>Reward: {item.reward}</Text>
                 <Text>Discount {item.discount} %</Text>
                 {isDelete && (
-                  <Pressable
-                    style={styles.delete_wrapper}
-                    onPress={() =>
-                      onDelete({
-                        cartItemID: cartItemId,
-                        itemId: item.id,
-                      })
-                    }
-                  >
-                    <Text style={styles.delete}>Delete</Text>
-                  </Pressable>
+                  <View style={styles.buttons_wrapper}>
+                    <Pressable
+                      style={styles.delete_wrapper}
+                      onPress={() =>
+                        onDelete({
+                          cartItemID: cartItemId,
+                          itemId: item.id,
+                        })
+                      }
+                    >
+                      <Text style={styles.delete}>Delete</Text>
+                    </Pressable>
+                    <InputNumber
+                      value={value}
+                      min={1}
+                      onChange={async (e) => {
+                        setValue(e)
+                        /*** FIXME I don't understand which id to pass to this request!!!! ***/
+                        // await handleUpdateQuantity(item.id)
+                        await handleUpdateQuantity(cartItemId)
+                      }}
+                    />
+                  </View>
                 )}
               </View>
             </View>
@@ -43,6 +62,11 @@ const colors = {
 }
 
 const styles = StyleSheet.create({
+  buttons_wrapper: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 20,
+  },
   cart_wrapper: {
     flexDirection: 'column',
     marginHorizontal: 15,
@@ -52,19 +76,17 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   delete: {
-    ...customStyles.border(1, 'solid', '#781F19'),
     borderRadius: 4,
     color: colors.red,
-    // height: 25,
     letterSpacing: 1,
-    paddingVertical: 10,
     textAlign: 'center',
-    width: 150,
   },
   delete_wrapper: {
+    ...customStyles.border(1, 'solid', '#781F19'),
     alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'center',
+    borderRadius: 4,
     marginVertical: 4,
+    paddingVertical: 5,
+    width: 140,
   },
 })

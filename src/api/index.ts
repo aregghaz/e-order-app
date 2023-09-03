@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { ALERT_TYPE } from 'react-native-alert-notification'
 
 import { getToken } from '~services'
 import { notification } from '~services/ShopService'
@@ -263,6 +264,25 @@ export const SHOP_API = {
         return res.data
       })
       .catch((err) => console.log(err))
+  },
+  updateCartQuantity: async (id: string, qty: number) => {
+    const body = {
+      cartItems: [
+        {
+          itemId: id,
+          quantity: qty,
+        },
+      ],
+    }
+    console.log(body, 'request body')
+    return axios
+      .put(`${fakeUrl}/api/shopping-cart/update-shopping-cart/${id}`, body)
+      .then((res) => {
+        console.log(res.data.payload.cartItems, 'data!!!')
+        return res.data
+      })
+      .catch((err) => notification(err, ALERT_TYPE.DANGER))
+    // .catch((err) => console.log(err, '__ERROR!!!!'))
   },
   /**** Order Api ****/
   getOrders: async () => {

@@ -16,12 +16,14 @@ import { CategoryInnerScreen, ProfileEditScreen, SignInScreen } from '~screens'
 import { CategoryDetailScreen } from '~screens/CategoryDetailScreen'
 import { CategorySearchScreen } from '~screens/CategorySearchScreen'
 import { MenuScreen } from '~screens/MenuScreen'
-import { OrderInnerScreen } from '~screens/OrderInnerScreen'
-import { OrderListScreen } from '~screens/OrderListScreen'
 import { ProductInnerScreen } from '~screens/ProductInnerScreen'
 import { WishlistScreen } from '~screens/WishlistScreen'
 import { CheckOutScreen } from '~screens/cart/CheckOutScreen'
 import { ShopCartScreen } from '~screens/cart/ShopCartScreen'
+import { OrderFailScreen } from '~screens/order/OrderFailScreen'
+import { OrderInnerScreen } from '~screens/order/OrderInnerScreen'
+import { OrderListScreen } from '~screens/order/OrderListScreen'
+import { OrderSuccessScreen } from '~screens/order/OrderSuccessScreen'
 import { AddPrtnerShipScreen } from '~screens/panthers/AddPrtnerShipScreen'
 import { PrtnerShipScreen } from '~screens/panthers/PartnerShipScreen'
 import { ChangePasswordScreen } from '~screens/profile/ChangePasswordScreen'
@@ -195,6 +197,24 @@ export const DrawerNavigator = () => {
         options={({ navigation, route }: any) => ({
           headerTitle: () => <Header navigation={navigation} title={'Order Details'} />,
           headerLeft: () => null,
+        })}
+      />
+      <Drawer.Screen
+        name={SCREEN.STACK_ORDER_SUCCESS}
+        component={OrderSuccessScreen}
+        options={({ navigation, route }: any) => ({
+          headerTitle: () => <Header navigation={navigation} title={'Order Success'} />,
+          headerShown: false,
+          headerLeft: () => null,
+        })}
+      />
+      <Drawer.Screen
+        name={SCREEN.STACK_ORDER_FAIL}
+        component={OrderFailScreen}
+        options={({ navigation, route }: any) => ({
+          headerTitle: () => <Header navigation={navigation} title={'Order Failed'} />,
+          headerLeft: () => null,
+          headerShown: false,
         })}
       />
       <Drawer.Screen
