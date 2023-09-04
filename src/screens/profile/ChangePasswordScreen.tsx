@@ -1,168 +1,170 @@
-import {useFocusEffect, useNavigation} from '@react-navigation/native'
-import React, {FC, useCallback, useRef} from 'react'
-import {useForm} from 'react-hook-form'
-import {useTranslation} from 'react-i18next'
-import {StyleSheet, TextInput, View} from 'react-native'
-import {ALERT_TYPE} from 'react-native-alert-notification'
-import {SHOP_API} from '~api'
-import {ControlledField} from '~components'
-import {CustomButton} from '~components/molecules/CustomButton'
-import {SCREEN} from '~constants'
-import {notification} from '~services/ShopService'
-import {getUserData} from '~services/UserService'
+import { useFocusEffect, useNavigation } from '@react-navigation/native'
+import React, { FC, useCallback, useRef } from 'react'
+import { useForm } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
+import { StyleSheet, TextInput, View } from 'react-native'
+import { ALERT_TYPE } from 'react-native-alert-notification'
+import { SHOP_API } from '~api'
+import { ControlledField } from '~components'
+import { CustomButton } from '~components/molecules/CustomButton'
+import { SCREEN } from '~constants'
+import { notification } from '~services/ShopService'
+import { getUserData } from '~services/UserService'
 
 interface IProps {
-    route: any
-    navigation: any
+  route: any
+  navigation: any
 }
 
-export const ChangePasswordScreen: FC<IProps> = ({route}) => {
-    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{10,}$/
+export const ChangePasswordScreen: FC<IProps> = ({ route }) => {
+  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{10,}$/
 
-    const {t} = useTranslation()
-    useFocusEffect(
-        useCallback(() => {
-            const getTokenData = async () => {
-                const pesdonalData = await getUserData()
+  const { t } = useTranslation()
+  useFocusEffect(
+    useCallback(() => {
+      const getTokenData = async () => {
+        const pesdonalData = await getUserData()
+      }
+      getTokenData()
+    }, [])
+  )
 
-            }
-            getTokenData()
-        }, [])
-    )
+  /// const mobile = route?.params?.mobile
+  const navigation = useNavigation<any>()
+  const passwordInputRef = useRef<TextInput>(null)
 
-    /// const mobile = route?.params?.mobile
-    const navigation = useNavigation<any>()
-    const passwordInputRef = useRef<TextInput>(null)
-
-    const handleSubmitForm = async (data: any) => {
-        const {confirmPassword, oldPassword, password} = data
-        console.log(data, oldPassword, password)
-        if (oldPassword !== confirmPassword) {
-            notification(t('password.doNotMatch'), ALERT_TYPE.WARNING)
-            return
-        }
-        if (password.trim() === '') {
-            notification(t('password.required'), ALERT_TYPE.WARNING)
-            // alert('Passwords do not match')
-            return
-        }
-        if (!regex.test(password)) {
-            notification(t('password.passError'), ALERT_TYPE.WARNING)
-            return
-        }
-
-        const dataRes = await SHOP_API.changePassword(oldPassword, password)
-        if (dataRes) {
-            notification(t('password.passwordChanged'))
-            navigation.navigate(SCREEN.TAB_HOME)
-        }
+  const handleSubmitForm = async (data: any) => {
+    const { confirmPassword, oldPassword, password } = data
+    console.log(data, oldPassword, password)
+    if (oldPassword !== confirmPassword) {
+      notification(t('password.doNotMatch'), ALERT_TYPE.WARNING)
+      return
     }
-    const defaultValues: any = {
-        // TODO: Reset this values when building production app
-        password: '',
-        oldPassword: '',
-        confirmPassword: '',
-        confirm: false,
+    if (password.trim() === '') {
+      notification(t('password.required'), ALERT_TYPE.WARNING)
+      // alert('Passwords do not match')
+      return
     }
-    const {
-        control,
-        formState: {errors},
-        handleSubmit,
-    } = useForm<any>({
-        mode: 'onTouched',
-        defaultValues
-    })
+    if (!regex.test(password)) {
+      notification(t('password.passError'), ALERT_TYPE.WARNING)
+      return
+    }
 
-    // const onSubmit = async (data: SignInFormValues) => {
-    //   try {
-    //
-    //   } catch (e) {
-    //
-    //   } finally {
-    //
-    //   }
-    // }
+    const dataRes = await SHOP_API.changePassword(oldPassword, password)
+    if (dataRes) {
+      notification(t('password.passwordChanged'))
+      navigation.navigate(SCREEN.TAB_HOME)
+    }
+  }
+  const defaultValues: any = {
+    // TODO: Reset this values when building production app
+    password: '',
+    oldPassword: '',
+    confirmPassword: '',
+    confirm: false,
+  }
+  const {
+    control,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<any>({
+    mode: 'onTouched',
+    defaultValues,
+  })
 
-    return (
-        <View style={styles.PasswordStack_wrapper}>
-            <ControlledField.Input
-                autoCapitalize="none"
-                control={control}
-                errors={errors}
-                isRequired
-                label={t('sign_in_screen.password_label')}
-                name="password"
-                onSubmitEditing={handleSubmit(handleSubmitForm)}
-                placeholder={t('sign_in_screen.password_placeholder')}
-                /// ref={passwordInputRef}
-                returnKeyType="send"
-                rules={{
-                    required: t('form.required'),
-                }}
-                testID="passwordInput"
-                type="password"
-            />
-            <ControlledField.Input
-                autoCapitalize="none"
-                control={control}
-                errors={errors}
-                isRequired
-                label={t('password.oldPassword')}
-                name="oldPassword"
-                onSubmitEditing={handleSubmit(handleSubmitForm)}
-                placeholder={t('password.oldPassword')}
-                ////     ref={passwordInputRef}
-                returnKeyType="send"
-                rules={{
-                    required: t('form.required'),
-                }}
-                testID="passwordInput"
-                type="password"
-            />
-            <ControlledField.Input
-                autoCapitalize="none"
-                control={control}
-                errors={errors}
-                isRequired
-                label={t('password.confirmPassword')}
-                name="confirmPassword"
-                onSubmitEditing={handleSubmit(handleSubmitForm)}
-                placeholder={t('password.confirmPassword')}
-                ////    ref={passwordInputRef}
-                returnKeyType="send"
-                rules={{
-                    required: t('form.required'),
-                }}
-                testID="passwordInput"
-                type="password"
-            />
-            <View style={styles.custom_Button}>
-                <CustomButton title={t('password.changePassword')} onPress={handleSubmit(handleSubmitForm)}/>
-            </View>
-        </View>
-    )
+  // const onSubmit = async (data: SignInFormValues) => {
+  //   try {
+  //
+  //   } catch (e) {
+  //
+  //   } finally {
+  //
+  //   }
+  // }
+
+  return (
+    <View style={styles.PasswordStack_wrapper}>
+      <ControlledField.Input
+        autoCapitalize="none"
+        control={control}
+        errors={errors}
+        isRequired
+        label={t('sign_in_screen.password_label')}
+        name="password"
+        onSubmitEditing={handleSubmit(handleSubmitForm)}
+        placeholder={t('sign_in_screen.password_placeholder')}
+        /// ref={passwordInputRef}
+        returnKeyType="send"
+        rules={{
+          required: t('form.required'),
+        }}
+        testID="passwordInput"
+        type="password"
+      />
+      <ControlledField.Input
+        autoCapitalize="none"
+        control={control}
+        errors={errors}
+        isRequired
+        label={t('password.oldPassword')}
+        name="oldPassword"
+        onSubmitEditing={handleSubmit(handleSubmitForm)}
+        placeholder={t('password.oldPassword')}
+        ////     ref={passwordInputRef}
+        returnKeyType="send"
+        rules={{
+          required: t('form.required'),
+        }}
+        testID="passwordInput"
+        type="password"
+      />
+      <ControlledField.Input
+        autoCapitalize="none"
+        control={control}
+        errors={errors}
+        isRequired
+        label={t('password.confirmPassword')}
+        name="confirmPassword"
+        onSubmitEditing={handleSubmit(handleSubmitForm)}
+        placeholder={t('password.confirmPassword')}
+        ////    ref={passwordInputRef}
+        returnKeyType="send"
+        rules={{
+          required: t('form.required'),
+        }}
+        testID="passwordInput"
+        type="password"
+      />
+      <View style={styles.custom_Button}>
+        <CustomButton
+          title={t('password.changePassword')}
+          onPress={handleSubmit(handleSubmitForm)}
+        />
+      </View>
+    </View>
+  )
 }
 const colors = {
-    border: '#ddd',
-    red: 'red',
+  border: '#ddd',
+  red: 'red',
 }
 const styles = StyleSheet.create({
-    PasswordStack_wrapper: {
-        flex: 1,
-        justifyContent: 'center',
-        paddingHorizontal: 20,
-    },
-    custom_Button: {
-        marginTop:20,
-    },
+  PasswordStack_wrapper: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+  },
+  custom_Button: {
+    marginTop: 20,
+  },
 
-    input: {
-        borderColor: colors.border,
-        borderRadius: 8,
-        borderStyle: 'solid',
-        borderWidth: 1,
-        marginBottom: 20,
-        padding: 10,
-        width: '100%',
-    },
+  input: {
+    borderColor: colors.border,
+    borderRadius: 8,
+    borderStyle: 'solid',
+    borderWidth: 1,
+    marginBottom: 20,
+    padding: 10,
+    width: '100%',
+  },
 })
