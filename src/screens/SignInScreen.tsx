@@ -1,7 +1,8 @@
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { Button, Center, Text } from 'native-base'
-import { FC, useCallback, useEffect } from 'react'
+import React, { FC, useCallback, useEffect } from 'react'
 import { StyleSheet, TextInput, TouchableOpacity } from 'react-native'
+import PhoneInput from 'react-native-phone-input'
 
 import { ControlledField } from '~components'
 import { SCREEN } from '~constants'
@@ -16,7 +17,7 @@ export const SignInScreen: FC<IProps> = (props): JSX.Element => {
   const { navigate } = useNavigation<any>()
   const { t } = useTranslation()
   const passwordInputRef = useRef<TextInput>(null)
-  const { control, errors, submit, isSubmitting } = useSignInForm()
+  const { control, errors, submit, isSubmitting, setPhoneNumber } = useSignInForm()
   const { isSignedIn } = useAuth()
   const goToRegister = useCallback(() => navigate(SCREEN.PHONE_REGISTER), [navigate])
   const handleCheckRegister = () => {
@@ -35,24 +36,33 @@ export const SignInScreen: FC<IProps> = (props): JSX.Element => {
       }
     }, [isSignedIn])
   )
+  const handlePhoneNumberChange = (value: string) => {
+    setPhoneNumber(value)
+  }
 
   return (
     <Center p={8} flex={1}>
-      <ControlledField.Input
-        autoCapitalize="none"
-        control={control}
-        errors={errors}
-        isRequired
-        rules={{
-          required: t('form.required'),
-        }}
-        label={t('common.phone_number')}
-        name="phone"
-        onSubmitEditing={passwordInputRef.current?.focus}
-        placeholder={t('common.phone_placeholder')}
-        returnKeyType="next"
-        testID="phoneInput"
-        keyboardType={'phone-pad'}
+      {/*<ControlledField.Input*/}
+      {/*  autoCapitalize="none"*/}
+      {/*  control={control}*/}
+      {/*  errors={errors}*/}
+      {/*  isRequired*/}
+      {/*  rules={{*/}
+      {/*    required: t('form.required'),*/}
+      {/*  }}*/}
+      {/*  label={t('common.phone_number')}*/}
+      {/*  name="phone"*/}
+      {/*  onSubmitEditing={passwordInputRef.current?.focus}*/}
+      {/*  placeholder={t('common.phone_placeholder')}*/}
+      {/*  returnKeyType="next"*/}
+      {/*  testID="phoneInput"*/}
+      {/*  keyboardType={'phone-pad'}*/}
+      {/*/>*/}
+      <PhoneInput
+        style={styles.input}
+        initialCountry="am"
+        onChangePhoneNumber={handlePhoneNumberChange}
+        textProps={{ placeholder: '+37491444444' }}
       />
       <ControlledField.Input
         autoCapitalize="none"
@@ -97,6 +107,7 @@ export const SignInScreen: FC<IProps> = (props): JSX.Element => {
 }
 const colors = {
   black: 'black',
+  border: '#ddd',
 }
 const styles = StyleSheet.create({
   button: {
@@ -109,5 +120,15 @@ const styles = StyleSheet.create({
   forgot_password_btn: {
     marginLeft: 'auto',
     marginTop: 10,
+  },
+  input: {
+    borderColor: colors.border,
+    borderRadius: 4,
+    borderStyle: 'solid',
+    borderWidth: 1,
+    marginBottom: 20,
+    paddingHorizontal: 10,
+    paddingVertical: 12,
+    width: '100%',
   },
 })

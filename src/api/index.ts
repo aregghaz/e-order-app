@@ -186,6 +186,7 @@ export const SHOP_API = {
   },
   /* step 4 */
   signInRequest: async (phone: string, password: string) => {
+    console.log(phone, password, 'request!!!!')
     return axios
       .post(`${fakeUrl}/api/auth/customer-login`, { login: phone, password })
       .then((res) => {
@@ -204,6 +205,7 @@ export const SHOP_API = {
   },
   /*** Forgot password ***/
   forgotPassword: async (data: any) => {
+    console.log(data, 'FORGOT REQUEST')
     return axios
       .post(`${fakeUrl}/api/auth/customer-forgot-password`, data)
       .then((res) => {

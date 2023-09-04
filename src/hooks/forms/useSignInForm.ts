@@ -19,6 +19,7 @@ export const useSignInForm = () => {
   const [error, setError] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { t } = useTranslation()
+  const [phoneNumber, setPhoneNumber] = useState('')
 
   const {
     control,
@@ -30,11 +31,17 @@ export const useSignInForm = () => {
   })
 
   const onSubmit = async (data: SignInFormValues) => {
+    const signInData = {
+      phone: phoneNumber,
+      password: data.password,
+      confirm: data.confirm,
+    }
+    console.log(data, 'data in submit!!!!')
+    console.log(signInData, 'signInData in submit!!!!')
     try {
       setIsSubmitting(true)
       setError('')
-      ///  console.log(data, 'data!!!!!!')
-      await signIn(data)
+      await signIn(signInData)
     } catch (e) {
       if (isError(e)) {
         setError(e.message)
@@ -54,5 +61,6 @@ export const useSignInForm = () => {
     control,
     errors,
     error,
+    setPhoneNumber,
   }
 }

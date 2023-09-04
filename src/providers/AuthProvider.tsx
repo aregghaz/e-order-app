@@ -4,10 +4,10 @@ import { SHOP_API } from '~api'
 import { AuthContextProvider, AuthContextType } from '~contexts'
 import { useCallback, useEffect, useMemo, useState } from '~hooks'
 import { deleteToken, getToken, setToken } from '~services'
+import { deleteShopId } from '~services/ShopService'
 import { setUserData } from '~services/UserService'
 import { SignUpFormValues } from '~types/authForms'
 import { wait } from '~utils'
-import { deleteShopId } from '~services/ShopService'
 export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   const [isSignedIn, setIsSignedIn] = useState<boolean | null>(null)
 
