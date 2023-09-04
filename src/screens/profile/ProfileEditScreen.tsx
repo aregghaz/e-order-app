@@ -63,7 +63,7 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
     useCallback(() => {
       const getAsyncData = async (): Promise<void> => {
         const pesdonalData = await getUserData()
-        console.log(pesdonalData.customer.person.citizenship, '324324')
+        console.log(pesdonalData, '324324')
         if (pesdonalData.customer) {
           setId(pesdonalData.customer.id)
           setName(pesdonalData.customer.person.firstName)

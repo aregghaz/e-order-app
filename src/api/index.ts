@@ -214,15 +214,16 @@ export const SHOP_API = {
       })
       .catch((err) => console.log(err))
   },
-  changePassword: async (currentPassword: string, newPassword: string) => {
+  changePassword: async ( newPassword: string,currentPassword: string) => {
     const tokenUSer = await getToken()
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
+    console.log(currentPassword,newPassword,'2222')
     return axios
       .post(`${fakeUrl}/api/users/change-password`, { currentPassword, newPassword })
       .then((res) => {
         return res.config
       })
-      .catch((err) => console.log(err))
+      .catch((err) => console.log(err.message))
   },
   resendConfirmation: async (phone: string) => {
     return axios
