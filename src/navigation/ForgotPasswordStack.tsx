@@ -3,7 +3,8 @@
  */
 import { useNavigation } from '@react-navigation/native'
 import React, { FC, useState } from 'react'
-import { StyleSheet, TextInput, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
+import PhoneInput from 'react-native-phone-input'
 
 import { SHOP_API } from '~api'
 import { CustomButton } from '~components/molecules/CustomButton'
@@ -22,12 +23,11 @@ export const ForgotPasswordStack: FC = ({ route }: any) => {
   }
   return (
     <View style={styles.ForgotPasswordStack_wrapper}>
-      <TextInput
+      <PhoneInput
         style={styles.input}
-        keyboardType={'phone-pad'}
-        placeholder={'+37491444444'}
-        value={number}
-        onChangeText={(value) => setNumber(value)}
+        initialCountry="am"
+        onChangePhoneNumber={setNumber}
+        textProps={{ placeholder: '+37491444444' }}
       />
       <CustomButton title="Verify" onPress={handleVerify} />
     </View>
