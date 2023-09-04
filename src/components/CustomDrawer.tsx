@@ -30,6 +30,16 @@ export const CustomDrawer: FC = (props: any) => {
       getData()
     }, [isSignedIn])
   )
+  const detectState = () => {
+    if (isSignedIn) {
+      signOut()
+      props.navigation.navigate(SCREEN.TAB_HOME)
+    } else {
+      props.navigation.navigate(SCREEN.STACK_SIGN_IN)
+    }
+
+    props.navigation.closeDrawer()
+  }
 
   return (
     <View style={styles.sidebar}>
@@ -73,13 +83,7 @@ export const CustomDrawer: FC = (props: any) => {
             }
           })}
       </DrawerContentScrollView>
-      <TouchableOpacity
-        onPress={() => {
-          props.navigation.closeDrawer()
-          signOut()
-          props.navigation.navigate(SCREEN.STACK_SIGN_IN)
-        }}
-      >
+      <TouchableOpacity onPress={detectState}>
         <View style={styles.sign_out}>
           {isSignedIn ? (
             <>
