@@ -1,4 +1,4 @@
-import { impactAsync, ImpactFeedbackStyle } from 'expo-haptics'
+// import { impactAsync, ImpactFeedbackStyle } from 'expo-haptics'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
@@ -48,7 +48,8 @@ export const useSignInForm = () => {
       } else {
         setError(t('errors.something_went_wrong'))
       }
-      await impactAsync(ImpactFeedbackStyle.Medium)
+      /*** This was for vibrating ***/
+      // await impactAsync(ImpactFeedbackStyle.Medium)
     } finally {
       setIsSubmitting(false)
     }
