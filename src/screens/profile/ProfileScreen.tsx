@@ -5,6 +5,7 @@
 import { useFocusEffect } from '@react-navigation/native'
 import React, { FC, useState } from 'react'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import { SHOP_API } from '~api'
 
 import { ImgOrSvg } from '~components/ImgOrSvg'
 import { SCREEN } from '~constants'
@@ -54,19 +55,21 @@ export const ProfileScreen: FC = ({ route, navigation }: any) => {
   useFocusEffect(
     React.useCallback(() => {
       ;(async () => {
+        console.log(isSignedIn,'isSignedIn')
         if (isSignedIn) {
           const data = await getUserData()
-          console.log(data.customer.person.firstName, data.customer.person.lastName, 'data')
           if (!data.customer) {
             navigation.navigate(SCREEN.PROFILE_EDIT, { type: false })
           } else {
-            setData(data.customer)
+            const custommerData = await SHOP_API.getCustommer(data.customer.id)
+            console.log(custommerData, 'data')
+            setData(custommerData.payload)
           }
         } else {
           navigation.navigate(SCREEN.STACK_SIGN_IN)
         }
       })()
-      return () => setData(IPropsData)
+      ///return () => setData(IPropsData)
     }, [isSignedIn])
   )
 

@@ -11,13 +11,14 @@ import { getUserData } from '~services/UserService'
 import { timestampToDate, checkAge } from '~utils/dateTimeFormat'
 
 export const ProfileEditScreen: FC = ({ route }: any) => {
-  const { type } = route.params
+  // const { type } = route.params
   const navigation = useNavigation<any>()
 
   // const [validAge, setValidAge] = useState(false);
 
   /*Name*/
   const [id, setId] = useState('')
+  const [type, setType] = useState(false)
   const [name, setName] = useState('')
   const [nameError, setNameError] = useState('')
   const [lastname, setLastName] = useState('')
@@ -63,7 +64,7 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
     useCallback(() => {
       const getAsyncData = async (): Promise<void> => {
         const pesdonalData = await getUserData()
-        console.log(pesdonalData, '324324')
+
         if (pesdonalData.customer) {
           setId(pesdonalData.customer.id)
           setName(pesdonalData.customer.person.firstName)
@@ -80,11 +81,12 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
           setExpireData(pesdonalData.customer.person.citizenship.issueDate)
           setIih(pesdonalData.customer.person.inn)
           setEmail(pesdonalData.customer.person.email)
+          setType(true)
+        }else{
+
         }
       }
-      if (type) {
-        getAsyncData()
-      }
+      getAsyncData()
     }, [])
   )
   const handleSave = async () => {
@@ -175,13 +177,12 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
       // }
     }
     ///console.log(isValid,type,id,'111111')
-    console.log(type, isValid, '1111111111111')
     if (isValid) {
+      let dataCheck = false;
       if (type) {
-        await SHOP_API.updateCustomerUser(body, id)
+        dataCheck = await SHOP_API.updateCustomerUser(body, id)
       } else {
-        const asd = await SHOP_API.fillingCustomerUser(body)
-        console.log(asd, '11111')
+        dataCheck =await SHOP_API.fillingCustomerUser(body)
       }
       notification('Сохранено')
       navigation.navigate(SCREEN.DRAWER_ROOT, {

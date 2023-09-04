@@ -36,7 +36,6 @@ export const Verification: FC<IProps> = ({
   }
   const handleVerify = async () => {
     const combineCode = pin1 + pin2 + pin3 + pin4
-    console.log(pin1 + pin2 + pin3 + pin4, 'combineCode')
     if (combineCode.trim().length === 4) {
       const toNumberCode = Number(combineCode)
       const data = await SHOP_API.setVerificationCode(phone, toNumberCode)

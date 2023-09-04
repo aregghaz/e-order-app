@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native'
+import {useFocusEffect, useNavigation } from '@react-navigation/native'
 import { Button, Center, Text } from 'native-base'
 import { FC, useCallback, useEffect } from 'react'
 import { StyleSheet, TextInput, TouchableOpacity } from 'react-native'
@@ -24,9 +24,22 @@ export const SignInScreen: FC<IProps> = (props): JSX.Element => {
   }
 
   useEffect(() => {
-    console.log(isSignedIn, 'isSignedInisSignedIn')
-    navigate(SCREEN.DRAWER_ROOT)
+      console.log(isSignedIn, 'isSignedInisSignedIn')
+    navigate(SCREEN.STACK_HOME)
   }, [isSignedIn])
+
+
+    useFocusEffect(
+        useCallback(() => {
+            if(isSignedIn){
+                navigate(SCREEN.STACK_HOME)
+            }
+
+        }, [isSignedIn])
+    )
+
+
+
   return (
     <Center p={8} flex={1}>
       <ControlledField.Input

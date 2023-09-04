@@ -170,7 +170,16 @@ export const SHOP_API = {
     return axios
       .patch(`${fakeUrl}/api/customers/update-customer/${id}`, body)
       .then((res) => {
-        console.log(res.data, '77777777')
+        return res.data
+      })
+      .catch((err) => console.log(err))
+  },
+  getCustommer: async  (id: string) => {
+    const tokenUSer = await getToken()
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
+    return axios
+      .get(`${fakeUrl}/api/customers/get-customer/${id}`)
+      .then((res) => {
         return res.data
       })
       .catch((err) => console.log(err))
@@ -198,18 +207,17 @@ export const SHOP_API = {
     return axios
       .post(`${fakeUrl}/api/auth/customer-forgot-password`, data)
       .then((res) => {
-        console.log(res.data, 'RES_________SER')
         return res.data
       })
       .catch((err) => console.log(err))
   },
-  resetPassword: async (token: number, phone: string, password: string) => {
+  resetPassword: async (token: string, phone: string, password: string) => {
     const tokenUSer = await getToken()
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
     return axios
       .post(`${fakeUrl}/api/auth/customer-reset-password`, { mobile: phone, password, token })
       .then((res) => {
-        console.log(res, '___ RES_DATA ___')
+        console.log(res.data, '___ RES_DATA ___')
         return res
       })
       .catch((err) => console.log(err))
@@ -235,7 +243,7 @@ export const SHOP_API = {
       .catch((err) => console.log(err))
   },
   signOut: () => {
-    return axios.post(`${fakeUrl}/api/auth/signOut`)
+    return axios.post(`${fakeUrl}/api/auth/signOut`).catch((err) => console.log(err))
   },
   /*** ADD to Cart ***/
   addToCart: async (data: any) => {
