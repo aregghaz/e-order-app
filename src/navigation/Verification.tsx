@@ -44,7 +44,7 @@ export const Verification: FC<IProps> = ({
           mobile: phone,
           token: toNumberCode,
           reset,
-          type: false,
+          typeData: false,
         })
       }
     }

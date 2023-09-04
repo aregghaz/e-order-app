@@ -11,14 +11,14 @@ import { getUserData } from '~services/UserService'
 import { timestampToDate, checkAge } from '~utils/dateTimeFormat'
 
 export const ProfileEditScreen: FC = ({ route }: any) => {
-  // const { type } = route.params
+  /// const { typeData } = route.params
   const navigation = useNavigation<any>()
 
   // const [validAge, setValidAge] = useState(false);
 
   /*Name*/
   const [id, setId] = useState('')
-  const [type, setType] = useState(false)
+  const [type, setType] = useState( false)
   const [name, setName] = useState('')
   const [nameError, setNameError] = useState('')
   const [lastname, setLastName] = useState('')
@@ -82,8 +82,8 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
           setIih(pesdonalData.customer.person.inn)
           setEmail(pesdonalData.customer.person.email)
           setType(true)
-        }else{
-
+        } else {
+          setType(false)
         }
       }
       getAsyncData()
@@ -176,13 +176,14 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
       //     "updatedAt": "2023-08-25T09:12:24.462Z"
       // }
     }
-    ///console.log(isValid,type,id,'111111')
+    console.log(isValid,type,id,'111111')
     if (isValid) {
-      let dataCheck = false;
+      let dataCheck = false
       if (type) {
         dataCheck = await SHOP_API.updateCustomerUser(body, id)
       } else {
-        dataCheck =await SHOP_API.fillingCustomerUser(body)
+        dataCheck = await SHOP_API.fillingCustomerUser(body)
+        console.log(dataCheck,'22222222')
       }
       notification('Сохранено')
       navigation.navigate(SCREEN.DRAWER_ROOT, {

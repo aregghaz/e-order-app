@@ -7,7 +7,7 @@ import { deleteToken, getToken, setToken } from '~services'
 import { setUserData } from '~services/UserService'
 import { SignUpFormValues } from '~types/authForms'
 import { wait } from '~utils'
-import {deleteShopId} from '~services/ShopService'
+import { deleteShopId } from '~services/ShopService'
 export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   const [isSignedIn, setIsSignedIn] = useState<boolean | null>(null)
 
@@ -41,13 +41,12 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
       await setToken(res.payload.token.accessToken)
       setIsSignedIn(true)
       ///navigation.navigate(SCREEN.HOME_STACK)
-
     }
   }, [])
 
   const signOut = useCallback(async () => {
     /*FIXME this request gives 401 status code*/
-    await SHOP_API.signOut();
+    await SHOP_API.signOut()
     await deleteShopId()
     await deleteToken()
     setIsSignedIn(false)

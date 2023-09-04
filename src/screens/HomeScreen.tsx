@@ -14,6 +14,7 @@ import OfferPosterSlider from '~components/OfferPosterSlider'
 import TopDiscountItems from '~components/TopDiscountItems'
 import TopRatedItems from '~components/TopRatedItems'
 import { getShopId, setShopId } from '~services/ShopService'
+import { useAuth } from '~hooks'
 
 const { slides } = fakeData.homeScreen
 
@@ -22,8 +23,8 @@ const options = {
   page: null,
   limit: null,
 }
-export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
-  const { navigation } = props
+export const HomeScreen = ({navigation}:any): JSX.Element => {
+
   const [categories, setCategories] = useState([])
   const [topDiscount, setTopDiscount] = useState([])
   const [featured, setFeatured] = useState([])
@@ -31,13 +32,17 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const [bestSeller, setBestSeller] = useState([])
   const [topRated, setTopRated] = useState([])
   const [shopId, setShopDefaultId] = useState('')
+  const { isSignedIn } = useAuth()
 
   useFocusEffect(
     useCallback(() => {
       const getAsyncData = async (): Promise<void> => {
         const getID = await getShopId()
-        if (getID && getID.length < 10) {
+
+        if (isSignedIn && !getID) {
+          console.log('asdsads')
           const shopData = await SHOP_API.getShopsData()
+          console.log(shopData)
           await setShopId(shopData.payload.content[0].id)
           setShopDefaultId(shopData.payload.content[0].id)
         }
@@ -64,7 +69,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
       {categories.length > 0 && (
         <CircleCategories navigation={navigation} categories={categories} />
       )}
-      <OfferPosterSlider slides={slides} />
+      {/*<OfferPosterSlider slides={slides} />*/}
       <TopRatedItems navigation={navigation} items={topRated} isCategoryProduct={false} />
       <FeaturedItems navigation={navigation} items={featured} />
       <TopDiscountItems navigation={navigation} items={topDiscount} />

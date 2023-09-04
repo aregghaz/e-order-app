@@ -18,7 +18,7 @@ interface IProps {
 export const PasswordStack: FC<IProps> = ({ route }) => {
   const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{10,}$/
   const [tokenData, setTokenData] = useState<any>('')
-  const {t} = useTranslation()
+  const { t } = useTranslation()
   const { reset, token } = route.params
   useFocusEffect(
     useCallback(() => {
@@ -48,7 +48,7 @@ export const PasswordStack: FC<IProps> = ({ route }) => {
       return
     }
     let data
-    console.log(tokenData,token, mobile, reset, 'resetreset')
+    console.log(tokenData, token, mobile, reset, 'resetreset')
     if (reset != undefined) {
       data = await SHOP_API.resetPassword(token, mobile, password)
     } else {
