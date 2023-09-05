@@ -18,7 +18,7 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
 
   /*Name*/
   const [id, setId] = useState('')
-  const [type, setType] = useState( false)
+  const [type, setType] = useState(false)
   const [name, setName] = useState('')
   const [nameError, setNameError] = useState('')
   const [lastname, setLastName] = useState('')
@@ -176,14 +176,14 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
       //     "updatedAt": "2023-08-25T09:12:24.462Z"
       // }
     }
-    console.log(isValid,type,id,'111111')
+    console.log(isValid, type, id, '111111')
     if (isValid) {
       let dataCheck = false
       if (type) {
         dataCheck = await SHOP_API.updateCustomerUser(body, id)
       } else {
         dataCheck = await SHOP_API.fillingCustomerUser(body)
-        console.log(dataCheck,'22222222')
+        console.log(dataCheck, '22222222')
       }
       notification('Сохранено')
       navigation.navigate(SCREEN.DRAWER_ROOT, {

@@ -114,7 +114,7 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
     addOption(1)
   }
   const handleAddToCart = async () => {
-    console.log(isSignedIn,'isSignedInisSignedInisSignedInisSignedIn')
+    console.log(isSignedIn, 'isSignedInisSignedInisSignedInisSignedIn')
     if (!isSignedIn) {
       notification(t('notification.signIn'), ALERT_TYPE.WARNING)
       navigation.navigate(SCREEN.STACK_SIGN_IN)

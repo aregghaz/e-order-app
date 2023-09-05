@@ -23,8 +23,7 @@ const options = {
   page: null,
   limit: null,
 }
-export const HomeScreen = ({navigation}:any): JSX.Element => {
-
+export const HomeScreen = ({ navigation }: any): JSX.Element => {
   const [categories, setCategories] = useState([])
   const [topDiscount, setTopDiscount] = useState([])
   const [featured, setFeatured] = useState([])
