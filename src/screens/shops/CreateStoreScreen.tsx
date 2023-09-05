@@ -131,7 +131,7 @@ export const CreateStoreScreen: FC = () => {
         console.log(err)
       }
     }
-    ///ASDASDSAresetValues()
+    resetValues()
   }
 
   const resetValues = () => {

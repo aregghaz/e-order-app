@@ -62,7 +62,6 @@ export const ProfileScreen: FC = ({ route, navigation }: any) => {
             navigation.navigate(SCREEN.PROFILE_EDIT, { type: false })
           } else {
             const custommerData = await SHOP_API.getCustommer(data.customer.id)
-            console.log(custommerData, 'data')
             setData(custommerData.payload)
           }
         } else {

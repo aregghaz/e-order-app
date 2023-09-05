@@ -12,7 +12,7 @@ import { Header } from '~navigation/Header'
 import { optionForScreen } from '~navigation/HeaderGlobalStyles'
 import { PasswordStack } from '~navigation/PasswordStack'
 import { RootNavigator } from '~navigation/RootNavigator'
-import { CategoryInnerScreen, HomeScreen, ProfileEditScreen, SignInScreen } from '~screens'
+import { CategoryInnerScreen,  ProfileEditScreen, SignInScreen } from '~screens'
 import { CategoryDetailScreen } from '~screens/CategoryDetailScreen'
 import { CategorySearchScreen } from '~screens/CategorySearchScreen'
 import { MenuScreen } from '~screens/MenuScreen'
@@ -30,7 +30,6 @@ import { ChangePasswordScreen } from '~screens/profile/ChangePasswordScreen'
 import { CreateStoreScreen } from '~screens/shops/CreateStoreScreen'
 import { ShopListScreen } from '~screens/shops/ShopListScreen'
 import { UpdateShopScreen } from '~screens/shops/UpdateShopScreen'
-import { HomeStack } from './HomeStack'
 
 const locale = 'ru'
 
@@ -39,6 +38,8 @@ export const DrawerNavigator = () => {
   const renderCustomDrawerContent = useCallback((props: object) => {
     return <CustomDrawer {...props} />
   }, [])
+
+
   return (
     <Drawer.Navigator
       useLegacyImplementation

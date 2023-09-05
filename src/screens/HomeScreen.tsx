@@ -2,21 +2,19 @@ import { useFocusEffect } from '@react-navigation/native'
 import { ScrollView, View } from 'native-base'
 import React, { useCallback, useState } from 'react'
 import { StyleSheet } from 'react-native'
-
-import { fakeData } from '~FakeData'
 import { SHOP_API } from '~api'
 ///import CarouselComponent from '~components/CarouselComponent'
-import BestSellerItems from '~components/BestSellerItems'
+///import BestSellerItems from '~components/BestSellerItems'
 import CircleCategories from '~components/CricleCategories'
 import FeaturedItems from '~components/FeaturedItems'
 import NewArrivalItems from '~components/NewArrivalItems'
-import OfferPosterSlider from '~components/OfferPosterSlider'
+///import OfferPosterSlider from '~components/OfferPosterSlider'
 import TopDiscountItems from '~components/TopDiscountItems'
 import TopRatedItems from '~components/TopRatedItems'
 import { getShopId, setShopId } from '~services/ShopService'
 import { useAuth } from '~hooks'
-
-const { slides } = fakeData.homeScreen
+//
+// const { slides } = fakeData.homeScreen
 
 const options = {
   shopId: null,
@@ -38,10 +36,8 @@ export const HomeScreen = ({ navigation }: any): JSX.Element => {
       const getAsyncData = async (): Promise<void> => {
         const getID = await getShopId()
 
-        if (isSignedIn && !getID) {
-          console.log('asdsads')
+        if (isSignedIn && !getID && getID.length > 0) {
           const shopData = await SHOP_API.getShopsData()
-          console.log(shopData)
           await setShopId(shopData.payload.content[0].id)
           setShopDefaultId(shopData.payload.content[0].id)
         }
@@ -74,9 +70,6 @@ export const HomeScreen = ({ navigation }: any): JSX.Element => {
       <TopDiscountItems navigation={navigation} items={topDiscount} />
       <NewArrivalItems navigation={navigation} title={'New Arrival'} items={newArrival} />
       <NewArrivalItems navigation={navigation} title={'Best Seller'} items={bestSeller} />
-      {/*<CarouselComponent navigation={navigation} items={newArrival} title="New Arrivals" />*/}
-      {/*<BestSellerItems navigation={navigation} items={bestSeller} />*/}
-      {/*<CarouselComponent navigation={navigation} items={bestSeller} title="Best Seller" />*/}
       <View style={styles.dummy}></View>
     </ScrollView>
   )

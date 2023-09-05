@@ -26,13 +26,13 @@ export const SignInScreen: FC<IProps> = (props): JSX.Element => {
 
   useEffect(() => {
     console.log(isSignedIn, 'isSignedInisSignedIn')
-    navigate(SCREEN.STACK_HOME)
+    navigate(SCREEN.DRAWER_ROOT)
   }, [isSignedIn])
 
   useFocusEffect(
     useCallback(() => {
       if (isSignedIn) {
-        navigate(SCREEN.STACK_HOME)
+        navigate(SCREEN.DRAWER_ROOT)
       }
     }, [isSignedIn])
   )

@@ -9,7 +9,6 @@ import { ModalWishList } from '~components/ModalWishList'
 import { SCREEN } from '~constants'
 import { IFeatured } from '~types/featuredProducts'
 import { getVW, screenWidth } from '~utils/breakpoints'
-import { customStyles } from '~utils/style_helpers'
 
 interface ITopBrands {
   items: IFeatured[]
@@ -51,6 +50,15 @@ const NewArrivalItems: FC<ITopBrands> = ({ items, navigation, title }) => {
                   color="darkslategrey"
                 />
                 <ImgOrSvg item={item} product="-product" padding={16} />
+                <View>
+                  <Text style={styles.name}>{item.name}</Text>
+                </View>
+                <View>
+                  <Text style={styles.price}>₽ {item.price}</Text>
+                </View>
+                <View>
+                  <Text style={styles.price}>views {item.views}</Text>
+                </View>
               </TouchableOpacity>
             )
           }}
@@ -94,22 +102,40 @@ const styles = StyleSheet.create({
   },
 
   item: {
+
     backgroundColor: colors.itemColor,
     borderRadius: 8,
-    position: 'relative',
-    ...customStyles.border(1, 'solid', colors.borderColor),
     height: '100%',
     marginHorizontal: 10,
+
     overflow: 'hidden',
+    position: 'relative',
+    ///...customStyles.border(1, 'solid', colors.borderColor),
+
     padding: 5,
   },
 
   main: {
     alignItems: 'center',
     flex: 1,
-    height: 250,
+    height: 370,
     overflow: 'hidden',
     width: '100%',
+  },
+  name: {
+    color: colors.nameColor,
+    fontWeight: '700',
+  },
+  // notFound: {
+  //   alignItems: 'center',
+  //   flex: 1,
+  //   fontSize: 20,
+  //   fontWeight: 'bold',
+  //   justifyContent: 'center',
+  //   textAlign: 'center',
+  // },
+  price: {
+    textAlign: 'left',
   },
 })
 

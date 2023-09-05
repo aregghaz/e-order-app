@@ -1,15 +1,14 @@
-import { useFocusEffect, useNavigation } from '@react-navigation/native'
-import React, { FC, useCallback, useRef } from 'react'
+import {  useNavigation } from '@react-navigation/native'
+import React, { FC } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, TextInput, View } from 'react-native'
+import { StyleSheet,  View } from 'react-native'
 import { ALERT_TYPE } from 'react-native-alert-notification'
 import { SHOP_API } from '~api'
 import { ControlledField } from '~components'
 import { CustomButton } from '~components/molecules/CustomButton'
 import { SCREEN } from '~constants'
 import { notification } from '~services/ShopService'
-import { getUserData } from '~services/UserService'
 
 interface IProps {
   route: any
@@ -20,18 +19,17 @@ export const ChangePasswordScreen: FC<IProps> = ({ route }) => {
   const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{10,}$/
 
   const { t } = useTranslation()
-  useFocusEffect(
-    useCallback(() => {
-      const getTokenData = async () => {
-        const pesdonalData = await getUserData()
-      }
-      getTokenData()
-    }, [])
-  )
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     const getTokenData = async () => {
+  //       const pesdonalData = await getUserData()
+  //     }
+  //     getTokenData()
+  //   }, [])
+  // )
 
   /// const mobile = route?.params?.mobile
   const navigation = useNavigation<any>()
-  const passwordInputRef = useRef<TextInput>(null)
 
   const handleSubmitForm = async (data: any) => {
     const { confirmPassword, oldPassword, password } = data
@@ -144,10 +142,7 @@ export const ChangePasswordScreen: FC<IProps> = ({ route }) => {
     </View>
   )
 }
-const colors = {
-  border: '#ddd',
-  red: 'red',
-}
+
 const styles = StyleSheet.create({
   PasswordStack_wrapper: {
     flex: 1,
@@ -156,15 +151,5 @@ const styles = StyleSheet.create({
   },
   custom_Button: {
     marginTop: 20,
-  },
-
-  input: {
-    borderColor: colors.border,
-    borderRadius: 8,
-    borderStyle: 'solid',
-    borderWidth: 1,
-    marginBottom: 20,
-    padding: 10,
-    width: '100%',
-  },
+  }
 })
