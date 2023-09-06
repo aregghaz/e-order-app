@@ -275,20 +275,18 @@ export const SHOP_API = {
       })
       .catch((err) => console.log(err))
   },
-  updateCartQuantity: async (id: string, qty: number) => {
+  updateCartQuantity: async (id: string,itemId:string, qty: number) => {
     const body = {
       cartItems: [
         {
-          itemId: id,
+          itemId: itemId,
           quantity: qty,
         },
       ],
     }
-    console.log(body, 'request body')
     return axios
       .put(`${fakeUrl}/api/shopping-cart/update-shopping-cart/${id}`, body)
       .then((res) => {
-        console.log(res.data.payload.cartItems, 'data!!!')
         return res.data
       })
       .catch((err) => notification(err, ALERT_TYPE.DANGER))

@@ -1,7 +1,8 @@
 {
   "shop": {
     "shop": "МАГАЗИН",
-    "supplier": "ПОСТАВЩИК"
+    "supplier": "ПОСТАВЩИК",
+    "add" : "Пожалуйста, создайте магазин, чтобы добавить в корзину"
   },
   "order": {
     "confirmOrder": "Оформить заказ"
@@ -14,6 +15,7 @@
     "invalid_email_format": "Incorrect e-mail address",
     "required": "Это поле обязательно к заполнению"
   },
+
   "password": {
     "oldPassword": "Прежний пароль",
     "newPassword": "Новый пароль",

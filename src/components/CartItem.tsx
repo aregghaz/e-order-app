@@ -5,11 +5,13 @@ import { SHOP_API } from '~api'
 import InputNumber from '~components/molecules/InputNumber'
 import { customStyles } from '~utils/style_helpers'
 
-export const CartItems = ({ elem, onDelete, cartItemId, isDelete }: any) => {
-  const [value, setValue] = useState<number>(1)
+export const CartItems = ({ elem, onDelete, cartItemId, isDelete,setTrigger,trigger }: any) => {
 
-  const handleUpdateQuantity = async (id: string) => {
-    await SHOP_API.updateCartQuantity(id, value)
+  ///console.log(cartItemId,'cartItemId')
+  const handleUpdateQuantity = async (id: string, itemId:string , qty:number) => {
+   const adasd =  await SHOP_API.updateCartQuantity(id, itemId,qty)
+    console.log(adasd,'adasdadasd')
+    setTrigger(!trigger)
   }
   return (
     <ScrollView>
@@ -39,14 +41,11 @@ export const CartItems = ({ elem, onDelete, cartItemId, isDelete }: any) => {
                     </Pressable>
                     <View style={styles.incrementor}>
                       <InputNumber
-                        value={value}
+                        qty={item.quantity}
+                        id={item.id}
                         min={1}
-                        onChange={async (e) => {
-                          setValue(e)
-                          /*** FIXME I don't understand which id to pass to this request!!!! ***/
-                          // await handleUpdateQuantity(item.id)
-                          await handleUpdateQuantity(cartItemId)
-                        }}
+                        cartItemId={cartItemId}
+                        handleUpdateQuantity={handleUpdateQuantity}
                       />
                     </View>
                   </View>

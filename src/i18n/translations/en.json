@@ -1,7 +1,8 @@
 {
   "shop": {
     "shop": "SHOP",
-    "supplier": "SUPPLIER"
+    "supplier": "SUPPLIER",
+    "add" : "Please create shop to add to cart"
   },
   "order": {
     "confirmOrder": "Оформить заказ"

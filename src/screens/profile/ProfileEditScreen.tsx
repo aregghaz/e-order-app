@@ -16,8 +16,8 @@ import { CustomButton } from '~components/molecules/CustomButton'
 import { SCREEN } from '~constants'
 import { notification } from '~services/ShopService'
 import { getUserData } from '~services/UserService'
-import { timestampToDate } from '~utils/dateTimeFormat'
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
+import {checkAge, timestampToDate } from '~utils/dateTimeFormat'
+import { GooglePlacesAutocomplete, Point } from 'react-native-google-places-autocomplete'
 
 export const ProfileEditScreen: FC = ({ route }: any) => {
   const { typeData } = route.params
@@ -68,12 +68,14 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
   const [email, setEmail] = useState('')
   ///  const [emailError, setEmailError] = useState('')
   const [latloang, setLatloang] = useState({ latitude: '', longitude: '' })
+ /// const [latloang2, setLatloang2] = useState<Point>({ lat: 0, lng: 0 })
   const [locationa, setLocation] = useState({ contry: '', state: '', city: '', address: '' })
 
   useFocusEffect(
     useCallback(() => {
       const getAsyncData = async (): Promise<void> => {
         const pesdonalData = await getUserData()
+        console.log(pesdonalData.customer,'dfsdf')
         if (pesdonalData.customer) {
           const custommerData = await SHOP_API.getCustommer(pesdonalData.customer.id)
           const dataUser = custommerData.payload
@@ -83,6 +85,8 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
             city: dataUser.person.address.city,
             address: dataUser.person.address.address_1,
           })
+         //// console.log( dataUser.person.address.,' dataUser.person.address')
+          setLatloang({latitude:dataUser.person.address.gpsCoordinates.latitude, longitude:dataUser.person.address.gpsCoordinates.longitude})
           setId(dataUser.id)
           setName(dataUser.person.firstName)
           setLastName(dataUser.person.lastName)
@@ -130,12 +134,12 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
       isValid = false
     }
 
-    // const validAge = checkAge(dob)
-    // console.log(validAge,'validAgevalidAge')
-    // if (validAge < 18) {
-    //   setDobError('Bам не 18.')
-    //   isValid = false
-    // }
+    const validAge = checkAge(dob)
+    console.log(validAge,'validAgevalidAge')
+    if (validAge < 18) {
+      setDobError('Обязательное поле.')
+      isValid = false
+    }
 
     // if (iih.trim() === '') {
     //   setIihError('Обязательное поле.')
@@ -303,23 +307,27 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
                 placeholder="Дата рождения"
               />
             </TouchableOpacity>
-            <Text style={styles.errorText}>{dobError}</Text>
             <DateTimePickerModal
               isVisible={isDatePickerVisible}
               mode="date"
               onConfirm={(date: any) => handleConfirm(date)}
               onCancel={hideDatePicker}
             />
+            <Text style={styles.errorText}>{dobError}</Text>
           </>
           <>
             <GooglePlacesAutocomplete
-              placeholder="Search"
+              placeholder="Address"
               GooglePlacesDetailsQuery={{
                 fields: 'geometry',
               }}
-              setAddressText={{
+            ///  predefinedPlaces={[{geometry: { location: latloang2}}]}
+              // getDefaultValue={(e:any) => {
+              //   return (locationa.address + ' ' + locationa.city + ' ' + locationa.contry)
+              // }}
+              textInputProps={{
                 autoFocus: true,
-                value: locationa.address + ' ' + locationa.city + ' ' + locationa.contry,
+                placeholder: locationa.address + ' ' + locationa.city + ' ' + locationa.contry,
               }}
               //   getDefaultValue={() => locationa.address + ' ' + locationa.city + " "+ locationa.contry}
               onPress={(data: any, details: any = null) => {
@@ -331,6 +339,10 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
                   address: data.terms[0].value,
                 })
                 setLatloang({
+                  latitude: details.geometry.location.lat,
+                  longitude: details.geometry.location.lng,
+                })
+                setLatloang2({
                   latitude: details.geometry.location.lat,
                   longitude: details.geometry.location.lng,
                 })

@@ -2,21 +2,23 @@
  * was created by tigran at 03.09.23
  */
 import { Feather } from '@expo/vector-icons'
-import React, { FC } from 'react'
+import React, {FC, useState} from 'react'
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 
 import { customStyles } from '~utils/style_helpers'
 
 interface IProps {
-  id?: string
+  id: string
   min: number
   max?: number
   step?: number
-  value: number
+  cartItemId: string
   size?: string
   onChange?: (arg: number) => void
   disabled?: boolean
-  style?: any
+  style?: any,
+  qty:number
+  handleUpdateQuantity:(cartId:string, itemId:string, qty:number)=> void
 }
 
 const colors = {
@@ -32,22 +34,10 @@ const colors = {
   delete: 'red',
 }
 
-const InputNumber: FC<IProps> = ({ value = null, step = 1, max = null, min = null, onChange }) => {
-  // const handleChange = (changeValue: string) => {
-  //   if (onChange) {
-  //     console.log(changeValue, 'changeValue!!!!!!!!!')
-  //     if (changeValue.trim() === '') {
-  //       onChange(Number(''))
-  //     } else {
-  //       const value = parseFloat(changeValue)
-  //
-  //       onChange(Number.isNaN(value) ? min || 0 : value)
-  //     }
-  //   }
-  // }
+const InputNumber: FC<IProps> = ({ step = 1, max = null, min = null, onChange, qty ,handleUpdateQuantity,cartItemId,id}) => {
+  const [value, setValue] = useState<number>(qty)
   const handleAddSubMousePress = (direction: number) => {
-    // console.log(direction, 'log-----------')
-    let newValue = (value === null || Number.isNaN(value) ? 0 : value) + step * direction
+    let newValue = value  + step * direction
 
     if (max !== null) {
       newValue = Math.min(max, newValue)
@@ -55,12 +45,11 @@ const InputNumber: FC<IProps> = ({ value = null, step = 1, max = null, min = nul
     if (min !== null) {
       newValue = Math.max(min, newValue)
     }
-
     if (newValue !== value) {
-      if (onChange) {
-        onChange(newValue)
-      }
+      setValue(newValue)
+      handleUpdateQuantity(cartItemId, id,newValue)
     }
+
   }
   return (
     <View style={styles.InputNumber_wrapper}>

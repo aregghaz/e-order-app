@@ -46,7 +46,6 @@ export const Navigation: FC = () => {
         linking={linking}
         initialState={initialState}
       >
-        {/*<RootNavigator />*/}
         <DrawerNavigator />
       </NavigationContainer>
     </>
