@@ -16,7 +16,7 @@ import { CustomButton } from '~components/molecules/CustomButton'
 import { SCREEN } from '~constants'
 import { notification } from '~services/ShopService'
 import { getUserData } from '~services/UserService'
-import {checkAge, timestampToDate } from '~utils/dateTimeFormat'
+import { checkAge, timestampToDate } from '~utils/dateTimeFormat'
 import { GooglePlacesAutocomplete, Point } from 'react-native-google-places-autocomplete'
 
 export const ProfileEditScreen: FC = ({ route }: any) => {
@@ -68,14 +68,14 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
   const [email, setEmail] = useState('')
   ///  const [emailError, setEmailError] = useState('')
   const [latloang, setLatloang] = useState({ latitude: '', longitude: '' })
- /// const [latloang2, setLatloang2] = useState<Point>({ lat: 0, lng: 0 })
+  /// const [latloang2, setLatloang2] = useState<Point>({ lat: 0, lng: 0 })
   const [locationa, setLocation] = useState({ contry: '', state: '', city: '', address: '' })
 
   useFocusEffect(
     useCallback(() => {
       const getAsyncData = async (): Promise<void> => {
         const pesdonalData = await getUserData()
-        console.log(pesdonalData.customer,'dfsdf')
+        console.log(pesdonalData.customer, 'dfsdf')
         if (pesdonalData.customer) {
           const custommerData = await SHOP_API.getCustommer(pesdonalData.customer.id)
           const dataUser = custommerData.payload
@@ -85,8 +85,11 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
             city: dataUser.person.address.city,
             address: dataUser.person.address.address_1,
           })
-         //// console.log( dataUser.person.address.,' dataUser.person.address')
-          setLatloang({latitude:dataUser.person.address.gpsCoordinates.latitude, longitude:dataUser.person.address.gpsCoordinates.longitude})
+          //// console.log( dataUser.person.address.,' dataUser.person.address')
+          setLatloang({
+            latitude: dataUser.person.address.gpsCoordinates.latitude,
+            longitude: dataUser.person.address.gpsCoordinates.longitude,
+          })
           setId(dataUser.id)
           setName(dataUser.person.firstName)
           setLastName(dataUser.person.lastName)
@@ -135,7 +138,7 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
     }
 
     const validAge = checkAge(dob)
-    console.log(validAge,'validAgevalidAge')
+    console.log(validAge, 'validAgevalidAge')
     if (validAge < 18) {
       setDobError('Обязательное поле.')
       isValid = false
@@ -321,7 +324,7 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
               GooglePlacesDetailsQuery={{
                 fields: 'geometry',
               }}
-            ///  predefinedPlaces={[{geometry: { location: latloang2}}]}
+              ///  predefinedPlaces={[{geometry: { location: latloang2}}]}
               // getDefaultValue={(e:any) => {
               //   return (locationa.address + ' ' + locationa.city + ' ' + locationa.contry)
               // }}

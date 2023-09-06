@@ -2,7 +2,7 @@
  * was created by tigran at 03.09.23
  */
 import { Feather } from '@expo/vector-icons'
-import React, {FC, useState} from 'react'
+import React, { FC, useState } from 'react'
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 
 import { customStyles } from '~utils/style_helpers'
@@ -16,9 +16,9 @@ interface IProps {
   size?: string
   onChange?: (arg: number) => void
   disabled?: boolean
-  style?: any,
-  qty:number
-  handleUpdateQuantity:(cartId:string, itemId:string, qty:number)=> void
+  style?: any
+  qty: number
+  handleUpdateQuantity: (cartId: string, itemId: string, qty: number) => void
 }
 
 const colors = {
@@ -34,10 +34,19 @@ const colors = {
   delete: 'red',
 }
 
-const InputNumber: FC<IProps> = ({ step = 1, max = null, min = null, onChange, qty ,handleUpdateQuantity,cartItemId,id}) => {
+const InputNumber: FC<IProps> = ({
+  step = 1,
+  max = null,
+  min = null,
+  onChange,
+  qty,
+  handleUpdateQuantity,
+  cartItemId,
+  id,
+}) => {
   const [value, setValue] = useState<number>(qty)
   const handleAddSubMousePress = (direction: number) => {
-    let newValue = value  + step * direction
+    let newValue = value + step * direction
 
     if (max !== null) {
       newValue = Math.min(max, newValue)
@@ -47,9 +56,8 @@ const InputNumber: FC<IProps> = ({ step = 1, max = null, min = null, onChange, q
     }
     if (newValue !== value) {
       setValue(newValue)
-      handleUpdateQuantity(cartItemId, id,newValue)
+      handleUpdateQuantity(cartItemId, id, newValue)
     }
-
   }
   return (
     <View style={styles.InputNumber_wrapper}>

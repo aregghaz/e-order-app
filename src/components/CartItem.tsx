@@ -5,12 +5,11 @@ import { SHOP_API } from '~api'
 import InputNumber from '~components/molecules/InputNumber'
 import { customStyles } from '~utils/style_helpers'
 
-export const CartItems = ({ elem, onDelete, cartItemId, isDelete,setTrigger,trigger }: any) => {
-
+export const CartItems = ({ elem, onDelete, cartItemId, isDelete, setTrigger, trigger }: any) => {
   ///console.log(cartItemId,'cartItemId')
-  const handleUpdateQuantity = async (id: string, itemId:string , qty:number) => {
-   const adasd =  await SHOP_API.updateCartQuantity(id, itemId,qty)
-    console.log(adasd,'adasdadasd')
+  const handleUpdateQuantity = async (id: string, itemId: string, qty: number) => {
+    const adasd = await SHOP_API.updateCartQuantity(id, itemId, qty)
+    console.log(adasd, 'adasdadasd')
     setTrigger(!trigger)
   }
   return (
