@@ -114,13 +114,12 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
     addOption(1)
   }
   const handleAddToCart = async () => {
-    console.log(isSignedIn, 'isSignedInisSignedInisSignedInisSignedIn')
     if (!isSignedIn) {
-      notification(t('notification.signIn'), ALERT_TYPE.WARNING)
+      await notification(t('notification.signIn'), ALERT_TYPE.WARNING)
       navigation.navigate(SCREEN.STACK_SIGN_IN)
     } else {
       if (!selectedOption) {
-        notification(t('notification.chose_unit'), ALERT_TYPE.WARNING)
+        await notification(t('notification.chose_unit'), ALERT_TYPE.WARNING)
       } else {
         delete selectedOption.productId
         const data = {
@@ -134,28 +133,16 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
 
         const add = await SHOP_API.addToCart(data)
         if (!add) {
-          notification('SOMETHING WRONG', ALERT_TYPE.DANGER)
+          await notification('SOMETHING WRONG', ALERT_TYPE.DANGER)
         } else {
-          notification('Добавлено в корзину')
+          await notification('Добавлено в корзину')
         }
       }
     }
   }
-
-  // const handlerOpenModal = async () => {
-  //   if (wishListName) {
-  //     await SHOP_API.createWishList(wishListName);
-  //   }
-  //   const wishListData = await SHOP_API.getWishList();
-  //   setWishList(wishListData.payload.content);
-  //   // setModalVisible(!modalVisible);
-  //   setModalVisible(true);
-  //   setWishListName("");
-  // };
-  //
-  // const handleAddToWishList = () => {
-  //   notification("Добавлено в корзину");
-  // };
+  const handleSearchSupplier = async () => {
+    navigation.navigate(SCREEN.SUPPLIER, { id: params.supplier.id })
+  }
 
   const Header = useCallback(() => {
     return (
@@ -188,6 +175,9 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
         <View style={styles.inner_wrapper}>
           <Text style={styles.title}>{params.name}</Text>
           <Text style={styles.description}>{params.description}</Text>
+          <Pressable onPress={handleSearchSupplier}>
+            <Text style={styles.supplier}>{params?.supplier?.companyName}</Text>
+          </Pressable>
           <View style={styles.rating_block}>
             <Text style={styles.rates}>{params.reward}</Text>
             <Ionicons name="star" size={16} color="#FFC107" />
@@ -226,6 +216,11 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
       </>
     )
   }, [params.id])
+  /***FIXME!!!!!!!!!!!
+   *We are always getting different products in different pages!!!!!!!!!!!
+   *
+   * ***/
+  console.log(params, '!!!!!PARAMS')
 
   return (
     <View style={styles.ProductInnerScreen_wrapper}>
@@ -263,8 +258,6 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
             padding={10}
             color="black"
             border="grey"
-            // onPress={() => handlerOpenModal()}
-            // onPress={() => setModalVisible(true)}
             onPress={() => {
               setModalVisible(true)
               setProductId(params.id)
@@ -280,67 +273,6 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
           />
         </View>
       </View>
-      {/*<Modal*/}
-      {/*  animationType="slide"*/}
-      {/*  transparent={true}*/}
-      {/*  visible={modalVisible}*/}
-      {/*  onRequestClose={() => {*/}
-      {/*    setModalVisible(!modalVisible);*/}
-      {/*  }}*/}
-      {/*>*/}
-      {/*  <View style={styles.cover}>*/}
-      {/*    <View style={styles.modal_content}>*/}
-      {/*      <View style={styles.modal_header}>*/}
-      {/*        <Text style={styles.textStyle}>Список избранных</Text>*/}
-      {/*        <Pressable onPress={() => setModalVisible(!modalVisible)}>*/}
-      {/*          <Text>*/}
-      {/*            <Feather name="x" size={24} color="black" />*/}
-      {/*          </Text>*/}
-      {/*        </Pressable>*/}
-      {/*      </View>*/}
-      {/*      <View style={styles.wish_list}>*/}
-      {/*        <ScrollView>*/}
-      {/*          <View>*/}
-      {/*            {wishList.length > 0 ? (*/}
-      {/*              wishList.map((item: any) => {*/}
-      {/*                console.log(item, "ITEM____");*/}
-      {/*                return (*/}
-      {/*                  <Pressable key={item.id} onPress={handleAddToWishList}>*/}
-      {/*                    <View style={styles.wish_list_item__block}>*/}
-      {/*                      <Text>{item.name}</Text>*/}
-      {/*                    </View>*/}
-      {/*                  </Pressable>*/}
-      {/*                );*/}
-      {/*              })*/}
-      {/*            ) : (*/}
-      {/*              <View>*/}
-      {/*                <Text style={styles.wish_list_text}>Список избранных пуст</Text>*/}
-      {/*              </View>*/}
-      {/*            )}*/}
-      {/*          </View>*/}
-      {/*        </ScrollView>*/}
-      {/*      </View>*/}
-      {/*      <View>*/}
-      {/*        <View style={styles.list_text}>*/}
-      {/*          <Text>Создать новый список</Text>*/}
-      {/*        </View>*/}
-      {/*        <View style={styles.create_wish_list}>*/}
-      {/*          <TextInput*/}
-      {/*            style={styles.input_BG}*/}
-      {/*            onChangeText={(value) => {*/}
-      {/*              setWishListName(value);*/}
-      {/*            }}*/}
-      {/*            value={wishListName}*/}
-      {/*            placeholder="Отчество"*/}
-      {/*          />*/}
-      {/*          <Pressable style={styles.button} onPress={() => handlerOpenModal()}>*/}
-      {/*            <Text style={styles.button_text}>Создать список</Text>*/}
-      {/*          </Pressable>*/}
-      {/*        </View>*/}
-      {/*      </View>*/}
-      {/*    </View>*/}
-      {/*  </View>*/}
-      {/*</Modal>*/}
       <ModalWishList
         productId={productId}
         modalVisible={modalVisible}
@@ -434,6 +366,9 @@ const styles = StyleSheet.create({
     height: '100%',
     marginHorizontal: 10,
     width: 1,
+  },
+  supplier: {
+    marginVertical: 10,
   },
   textContainer: {
     alignItems: 'center',

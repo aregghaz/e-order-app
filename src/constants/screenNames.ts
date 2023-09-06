@@ -40,6 +40,7 @@ export const SCREEN = {
   CHECKOUT: 'Checkout',
   PROFILE_EDIT: 'ProfileEdit',
   CHANGE_PASSWORD: 'ChangePassword',
+  SUPPLIER: 'Supplier',
 }
 
 export const MENUS = {

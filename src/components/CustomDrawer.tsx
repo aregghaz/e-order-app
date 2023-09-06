@@ -3,14 +3,16 @@
  */
 
 import { Feather, FontAwesome5 } from '@expo/vector-icons'
-import { DrawerContentScrollView } from '@react-navigation/drawer'
+// import { DrawerContentScrollView } from '@react-navigation/drawer'
 import { useFocusEffect } from '@react-navigation/native'
 import React, { FC, useState } from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import { fakeData } from '~FakeData'
 import { Accordion, TIcon } from '~components/Accordion'
 import { ImgOrSvg } from '~components/ImgOrSvg'
+/*FIXME do not delete this part*/
+// import { LanguageToggle } from '~components/LanguageToggle'
 import { SCREEN } from '~constants'
 import { useAuth } from '~hooks'
 import { IProps } from '~screens'
@@ -53,7 +55,9 @@ export const CustomDrawer: FC = (props: any) => {
           </Text>
         </View>
       )}
-      <DrawerContentScrollView {...props}>
+      <ScrollView>
+        {/*FIXME do not delete this part*/}
+        {/*<LanguageToggle {...props} />*/}
         {fakeData.accordion &&
           fakeData.accordion.map((item: any) => {
             if (isSignedIn) {
@@ -82,7 +86,7 @@ export const CustomDrawer: FC = (props: any) => {
               )
             }
           })}
-      </DrawerContentScrollView>
+      </ScrollView>
       <TouchableOpacity onPress={detectState}>
         <View style={styles.sign_out}>
           {isSignedIn ? (
@@ -124,6 +128,7 @@ const styles = StyleSheet.create({
     height: 150,
     paddingLeft: 15,
     paddingTop: 50,
+    position: 'relative',
   },
   // profileImage: {
   //   borderRadius: 10,
@@ -140,11 +145,9 @@ const styles = StyleSheet.create({
   },
   sign_out: {
     flexDirection: 'row',
-    // paddingLeft: 10,
-    // paddingTop: 20,
     padding: 10,
     paddingVertical: 20,
-    ...customStyles.border(1, 'solid', colors.lightGrey),
+    ...customStyles.borderTop(1, 'solid', colors.lightGrey),
   },
   sign_out__text: {
     paddingLeft: 10,

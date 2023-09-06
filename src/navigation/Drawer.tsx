@@ -1,5 +1,6 @@
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import React, { useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Text } from 'react-native'
 
 import { PhoneRegisterStack } from './PhoneRegisterStack'
@@ -17,6 +18,7 @@ import { CategoryDetailScreen } from '~screens/CategoryDetailScreen'
 import { CategorySearchScreen } from '~screens/CategorySearchScreen'
 import { MenuScreen } from '~screens/MenuScreen'
 import { ProductInnerScreen } from '~screens/ProductInnerScreen'
+import { SupplierSearch } from '~screens/SupplierSearch'
 import { WishlistScreen } from '~screens/WishlistScreen'
 import { CheckOutScreen } from '~screens/cart/CheckOutScreen'
 import { ShopCartScreen } from '~screens/cart/ShopCartScreen'
@@ -35,6 +37,7 @@ const locale = 'ru'
 
 const Drawer = createDrawerNavigator()
 export const DrawerNavigator = () => {
+  const { t } = useTranslation()
   const renderCustomDrawerContent = useCallback((props: object) => {
     return <CustomDrawer {...props} />
   }, [])
@@ -248,6 +251,16 @@ export const DrawerNavigator = () => {
         component={ChangePasswordScreen}
         options={({ navigation, route }: any) => ({
           headerTitle: () => <Header navigation={navigation} title={'Change Password'} />,
+          headerLeft: () => null,
+        })}
+      />
+      <Drawer.Screen
+        name={SCREEN.SUPPLIER}
+        component={SupplierSearch}
+        options={({ navigation, route }: any) => ({
+          headerTitle: () => (
+            <Header navigation={navigation} title={t('navigation.screen_titles.supplier')} />
+          ),
           headerLeft: () => null,
         })}
       />

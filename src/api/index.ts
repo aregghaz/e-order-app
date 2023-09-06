@@ -122,6 +122,15 @@ export const SHOP_API = {
       })
       .catch((err) => console.log(err))
   },
+  getSupplierData: async (id: string) => {
+    return axios
+      .post(`${fakeUrl}/api/products/products-search?supplier=${id}`)
+      .then((res) => {
+        // console.log(res.data, 'data in supplier')
+        return res.data
+      })
+      .catch((err) => console.log(err))
+  },
   /*** Authentication ***/
   /* step 1 */
   setPhoneNumberRequest: async (phoneNumber: string) => {
