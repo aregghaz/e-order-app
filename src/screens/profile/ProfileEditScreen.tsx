@@ -1,6 +1,6 @@
 import {useFocusEffect, useNavigation} from '@react-navigation/native'
 import React, {FC, useCallback, useState} from 'react'
-import {ScrollView, StyleSheet, Text, TextInput, View} from 'react-native'
+import {SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
 
 import {SHOP_API} from '~api'
@@ -12,7 +12,6 @@ import {timestampToDate} from '~utils/dateTimeFormat'
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 
 export const ProfileEditScreen: FC = ({route}: any) => {
-    console.log(route.params, ' route.params route.params')
     const {typeData} = route.params;
     const navigation = useNavigation<any>()
 
@@ -52,14 +51,14 @@ export const ProfileEditScreen: FC = ({route}: any) => {
     const [passport, setPassport] = useState('')
     /// const [passportError, setpPassportError] = useState('')
     const [whoGive, setWhoGive] = useState('')
- ///   const [whoGiveError, setWhoGiveError] = useState('')
+    ///   const [whoGiveError, setWhoGiveError] = useState('')
     const [expireData, setExpireData] = useState('')
     /// const [expireDataError, setExpireDataError] = useState('')
 
     const [iih, setIih] = useState('')
-  ///  const [iihError, setIihError] = useState('')
+    ///  const [iihError, setIihError] = useState('')
     const [email, setEmail] = useState('')
-  ///  const [emailError, setEmailError] = useState('')
+    ///  const [emailError, setEmailError] = useState('')
     const [latloang, setLatloang] = useState({latitude: '', longitude: ''})
     const [locationa, setLocation] = useState({contry: '', state: '', city: '', address: ''})
 
@@ -67,36 +66,34 @@ export const ProfileEditScreen: FC = ({route}: any) => {
         useCallback(() => {
             const getAsyncData = async (): Promise<void> => {
                 const pesdonalData = await getUserData()
-                console.log(pesdonalData.customer, 'pesdonalData.customer')
                 if (pesdonalData.customer) {
+                    const custommerData = await SHOP_API.getCustommer(pesdonalData.customer.id)
+                    const dataUser = custommerData.payload
                     setLocation({
-                        contry: pesdonalData.customer.person.address.country,
-                        state: pesdonalData.customer.person.address.city,
-                        city: pesdonalData.customer.person.address.city,
-                        address: pesdonalData.customer.person.address.address_1
+                        contry: dataUser.person.address.country,
+                        state: dataUser.person.address.city,
+                        city: dataUser.person.address.city,
+                        address: dataUser.person.address.address_1
                     })
-                    setId(pesdonalData.customer.id)
-                    setName(pesdonalData.customer.person.firstName)
-                    setLastName(pesdonalData.customer.person.lastName)
-                    setFatherName(pesdonalData.customer.person.fatherName)
-                    setDob(pesdonalData.customer.person.birthDate)
-                    setLegalApartment(pesdonalData.customer.person.address.address_2)
-                    setLegalPostCode(pesdonalData.customer.person.address.postCode)
-                    setLegalPhone_1(pesdonalData.customer.person.address.phoneNumber1)
-                    setCityzen(pesdonalData.customer.person.citizenship.citizenship)
-                    setPassport(pesdonalData.customer.person.citizenship.passport)
-                    setWhoGive(pesdonalData.customer.person.citizenship.issuedBy)
-                    setExpireData(pesdonalData.customer.person.citizenship.issueDate)
-                    setIih(pesdonalData.customer.person.inn)
-                    setEmail(pesdonalData.customer.person.email)
+                    setId(dataUser.id)
+                    setName(dataUser.person.firstName)
+                    setLastName(dataUser.person.lastName)
+                    setFatherName(dataUser.person.fatherName)
+                    setDob(dataUser.person.birthDate)
+                    setLegalApartment(dataUser.person.address.address_2)
+                    setLegalPostCode(dataUser.person.address.postCode)
+                    setLegalPhone_1(dataUser.person.address.phoneNumber1)
+                    setCityzen(dataUser.person.citizenship.citizenship)
+                    setPassport(dataUser.person.citizenship.passport)
+                    setWhoGive(dataUser.person.citizenship.issuedBy)
+                    setExpireData(dataUser.person.citizenship.issueDate)
+                    setIih(dataUser.person.inn)
+                    setEmail(dataUser.person.email)
                     setType(true)
                 } else {
                     setType(false)
                 }
             }
-
-            ///  }
-            console.log(!typeData, 'typeData')
             if (typeData === false) {
                 resetValues()
             } else {
@@ -195,17 +192,15 @@ export const ProfileEditScreen: FC = ({route}: any) => {
             //     "updatedAt": "2023-08-25T09:12:24.462Z"
             // }
         }
-        console.log(body, type, id, '111111')
         if (isValid) {
             let dataCheck = false
             if (type) {
                 dataCheck = await SHOP_API.updateCustomerUser(body, id)
             } else {
                 dataCheck = await SHOP_API.fillingCustomerUser(body)
-                console.log(dataCheck, '22222222')
             }
             if (!dataCheck) {
-                resetValues()
+               /// resetValues()
             } else {
                 notification('Сохранено')
                 navigation.navigate(SCREEN.DRAWER_ROOT, {
@@ -248,209 +243,213 @@ export const ProfileEditScreen: FC = ({route}: any) => {
     }
 
     return (
-        <ScrollView contentContainerStyle={styles.CreateStoreScreen_wrapper}>
-            <View style={styles.innerWrapper}>
-                <>
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={(value) => {
-                            setName(value)
-                            setNameError(value.trim() === '' ? 'Обязательное поле.' : '')
-                        }}
-                        value={name}
-                        placeholder="Имя*"
-                    />
-                    <Text style={styles.errorText}>{nameError}</Text>
-                </>
-                <>
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={(value) => {
-                            setLastName(value)
-                            setLastNameError(value.trim() === '' ? 'Обязательное поле.' : '')
-                        }}
-                        value={lastname}
-                        placeholder="Фамилия*"
-                    />
-                    <Text style={styles.errorText}>{lastnameError}</Text>
-                </>
-                <>
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={(value) => {
-                            setFatherName(value)
-                            setFatherNameError(value.trim() === '' ? 'Обязательное поле.' : '')
-                        }}
-                        value={fatherName}
-                        placeholder="Отчество"
-                    />
-                    <Text style={styles.errorText}>{fatherNameError}</Text>
-                </>
-                <>
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={(value) => {
-                            setDobError(value.trim() === '' ? 'Обязательное поле.' : '')
-                        }}
-                        onPressIn={showDatePicker}
-                        value={timestampToDate(dob)}
-                        editable={false}
-                        placeholder="Дата рождения"
-                    />
-
-                    <Text style={styles.errorText}>{dobError}</Text>
-
-                    <DateTimePickerModal
-                        isVisible={isDatePickerVisible}
-                        mode="date"
-                        onConfirm={(date) => handleConfirm(date)}
-                        onCancel={hideDatePicker}
-                    />
-                </>
-                <>
-
-                    <GooglePlacesAutocomplete
-                        placeholder='Search'
-                        GooglePlacesDetailsQuery={{
-                            fields: 'geometry',
-                        }}
-                        textInputProps={{
-                            value:  locationa.address + ' ' + locationa.city + " "+ locationa.contry
-                        }}
-                        onPress={(data: any, details: any = null) => {
-                            setLocation({
-                                contry: data.terms[2].value,
-                                state: data.terms[1].value,
-                                city: data.terms[1].value,
-                                address: data.terms[0].value
-                            })
-                            setLatloang({
-                                latitude: details.geometry.location.lat,
-                                longitude: details.geometry.location.lng
-                            })
-                        }}
-                        fetchDetails={true}
-                        styles={{
-                            textInputContainer: {
-                                width: "100%",
-                                //top: 8,
-                                alignSelf: 'center'
-                            },
-                            textInput: {
-                                /// borderColor: grey,
-                                borderWidth: 1,
-                                borderRadius: 5,
-                                height: 48,
-                                paddingBottom: 8,
-                                //   color: black,
-                                fontSize: 16,
-                            },
-                            predefinedPlacesDescription: {
-                                color: '#1faadb',
-                            },
-                        }}
-                        query={{
-                            fields: 'geometry',
-                            key: 'AIzaSyBKkr76ZgeVEhZLj-ZT5u8XQBbT4SUQI5E',
-                            language: 'en',
-                        }}
-                    />
-
-                    <Text style={styles.errorText}>{legalAddressError}</Text>
-                </>
-                <View style={styles.inputsContainer}>
+        <SafeAreaView>
+            <ScrollView keyboardShouldPersistTaps='always' contentContainerStyle={styles.CreateStoreScreen_wrapper}>
+                <View style={styles.innerWrapper}>
                     <>
                         <TextInput
                             style={styles.input}
-                            onChangeText={setLegalApartment}
-                            value={legalApartment}
-                            placeholder="Квартира, блок, здание, этаж и т. д."
+                            onChangeText={(value) => {
+                                setName(value)
+                                setNameError(value.trim() === '' ? 'Обязательное поле.' : '')
+                            }}
+                            value={name}
+                            placeholder="Имя*"
                         />
-                        {/*<Text style={styles.errorText}>{legalApartmentError}</Text>*/}
+                        <Text style={styles.errorText}>{nameError}</Text>
                     </>
                     <>
                         <TextInput
                             style={styles.input}
-                            onChangeText={setLegalPostCode}
-                            value={legalPostCode}
-                            placeholder="Почтовый индекс"
+                            onChangeText={(value) => {
+                                setLastName(value)
+                                setLastNameError(value.trim() === '' ? 'Обязательное поле.' : '')
+                            }}
+                            value={lastname}
+                            placeholder="Фамилия*"
                         />
-                        {/*<Text style={styles.errorText}>{legalPostCodeError}</Text>*/}
+                        <Text style={styles.errorText}>{lastnameError}</Text>
                     </>
                     <>
                         <TextInput
                             style={styles.input}
-                            onChangeText={setLegalPhone_1}
-                            value={legalPhone_1}
-                            placeholder="Номер телефона"
+                            onChangeText={(value) => {
+                                setFatherName(value)
+                                setFatherNameError(value.trim() === '' ? 'Обязательное поле.' : '')
+                            }}
+                            value={fatherName}
+                            placeholder="Отчество"
                         />
-                        {/*<Text style={styles.errorText}>{legalPhoneError_1}</Text>*/}
+                        <Text style={styles.errorText}>{fatherNameError}</Text>
                     </>
+                    <>
+                        <TouchableOpacity style={styles.input} onPressIn={showDatePicker}>
+                            <TextInput
+                                onChangeText={(value) => {
+                                    setDobError(value.trim() === '' ? 'Обязательное поле.' : '')
+                                }}
+                                onPressIn={showDatePicker}
+                                value={timestampToDate(dob)}
+                                editable={false}
+                                placeholder="Дата рождения"
+                            />
+                        </TouchableOpacity>
+                        <Text style={styles.errorText}>{dobError}</Text>
+                        <DateTimePickerModal
+                            isVisible={isDatePickerVisible}
+                            mode="date"
+                            onConfirm={(date: any) => handleConfirm(date)}
+                            onCancel={hideDatePicker}
+                        />
+                    </>
+                    <>
+                        <GooglePlacesAutocomplete
+                            placeholder='Search'
+                            GooglePlacesDetailsQuery={{
+                                fields: 'geometry',
+                            }}
+                            setAddressText={{
+                                autoFocus: true,
+                                value: locationa.address + ' ' + locationa.city + " " + locationa.contry
+                            }}
+                            //   getDefaultValue={() => locationa.address + ' ' + locationa.city + " "+ locationa.contry}
+                            onPress={(data: any, details: any = null) => {
+                                console.log(details, 'detailsdetailsdetails')
+                                setLocation({
+                                    contry: data.terms[2].value,
+                                    state: data.terms[1].value,
+                                    city: data.terms[1].value,
+                                    address: data.terms[0].value
+                                })
+                                setLatloang({
+                                    latitude: details.geometry.location.lat,
+                                    longitude: details.geometry.location.lng
+                                })
+                            }}
+                            fetchDetails={true}
+                            styles={{
+                                textInputContainer: {
+                                    width: "100%",
+                                    //top: 8,
+                                    alignSelf: 'center'
+                                },
+                                textInput: {
+                                    /// borderColor: grey,
+                                    borderWidth: 1,
+                                    borderRadius: 5,
+                                    height: 48,
+                                    paddingBottom: 8,
+                                    //   color: black,
+                                    fontSize: 16,
+                                },
+                                predefinedPlacesDescription: {
+                                    color: '#1faadb',
+                                },
+                            }}
+                            query={{
+                                fields: 'geometry',
+                                key: 'AIzaSyBKkr76ZgeVEhZLj-ZT5u8XQBbT4SUQI5E',
+                                language: 'en',
+                            }}
+                        />
+
+                        <Text style={styles.errorText}>{legalAddressError}</Text>
+                    </>
+                    <View style={styles.inputsContainer}>
+                        <>
+                            <TextInput
+                                style={styles.input}
+                                onChangeText={setLegalApartment}
+                                value={legalApartment}
+                                placeholder="Квартира, блок, здание, этаж и т. д."
+                            />
+                            {/*<Text style={styles.errorText}>{legalApartmentError}</Text>*/}
+                        </>
+                        <>
+                            <TextInput
+                                style={styles.input}
+                                onChangeText={setLegalPostCode}
+                                value={legalPostCode}
+                                placeholder="Почтовый индекс"
+                            />
+                            {/*<Text style={styles.errorText}>{legalPostCodeError}</Text>*/}
+                        </>
+                        <>
+                            <TextInput
+                                style={styles.input}
+                                onChangeText={setLegalPhone_1}
+                                value={legalPhone_1}
+                                placeholder="Номер телефона"
+                            />
+                            {/*<Text style={styles.errorText}>{legalPhoneError_1}</Text>*/}
+                        </>
+                    </View>
+                    <>
+                        <TextInput
+                            style={styles.input}
+                            onChangeText={(value) => {
+                                setCityzen(value)
+                                setCityzenError(value.trim() === '' ? 'Обязательное поле.' : '')
+                            }}
+                            value={cityzen}
+                            placeholder="Гражданство"
+                        />
+                        <Text style={styles.errorText}>{cityzenError}</Text>
+                    </>
+                    <View style={styles.inputsContainer}>
+                        <>
+                            <TextInput
+                                style={styles.input}
+                                onChangeText={setPassport}
+                                value={passport}
+                                placeholder="Номер паспорта"
+                            />
+                            {/*<Text style={styles.errorText}>{passportError}</Text>*/}
+                        </>
+                        <>
+                            <TextInput
+                                style={styles.input}
+                                onChangeText={setExpireData}
+                                value={expireData}
+                                placeholder="Дата выдачи паспорта"
+                            />
+                            {/*<Text style={styles.errorText}>{expireDataError}</Text>*/}
+                        </>
+                        <>
+                            <TextInput
+                                style={styles.input}
+                                onChangeText={setWhoGive}
+                                value={whoGive}
+                                placeholder="Орган, выдавший документ"
+                            />
+                            {/*<Text style={styles.errorText}>{whoGiveError}</Text>*/}
+                        </>
+                    </View>
+                    <>
+                        <TextInput
+                            style={styles.input}
+                            onChangeText={(value) => {
+                                setIih(value)
+                            }}
+                            value={iih}
+                            placeholder="IIh"
+                        />
+                    </>
+                    <>
+                        <TextInput
+                            style={styles.input}
+                            onChangeText={(value) => {
+                                setEmail(value)
+                            }}
+                            value={email}
+                            placeholder="Адрес электронной почты"
+                        />
+                    </>
+                    <CustomButton title=" Сохранить " onPress={handleSave}/>
                 </View>
-                <>
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={(value) => {
-                            setCityzen(value)
-                            setCityzenError(value.trim() === '' ? 'Обязательное поле.' : '')
-                        }}
-                        value={cityzen}
-                        placeholder="Гражданство"
-                    />
-                    <Text style={styles.errorText}>{cityzenError}</Text>
-                </>
-                <View style={styles.inputsContainer}>
-                    <>
-                        <TextInput
-                            style={styles.input}
-                            onChangeText={setPassport}
-                            value={passport}
-                            placeholder="Номер паспорта"
-                        />
-                        {/*<Text style={styles.errorText}>{passportError}</Text>*/}
-                    </>
-                    <>
-                        <TextInput
-                            style={styles.input}
-                            onChangeText={setExpireData}
-                            value={expireData}
-                            placeholder="Дата выдачи паспорта"
-                        />
-                        {/*<Text style={styles.errorText}>{expireDataError}</Text>*/}
-                    </>
-                    <>
-                        <TextInput
-                            style={styles.input}
-                            onChangeText={setWhoGive}
-                            value={whoGive}
-                            placeholder="Орган, выдавший документ"
-                        />
-                        {/*<Text style={styles.errorText}>{whoGiveError}</Text>*/}
-                    </>
-                </View>
-                <>
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={(value) => {
-                            setIih(value)
-                        }}
-                        value={iih}
-                        placeholder="IIh"
-                    />
-                </>
-                <>
-                    <TextInput
-                        style={styles.input}
-                        onChangeText={(value) => {
-                            setEmail(value)
-                        }}
-                        value={email}
-                        placeholder="Адрес электронной почты"
-                    />
-                </>
-                <CustomButton title=" Сохранить " onPress={handleSave}/>
-            </View>
-        </ScrollView>
+            </ScrollView>
+        </SafeAreaView>
+
     )
 }
 

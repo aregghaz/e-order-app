@@ -46,7 +46,7 @@ export const PasswordStack: FC<IProps> = ({route}) => {
             return
         }
         let data
-        console.log(tokenData, token, mobile, reset, 'resetreset')
+       /// console.log(tokenData, token, mobile, reset, 'resetreset')
         if (reset != undefined) {
             data = await SHOP_API.resetPassword(token, mobile, password)
         } else {
