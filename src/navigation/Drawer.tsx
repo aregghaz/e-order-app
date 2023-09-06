@@ -12,7 +12,7 @@ import { Header } from '~navigation/Header'
 import { optionForScreen } from '~navigation/HeaderGlobalStyles'
 import { PasswordStack } from '~navigation/PasswordStack'
 import { RootNavigator } from '~navigation/RootNavigator'
-import { CategoryInnerScreen,  ProfileEditScreen, SignInScreen } from '~screens'
+import { CategoryInnerScreen, ProfileEditScreen, SignInScreen } from '~screens'
 import { CategoryDetailScreen } from '~screens/CategoryDetailScreen'
 import { CategorySearchScreen } from '~screens/CategorySearchScreen'
 import { MenuScreen } from '~screens/MenuScreen'
@@ -38,7 +38,6 @@ export const DrawerNavigator = () => {
   const renderCustomDrawerContent = useCallback((props: object) => {
     return <CustomDrawer {...props} />
   }, [])
-
 
   return (
     <Drawer.Navigator

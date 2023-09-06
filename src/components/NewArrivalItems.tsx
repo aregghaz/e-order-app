@@ -102,7 +102,6 @@ const styles = StyleSheet.create({
   },
 
   item: {
-
     backgroundColor: colors.itemColor,
     borderRadius: 8,
     height: '100%',

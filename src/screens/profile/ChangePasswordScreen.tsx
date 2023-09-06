@@ -1,8 +1,8 @@
-import {  useNavigation } from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 import React, { FC } from 'react'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet,  View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { ALERT_TYPE } from 'react-native-alert-notification'
 import { SHOP_API } from '~api'
 import { ControlledField } from '~components'
@@ -151,5 +151,5 @@ const styles = StyleSheet.create({
   },
   custom_Button: {
     marginTop: 20,
-  }
+  },
 })
