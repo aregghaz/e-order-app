@@ -72,4 +72,4 @@ export { useDebounce, useDebouncedCallback, useThrottledCallback } from 'use-deb
 export * from './useTimestamp'
 export * from './useCartCount'
 export { useNotificationController, useNotifications } from 'react-native-notificated'
-export { useAuthContext as useAuth } from '~contexts'
+export { useAuthContext as useAuth, useGlobalContext as useGlobal } from '~contexts'

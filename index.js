@@ -9,14 +9,14 @@ import '~i18n'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import { registerRootComponent } from 'expo'
 import { StyleSheet } from 'react-native'
+import { AlertNotificationRoot } from 'react-native-alert-notification'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { QueryClientProvider, QueryClient } from 'react-query'
-import { AlertNotificationRoot } from 'react-native-alert-notification'
 
 import { AppLoading } from '~components'
 import { theme, nativeBaseConfig } from '~constants'
 import { Navigation } from '~navigation'
-import { AuthProvider, NotificationsProvider, NativeBaseProvider } from '~providers'
+import { AuthProvider, NotificationsProvider, NativeBaseProvider, GlobalProvider } from '~providers'
 import { startMockedServer, colorModeManager } from '~services'
 
 // FIXME: there is some issue with miragejs that causes console.log to not work
@@ -36,17 +36,19 @@ const App = () => {
 
       <NotificationsProvider>
         <QueryClientProvider client={queryClient}>
-          <AuthProvider>
-            <AppLoading>
-              <GestureHandlerRootView style={styles.gestureHandlerRootView}>
-                <BottomSheetModalProvider>
-                  <AlertNotificationRoot>
-                    <Navigation />
-                  </AlertNotificationRoot>
-                </BottomSheetModalProvider>
-              </GestureHandlerRootView>
-            </AppLoading>
-          </AuthProvider>
+          <GlobalProvider>
+            <AuthProvider>
+              <AppLoading>
+                <GestureHandlerRootView style={styles.gestureHandlerRootView}>
+                  <BottomSheetModalProvider>
+                    <AlertNotificationRoot>
+                      <Navigation />
+                    </AlertNotificationRoot>
+                  </BottomSheetModalProvider>
+                </GestureHandlerRootView>
+              </AppLoading>
+            </AuthProvider>
+          </GlobalProvider>
         </QueryClientProvider>
       </NotificationsProvider>
     </NativeBaseProvider>

@@ -54,7 +54,8 @@
       "main_tab": "MainTab",
       "settings": "Settings",
       "application_info": "ApplicationInfo",
-      "not_found": "NotFound"
+      "not_found": "NotFound",
+      "supplier": "Supplier"
     }
   },
   "application_info_screen": {
