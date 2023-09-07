@@ -7,7 +7,7 @@ import { View, StyleSheet, Pressable } from 'react-native'
 import { EnglishSVG, RussiaSVG } from '../../assets/svg/flags'
 
 import { customStyles } from '~utils/style_helpers'
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next'
 
 const colors = {
   white: 'white',

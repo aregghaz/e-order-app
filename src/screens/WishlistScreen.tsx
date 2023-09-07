@@ -35,7 +35,6 @@ interface IWishListProductProps {
   itemId: string
 }
 
-
 const WishListProducts: FC<IWishListProductProps> = ({
   products,
   handleRemoveProductFromWishlist,
@@ -93,7 +92,7 @@ export const WishlistScreen: FC = () => {
   const [value, setValue] = useState<string>('')
   const { isSignedIn } = useAuth()
   const navigation = useNavigation<any>()
-  const {t} = useTranlation()
+  const { t } = useTranlation()
   useFocusEffect(
     useCallback(() => {
       const getWishListData = async () => {
@@ -360,6 +359,5 @@ const styles = StyleSheet.create({
   },
 })
 function useTranlation(): { t: any } {
-    throw new Error('Function not implemented.')
+  throw new Error('Function not implemented.')
 }
-

@@ -2,33 +2,33 @@
  * was created by tigran at 02.07.23
  */
 
-import {Ionicons} from '@expo/vector-icons'
-import {useFocusEffect} from '@react-navigation/native'
-import React, {FC, useCallback, useEffect, useRef, useState} from 'react'
+import { Ionicons } from '@expo/vector-icons'
+import { useFocusEffect } from '@react-navigation/native'
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react'
 import {
-    ActivityIndicator,
-    Dimensions,
-    FlatList,
-    Pressable,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  ActivityIndicator,
+  Dimensions,
+  FlatList,
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native'
-import {ALERT_TYPE} from 'react-native-alert-notification'
+import { ALERT_TYPE } from 'react-native-alert-notification'
 import Swiper from 'react-native-swiper'
 
-import {SHOP_API} from '~api'
-import {ImgOrSvg} from '~components/ImgOrSvg'
-import {ModalWishList} from '~components/ModalWishList'
-import {NoImageSvg} from '~components/NoImageSvg'
-import {CustomButton} from '~components/molecules/CustomButton'
-import {SCREEN} from '~constants'
-import {useAuth, useTranslation} from '~hooks'
-import {useIncrement} from '~hooks/useIncrement'
-import {getShopId, notification} from '~services/ShopService'
-import {IFeatured} from '~types/featuredProducts'
-import {customStyles} from '~utils/style_helpers'
+import { SHOP_API } from '~api'
+import { ImgOrSvg } from '~components/ImgOrSvg'
+import { ModalWishList } from '~components/ModalWishList'
+import { NoImageSvg } from '~components/NoImageSvg'
+import { CustomButton } from '~components/molecules/CustomButton'
+import { SCREEN } from '~constants'
+import { useAuth, useTranslation } from '~hooks'
+import { useIncrement } from '~hooks/useIncrement'
+import { getShopId, notification } from '~services/ShopService'
+import { IFeatured } from '~types/featuredProducts'
+import { customStyles } from '~utils/style_helpers'
 import InputNumber from '~components/molecules/InputNumber'
 
 const colors = {
@@ -51,59 +51,59 @@ const RenderFooter = ({ isLoading }: any) => {
   )
 }
 
-export const ProductInnerScreen: FC = ({route, navigation}: any) => {
-    const [featured, setFeatured] = useState<IFeatured[]>([])
-    const [isLoading, setIsLoading] = useState(false)
-    const [hasNext, setHasNext] = useState(false)
-    const [countProduct, setCount] = useState(1)
-    const [selectedOption, setSelectedOption] = useState<null | any>(null)
-    const [shopId, setShopId] = useState('')
-    const scrollViewRef = useRef<any>(null)
-    const [value, addOption] = useIncrement()
-    const width = Dimensions.get('window').width
-    const {params} = route
-    const activeItemRef = useRef(null)
-    const {isSignedIn} = useAuth()
-    const [modalVisible, setModalVisible] = useState(false)
-    const {t} = useTranslation()
-    const [productId, setProductId] = useState('')
+export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
+  const [featured, setFeatured] = useState<IFeatured[]>([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [hasNext, setHasNext] = useState(false)
+  const [countProduct, setCount] = useState(1)
+  const [selectedOption, setSelectedOption] = useState<null | any>(null)
+  const [shopId, setShopId] = useState('')
+  const scrollViewRef = useRef<any>(null)
+  const [value, addOption] = useIncrement()
+  const width = Dimensions.get('window').width
+  const { params } = route
+  const activeItemRef = useRef(null)
+  const { isSignedIn } = useAuth()
+  const [modalVisible, setModalVisible] = useState(false)
+  const { t } = useTranslation()
+  const [productId, setProductId] = useState('')
 
-    const activeBorder = {backgroundColor: colors.headingColor, color: colors.activeText}
-    const options = {
-        shopId: null,
-        page: value,
-        limit: 6,
-    }
+  const activeBorder = { backgroundColor: colors.headingColor, color: colors.activeText }
+  const options = {
+    shopId: null,
+    page: value,
+    limit: 6,
+  }
 
-    useFocusEffect(
-        useCallback(() => {
-            const getAsyncData = async (): Promise<void> => {
-                /// try {
-                setSelectedOption(null)
-                const getID = await getShopId()
-                setShopId(getID)
-                if (getID) {
-                    const featuredData = await SHOP_API.getTopDiscounts(options)
-                    setHasNext(featuredData.payload.pagination.hasNext)
-                    setFeatured((featured) => [...featured, ...featuredData.payload.content])
-                }
-                setIsLoading(true)
-                // } catch (err) {
-                //     console.error('Error fetching latest products:', err)
-                // } finally {
-                //     setIsLoading(false)
-                // }
-            }
-            getAsyncData()
-        }, [value])
-    )
-    useEffect(() => {
-        activeItemRef.current = null
+  useFocusEffect(
+    useCallback(() => {
+      const getAsyncData = async (): Promise<void> => {
+        /// try {
         setSelectedOption(null)
-        if (scrollViewRef.current) {
-            scrollViewRef.current.scrollToOffset({offset: 0})
+        const getID = await getShopId()
+        setShopId(getID)
+        if (getID) {
+          const featuredData = await SHOP_API.getTopDiscounts(options)
+          setHasNext(featuredData.payload.pagination.hasNext)
+          setFeatured((featured) => [...featured, ...featuredData.payload.content])
         }
-    }, [params.id])
+        setIsLoading(true)
+        // } catch (err) {
+        //     console.error('Error fetching latest products:', err)
+        // } finally {
+        //     setIsLoading(false)
+        // }
+      }
+      getAsyncData()
+    }, [value])
+  )
+  useEffect(() => {
+    activeItemRef.current = null
+    setSelectedOption(null)
+    if (scrollViewRef.current) {
+      scrollViewRef.current.scrollToOffset({ offset: 0 })
+    }
+  }, [params.id])
 
   const handleSelect = (elem: any) => {
     activeItemRef.current = elem.refId
@@ -146,78 +146,78 @@ export const ProductInnerScreen: FC = ({route, navigation}: any) => {
     navigation.navigate(SCREEN.SUPPLIER, { id: params.supplier.id })
   }
 
-    const handleUpdateQuantity = (cartItemId: string, id: string, count: number) => {
-        setCount(count)
-    }
-    const Header = useCallback(() => {
-        return (
-            <>
-                {params.gallery.length > 0 ? (
-                    <Swiper
-                        width={width}
-                        height={width}
-                        horizontal={true}
-                        loop={true}
-                        showsPagination={true}
-                        scrollEnabled={true}
-                        showsButtons={false}
-                        autoplay={false}
-                        autoplayTimeout={500}
-                        autoplayDirection={true}
-                        pagingEnabled={true}
-                    >
-                        {params.gallery.map((item: IFeatured) => {
-                            return (
-                                <React.Fragment key={item.id}>
-                                    <ImgOrSvg item={item} product="-product"/>
-                                </React.Fragment>
-                            )
-                        })}
-                    </Swiper>
-                ) : (
-                    <NoImageSvg width={width} height={width}/>
-                )}
-                <View style={styles.inner_wrapper}>
-                    <Text style={styles.title}>{params.name}</Text>
-                    <Text style={styles.description}>{params.description}</Text>
-                  <Pressable onPress={handleSearchSupplier}>
-                    <Text style={styles.supplier}>{params?.supplier?.companyName}</Text>
-                  </Pressable>
-                    <View style={styles.rating_block}>
-                        <Text style={styles.rates}>{params.reward}</Text>
-                        <Ionicons name="star" size={16} color="#FFC107"/>
-                        <View style={styles.slash}/>
-                        <Text style={styles.rates}>{params.rating} Ratings</Text>
-                    </View>
-                    <View style={styles.horizontal_row}/>
-                    <View>
-                        <Text style={styles.price}>₽ {params.price}</Text>
-                    </View>
-                    <View style={styles.horizontal_row}/>
-                    <View>
-                        <Text>Вложение</Text>
-                    </View>
-                    <View style={styles.each}>
-                        {params.properties.unit.length > 0 &&
-                            params.properties.unit.map((el: any, index: number) => (
-                                <Pressable onPress={() => handleSelect(el)} key={index}>
-                                    <Text
-                                        style={[styles.each_btn, activeItemRef.current === el.refId && activeBorder]}
-                                    >
-                                        {el.contents} {el.name}
-                                    </Text>
-                                </Pressable>
-                            ))}
-                    </View>
-                   <View style={styles.icrement}>
-                       <InputNumber
-                           qty={1}
-                           id={params.id}
-                           min={1}
-                           cartItemId={shopId}
-                           handleUpdateQuantity={handleUpdateQuantity}
-                       />
-                   </View>
+  const handleUpdateQuantity = (cartItemId: string, id: string, count: number) => {
+    setCount(count)
+  }
+  const Header = useCallback(() => {
+    return (
+      <>
+        {params.gallery.length > 0 ? (
+          <Swiper
+            width={width}
+            height={width}
+            horizontal={true}
+            loop={true}
+            showsPagination={true}
+            scrollEnabled={true}
+            showsButtons={false}
+            autoplay={false}
+            autoplayTimeout={500}
+            autoplayDirection={true}
+            pagingEnabled={true}
+          >
+            {params.gallery.map((item: IFeatured) => {
+              return (
+                <React.Fragment key={item.id}>
+                  <ImgOrSvg item={item} product="-product" />
+                </React.Fragment>
+              )
+            })}
+          </Swiper>
+        ) : (
+          <NoImageSvg width={width} height={width} />
+        )}
+        <View style={styles.inner_wrapper}>
+          <Text style={styles.title}>{params.name}</Text>
+          <Text style={styles.description}>{params.description}</Text>
+          <Pressable onPress={handleSearchSupplier}>
+            <Text style={styles.supplier}>{params?.supplier?.companyName}</Text>
+          </Pressable>
+          <View style={styles.rating_block}>
+            <Text style={styles.rates}>{params.reward}</Text>
+            <Ionicons name="star" size={16} color="#FFC107" />
+            <View style={styles.slash} />
+            <Text style={styles.rates}>{params.rating} Ratings</Text>
+          </View>
+          <View style={styles.horizontal_row} />
+          <View>
+            <Text style={styles.price}>₽ {params.price}</Text>
+          </View>
+          <View style={styles.horizontal_row} />
+          <View>
+            <Text>Вложение</Text>
+          </View>
+          <View style={styles.each}>
+            {params.properties.unit.length > 0 &&
+              params.properties.unit.map((el: any, index: number) => (
+                <Pressable onPress={() => handleSelect(el)} key={index}>
+                  <Text
+                    style={[styles.each_btn, activeItemRef.current === el.refId && activeBorder]}
+                  >
+                    {el.contents} {el.name}
+                  </Text>
+                </Pressable>
+              ))}
+          </View>
+          <View style={styles.icrement}>
+            <InputNumber
+              qty={1}
+              id={params.id}
+              min={1}
+              cartItemId={shopId}
+              handleUpdateQuantity={handleUpdateQuantity}
+            />
+          </View>
 
           <View style={styles.horizontal_row} />
           <View>
@@ -236,76 +236,77 @@ export const ProductInnerScreen: FC = ({route, navigation}: any) => {
    * ***/
   console.log(params, '!!!!!PARAMS')
 
-    return (
-        isLoading ? <View style={styles.ProductInnerScreen_wrapper}>
-                <FlatList
-                    numColumns={2}
-                    ref={scrollViewRef}
-                    data={featured}
-                    ListHeaderComponent={Header}
-                    keyExtractor={(item) => item.id}
-                    renderItem={({item}) => (
-                        <TouchableOpacity
-                            style={styles.item}
-                            onPress={() => {
-                                navigation.navigate(SCREEN.STACK_PRODUCT_INNER, item)
-                            }}
-                        >
-                            <ImgOrSvg item={item} padding={20} product="-product"/>
-                            <View style={styles.textContainer}>
-                                <Text style={styles.name}>{item.name}</Text>
-                            </View>
-                            <View>
-                                <Text style={styles.price}>₽ {item.price}</Text>
-                            </View>
-                        </TouchableOpacity>
-                    )}
-                    ListFooterComponent={<RenderFooter isLoading={isLoading}/>}
-                    // onEndReached={() => addOption(1)}
-                    onEndReached={handleEnd}
-                    onEndReachedThreshold={0.5}
-                />
-                <View style={styles.fix_footer}>
-                    <View style={styles.btn_wrapper}>
-                        <CustomButton
-                            title="Wishlist"
-                            padding={10}
-                            color="black"
-                            border="grey"
-                            // onPress={() => handlerOpenModal()}
-                            // onPress={() => setModalVisible(true)}
-                            onPress={() => {
-                                setModalVisible(true)
-                                setProductId(params.id)
-                            }}
-                        />
-                    </View>
-                    <View style={styles.btn_wrapper}>
-                        <CustomButton
-                            title="Add To Cart"
-                            padding={10}
-                            onPress={handleAddToCart}
-                            background="black"
-                        />
-                    </View>
-                </View>
-
-                <ModalWishList
-                    productId={productId}
-                    modalVisible={modalVisible}
-                    setModalVisible={setModalVisible}
-                />
-            </View> :
-            <View style={[styles.container, styles.horizontal]}>
-                <ActivityIndicator size="large"/>
+  return isLoading ? (
+    <View style={styles.ProductInnerScreen_wrapper}>
+      <FlatList
+        numColumns={2}
+        ref={scrollViewRef}
+        data={featured}
+        ListHeaderComponent={Header}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            style={styles.item}
+            onPress={() => {
+              navigation.navigate(SCREEN.STACK_PRODUCT_INNER, item)
+            }}
+          >
+            <ImgOrSvg item={item} padding={20} product="-product" />
+            <View style={styles.textContainer}>
+              <Text style={styles.name}>{item.name}</Text>
             </View>
-    )
+            <View>
+              <Text style={styles.price}>₽ {item.price}</Text>
+            </View>
+          </TouchableOpacity>
+        )}
+        ListFooterComponent={<RenderFooter isLoading={isLoading} />}
+        // onEndReached={() => addOption(1)}
+        onEndReached={handleEnd}
+        onEndReachedThreshold={0.5}
+      />
+      <View style={styles.fix_footer}>
+        <View style={styles.btn_wrapper}>
+          <CustomButton
+            title="Wishlist"
+            padding={10}
+            color="black"
+            border="grey"
+            // onPress={() => handlerOpenModal()}
+            // onPress={() => setModalVisible(true)}
+            onPress={() => {
+              setModalVisible(true)
+              setProductId(params.id)
+            }}
+          />
+        </View>
+        <View style={styles.btn_wrapper}>
+          <CustomButton
+            title="Add To Cart"
+            padding={10}
+            onPress={handleAddToCart}
+            background="black"
+          />
+        </View>
+      </View>
+
+      <ModalWishList
+        productId={productId}
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+      />
+    </View>
+  ) : (
+    <View style={[styles.container, styles.horizontal]}>
+      <ActivityIndicator size="large" />
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
-    icrement:{
-        marginTop: 20
-    },
+  icrement: {
+    marginTop: 20,
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
