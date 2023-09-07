@@ -5,6 +5,7 @@ import { AntDesign, Entypo, Feather } from '@expo/vector-icons'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import React, { FC, useCallback, useState } from 'react'
 import { Modal, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
+import { ALERT_TYPE } from 'react-native-alert-notification'
 
 import { SHOP_API } from '~api'
 import { ImgOrSvg } from '~components/ImgOrSvg'
@@ -33,6 +34,7 @@ interface IWishListProductProps {
   handleRemoveProductFromWishlist: (productID: string, id: string) => void
   itemId: string
 }
+
 
 const WishListProducts: FC<IWishListProductProps> = ({
   products,
@@ -91,7 +93,7 @@ export const WishlistScreen: FC = () => {
   const [value, setValue] = useState<string>('')
   const { isSignedIn } = useAuth()
   const navigation = useNavigation<any>()
-
+  const {t} = useTranlation()
   useFocusEffect(
     useCallback(() => {
       const getWishListData = async () => {
@@ -135,7 +137,35 @@ export const WishlistScreen: FC = () => {
   const handleDeleteList = async (id: string) => {
     setModalVisible(false)
     await SHOP_API.deleteWishListItem(id)
+    setRefreshTrigger(!refreshTrigger)
   }
+  // const handleAddToCart = async () => {
+  //   if (!isSignedIn) {
+  //     notification(t('notification.signIn'), ALERT_TYPE.WARNING)
+  //     navigation.navigate(SCREEN.STACK_SIGN_IN)
+  //   } else {
+  //     if (!selectedOption) {
+  //       notification(t('notification.chose_unit'), ALERT_TYPE.WARNING)
+  //     } else {
+  //       delete selectedOption.productId
+  //       // const data = {
+  //       //   properties: {
+  //       //     unit: selectedOption,
+  //       //   },
+  //       //   shop: shopId,
+  //       //   productId: params.id,
+  //       //   quantity: countProduct,
+  //       // }
+  //       // console.log(data,'datadata')
+  //       const add = await SHOP_API.addToCart(data)
+  //       if (!add) {
+  //         notification('SOMETHING WRONG', ALERT_TYPE.DANGER)
+  //       } else {
+  //         notification('Добавлено в корзину')
+  //       }
+  //     }
+  //   }
+  // }
 
   return (
     <View style={styles.WishlistScreen_wrapper}>
@@ -329,3 +359,7 @@ const styles = StyleSheet.create({
     padding: 5,
   },
 })
+function useTranlation(): { t: any } {
+    throw new Error('Function not implemented.')
+}
+

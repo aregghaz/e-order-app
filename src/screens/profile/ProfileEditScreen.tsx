@@ -9,7 +9,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
 
 import { SHOP_API } from '~api'
@@ -18,6 +17,7 @@ import { SCREEN } from '~constants'
 import { notification } from '~services/ShopService'
 import { getUserData } from '~services/UserService'
 import { checkAge, timestampToDate } from '~utils/dateTimeFormat'
+import { GooglePlacesAutocomplete, Point } from 'react-native-google-places-autocomplete'
 
 export const ProfileEditScreen: FC = ({ route }: any) => {
   const { typeData } = route.params
@@ -345,10 +345,6 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
                   latitude: details.geometry.location.lat,
                   longitude: details.geometry.location.lng,
                 })
-                // setLatloang2({
-                //   latitude: details.geometry.location.lat,
-                //   longitude: details.geometry.location.lng,
-                // })
               }}
               fetchDetails={true}
               styles={{
