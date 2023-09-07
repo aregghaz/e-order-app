@@ -178,7 +178,8 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
         )}
         <View style={styles.inner_wrapper}>
           <Text style={styles.title}>{params.name}</Text>
-          <Text style={styles.description}>{params.description}</Text><Pressable onPress={handleSearchSupplier}>
+          <Text style={styles.description}>{params.description}</Text>
+          <Pressable onPress={handleSearchSupplier}>
             <Text style={styles.supplier}>{params?.supplier?.companyName}</Text>
           </Pressable>
           <View style={styles.rating_block}>
@@ -309,9 +310,9 @@ const styles = StyleSheet.create({
   icrement: {
     marginTop: 20,
   },
-    supplier: {
-        marginVertical: 10,
-    },
+  supplier: {
+    marginVertical: 10,
+  },
   horizontal: {
     flexDirection: 'row',
     justifyContent: 'space-around',
