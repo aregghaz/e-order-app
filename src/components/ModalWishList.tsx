@@ -57,10 +57,10 @@ export const ModalWishList: FC<IProps> = ({ setModalVisible, modalVisible, produ
 
     if (hasProduct) {
       await SHOP_API.removeFromWishList(productId, id)
-      await notification('Успешно удален из списка')
+      // await notification('Успешно удален из списка')
     } else {
       await SHOP_API.addToWishList(productId, id)
-      await notification('Успешно добавлено в список')
+      // await notification('Успешно добавлено в список')
     }
   }
 

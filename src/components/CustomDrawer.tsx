@@ -6,7 +6,7 @@ import { Feather, FontAwesome5 } from '@expo/vector-icons'
 // import { DrawerContentScrollView } from '@react-navigation/drawer'
 import { useFocusEffect } from '@react-navigation/native'
 import React, { FC, useState } from 'react'
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import { fakeData } from '~FakeData'
 import { Accordion, TIcon } from '~components/Accordion'
@@ -43,8 +43,10 @@ export const CustomDrawer: FC = (props: any) => {
     props.navigation.closeDrawer()
   }
 
+  const addPadding = isSignedIn ? { paddingTop: 0 } : { paddingTop: 50 }
+
   return (
-    <View style={styles.sidebar}>
+    <SafeAreaView style={[styles.sidebar, addPadding]}>
       {isSignedIn && data && (
         <View style={styles.infoBlock}>
           <View style={styles.imageWrapper}>
@@ -103,7 +105,7 @@ export const CustomDrawer: FC = (props: any) => {
         </View>
       </TouchableOpacity>
       {/*<Switch />*/}
-    </View>
+    </SafeAreaView>
   )
 }
 

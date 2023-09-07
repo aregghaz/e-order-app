@@ -30,6 +30,8 @@ export interface IWishlistProduct {
   status: string
   updatedAt: string
   views: number
+  price: string
+  reward: string
 }
 
 interface IUnit {
