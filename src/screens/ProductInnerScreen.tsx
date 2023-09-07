@@ -233,7 +233,7 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
    *We are always getting different products in different pages!!!!!!!!!!!
    *
    * ***/
-  console.log(params, '!!!!!PARAMS')
+  console.log(params, 'PRODUCT IN INNERPAGE')
 
   return isLoading ? (
     <View style={styles.ProductInnerScreen_wrapper}>

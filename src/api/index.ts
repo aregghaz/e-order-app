@@ -483,12 +483,17 @@ export const SHOP_API = {
 
   addToWishList: async (productId: string, id: string) => {
     const tokenUSer = await getToken()
+    console.log(tokenUSer, 'toke!!!!!')
+    if (!tokenUSer) {
+      await notification('Сперва нужно войти!!!', ALERT_TYPE.WARNING)
+    }
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
     return axios
       .put(
         `${fakeUrl}/api/favorite-products-lists/add-favorite-product?id=${id}&productId=${productId}`
       )
       .then((res) => {
+        notification('Успешно добавлено в список')
         return res.data
       })
       .catch((err) => console.log(err))
@@ -514,6 +519,7 @@ export const SHOP_API = {
     return axios
       .delete(`${fakeUrl}/api/favorite-products-lists/delete-favorite-list/${id}`)
       .then((res) => {
+        notification('Успешно удален!!')
         return res.data
       })
       .catch((err) => console.log(err))
@@ -534,6 +540,18 @@ export const SHOP_API = {
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
     return axios
       .get(`${fakeUrl}/api/favorite-products-lists/get-favorite-lists?limit=100`)
+      .then((res) => {
+        return res.data
+      })
+      .catch((err) => console.log(err))
+  },
+  getWishListID: async (id: string, shopId: string) => {
+    const tokenUSer = await getToken()
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
+    return axios
+      .get(
+        `${fakeUrl}/api/favorite-products-lists/get-favorite-list/${id}?shopId=${shopId}&limit=100`
+      )
       .then((res) => {
         return res.data
       })

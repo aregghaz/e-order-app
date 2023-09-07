@@ -1,19 +1,18 @@
 /**
  * was created by tigran at 08.08.23
  */
-import { AntDesign, Entypo, Feather } from '@expo/vector-icons'
+import { Entypo, Feather } from '@expo/vector-icons'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
-import React, { FC, useCallback, useState } from 'react'
+import React, { FC, useCallback, useEffect, useState } from 'react'
 import { Modal, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
-import { ALERT_TYPE } from 'react-native-alert-notification'
 
 import { SHOP_API } from '~api'
-import { ImgOrSvg } from '~components/ImgOrSvg'
+import { WishListProducts } from '~components/WishListProducts'
 import { SCREEN } from '~constants'
 import { useAuth } from '~hooks'
-import { notification } from '~services/ShopService'
+import { getShopId, notification } from '~services/ShopService'
 import { screenHeight, screenWidth } from '~utils/breakpoints'
-import { IWishlist, IWishlistProduct } from '~utils/helper'
+import { IWishlist } from '~utils/helper'
 import { customStyles } from '~utils/style_helpers'
 
 const colors = {
@@ -29,91 +28,58 @@ const colors = {
   delete: 'red',
 }
 
-interface IWishListProductProps {
-  products: IWishlistProduct[]
-  handleRemoveProductFromWishlist: (productID: string, id: string) => void
-  itemId: string
-}
-
-const WishListProducts: FC<IWishListProductProps> = ({
-  products,
-  handleRemoveProductFromWishlist,
-  itemId,
-}) => {
-  return (
-    <View>
-      {products?.length > 0 &&
-        products.map((item: IWishlistProduct) => {
-          return (
-            <View key={item.id} style={styles.product_wrapper}>
-              <ImgOrSvg item={item} product="-product" padding={20} width={80} />
-              <View>
-                <Text>{item.name}</Text>
-              </View>
-              <View>
-                <Text>Rating : {item.rating}</Text>
-              </View>
-              <View>
-                <Text>Views : {item.views}</Text>
-              </View>
-              <View>
-                <Text>Status : {item.status}</Text>
-              </View>
-              <View style={styles.icons}>
-                <AntDesign
-                  name="shoppingcart"
-                  size={24}
-                  color="black"
-                  onPress={() => alert(item.id)}
-                  style={styles.icon}
-                />
-                <AntDesign
-                  name="delete"
-                  size={24}
-                  color="red"
-                  onPress={() => handleRemoveProductFromWishlist(item.id, itemId)}
-                  style={styles.icon}
-                />
-              </View>
-            </View>
-          )
-        })}
-    </View>
-  )
-}
-
 export const WishlistScreen: FC = () => {
   const [wishList, setWishList] = useState<IWishlist[]>([])
-  const [foundList, setFoundList] = useState<null | IWishlist>(null)
+  const [wishListProducts, setWishListProducts] = useState<IWishlist[]>([])
   const [modalVisible, setModalVisible] = useState<boolean>(false)
   const [edit, setEdit] = useState<boolean>(false)
   const [refreshTrigger, setRefreshTrigger] = useState<boolean>(false)
   const [id, setId] = useState<string>('')
+  const [shopID, setShopID] = useState<string>('')
   const [value, setValue] = useState<string>('')
   const { isSignedIn } = useAuth()
   const navigation = useNavigation<any>()
-  const { t } = useTranlation()
+  // const { t } = useTranlation()
   useFocusEffect(
     useCallback(() => {
       const getWishListData = async () => {
         if (isSignedIn) {
+          const getID = await getShopId()
+          setShopID(getID)
           const wishListData = await SHOP_API.getWishList()
+          const wishListDataItem = await SHOP_API.getWishListID(
+            wishListData.payload.content[0].id,
+            getID
+          )
           if (wishListData) {
+            setId(wishListData.payload.content[0].id)
             setWishList(wishListData.payload.content)
+            setWishListProducts(wishListDataItem.payload.products)
           }
         } else {
           navigation.navigate(SCREEN.STACK_SIGN_IN)
         }
       }
       getWishListData()
-    }, [wishList, refreshTrigger, foundList])
+    }, [])
   )
 
-  const handleLoadProducts = (id: string) => {
+  useEffect(() => {
+    const getAsyncRefreshData = async () => {
+      const wishListData = await SHOP_API.getWishList()
+      setWishList(wishListData.payload.content)
+      handleLoadProducts(id)
+    }
+    getAsyncRefreshData()
+  }, [refreshTrigger])
+
+  const handleLoadProducts = async (id: string) => {
     setId(id)
-    const filteredListItem = wishList.find((item: IWishlist) => item.id === id)
+    const newData = await SHOP_API.getWishListID(id, shopID)
+    const filteredListItem = newData.payload.products
     if (!filteredListItem) return false
-    setFoundList(filteredListItem)
+
+    setWishListProducts(filteredListItem)
   }
 
   const handleRemoveProductFromWishlist = async (productId: string, id: string) => {
@@ -138,33 +104,6 @@ export const WishlistScreen: FC = () => {
     await SHOP_API.deleteWishListItem(id)
     setRefreshTrigger(!refreshTrigger)
   }
-  // const handleAddToCart = async () => {
-  //   if (!isSignedIn) {
-  //     notification(t('notification.signIn'), ALERT_TYPE.WARNING)
-  //     navigation.navigate(SCREEN.STACK_SIGN_IN)
-  //   } else {
-  //     if (!selectedOption) {
-  //       notification(t('notification.chose_unit'), ALERT_TYPE.WARNING)
-  //     } else {
-  //       delete selectedOption.productId
-  //       // const data = {
-  //       //   properties: {
-  //       //     unit: selectedOption,
-  //       //   },
-  //       //   shop: shopId,
-  //       //   productId: params.id,
-  //       //   quantity: countProduct,
-  //       // }
-  //       // console.log(data,'datadata')
-  //       const add = await SHOP_API.addToCart(data)
-  //       if (!add) {
-  //         notification('SOMETHING WRONG', ALERT_TYPE.DANGER)
-  //       } else {
-  //         notification('Добавлено в корзину')
-  //       }
-  //     }
-  //   }
-  // }
 
   return (
     <View style={styles.WishlistScreen_wrapper}>
@@ -173,7 +112,7 @@ export const WishlistScreen: FC = () => {
           <ScrollView horizontal={true} contentContainerStyle={styles.scroll_style}>
             {wishList.length > 0 &&
               wishList.map((item: IWishlist) => {
-                const activeMenu = foundList && item.id === foundList?.id
+                const activeMenu = item.id === id
                 return (
                   <Pressable
                     key={item.id}
@@ -206,9 +145,9 @@ export const WishlistScreen: FC = () => {
       </View>
       <ScrollView>
         <View>
-          {wishList.length > 0 && foundList && Object.keys(foundList).length > 0 && (
+          {wishListProducts.length > 0 && (
             <WishListProducts
-              products={foundList.products}
+              products={wishListProducts as any}
               handleRemoveProductFromWishlist={handleRemoveProductFromWishlist}
               itemId={id}
             />
@@ -280,14 +219,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: screenWidth,
   },
-  icon: {
-    marginVertical: 10,
-  },
-  icons: {
-    position: 'absolute',
-    right: 10,
-    top: 5,
-  },
   input: {
     ...customStyles.border(1, 'solid', colors.borderColor),
     borderRadius: 4,
@@ -312,16 +243,6 @@ const styles = StyleSheet.create({
     // ...customStyles.border(1, 'solid', colors.borderColor),
   },
   passive: {},
-  product_wrapper: {
-    ...customStyles.border(1, 'solid', colors.borderColor),
-    borderRadius: 4,
-    gap: 10,
-    margin: 10,
-    minHeight: 100,
-    padding: 10,
-    paddingRight: 40,
-    position: 'relative',
-  },
   scroll_style: {
     gap: 10,
   },
@@ -358,6 +279,6 @@ const styles = StyleSheet.create({
     padding: 5,
   },
 })
-function useTranlation(): { t: any } {
-  throw new Error('Function not implemented.')
-}
+// function useTranlation(): { t: any } {
+//   throw new Error('Function not implemented.')
+// }
