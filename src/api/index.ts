@@ -5,6 +5,7 @@ import { getToken } from '~services'
 import { notification } from '~services/ShopService'
 import { IProfile } from '~types/authForms'
 import { IShopDetails } from '~types/shop'
+import { ErrorStatusCodeHandling } from '~utils/helper'
 
 interface IOptions {
   shopId: string | null
@@ -195,13 +196,16 @@ export const SHOP_API = {
   },
   /* step 4 */
   signInRequest: async (phone: string, password: string) => {
-    console.log(phone, password, 'request!!!!')
+    // console.log(phone, password, 'request!!!!')
     return axios
       .post(`${fakeUrl}/api/auth/customer-login`, { login: phone, password })
       .then((res) => {
         return res.data
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        console.log(err)
+        ErrorStatusCodeHandling(err.request.status)
+      })
   },
   /* step 5 */
   createCustomerAccount: async (data = {}) => {
@@ -478,15 +482,14 @@ export const SHOP_API = {
       .then((res) => {
         return res.data
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        console.log(err, '__ createWishList')
+        ErrorStatusCodeHandling(err.request.status)
+      })
   },
 
   addToWishList: async (productId: string, id: string) => {
     const tokenUSer = await getToken()
-    console.log(tokenUSer, 'toke!!!!!')
-    if (!tokenUSer) {
-      await notification('Сперва нужно войти!!!', ALERT_TYPE.WARNING)
-    }
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
     return axios
       .put(
@@ -496,7 +499,10 @@ export const SHOP_API = {
         notification('Успешно добавлено в список')
         return res.data
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        console.log(err, '__ addToWishList')
+        ErrorStatusCodeHandling(err.request.status)
+      })
   },
 
   removeFromWishList: async (productId: string, id: string) => {

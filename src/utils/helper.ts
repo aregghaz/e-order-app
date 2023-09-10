@@ -1,4 +1,6 @@
 import { SCREEN } from '~constants'
+import { notification } from "~services/ShopService";
+import { ALERT_TYPE } from "react-native-alert-notification";
 
 export interface IWishlist {
   customer: {
@@ -68,5 +70,16 @@ export const ScreenNameChanger = (name: string) => {
       return SCREEN.TAB_CONTACT
     default:
       return SCREEN.DRAWER_MENU
+  }
+}
+
+export const ErrorStatusCodeHandling = (statusCode: number) => {
+  switch (statusCode) {
+    case 401:
+      return notification('Сперва нужно войти!!!', ALERT_TYPE.WARNING)
+    case 404:
+      return notification('Такого пользователя не существует ', ALERT_TYPE.WARNING)
+    default:
+      return notification('Что то пошло не так.', ALERT_TYPE.WARNING)
   }
 }
