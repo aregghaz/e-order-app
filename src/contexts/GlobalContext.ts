@@ -9,6 +9,8 @@ export type GlobalContextType = {
   surname: string
   setName: (name: string) => void
   setSurname: (surname: string) => void
+  setUserData: (object: any) => void
+  userData: any
 }
 
 export const [useGlobalContext, GlobalContextProvider] =
