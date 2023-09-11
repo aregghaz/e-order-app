@@ -44,13 +44,13 @@ export const SCREEN = {
 }
 
 export const MENUS = {
-  HOME: 'Home',
-  SHOP_LIST: 'Shop List',
-  PROFILE: 'Profile',
-  PERSONAL_INFO: 'Personal Info',
-  CHANGE_PASSWORD: 'Change Password',
-  EDIT_PROFILE: 'Edit Profile',
-  ORDER_LIST: 'Order List',
-  PARTNERS: 'Partners',
-  CONTACT_US: 'Contact Us',
+  HOME: 'menu.home',
+  SHOP_LIST: 'menu.shop_list',
+  PROFILE: 'menu.profile',
+  PERSONAL_INFO: 'menu.personal_info',
+  CHANGE_PASSWORD: 'menu.change_password',
+  EDIT_PROFILE: 'menu.edit_profile',
+  ORDER_LIST: 'menu.order_list',
+  PARTNERS: 'menu.partners',
+  CONTACT_US: 'menu.contact_us',
 }

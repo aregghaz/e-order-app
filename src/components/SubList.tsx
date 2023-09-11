@@ -2,6 +2,7 @@
  * was created by tigran at 01.07.23
  */
 import React, { FC } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import { SCREEN } from '~constants'
@@ -26,6 +27,7 @@ export const SubList: FC<IProps> = ({
   group,
   shop_id,
 }) => {
+  const { t } = useTranslation()
   const handlePressCheck = async (title: string, group: string, shop_id: string) => {
     console.log(title, 'title')
     if (group === 'shop') {
@@ -46,7 +48,8 @@ export const SubList: FC<IProps> = ({
   return (
     <TouchableOpacity onPress={() => handlePressCheck(title, group!, shop_id!)}>
       <View style={styles.SubList_wrapper}>
-        <Text>{title}</Text>
+        {/*<Text>{title}</Text>*/}
+        <Text>{t(title)}</Text>
       </View>
     </TouchableOpacity>
   )

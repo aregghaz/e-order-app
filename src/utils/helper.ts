@@ -52,21 +52,21 @@ export const findTheExactElement = (array: IWishlist[], itemId: string, productI
 
 export const ScreenNameChanger = (name: string) => {
   switch (name) {
-    case 'Home':
+    case 'menu.home':
       return SCREEN.TAB_HOME
-    case 'Shop List':
+    case 'menu.shop_list':
       return SCREEN.STACK_SHOP_LIST
-    case 'Personal Info':
+    case 'menu.personal_info':
       return SCREEN.TAB_PROFILE
-    case 'Change Password':
+    case 'menu.change_password':
       return SCREEN.CHANGE_PASSWORD
-    case 'Edit Profile':
+    case 'menu.edit_profile':
       return SCREEN.PROFILE_EDIT
-    case 'Order List':
+    case 'menu.order_list':
       return SCREEN.STACK_ORDER_LIST
-    case 'Partners':
+    case 'menu.partners':
       return SCREEN.PARTNER_SHIP
-    case 'Contact Us':
+    case 'menu.contact_us':
       return SCREEN.TAB_CONTACT
     default:
       return SCREEN.DRAWER_MENU

@@ -6,13 +6,14 @@ import { Feather, FontAwesome5 } from '@expo/vector-icons'
 // import { DrawerContentScrollView } from '@react-navigation/drawer'
 import { useFocusEffect } from '@react-navigation/native'
 import React, { FC, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import { fakeData } from '~FakeData'
 import { Accordion, TIcon } from '~components/Accordion'
 import { ImgOrSvg } from '~components/ImgOrSvg'
 /*FIXME do not delete this part*/
-// import { LanguageToggle } from '~components/LanguageToggle'
+import { LanguageToggle } from '~components/LanguageToggle'
 import { SCREEN } from '~constants'
 import { useAuth } from '~hooks'
 import { IProps } from '~screens'
@@ -21,6 +22,7 @@ import { customStyles } from '~utils/style_helpers'
 
 export const CustomDrawer: FC = (props: any) => {
   const { signOut, isSignedIn } = useAuth()
+  const { t } = useTranslation()
   const [data, setData] = useState<IProps>({} as IProps)
 
   useFocusEffect(
@@ -59,7 +61,7 @@ export const CustomDrawer: FC = (props: any) => {
       )}
       <ScrollView>
         {/*FIXME do not delete this part*/}
-        {/*<LanguageToggle {...props} />*/}
+        <LanguageToggle {...props} />
         {fakeData.accordion &&
           fakeData.accordion.map((item: any) => {
             if (isSignedIn) {
@@ -94,12 +96,12 @@ export const CustomDrawer: FC = (props: any) => {
           {isSignedIn ? (
             <>
               <Feather name="log-out" size={20} />
-              <Text style={styles.sign_out__text}>Sign Out</Text>
+              <Text style={styles.sign_out__text}>{t('settings_screen.sign_out')}</Text>
             </>
           ) : (
             <>
               <FontAwesome5 name="user-circle" size={20} />
-              <Text style={styles.sign_out__text}>Sign In</Text>
+              <Text style={styles.sign_out__text}>{t('common.sign_in')}</Text>
             </>
           )}
         </View>

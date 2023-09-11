@@ -125,7 +125,8 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
           },
           shop: shopId,
           productId: params.id,
-          quantity: 1,
+          // quantity: 1,
+          quantity: countProduct,
         }
 
         const add = await SHOP_API.addToCart(data)

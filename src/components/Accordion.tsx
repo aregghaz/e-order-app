@@ -1,10 +1,12 @@
 import { Feather } from '@expo/vector-icons'
 import React, { FC, useCallback, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native'
 
 import { SubList } from '~components/SubList'
 // import { SCREEN } from '~constants'
 import { ScreenNameChanger } from '~utils/helper'
+
 //import { useAuth } from '~hooks'
 
 export type TIcon =
@@ -35,6 +37,7 @@ export const Accordion: FC<IProps> = ({
 }) => {
   const [rotateState, setRotateState] = useState(false)
   const [rotateValue, setRotateValue] = useState('0deg')
+  const { t } = useTranslation()
 
   const handlePress = useCallback(() => {
     setRotateState(!rotateState)
@@ -76,7 +79,8 @@ export const Accordion: FC<IProps> = ({
           <View style={styles.accordion_text__wrapper}>
             <View style={styles.sidebar_icon__block}>
               <Feather name={iconName} size={20} />
-              <Text style={styles.text}>{title}</Text>
+              {/*<Text style={styles.text}>{title}</Text>*/}
+              <Text style={styles.text}>{t(title)}</Text>
             </View>
             {hasChildren && <Feather name="chevron-left" size={18} style={chevronStyle} />}
           </View>

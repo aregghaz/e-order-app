@@ -29,10 +29,9 @@ export const ShopCartScreen: FC = ({ navigation }: any) => {
     total: 0,
     totalReward: 0,
   })
-
   useFocusEffect(
     useCallback(() => {
-      setCarts([])
+      // setCarts([])
       const getShopCarts = async () => {
         const getID = await getShopId()
 
@@ -139,28 +138,28 @@ export const ShopCartScreen: FC = ({ navigation }: any) => {
               <Text>There is no products here</Text>
             </View>
           )}
-        </View>
-      </View>
-      <View style={styles.btn_wrapper}>
-        <View style={styles.orderViewContainer}>
-          <View style={styles.orderView}>
-            <Text> Итоги: </Text>
-            <View style={styles.hr} />
-            <Text>Поставщик: {carData.selectedShops}</Text>
-            <Text>Магазин: {carData.shop} </Text>
-            <Text>Бонус за заказ : {carData.totalReward.toFixed(2)}</Text>
-            <Text>Итоговая сумма : {carData.total.toFixed(2)} </Text>
+          <View style={styles.btn_wrapper}>
+            <View style={styles.orderViewContainer}>
+              <View style={styles.orderView}>
+                <Text> Итоги: </Text>
+                <View style={styles.hr} />
+                <Text>Поставщик: {carData.selectedShops}</Text>
+                <Text>Магазин: {carData.shop} </Text>
+                <Text>Бонус за заказ : {carData.totalReward.toFixed(2)}</Text>
+                <Text>Итоговая сумма : {carData.total.toFixed(2)} </Text>
+              </View>
+            </View>
+            <CustomButton
+              width={340}
+              padding={10}
+              border="grey"
+              background="black"
+              color="white"
+              title={'Go To Checkout'}
+              onPress={() => handlerCheckOut(selectedShops)}
+            />
           </View>
         </View>
-        <CustomButton
-          width={340}
-          padding={10}
-          border="grey"
-          background="black"
-          color="white"
-          title={'Go To Checkout'}
-          onPress={() => handlerCheckOut(selectedShops)}
-        />
       </View>
     </>
   ) : (
