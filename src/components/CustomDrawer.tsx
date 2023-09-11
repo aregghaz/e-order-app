@@ -6,7 +6,7 @@ import { Feather, FontAwesome5 } from '@expo/vector-icons'
 // import { DrawerContentScrollView } from '@react-navigation/drawer'
 import { useFocusEffect } from '@react-navigation/native'
 import React, { FC, useState } from 'react'
-import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import { fakeData } from '~FakeData'
 import { Accordion, TIcon } from '~components/Accordion'

@@ -19,12 +19,12 @@ import { getUserData } from '~services/UserService'
 import { checkAge, timestampToDate } from '~utils/dateTimeFormat'
 import { GooglePlacesAutocomplete, Point } from 'react-native-google-places-autocomplete'
 import { useTranslation } from 'react-i18next'
-const moment = require("moment");
+const moment = require('moment')
 
 export const ProfileEditScreen: FC = ({ route }: any) => {
   const { typeData } = route.params
   const navigation = useNavigation<any>()
-const {t} = useTranslation()
+  const { t } = useTranslation()
   // const [validAge, setValidAge] = useState(false);
 
   /*Name*/
@@ -139,7 +139,6 @@ const {t} = useTranslation()
       isValid = false
     }
 
-
     // if (iih.trim() === '') {
     //   setIihError('Обязательное поле.')
     //   isValid = false
@@ -235,13 +234,11 @@ const {t} = useTranslation()
     console.log(validAge, 'validAgevalidAge')
     if (validAge < 18) {
       setDobError(t('form.under18'))
- 
-    }else {
+    } else {
       setDobError('')
       setDob(date)
       hideDatePicker()
     }
-
   }
   const resetValues = () => {
     setId('')
@@ -259,7 +256,7 @@ const {t} = useTranslation()
     setIih('')
     setEmail('')
   }
-  console.log(new Date(moment().subtract(30, 'years')),'213213')
+  console.log(new Date(moment().subtract(30, 'years')), '213213')
   return (
     <SafeAreaView>
       <ScrollView
@@ -320,8 +317,6 @@ const {t} = useTranslation()
               mode="date"
               onConfirm={(date: any) => handleConfirm(date)}
               onCancel={hideDatePicker}
-
-
             />
             <Text style={styles.errorText}>{dobError}</Text>
           </>
