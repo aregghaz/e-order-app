@@ -288,14 +288,15 @@ export const SHOP_API = {
       })
       .catch((err) => console.log(err))
   },
-  updateCartQuantity: async (id: string, itemId: string, qty: number) => {
+  updateCartQuantity: async (id: string, requestBody: { itemId: string; qty: number }[]) => {
     const body = {
-      cartItems: [
-        {
-          itemId: itemId,
-          quantity: qty,
-        },
-      ],
+      // cartItems: [
+      //   {
+      //     itemId: itemId,
+      //     quantity: qty,
+      //   },
+      // ],
+      cartItems: requestBody,
     }
     return axios
       .put(`${fakeUrl}/api/shopping-cart/update-shopping-cart/${id}`, body)

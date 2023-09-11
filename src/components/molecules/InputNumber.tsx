@@ -3,7 +3,7 @@
  */
 import { Feather } from '@expo/vector-icons'
 import React, { FC, useState } from 'react'
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { View, StyleSheet, TouchableOpacity, TextInput } from 'react-native'
 
 import { customStyles } from '~utils/style_helpers'
 
@@ -14,9 +14,8 @@ interface IProps {
   step?: number
   cartItemId: string
   size?: string
-  onChange?: (arg: number) => void
+  onChange?: (arg: string | number) => void
   disabled?: boolean
-  style?: any
   qty: number
   handleUpdateQuantity: (cartId: string, itemId: string, qty: number) => void
 }
@@ -38,7 +37,6 @@ const InputNumber: FC<IProps> = ({
   step = 1,
   max = null,
   min = null,
-  onChange,
   qty,
   handleUpdateQuantity,
   cartItemId,
@@ -59,17 +57,27 @@ const InputNumber: FC<IProps> = ({
       handleUpdateQuantity(cartItemId, id, newValue)
     }
   }
+  const handleChange = (changeValue: string) => {
+    const parsedValue = parseFloat(changeValue)
+    if (!isNaN(parsedValue)) {
+      setValue(parsedValue)
+      handleUpdateQuantity(cartItemId, id, parsedValue)
+    } else {
+      setValue(1)
+    }
+  }
+
   return (
     <View style={styles.InputNumber_wrapper}>
       <TouchableOpacity style={styles.input_number__sub} onPress={() => handleAddSubMousePress(-1)}>
         <Feather name="minus" size={20} color="black" />
       </TouchableOpacity>
-      {/*<TextInput*/}
-      {/*  style={styles.form_control}*/}
-      {/*  onChangeText={handleChange}*/}
-      {/*  keyboardType={'number-pad'}*/}
-      {/*/>*/}
-      <Text style={styles.form_control}>{value}</Text>
+      <TextInput
+        style={styles.form_control}
+        onChangeText={handleChange}
+        keyboardType={'number-pad'}
+        value={value?.toString()}
+      />
       <TouchableOpacity style={styles.input_number__add} onPress={() => handleAddSubMousePress(+1)}>
         <Feather name="plus" size={20} color="black" />
       </TouchableOpacity>
@@ -82,7 +90,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     width: 140,
-    // ...customStyles.border(1, 'solid', colors.borderColor),
   },
   form_control: {
     ...customStyles.border(1, 'solid', colors.borderColor),

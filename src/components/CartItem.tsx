@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Pressable, View, Text, StyleSheet, ScrollView } from 'react-native'
 
 import { SHOP_API } from '~api'
@@ -6,12 +6,23 @@ import InputNumber from '~components/molecules/InputNumber'
 import { customStyles } from '~utils/style_helpers'
 
 export const CartItems = ({ elem, onDelete, cartItemId, isDelete, setTrigger, trigger }: any) => {
-  ///console.log(cartItemId,'cartItemId')
   const handleUpdateQuantity = async (id: string, itemId: string, qty: number) => {
-    const adasd = await SHOP_API.updateCartQuantity(id, itemId, qty)
-    console.log(adasd, 'adasdadasd')
+    console.log(itemId, 'ITEM____ID')
+    console.log(qty, 'QTY____________')
+    const updatedQtyObj = elem.map((item: any) => {
+      if (item.id === itemId) {
+        item.quantity = qty
+      }
+      return {
+        itemId: item.id,
+        quantity: item.quantity,
+      }
+    })
+    console.log(updatedQtyObj, '______updatedQtyObj')
+    await SHOP_API.updateCartQuantity(id, updatedQtyObj)
     setTrigger(!trigger)
   }
+
   return (
     <ScrollView>
       {elem &&
@@ -21,7 +32,7 @@ export const CartItems = ({ elem, onDelete, cartItemId, isDelete, setTrigger, tr
             <View key={index} style={styles.cart_wrapper}>
               <View>
                 <Text>{item.product.productName}</Text>
-                <Text>Sky: {item.product.sku}</Text>
+                <Text>Sku: {item.product.sku}</Text>
                 <Text>
                   Unit:{' '}
                   {item.properties.unit.name + ' ' + '(x' + item.properties.unit.contents + ')'}
@@ -72,7 +83,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flex: 1,
     gap: 20,
-    // ...customStyles.border(1, 'solid', colors.borderColor),
     justifyContent: 'space-between',
     marginTop: 10,
   },

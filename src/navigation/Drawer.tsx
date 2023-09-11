@@ -107,7 +107,7 @@ export const DrawerNavigator = () => {
         name={SCREEN.STACK_SHOP_LIST}
         component={ShopListScreen}
         options={({ navigation, route }: any) => ({
-          headerTitle: () => <Header navigation={navigation} title={'Shops'} />,
+          headerTitle: () => <Header navigation={navigation} title={t('menu.shop_list')} />,
           headerLeft: () => null,
         })}
       />
@@ -192,7 +192,7 @@ export const DrawerNavigator = () => {
         name={SCREEN.STACK_ORDER_LIST}
         component={OrderListScreen}
         options={({ navigation, route }: any) => ({
-          headerTitle: () => <Header navigation={navigation} title={'Orders'} />,
+          headerTitle: () => <Header navigation={navigation} title={t('menu.order_list')} />,
           headerLeft: () => null,
         })}
       />
@@ -226,7 +226,7 @@ export const DrawerNavigator = () => {
         name={SCREEN.PARTNER_SHIP}
         component={PrtnerShipScreen}
         options={({ navigation, route }: any) => ({
-          headerTitle: () => <Header navigation={navigation} title={'Partners'} />,
+          headerTitle: () => <Header navigation={navigation} title={t('menu.partners')} />,
           headerLeft: () => null,
         })}
       />
@@ -242,7 +242,7 @@ export const DrawerNavigator = () => {
         name={SCREEN.PROFILE_EDIT}
         component={ProfileEditScreen}
         options={({ navigation, route }: any) => ({
-          headerTitle: () => <Header navigation={navigation} title={'Edit Profile'} />,
+          headerTitle: () => <Header navigation={navigation} title={t('menu.edit_profile')} />,
           headerLeft: () => null,
         })}
       />
@@ -250,7 +250,7 @@ export const DrawerNavigator = () => {
         name={SCREEN.CHANGE_PASSWORD}
         component={ChangePasswordScreen}
         options={({ navigation, route }: any) => ({
-          headerTitle: () => <Header navigation={navigation} title={'Change Password'} />,
+          headerTitle: () => <Header navigation={navigation} title={t('menu.change_password')} />,
           headerLeft: () => null,
         })}
       />
