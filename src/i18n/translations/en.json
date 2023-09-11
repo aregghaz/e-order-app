@@ -13,7 +13,9 @@
   },
   "form": {
     "invalid_email_format": "Incorrect e-mail address",
-    "required": "This field is required"
+    "required": "This field is required",
+    "under18": "Вам меньше 18 лет"
+
   },
   "notification": {
     "signIn": "To add to cart, please login",

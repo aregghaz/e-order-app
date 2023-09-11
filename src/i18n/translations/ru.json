@@ -13,7 +13,8 @@
   },
   "form": {
     "invalid_email_format": "Incorrect e-mail address",
-    "required": "Это поле обязательно к заполнению"
+    "required": "Это поле обязательно к заполнению",
+    "under18": "Вам меньше 18 лет"
   },
 
   "password": {

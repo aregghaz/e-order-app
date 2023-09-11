@@ -18,11 +18,13 @@ import { notification } from '~services/ShopService'
 import { getUserData } from '~services/UserService'
 import { checkAge, timestampToDate } from '~utils/dateTimeFormat'
 import { GooglePlacesAutocomplete, Point } from 'react-native-google-places-autocomplete'
+import { useTranslation } from 'react-i18next'
+const moment = require("moment");
 
 export const ProfileEditScreen: FC = ({ route }: any) => {
   const { typeData } = route.params
   const navigation = useNavigation<any>()
-
+const {t} = useTranslation()
   // const [validAge, setValidAge] = useState(false);
 
   /*Name*/
@@ -137,12 +139,6 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
       isValid = false
     }
 
-    const validAge = checkAge(dob)
-    console.log(validAge, 'validAgevalidAge')
-    if (validAge < 18) {
-      setDobError('Обязательное поле.')
-      isValid = false
-    }
 
     // if (iih.trim() === '') {
     //   setIihError('Обязательное поле.')
@@ -235,8 +231,17 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
   }
 
   const handleConfirm = (date: any) => {
-    setDob(date)
-    hideDatePicker()
+    const validAge = checkAge(date)
+    console.log(validAge, 'validAgevalidAge')
+    if (validAge < 18) {
+      setDobError(t('form.under18'))
+ 
+    }else {
+      setDobError('')
+      setDob(date)
+      hideDatePicker()
+    }
+
   }
   const resetValues = () => {
     setId('')
@@ -254,7 +259,7 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
     setIih('')
     setEmail('')
   }
-
+  console.log(new Date(moment().subtract(30, 'years')),'213213')
   return (
     <SafeAreaView>
       <ScrollView
@@ -315,6 +320,8 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
               mode="date"
               onConfirm={(date: any) => handleConfirm(date)}
               onCancel={hideDatePicker}
+
+
             />
             <Text style={styles.errorText}>{dobError}</Text>
           </>
@@ -454,6 +461,7 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
               value={iih}
               placeholder="IIh"
             />
+            <Text style={styles.errorText}></Text>
           </>
           <>
             <TextInput
@@ -464,6 +472,7 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
               value={email}
               placeholder="Адрес электронной почты"
             />
+            <Text style={styles.errorText}></Text>
           </>
           <CustomButton title=" Сохранить " onPress={handleSave} />
         </View>
