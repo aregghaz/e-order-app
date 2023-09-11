@@ -36,16 +36,24 @@ export const Header: FC<IProps> = ({ title, navigation }) => {
     useCallback(() => {
       const getShopCartCount = async () => {
         const getID = await getShopId()
+        console.log(getID,'333333')
+
         if (getID) {
+          console.log(getID,'1111111111')
+
           const count = await SHOP_API.getShopCarts(getID)
 
           if (count) {
             setCountIndicator(count.payload.content.length)
+          }else{
+            setCountIndicator(0)
           }
+        }else{
+          setCountIndicator(0)
         }
       }
       getShopCartCount()
-    }, [countIndicator])
+    }, [countIndicator,isSignedIn])
   )
 
   const handleOpenMenu = useCallback(() => {

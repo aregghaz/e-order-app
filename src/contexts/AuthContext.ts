@@ -6,6 +6,7 @@ export type AuthContextType = {
   isSignedIn: boolean | null
   signIn: (data: SignInFormValues) => void
   signOut: () => void
+  setIsSignedIn: (status:boolean) => void
   signUp: (data: SignUpFormValues) => void
 }
 

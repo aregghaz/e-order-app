@@ -14,7 +14,8 @@
   "form": {
     "invalid_email_format": "Incorrect e-mail address",
     "required": "Это поле обязательно к заполнению",
-    "under18": "Вам меньше 18 лет"
+    "under18": "Вам меньше 18 лет",
+    "numberExist" : "Аккаунт с таким номером уже существует",
   },
 
   "password": {

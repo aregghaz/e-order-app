@@ -88,11 +88,6 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
           setFeatured((featured) => [...featured, ...featuredData.payload.content])
         }
         setIsLoading(true)
-        // } catch (err) {
-        //     console.error('Error fetching latest products:', err)
-        // } finally {
-        //     setIsLoading(false)
-        // }
       }
       getAsyncData()
     }, [value])

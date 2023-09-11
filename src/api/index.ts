@@ -169,7 +169,7 @@ export const SHOP_API = {
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
     return axios
       .post(`${fakeUrl}/api/customers/create-customer-account`, body)
-      .then((res) => {
+      .then((res:any) => {
         return res.data
       })
       .catch((err) => console.log(err))

@@ -11,8 +11,9 @@ import NewArrivalItems from '~components/NewArrivalItems'
 ///import OfferPosterSlider from '~components/OfferPosterSlider'
 import TopDiscountItems from '~components/TopDiscountItems'
 import TopRatedItems from '~components/TopRatedItems'
-import { getShopId, setShopId } from '~services/ShopService'
-import { useAuth } from '~hooks'
+import { getShopId, notification, setShopId } from '~services/ShopService'
+import { useAuth, useTranslation } from '~hooks'
+import { ALERT_TYPE } from 'react-native-alert-notification'
 //
 // const { slides } = fakeData.homeScreen
 
@@ -31,17 +32,23 @@ export const HomeScreen = ({ navigation }: any): JSX.Element => {
   const [shopId, setShopDefaultId] = useState('')
   const [laoding, setLoading] = useState(false)
   const { isSignedIn } = useAuth()
-
+  const {t} = useTranslation();
   useFocusEffect(
     useCallback(() => {
       const getAsyncData = async (): Promise<void> => {
         if (isSignedIn) {
           const getID = await getShopId()
-          console.log(!getID, getID, '1111')
+          console.log(getID,'getIDgetID')
           if (!getID) {
             const shopData = await SHOP_API.getShopsData()
-            await setShopId(shopData.payload.content[0].id)
-            setShopDefaultId(shopData.payload.content[0].id)
+            console.log(shopData,'shopDatashopData')
+            if(shopData.payload.content.length > 0){
+              await setShopId(shopData.payload.content[0].id)
+              setShopDefaultId(shopData.payload.content[0].id)
+            }
+            // else{
+            //   await notification(t('shop.add'), ALERT_TYPE.WARNING)
+            // }
           } else {
             setShopDefaultId(getID)
           }

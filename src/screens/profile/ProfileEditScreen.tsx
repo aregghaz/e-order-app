@@ -10,12 +10,13 @@ import {
   View,
 } from 'react-native'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
+import { useAuth } from '~hooks'
 
 import { SHOP_API } from '~api'
 import { CustomButton } from '~components/molecules/CustomButton'
 import { SCREEN } from '~constants'
 import { notification } from '~services/ShopService'
-import { getUserData } from '~services/UserService'
+import { getUserData, setUserData } from '~services/UserService'
 import { checkAge, timestampToDate } from '~utils/dateTimeFormat'
 import { GooglePlacesAutocomplete, Point } from 'react-native-google-places-autocomplete'
 import { useTranslation } from 'react-i18next'
@@ -23,13 +24,14 @@ const moment = require('moment')
 
 export const ProfileEditScreen: FC = ({ route }: any) => {
   const { typeData } = route.params
-  const navigation = useNavigation<any>()
+  const { navigate } = useNavigation<any>()
   const { t } = useTranslation()
   // const [validAge, setValidAge] = useState(false);
+  const { setIsSignedIn, isSignedIn } = useAuth()
 
   /*Name*/
   const [id, setId] = useState('')
-  const [type, setType] = useState(typeData || false)
+  const [type, setType] = useState(isSignedIn)
   const [name, setName] = useState('')
   const [nameError, setNameError] = useState('')
   const [lastname, setLastName] = useState('')
@@ -37,7 +39,7 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
   const [fatherName, setFatherName] = useState('')
   const [fatherNameError, setFatherNameError] = useState('')
   /* dob*/
-  const [dob, setDob] = useState('')
+  const [dob, setDob] = useState<any>('')
   const [dobError, setDobError] = useState('')
 
   /*** Legal address ***/
@@ -77,9 +79,8 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
     useCallback(() => {
       const getAsyncData = async (): Promise<void> => {
         const pesdonalData = await getUserData()
-        console.log(pesdonalData.customer, 'dfsdf')
-        if (pesdonalData.customer) {
-          const custommerData = await SHOP_API.getCustommer(pesdonalData.customer.id)
+        if (pesdonalData.id) {
+          const custommerData = await SHOP_API.getCustommer(pesdonalData.id)
           const dataUser = custommerData.payload
           setLocation({
             contry: dataUser.person.address.country,
@@ -111,6 +112,8 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
           setType(false)
         }
       }
+      console.log(typeData === false,isSignedIn, '33333333333333333333333333')
+
       if (typeData === false) {
         resetValues()
       } else {
@@ -203,19 +206,26 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
       // }
     }
     if (isValid) {
-      let dataCheck = false
+      let dataCheck;
+      console.log(type,'typetype')
       if (type) {
         dataCheck = await SHOP_API.updateCustomerUser(body, id)
       } else {
         dataCheck = await SHOP_API.fillingCustomerUser(body)
+        console.log(dataCheck.payload,'dataCheck.payload.')
+        await setUserData(dataCheck.payload.person)
+        await setIsSignedIn(true)
       }
-      if (!dataCheck) {
-        /// resetValues()
-      } else {
+      console.log(dataCheck,'!dataCheck!dataCheck')
+      if (dataCheck) {
+        console.log(dataCheck,'!dataCheck!dataCheck')
+
         notification('Сохранено')
-        navigation.navigate(SCREEN.DRAWER_ROOT, {
-          screen: SCREEN.STACK_MAIN_TAB,
-        })
+        navigate(SCREEN.DRAWER_ROOT)
+      } else {
+        // notification('Сохранено')
+        // navigation.navigate(SCREEN.STACK_SIGN_IN)
+
       }
     }
   }
@@ -245,7 +255,7 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
     setName('')
     setLastName('')
     setFatherName('')
-    setDob(require('moment')().format('YYYY-MM-DD HH:mm:ss'))
+    setDob(new Date(moment().subtract(18, 'years')))
     setLegalApartment('')
     setLegalPostCode('')
     setLegalPhone_1('')
@@ -256,7 +266,6 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
     setIih('')
     setEmail('')
   }
-  console.log(new Date(moment().subtract(30, 'years')), '213213')
   return (
     <SafeAreaView>
       <ScrollView
@@ -512,3 +521,5 @@ const styles = StyleSheet.create({
     width: '100%',
   },
 })
+
+

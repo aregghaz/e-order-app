@@ -16,11 +16,13 @@ export const CartItems = ({ elem, onDelete, cartItemId, isDelete, setTrigger, tr
     <ScrollView>
       {elem &&
         elem.map((item: any, index: number) => {
+          console.log(item.properties.unit,'itemitemitem')
           return (
             <View key={index} style={styles.cart_wrapper}>
               <View>
                 <Text>{item.product.productName}</Text>
                 <Text>Sky: {item.product.sku}</Text>
+                <Text>Unit: {item.properties.unit.name +' ' + '(x'+item.properties.unit.contents+')'}</Text>
                 <Text>Qty: {item.quantity}</Text>
                 <Text>Price: {item.price}</Text>
                 <Text>Reward: {item.reward}</Text>

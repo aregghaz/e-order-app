@@ -3,7 +3,7 @@
  */
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import React, { FC, useState } from 'react'
-import { View, Text, StyleSheet, ScrollView, TextInput } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, TextInput, ActivityIndicator } from 'react-native'
 
 import { SHOP_API } from '~api'
 import { CustomButton } from '~components/molecules/CustomButton'
@@ -52,10 +52,12 @@ export const UpdateShopScreen: FC = ({ route }: any) => {
   /*Legal phone 2*/
   const [deliveryPhone_2, setDeliveryPhone_2] = useState('')
   const [deliveryPhoneError_2] = useState('')
+  const [laoding, setLoading] = useState(false)
 
   useFocusEffect(
     React.useCallback(() => {
       const getData = async () => {
+        setLoading(false)
         const data = await SHOP_API.getShop(id)
         setTax(data.payload.taxId)
         setShopName(data.payload.shopName)
@@ -70,9 +72,10 @@ export const UpdateShopScreen: FC = ({ route }: any) => {
         setDeliveryPostCode(data.payload.deliveryAddress.postCode)
         setDeliveryPhone_1(data.payload.deliveryAddress.phoneNumber1)
         setDeliveryPhone_2(data.payload.deliveryAddress.phoneNumber2)
+        setLoading(true)
       }
       getData()
-    }, [])
+    }, [id])
   )
 
   const handleSave = async () => {
@@ -150,7 +153,7 @@ export const UpdateShopScreen: FC = ({ route }: any) => {
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.CreateStoreScreen_wrapper}>
+      laoding ?  <ScrollView contentContainerStyle={styles.CreateStoreScreen_wrapper}>
       <View style={styles.innerWrapper}>
         <>
           <TextInput
@@ -288,7 +291,11 @@ export const UpdateShopScreen: FC = ({ route }: any) => {
         </>
         <CustomButton title=" Сохранить " onPress={handleSave} />
       </View>
-    </ScrollView>
+    </ScrollView> : (
+      <View style={[styles.container, styles.horizontal]}>
+        <ActivityIndicator size="large" />
+      </View>
+  )
   )
 }
 
@@ -298,6 +305,15 @@ const colors = {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  horizontal: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 10,
+  },
   CreateStoreScreen_wrapper: {
     flexGrow: 1,
     justifyContent: 'center',

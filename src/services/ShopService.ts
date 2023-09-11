@@ -23,6 +23,7 @@ export async function getShopId(): Promise<string> {
 
 export async function deleteShopId() {
   const id = await secureStore.getItem(SHOP_ID)
+  console.log(id,'ididid')
   if (!id) return
   return secureStore.removeItem(SHOP_ID)
 }
