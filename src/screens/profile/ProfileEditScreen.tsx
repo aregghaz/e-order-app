@@ -112,7 +112,7 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
           setType(false)
         }
       }
-      console.log(typeData === false,isSignedIn, '33333333333333333333333333')
+      console.log(typeData === false, isSignedIn, '33333333333333333333333333')
 
       if (typeData === false) {
         resetValues()
@@ -206,26 +206,25 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
       // }
     }
     if (isValid) {
-      let dataCheck;
-      console.log(type,'typetype')
+      let dataCheck
+      console.log(type, 'typetype')
       if (type) {
         dataCheck = await SHOP_API.updateCustomerUser(body, id)
       } else {
         dataCheck = await SHOP_API.fillingCustomerUser(body)
-        console.log(dataCheck.payload,'dataCheck.payload.')
+        console.log(dataCheck.payload, 'dataCheck.payload.')
         await setUserData(dataCheck.payload.person)
         await setIsSignedIn(true)
       }
-      console.log(dataCheck,'!dataCheck!dataCheck')
+      console.log(dataCheck, '!dataCheck!dataCheck')
       if (dataCheck) {
-        console.log(dataCheck,'!dataCheck!dataCheck')
+        console.log(dataCheck, '!dataCheck!dataCheck')
 
         notification('Сохранено')
         navigate(SCREEN.DRAWER_ROOT)
       } else {
         // notification('Сохранено')
         // navigation.navigate(SCREEN.STACK_SIGN_IN)
-
       }
     }
   }
@@ -521,5 +520,3 @@ const styles = StyleSheet.create({
     width: '100%',
   },
 })
-
-

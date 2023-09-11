@@ -1,6 +1,6 @@
 import { SCREEN } from '~constants'
-import { notification } from "~services/ShopService";
-import { ALERT_TYPE } from "react-native-alert-notification";
+import { notification } from '~services/ShopService'
+import { ALERT_TYPE } from 'react-native-alert-notification'
 
 export interface IWishlist {
   customer: {

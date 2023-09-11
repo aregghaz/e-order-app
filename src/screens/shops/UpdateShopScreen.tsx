@@ -152,8 +152,8 @@ export const UpdateShopScreen: FC = ({ route }: any) => {
     }
   }
 
-  return (
-      laoding ?  <ScrollView contentContainerStyle={styles.CreateStoreScreen_wrapper}>
+  return laoding ? (
+    <ScrollView contentContainerStyle={styles.CreateStoreScreen_wrapper}>
       <View style={styles.innerWrapper}>
         <>
           <TextInput
@@ -291,11 +291,11 @@ export const UpdateShopScreen: FC = ({ route }: any) => {
         </>
         <CustomButton title=" Сохранить " onPress={handleSave} />
       </View>
-    </ScrollView> : (
-      <View style={[styles.container, styles.horizontal]}>
-        <ActivityIndicator size="large" />
-      </View>
-  )
+    </ScrollView>
+  ) : (
+    <View style={[styles.container, styles.horizontal]}>
+      <ActivityIndicator size="large" />
+    </View>
   )
 }
 

@@ -32,17 +32,17 @@ export const HomeScreen = ({ navigation }: any): JSX.Element => {
   const [shopId, setShopDefaultId] = useState('')
   const [laoding, setLoading] = useState(false)
   const { isSignedIn } = useAuth()
-  const {t} = useTranslation();
+  const { t } = useTranslation()
   useFocusEffect(
     useCallback(() => {
       const getAsyncData = async (): Promise<void> => {
         if (isSignedIn) {
           const getID = await getShopId()
-          console.log(getID,'getIDgetID')
+          console.log(getID, 'getIDgetID')
           if (!getID) {
             const shopData = await SHOP_API.getShopsData()
-            console.log(shopData,'shopDatashopData')
-            if(shopData.payload.content.length > 0){
+            console.log(shopData, 'shopDatashopData')
+            if (shopData.payload.content.length > 0) {
               await setShopId(shopData.payload.content[0].id)
               setShopDefaultId(shopData.payload.content[0].id)
             }
