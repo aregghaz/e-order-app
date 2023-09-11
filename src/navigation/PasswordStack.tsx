@@ -8,7 +8,6 @@ import { CustomButton } from '~components/molecules/CustomButton'
 import { SCREEN } from '~constants'
 import { getToken, setToken } from '~services'
 import { notification } from '~services/ShopService'
-import { getUserData } from '~services/UserService'
 
 interface IProps {
   route: any
@@ -54,10 +53,11 @@ export const PasswordStack: FC<IProps> = ({ route }) => {
     }
     if (data) {
       if (reset != undefined) {
-        notification(t('password.passwordChanged'))
+        await notification(t('password.passwordChanged'))
         navigation.navigate(SCREEN.STACK_SIGN_IN)
       } else {
         const token2 = data.payload.token.accessToken
+        console.log(token2, 'token__222222')
         await setToken(token2)
         navigation.navigate(SCREEN.PROFILE_EDIT, { typeData: false })
       }

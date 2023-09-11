@@ -5,6 +5,7 @@ import { useMemo, useState } from '~hooks'
 export const GlobalProvider: FC<PropsWithChildren> = ({ children }) => {
   const [name, setName] = useState<string>('')
   const [surname, setSurname] = useState<string>('')
+  const [userData, setUserData] = useState<any>({})
 
   const value = useMemo(() => {
     return {
@@ -12,8 +13,10 @@ export const GlobalProvider: FC<PropsWithChildren> = ({ children }) => {
       setName,
       surname,
       setSurname,
+      userData,
+      setUserData,
     }
-  }, [name, setName, surname, setSurname])
+  }, [name, setName, surname, setSurname, setUserData, userData])
 
   return <GlobalContextProvider value={value}>{children}</GlobalContextProvider>
 }
