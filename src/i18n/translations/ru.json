@@ -159,15 +159,15 @@
     "user_placeholder": "Пользователь"
   },
   "menu": {
-    "home" : "Главная",
-    "shop_list" : "Магазины",
-    "profile" : "Профиль",
-    "personal_info" : "Акаунт",
-    "change_password" : "Поменять пороль",
-    "edit_profile" : "Изменить профиль",
-    "order_list" : "Заказы",
-    "partners" : "Партньори",
-    "contact_us" : "Связь с нами"
+    "home": "Главная",
+    "shop_list": "Магазины",
+    "profile": "Профиль",
+    "personal_info": "Акаунт",
+    "change_password": "Поменять пороль",
+    "edit_profile": "Изменить профиль",
+    "order_list": "Заказы",
+    "partners": "Партньори",
+    "contact_us": "Связь с нами"
   },
   "hello": "Welcome",
   "thanks": "Thank you for using the best template for expo apps",

@@ -160,15 +160,15 @@
     "user_placeholder": "user"
   },
   "menu": {
-    "home" : "Home",
-    "shop_list" : "Shop List",
-    "profile" : "Profile",
-    "personal_info" : "Personal Info",
-    "change_password" : "Change Password",
-    "edit_profile" : "Edit Profile",
-    "order_list" : "Order List",
-    "partners" : "Partners",
-    "contact_us" : "Contact Us"
+    "home": "Home",
+    "shop_list": "Shop List",
+    "profile": "Profile",
+    "personal_info": "Personal Info",
+    "change_password": "Change Password",
+    "edit_profile": "Edit Profile",
+    "order_list": "Order List",
+    "partners": "Partners",
+    "contact_us": "Contact Us"
   },
   "hello": "Welcome",
   "thanks": "Thank you for using the best template for expo apps",
