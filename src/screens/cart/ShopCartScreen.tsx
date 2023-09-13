@@ -13,16 +13,19 @@ import { CartItems } from '~components/CartItem'
 import { CustomButton } from '~components/molecules/CustomButton'
 import { SCREEN } from '~constants'
 import { getShopId, notification } from '~services/ShopService'
+import { screenWidth } from '~utils/breakpoints'
 import { customStyles } from '~utils/style_helpers'
 
 export const ShopCartScreen: FC = ({ navigation }: any) => {
   const { t } = useTranslation()
   const [data, setData] = useState<null | any>([])
   const [carts, setCarts] = useState<null | any>([])
-  const [carId, setCartId] = useState<string>('')
+  const [combinedData, setCombinedData] = useState<any>([])
+  const [cartID, setCartID] = useState<string>('')
   const [trigger, setTrigger] = useState(false)
   const [selectedShops, setSelectedShops] = useState('')
   const [loding, setLoading] = useState(false)
+  const halfWidth = screenWidth / 2 - 20
   const [carData, setCarData] = useState({
     selectedShops: '',
     shop: '',
@@ -47,7 +50,7 @@ export const ShopCartScreen: FC = ({ navigation }: any) => {
               totalReward: item[0].totalReward,
             })
             setCarts(item[0].cartItems)
-            setCartId(item[0].id)
+            // setCartId(item[0].id)
             setData(item)
           }
           setLoading(true)
@@ -87,43 +90,53 @@ export const ShopCartScreen: FC = ({ navigation }: any) => {
     navigation.navigate(SCREEN.CHECKOUT, { id })
   }
 
+  const onDataToParent = (id: string, data: any) => {
+    setCartID(id)
+    setCombinedData(data)
+  }
+
+  const handleUpdateData = async (id: string, data: any) => {
+    console.log(id, '___ ID')
+    console.log(data, '___ data')
+    await SHOP_API.updateCartQuantity(id, data)
+  }
+
   return loding ? (
     <>
-      <View style={styles.ShopCartScreen_wrapper}>
-        <View style={styles.ShopListScreen_wrapper}>
-          <View style={styles.select_wrapper}>
-            {carts.length > 0 && (
-              <Select
-                selectedValue={selectedShops}
-                minWidth="360"
-                height="50"
-                borderColor="#CCC"
-                marginY="2"
-                color="#000"
-                letterSpacing="1"
-                fontSize="17"
-                accessibilityLabel="Choose Service"
-                placeholder="Choose Service"
-                _selectedItem={{
-                  bg: 'teal.600',
-                  endIcon: <CheckIcon size="5" />,
-                }}
-                mt={1}
-                onValueChange={(itemValue) => {
-                  setSelectedShops(itemValue)
-                  setLoading(false)
-                }}
-              >
-                {data.map((item: any) => {
-                  return (
-                    <Select.Item label={item.supplier.companyName} key={item.id} value={item.id} />
-                  )
-                })}
-              </Select>
-            )}
-          </View>
+      <View style={styles.shopListScreen_wrapper}>
+        <View style={styles.select_wrapper}>
+          {carts.length > 0 && (
+            <Select
+              selectedValue={selectedShops}
+              minWidth="100%"
+              height="50"
+              borderColor="#CCC"
+              marginY="2"
+              marginX="4"
+              color="#000"
+              letterSpacing="1"
+              fontSize="17"
+              accessibilityLabel="Choose Service"
+              placeholder="Choose Service"
+              _selectedItem={{
+                bg: 'teal.600',
+                endIcon: <CheckIcon size="5" />,
+              }}
+              mt={1}
+              onValueChange={(itemValue) => {
+                setSelectedShops(itemValue)
+                setLoading(false)
+              }}
+            >
+              {data.map((item: any) => {
+                return (
+                  <Select.Item label={item.supplier.companyName} key={item.id} value={item.id} />
+                )
+              })}
+            </Select>
+          )}
         </View>
-        <View style={styles.scrollView}>
+        <>
           {carts.length > 0 ? (
             <CartItems
               trigger={trigger}
@@ -132,12 +145,15 @@ export const ShopCartScreen: FC = ({ navigation }: any) => {
               elem={carts}
               onDelete={handleDelete}
               cartItemId={selectedShops}
+              onDataToParent={onDataToParent}
             />
           ) : (
             <View style={styles.no_product}>
               <Text>There is no products here</Text>
             </View>
           )}
+        </>
+        {carts.length > 0 && (
           <View style={styles.btn_wrapper}>
             <View style={styles.orderViewContainer}>
               <View style={styles.orderView}>
@@ -149,17 +165,28 @@ export const ShopCartScreen: FC = ({ navigation }: any) => {
                 <Text>Итоговая сумма : {carData.total.toFixed(2)} </Text>
               </View>
             </View>
-            <CustomButton
-              width={340}
-              padding={10}
-              border="grey"
-              background="black"
-              color="white"
-              title={'Go To Checkout'}
-              onPress={() => handlerCheckOut(selectedShops)}
-            />
+            <View style={styles.button_double}>
+              <CustomButton
+                width={halfWidth}
+                padding={10}
+                border="grey"
+                background="white"
+                color="black"
+                title={t('buttons.update')}
+                onPress={() => handleUpdateData(cartID, combinedData)}
+              />
+              <CustomButton
+                width={halfWidth}
+                padding={10}
+                border="grey"
+                background="black"
+                color="white"
+                title={t('buttons.checkout')}
+                onPress={() => handlerCheckOut(selectedShops)}
+              />
+            </View>
           </View>
-        </View>
+        )}
       </View>
     </>
   ) : (
@@ -172,9 +199,26 @@ export const ShopCartScreen: FC = ({ navigation }: any) => {
 const colors = {
   borderColor: '#d1d1d1',
   red: 'red',
+  white: 'white',
 }
 
 const styles = StyleSheet.create({
+  btn_wrapper: {
+    alignItems: 'center',
+    ...customStyles.border(1, 'solid', colors.borderColor),
+    backgroundColor: colors.white,
+    paddingVertical: 10,
+    // position: 'absolute',
+    width: '100%',
+  },
+  button_double: {
+    ...customStyles.borderTop(1, 'solid', colors.borderColor),
+    flexDirection: 'row',
+    gap: 10,
+    justifyContent: 'center',
+    paddingTop: 10,
+    width: '100%',
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -184,34 +228,16 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     padding: 10,
   },
-  ShopCartScreen_wrapper: {
-    justifyContent: 'center',
-  },
-  ShopListScreen_wrapper: {
-    flex: 1,
-    position: 'relative',
-  },
-  btn_wrapper: {
-    paddingVertical: 10,
-    ...customStyles.border(1, 'solid', colors.borderColor),
-    alignItems: 'center',
-  },
-
   hr: {
     ...customStyles.border(1, 'solid', colors.borderColor),
     marginVertical: 3,
     width: 200,
   },
+
   no_product: {
     alignItems: 'center',
     marginTop: 20,
   },
-  // image_wrapper: {
-  //   ...customStyles.border(1, "solid", colors.borderColor),
-  //   width: 100,
-  //   height: 100,
-  //   marginRight: 10
-  // },
   orderView: {
     // width: 340,
     alignItems: 'flex-start',
@@ -219,15 +245,22 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     // backgroundColor: 'red',
   },
+  // image_wrapper: {
+  //   ...customStyles.border(1, "solid", colors.borderColor),
+  //   width: 100,
+  //   height: 100,
+  //   marginRight: 10
+  // },
   orderViewContainer: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
     width: 340,
   },
-  scrollView: {
-    marginTop: 68,
-  },
   select_wrapper: {
     alignItems: 'center',
+  },
+  shopListScreen_wrapper: {
+    flex: 1,
+    position: 'relative',
   },
 })

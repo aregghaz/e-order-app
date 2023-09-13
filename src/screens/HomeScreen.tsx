@@ -11,9 +11,8 @@ import NewArrivalItems from '~components/NewArrivalItems'
 ///import OfferPosterSlider from '~components/OfferPosterSlider'
 import TopDiscountItems from '~components/TopDiscountItems'
 import TopRatedItems from '~components/TopRatedItems'
-import { getShopId, notification, setShopId } from '~services/ShopService'
-import { useAuth, useTranslation } from '~hooks'
-import { ALERT_TYPE } from 'react-native-alert-notification'
+import { getShopId, setShopId } from '~services/ShopService'
+import { useAuth } from '~hooks'
 //
 // const { slides } = fakeData.homeScreen
 
@@ -32,7 +31,7 @@ export const HomeScreen = ({ navigation }: any): JSX.Element => {
   const [shopId, setShopDefaultId] = useState('')
   const [laoding, setLoading] = useState(false)
   const { isSignedIn } = useAuth()
-  const { t } = useTranslation()
+  // const { t } = useTranslation()
   useFocusEffect(
     useCallback(() => {
       const getAsyncData = async (): Promise<void> => {
@@ -72,7 +71,7 @@ export const HomeScreen = ({ navigation }: any): JSX.Element => {
     }, [shopId])
   )
   return laoding ? (
-    <ScrollView flex={1} style={styles.main_wrapper}>
+    <ScrollView flex={1} contentContainerStyle={styles.main_wrapper}>
       {categories.length > 0 && (
         <CircleCategories navigation={navigation} categories={categories} />
       )}
@@ -96,13 +95,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
   },
+  dummy: {
+    width: '100%',
+  },
   horizontal: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     padding: 10,
-  },
-  dummy: {
-    width: '100%',
   },
 
   main_wrapper: {

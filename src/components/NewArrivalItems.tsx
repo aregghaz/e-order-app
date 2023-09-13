@@ -56,8 +56,9 @@ const NewArrivalItems: FC<ITopBrands> = ({ items, navigation, title }) => {
                 <View>
                   <Text style={styles.price}>₽ {item.price}</Text>
                 </View>
-                <View>
-                  <Text style={styles.price}>views {item.views}</Text>
+                <View style={styles.reward_block}>
+                  <Text style={styles.price}>Reward {item.reward}</Text>
+                  <Text style={styles.reward}>B</Text>
                 </View>
               </TouchableOpacity>
             )
@@ -78,6 +79,7 @@ const colors = {
   borderColor: '#D2D2D2',
   nameColor: '#646464',
   itemColor: '#FFFFFF',
+  red: 'red',
 }
 
 const styles = StyleSheet.create({
@@ -108,10 +110,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
 
     overflow: 'hidden',
-    position: 'relative',
+    padding: 5,
     ///...customStyles.border(1, 'solid', colors.borderColor),
 
-    padding: 5,
+    position: 'relative',
   },
 
   main: {
@@ -135,6 +137,13 @@ const styles = StyleSheet.create({
   // },
   price: {
     textAlign: 'left',
+  },
+  reward: {
+    color: colors.red,
+  },
+  reward_block: {
+    flexDirection: 'row',
+    gap: 5,
   },
 })
 

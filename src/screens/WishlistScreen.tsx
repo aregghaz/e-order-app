@@ -1,9 +1,10 @@
 /**
  * was created by tigran at 08.08.23
  */
-import { Entypo, Feather } from '@expo/vector-icons'
+import { AntDesign, Entypo, Feather } from '@expo/vector-icons'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import React, { FC, useCallback, useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Modal, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
 
 import { SHOP_API } from '~api'
@@ -26,6 +27,7 @@ const colors = {
   grey: '#dee2e6',
   edit: 'orange',
   delete: 'red',
+  confirm: 'green',
 }
 
 export const WishlistScreen: FC = () => {
@@ -39,7 +41,7 @@ export const WishlistScreen: FC = () => {
   const [value, setValue] = useState<string>('')
   const { isSignedIn } = useAuth()
   const navigation = useNavigation<any>()
-  // const { t } = useTranlation()
+  const { t } = useTranslation()
   useFocusEffect(
     useCallback(() => {
       const getWishListData = async () => {
@@ -98,6 +100,7 @@ export const WishlistScreen: FC = () => {
     setModalVisible(false)
     setEdit(false)
     setValue('')
+    setRefreshTrigger(!refreshTrigger)
   }
   const handleDeleteList = async (id: string) => {
     setModalVisible(false)
@@ -128,8 +131,10 @@ export const WishlistScreen: FC = () => {
                         size={18}
                         color="black"
                         onPress={() => {
+                          setValue(item.name)
                           setModalVisible(true)
                           handleSetID(item.id)
+                          setEdit(false)
                         }}
                       />
                     </View>
@@ -166,9 +171,17 @@ export const WishlistScreen: FC = () => {
           <View style={styles.modal_content}>
             {edit ? (
               <>
+                <Feather
+                  onPress={() => setModalVisible(!modalVisible)}
+                  name="x"
+                  size={24}
+                  color="black"
+                  style={styles.close}
+                />
                 <TextInput style={styles.input} onChangeText={setValue} value={value} />
-                <Pressable onPress={() => handleEditName(id, value)}>
-                  <Text style={[styles.text, styles.text_update]}>Update</Text>
+                <Pressable onPress={() => handleEditName(id, value)} style={styles.text_confirm}>
+                  <AntDesign name="checkcircle" size={24} color={colors.confirm} />
+                  <Text style={[styles.text]}>{t('modal.confirm')}</Text>
                 </Pressable>
               </>
             ) : (
@@ -181,11 +194,21 @@ export const WishlistScreen: FC = () => {
                   style={styles.close}
                 />
                 <View>
-                  <Pressable onPress={() => setEdit(true)}>
-                    <Text style={[styles.text, styles.text_update]}>Edit</Text>
+                  <Pressable
+                    onPress={() => setEdit(true)}
+                    style={[styles.button_wrapper, styles.text_update]}
+                  >
+                    <Feather name="edit" size={24} color={colors.edit} />
+                    <Text style={[styles.text, styles.text_update__color]}>{t('modal.edit')}</Text>
                   </Pressable>
-                  <Pressable onPress={() => handleDeleteList(id)}>
-                    <Text style={[styles.text, styles.text_delete]}>Delete</Text>
+                  <Pressable
+                    onPress={() => handleDeleteList(id)}
+                    style={[styles.button_wrapper, styles.text_delete]}
+                  >
+                    <AntDesign name="delete" size={24} color={colors.delete} />
+                    <Text style={[styles.text, styles.text_delete__color]}>
+                      {t('modal.delete')}
+                    </Text>
                   </Pressable>
                 </View>
               </>
@@ -205,7 +228,18 @@ const styles = StyleSheet.create({
   active: {
     backgroundColor: colors.menuColor,
   },
-
+  button_wrapper: {
+    alignItems: 'center',
+    borderRadius: 4,
+    flexDirection: 'row',
+    fontSize: 18,
+    gap: 10,
+    marginVertical: 10,
+    minWidth: 200,
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+    textAlign: 'center',
+  },
   close: {
     position: 'absolute',
     right: 10,
@@ -222,6 +256,7 @@ const styles = StyleSheet.create({
   input: {
     ...customStyles.border(1, 'solid', colors.borderColor),
     borderRadius: 4,
+    marginTop: 30,
     paddingHorizontal: 10,
     paddingVertical: 5,
     width: '100%',
@@ -251,19 +286,28 @@ const styles = StyleSheet.create({
     ...customStyles.borderBottom(1, 'solid', colors.borderColor),
   },
   text: {
-    borderRadius: 4,
     fontSize: 18,
-    marginVertical: 10,
     paddingHorizontal: 10,
     paddingVertical: 3,
-    textAlign: 'center',
+  },
+  text_confirm: {
+    alignItems: 'center',
+    borderRadius: 4,
+    flexDirection: 'row',
+    marginTop: 10,
+    paddingHorizontal: 10,
+    ...customStyles.border(1, 'solid', colors.confirm),
   },
   text_delete: {
     ...customStyles.border(1, 'solid', colors.delete),
+  },
+  text_delete__color: {
     color: colors.delete,
   },
   text_update: {
     ...customStyles.border(1, 'solid', colors.edit),
+  },
+  text_update__color: {
     color: colors.edit,
   },
   wishlist_item__wrapper: {
