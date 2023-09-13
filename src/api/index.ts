@@ -15,7 +15,7 @@ interface IOptions {
 }
 
 ///export const fakeUrl = 'https://test-api.redro.ru'
-export const fakeUrl = 'https://api-android.redro.ru/api'
+export const fakeUrl = 'https://api-android.redro.ru'
 const shopIdTest = `07c1a17d-41ed-49a6-96a0-01db91821db2`
 
 export const getImagePath = (path: string | null, product = '') =>
@@ -156,7 +156,7 @@ export const SHOP_API = {
       .catch((err) => console.log(err))
   },
   /* step 3 */
-  createCustomerUser: async (token: string, phone: string, password: string) => {
+  createCustomerUser: async (token: number, phone: string, password: string) => {
     return axios
       .post(`${fakeUrl}/api/users/create-customer-user`, { mobile: phone, password, token })
       .then((res) => {
