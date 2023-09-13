@@ -14,8 +14,10 @@ interface IOptions {
   categoryId?: number | string | null
 }
 
-///export const fakeUrl = 'https://test-api.redro.ru'
-export const fakeUrl = 'https://api-android.redro.ru'
+
+export const fakeUrl = 'https://test-api.redro.ru'
+// export const fakeUrl = 'https://api-android.redro.ru/api'
+
 const shopIdTest = `07c1a17d-41ed-49a6-96a0-01db91821db2`
 
 export const getImagePath = (path: string | null, product = '') =>
@@ -290,6 +292,7 @@ export const SHOP_API = {
       .catch((err) => console.log(err))
   },
   updateCartQuantity: async (id: string, requestBody: { itemId: string; qty: number }[]) => {
+    console.log(requestBody, 'BODYYYYYYYYYYYYYYY')
     const body = {
       // cartItems: [
       //   {
@@ -302,6 +305,7 @@ export const SHOP_API = {
     return axios
       .put(`${fakeUrl}/api/shopping-cart/update-shopping-cart/${id}`, body)
       .then((res) => {
+        console.log(res.data, 'RESULT')
         return res.data
       })
       .catch((err) => notification(err, ALERT_TYPE.DANGER))

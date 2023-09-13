@@ -169,6 +169,16 @@
     "partners": "Партньори",
     "contact_us": "Связь с нами"
   },
+  "modal": {
+    "edit": "Редактировать",
+    "delete": "Удалить",
+    "confirm": "Сохранить"
+  },
+  "buttons": {
+    "update": "Обновить",
+    "checkout": "Оформить",
+    "pay": "Заплатить"
+  },
   "hello": "Welcome",
   "thanks": "Thank you for using the best template for expo apps",
   "app_information": "Shake your device to open developer menu"

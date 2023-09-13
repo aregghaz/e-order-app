@@ -21,6 +21,7 @@ const colors = {
   headingColor: '#212529',
   borderColor: '#D2D2D2',
   nameColor: '#646464',
+  red: 'red',
 }
 
 const TopRatedItems: FC<IFeaturedItems> = ({ items, navigation, isCategoryProduct }) => {
@@ -34,7 +35,7 @@ const TopRatedItems: FC<IFeaturedItems> = ({ items, navigation, isCategoryProduc
         {items &&
           items.length > 0 &&
           items.map((item) => {
-            const { name, id, price, views } = item
+            const { name, id, price, reward } = item
             return (
               <TouchableOpacity
                 key={id}
@@ -60,8 +61,9 @@ const TopRatedItems: FC<IFeaturedItems> = ({ items, navigation, isCategoryProduc
                 <View>
                   <Text style={styles.price}>₽ {price}</Text>
                 </View>
-                <View>
-                  <Text style={styles.price}>views {views}</Text>
+                <View style={styles.reward_block}>
+                  <Text style={styles.price}>Reward {reward}</Text>
+                  <Text style={styles.reward}>B</Text>
                 </View>
               </TouchableOpacity>
             )
@@ -130,6 +132,13 @@ const styles = StyleSheet.create({
   // },
   price: {
     textAlign: 'left',
+  },
+  reward: {
+    color: colors.red,
+  },
+  reward_block: {
+    flexDirection: 'row',
+    gap: 5,
   },
 })
 

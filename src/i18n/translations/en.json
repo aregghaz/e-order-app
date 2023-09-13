@@ -170,6 +170,16 @@
     "partners": "Partners",
     "contact_us": "Contact Us"
   },
+  "modal": {
+    "edit": "Edit",
+    "delete": "Delete",
+    "confirm": "Save Name"
+  },
+  "buttons": {
+    "update": "Update",
+    "checkout": "Checkout",
+    "pay": "Pay",
+  },
   "hello": "Welcome",
   "thanks": "Thank you for using the best template for expo apps",
   "app_information": "Shake your device to open developer menu"

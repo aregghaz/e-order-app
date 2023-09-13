@@ -5,21 +5,48 @@ import { SHOP_API } from '~api'
 import InputNumber from '~components/molecules/InputNumber'
 import { customStyles } from '~utils/style_helpers'
 
-export const CartItems = ({ elem, onDelete, cartItemId, isDelete, setTrigger, trigger }: any) => {
+export const CartItems = ({
+  elem,
+  onDelete,
+  cartItemId,
+  isDelete,
+  setTrigger,
+  trigger,
+  onDataToParent,
+}: any) => {
   const handleUpdateQuantity = async (id: string, itemId: string, qty: number) => {
-    console.log(itemId, 'ITEM____ID')
-    console.log(qty, 'QTY____________')
+    // const updatedQtyObj = elem.map((item: any) => {
+    //   if (item.id === itemId) {
+    //     return {
+    //       itemId: item.id,
+    //       quantity: qty,
+    //     }
+    //   }
+    //   return item
+    // })
+    // const updatedQtyObj = elem.map((item: any) => {
+    //   if (item.id === itemId) {
+    //     item.quantity = qty
+    //   }
+    //   return {
+    //     itemId: item.id,
+    //     quantity: item.quantity,
+    //   }
+    // })
+
     const updatedQtyObj = elem.map((item: any) => {
       if (item.id === itemId) {
-        item.quantity = qty
+        console.log(item, '________++++++++++')
+        console.log(qty, '________++++++++++qty')
+        // Create a shallow copy of the item and update its quantity
+        return { ...item, quantity: qty }
       }
-      return {
-        itemId: item.id,
-        quantity: item.quantity,
-      }
+      // return item
     })
+
     console.log(updatedQtyObj, '______updatedQtyObj')
-    await SHOP_API.updateCartQuantity(id, updatedQtyObj)
+    onDataToParent(id, updatedQtyObj)
+    // await SHOP_API.updateCartQuantity(id, updatedQtyObj)
     setTrigger(!trigger)
   }
 
@@ -27,7 +54,6 @@ export const CartItems = ({ elem, onDelete, cartItemId, isDelete, setTrigger, tr
     <ScrollView>
       {elem &&
         elem.map((item: any, index: number) => {
-          console.log(item.properties.unit, 'itemitemitem')
           return (
             <View key={index} style={styles.cart_wrapper}>
               <View>

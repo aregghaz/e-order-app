@@ -35,14 +35,12 @@ export const SupplierSearch: FC<IProps> = ({ route, navigation }) => {
   return (
     <SafeAreaView>
       <ScrollView>
-        {data && data.length > 0 ? (
-          loading ? (
-            <View style={styles.container}>
-              <ActivityIndicator size="large" />
-            </View>
-          ) : (
-            <TopRatedItems items={data} navigation={navigation} isCategoryProduct={true} />
-          )
+        {loading ? (
+          <View style={styles.container}>
+            <ActivityIndicator size="large" />
+          </View>
+        ) : data && data.length > 0 ? (
+          <TopRatedItems items={data} navigation={navigation} isCategoryProduct={true} />
         ) : (
           <View style={styles.text_wrapper}>
             <Text style={styles.text}>Nothing found</Text>
