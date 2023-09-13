@@ -22,6 +22,9 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,

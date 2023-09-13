@@ -6578,7 +6578,7 @@ expo-modules-autolinking@1.2.0:
     find-up "^5.0.0"
     fs-extra "^9.1.0"
 
-expo-modules-core@1.2.7:
+expo-modules-core@1.2.7, expo-modules-core@~1.2.7:
   version "1.2.7"
   resolved "https://registry.npmjs.org/expo-modules-core/-/expo-modules-core-1.2.7.tgz"
   integrity sha512-sulqn2M8+tIdxi6QFkKppDEzbePAscgE2LEHocYoQOgHxJpeT7axE0Hkzc+81EeviQilZzGeFZMtNMGh3c9yJg==

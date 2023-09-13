@@ -49,7 +49,8 @@ export const PasswordStack: FC<IProps> = ({ route }) => {
     if (reset != undefined) {
       data = await SHOP_API.resetPassword(token, mobile, password)
     } else {
-      data = await SHOP_API.createCustomerUser('1111', mobile, password)
+      console.log(token, 'tokentoken')
+      data = await SHOP_API.createCustomerUser(token, mobile, password)
     }
     if (data) {
       if (reset != undefined) {

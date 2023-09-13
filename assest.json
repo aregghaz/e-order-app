@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.redro.app",
+      "sha256_cert_fingerprints": [
+        "2C:BD:A2:26:64:17:92:82:82:56:D1:ED:EB:A6:95:92:C2:05:C3:C0:E8:24:6B:80:55:B9:AF:ED:D3:CE:FC:57"
+      ]
+    }
+  }
+]

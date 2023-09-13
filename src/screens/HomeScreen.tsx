@@ -37,7 +37,7 @@ export const HomeScreen = ({ navigation }: any): JSX.Element => {
       const getAsyncData = async (): Promise<void> => {
         if (isSignedIn) {
           const getID = await getShopId()
-          console.log(getID, 'getIDgetID')
+          console.log(getID, '111111111')
           if (!getID) {
             const shopData = await SHOP_API.getShopsData()
             console.log(shopData, 'shopDatashopData')
