@@ -1,13 +1,14 @@
 {
   "expo": {
-    "name": "e-order-app",
-    "slug": "e-order-app",
+    "name": "redro",
+    "slug": "redro",
     "scheme": "template",
-    "version": "1.0.0",
-    "owner": "itflame",
+    "version": "0.0.2",
+    "owner": "redro",
     "userInterfaceStyle": "automatic",
     "orientation": "portrait",
     "icon": "./assets/splash.png",
+    "jsEngine": "hermes",
     "splash": {
       "image": "./assets/logo.png",
       "resizeMode": "contain",
@@ -15,25 +16,25 @@
     },
     "extra": {
       "eas": {
-        "projectId": "4eb24f80-de3b-497f-9623-3d5eb4ae1d96"
+        "projectId": "1233bed6-82c7-4703-a4cf-9732a305a7c1"
       }
     },
-
     "updates": {
       "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "jsEngine": "hermes",
+      "jsEngine": "jsc",
       "bundleIdentifier": "com.order.app"
     },
     "android": {
+      "versionCode": 2,
+      "jsEngine": "hermes",
       "adaptiveIcon": {
         "foregroundImage": "./assets/splash.png",
         "backgroundColor": "#FFFFFF"
-      },
-      "jsEngine": "hermes"
+      }
     },
     "web": {
       "favicon": "./assets/splash.png"

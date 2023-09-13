@@ -10,17 +10,16 @@ import {
   View,
 } from 'react-native'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
-import { useAuth, useGlobal } from "~hooks";
+import { useAuth } from '~hooks'
 
 import { SHOP_API } from '~api'
 import { CustomButton } from '~components/molecules/CustomButton'
 import { SCREEN } from '~constants'
 import { notification } from '~services/ShopService'
-// import { getUserData, setUserData } from '~services/UserService'
+import { getUserData, setUserData } from '~services/UserService'
 import { checkAge, timestampToDate } from '~utils/dateTimeFormat'
 import { GooglePlacesAutocomplete, Point } from 'react-native-google-places-autocomplete'
 import { useTranslation } from 'react-i18next'
-import { ALERT_TYPE } from "react-native-alert-notification";
 const moment = require('moment')
 
 export const ProfileEditScreen: FC = ({ route }: any) => {
@@ -29,7 +28,6 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
   const { t } = useTranslation()
   // const [validAge, setValidAge] = useState(false);
   const { setIsSignedIn, isSignedIn } = useAuth()
-  const { userData, setUserData } = useGlobal()
 
   /*Name*/
   const [id, setId] = useState('')
@@ -80,11 +78,9 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
   useFocusEffect(
     useCallback(() => {
       const getAsyncData = async (): Promise<void> => {
-        // const pesdonalData = await getUserData()
-        // if (pesdonalData.id) {
-        if (userData.id) {
-          // const custommerData = await SHOP_API.getCustommer(pesdonalData.id)
-          const custommerData = await SHOP_API.getCustommer(userData.id)
+        const pesdonalData = await getUserData()
+        if (pesdonalData.id) {
+          const custommerData = await SHOP_API.getCustommer(pesdonalData.id)
           const dataUser = custommerData.payload
           setLocation({
             contry: dataUser.person.address.country,
@@ -117,7 +113,6 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
         }
       }
       console.log(typeData === false, isSignedIn, '33333333333333333333333333')
-      console.log(route.params, '5555555555555555555555555')
 
       if (typeData === false) {
         resetValues()
@@ -212,30 +207,20 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
     }
     if (isValid) {
       let dataCheck
-      console.log(type, 'typetype')
       if (type) {
         dataCheck = await SHOP_API.updateCustomerUser(body, id)
       } else {
         dataCheck = await SHOP_API.fillingCustomerUser(body)
-        console.log(dataCheck.payload, 'dataCheck.payload.')
+        // console.log(dataCheck.payload, 'dataCheck.payload.')
         // await setUserData(dataCheck.payload.person)
-        setUserData(dataCheck.payload.person)
-        await setIsSignedIn(true)
+        // await setIsSignedIn(true)
       }
-      console.log(dataCheck, '!dataCheck!dataCheck')
-      if (dataCheck) {
-        console.log(dataCheck, '!dataCheck!dataCheck')
-
-        await notification('Сохранено')
-        navigate(SCREEN.DRAWER_ROOT, {
-          screen: SCREEN.STACK_MAIN_TAB,
-          params: {
-            screen: SCREEN.TAB_HOME,
-          },
-        })
+    ///  console.log(dataCheck, '!dataCheck!dataCheck')
+      if (!dataCheck) {
+    ///    console.log(dataCheck, '!dataCheck!dataCheck')
       } else {
-        await notification('404 not found', ALERT_TYPE.WARNING)
-        // navigation.navigate(SCREEN.STACK_SIGN_IN)
+        notification('Сохранено')
+        navigate(SCREEN.DRAWER_ROOT)
       }
     }
   }

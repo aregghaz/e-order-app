@@ -15,7 +15,15 @@
     "preview": {
       "distribution": "internal"
     },
-    "production": {}
+    "staging": {
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      }
+    },
+    "production": {
+      "autoIncrement": true
+    }
   },
   "cli": {
     "version": ">= 0.53.1"

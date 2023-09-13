@@ -14,7 +14,8 @@ interface IOptions {
   categoryId?: number | string | null
 }
 
-export const fakeUrl = 'https://test-api.redro.ru'
+///export const fakeUrl = 'https://test-api.redro.ru'
+export const fakeUrl = 'https://api-android.redro.ru/api'
 const shopIdTest = `07c1a17d-41ed-49a6-96a0-01db91821db2`
 
 export const getImagePath = (path: string | null, product = '') =>
