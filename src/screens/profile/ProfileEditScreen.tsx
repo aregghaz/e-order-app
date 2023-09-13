@@ -215,9 +215,9 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
         // await setUserData(dataCheck.payload.person)
         // await setIsSignedIn(true)
       }
-    ///  console.log(dataCheck, '!dataCheck!dataCheck')
+      ///  console.log(dataCheck, '!dataCheck!dataCheck')
       if (!dataCheck) {
-    ///    console.log(dataCheck, '!dataCheck!dataCheck')
+        ///    console.log(dataCheck, '!dataCheck!dataCheck')
       } else {
         notification('Сохранено')
         navigate(SCREEN.DRAWER_ROOT)
