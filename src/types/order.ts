@@ -131,4 +131,5 @@ export interface IProduct {
   discount: number
   reward: number
   price: number
+  productId: any
 }

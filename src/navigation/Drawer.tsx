@@ -99,7 +99,7 @@ export const DrawerNavigator = () => {
         name={SCREEN.CHECKOUT}
         component={CheckOutScreen}
         options={({ navigation, route }: any) => ({
-          headerTitle: () => <Header navigation={navigation} title={'Checkout'} />,
+          headerTitle: () => <Header navigation={navigation} title={t('checkout_title')} />,
           headerLeft: () => null,
         })}
       />
@@ -160,7 +160,7 @@ export const DrawerNavigator = () => {
         component={PhoneRegisterStack}
         options={({ navigation, route }: any) => ({
           // headerTitle: () => <Header navigation={navigation} title={'login'} />,
-          headerTitle: () => <Text>Registration</Text>,
+          headerTitle: () => <Text>{t('registration')}</Text>,
           // headerLeft: () => null,
         })}
       />
@@ -176,7 +176,7 @@ export const DrawerNavigator = () => {
         name={SCREEN.STACK_VERIFICATION}
         component={Verification}
         options={({ navigation, route }: any) => ({
-          headerTitle: () => <Header navigation={navigation} title={'Verification'} />,
+          headerTitle: () => <Header navigation={navigation} title={t('verification')} />,
           headerLeft: () => null,
         })}
       />
@@ -200,7 +200,7 @@ export const DrawerNavigator = () => {
         name={SCREEN.STACK_ORDER_INNER}
         component={OrderInnerScreen}
         options={({ navigation, route }: any) => ({
-          headerTitle: () => <Header navigation={navigation} title={'Order Details'} />,
+          headerTitle: () => <Header navigation={navigation} title={t('order_details')} />,
           headerLeft: () => null,
         })}
       />

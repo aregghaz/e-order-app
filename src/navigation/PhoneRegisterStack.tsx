@@ -43,9 +43,9 @@ export const PhoneRegisterStack: FC = () => {
         onChangePhoneNumber={handlePhoneNumberChange}
         textProps={{ placeholder: '+37491444444' }}
       />
-      <CustomButton title="Registration" onPress={handleButtonPress} />
+      <CustomButton title={t('register')} onPress={handleButtonPress} />
       <TouchableOpacity onPress={() => navigation.navigate(SCREEN.STACK_SIGN_IN)}>
-        <Text style={styles.have_account}>Already have account ?</Text>
+        <Text style={styles.have_account}>{t('have_account')}</Text>
       </TouchableOpacity>
     </View>
   )

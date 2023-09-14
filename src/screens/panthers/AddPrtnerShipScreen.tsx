@@ -1,9 +1,11 @@
 import { useFocusEffect } from '@react-navigation/native'
 import React, { FC, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { ActivityIndicator, FlatList, StyleSheet, Text, View } from 'react-native'
 
 import { SHOP_API } from '~api'
 import { CustomButton } from '~components/molecules/CustomButton'
+import { PARTNERS_STATUS } from '~constants'
 import { getShopId, notification } from '~services/ShopService'
 import { customStyles } from '~utils/style_helpers'
 
@@ -14,6 +16,7 @@ export const AddPrtnerShipScreen: FC = () => {
   ///   const [isLoading, setIsLoading] = useState(false);
   const [loding, setLoading] = useState(false)
   ///   const [hasMoreData, setHasMoreData] = useState(true);
+  const { t } = useTranslation()
 
   useFocusEffect(
     React.useCallback(() => {
@@ -73,13 +76,14 @@ export const AddPrtnerShipScreen: FC = () => {
         onEndReachedThreshold={0.5}
         renderItem={(e: any) => {
           const item = e.item
+          console.log(item, 'OPOPOPOP')
           return (
             <View key={item.id} style={styles.box}>
               <Text style={styles.title}>{item.companyName}</Text>
               <View style={styles.buttonsContainer}>
                 <CustomButton
-                  title={item.partnershipStatus}
-                  width={150}
+                  title={t(PARTNERS_STATUS[item.partnershipStatus])}
+                  width={200}
                   padding={15}
                   border="grey"
                   background="white"
