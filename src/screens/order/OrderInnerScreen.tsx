@@ -1,5 +1,6 @@
 import { useFocusEffect } from '@react-navigation/native'
 import React, { FC, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 
 import { SHOP_API } from '~api'
@@ -10,7 +11,7 @@ import { customStyles } from '~utils/style_helpers'
 export const OrderInnerScreen: FC = ({ route }: any) => {
   const id = route.params.id
   const [order, setOrder] = useState<IOorder>()
-
+  const { t } = useTranslation()
   useFocusEffect(
     React.useCallback(() => {
       const getData = async () => {
@@ -28,23 +29,55 @@ export const OrderInnerScreen: FC = ({ route }: any) => {
         <View style={styles.box}>
           <Text style={styles.text_h2}>Заказ # {order.orderNumber}</Text>
           <View style={styles.hr} />
-          <Text>Дата создания: {timestampToDate(order.createdAt)}</Text>
-          <Text>Дата обновления: {timestampToDate(order.updatedAt)}</Text>
-          <Text>Статус: {order.status}</Text>
+          <View style={styles.row_wrap}>
+            <Text style={styles.title}>{t('created-at')} :</Text>
+            <Text>{timestampToDate(order.createdAt)}</Text>
+          </View>
+          <View style={styles.row_wrap}>
+            <Text style={styles.title}>{t('updated_at')} :</Text>
+            <Text>{timestampToDate(order.updatedAt)}</Text>
+          </View>
+          <View style={styles.row_wrap}>
+            <Text style={styles.title}>{t('status')} :</Text>
+            <Text>{t(order.status)}</Text>
+          </View>
         </View>
 
         <View style={styles.hr} />
-        {order.orderItems.map((item: IProduct, index: number) => (
-          <View key={index} style={styles.box}>
-            <Text>ТОВАР : {item.productName}</Text>
-            <Text>КОЛ-ВО : {item.quantity}</Text>
-            {/*<View style={styles.hr}/>*/}
-            <Text>ЦЕНА : {item.price}</Text>
-            <Text>СКИДКА : {item.discount}</Text>
-            <Text>БОНУС : {item.reward} </Text>
-            <Text>СУММА : {(item.price - (item.price * item.discount) / 100).toFixed(2)}</Text>
-          </View>
-        ))}
+        {order.orderItems.map((item: IProduct, index: number) => {
+          return (
+            <View key={index} style={styles.box}>
+              <View style={styles.row_wrap}>
+                <Text style={styles.title}>{t('company_name')} :</Text>
+                <Text>{item.productId.supplier.companyName}</Text>
+              </View>
+              <View style={styles.row_wrap}>
+                <Text style={styles.title}>{t('product_name')} :</Text>
+                <Text>{item.productName}</Text>
+              </View>
+              <View style={styles.row_wrap}>
+                <Text style={styles.title}>{t('quantity')} :</Text>
+                <Text>{item.quantity}</Text>
+              </View>
+              <View style={styles.row_wrap}>
+                <Text style={styles.title}>{t('price')} :</Text>
+                <Text>{item.price}</Text>
+              </View>
+              <View style={styles.row_wrap}>
+                <Text style={styles.title}>{t('discount')} :</Text>
+                <Text>{item.discount}</Text>
+              </View>
+              <View style={styles.row_wrap}>
+                <Text style={styles.title}>{t('reward')} :</Text>
+                <Text>{item.reward}</Text>
+              </View>
+              <View style={styles.row_wrap}>
+                <Text style={styles.title}>{t('total')} :</Text>
+                <Text>{(item.price - (item.price * item.discount) / 100).toFixed(2)}</Text>
+              </View>
+            </View>
+          )
+        })}
 
         {/*<View style={styles.hr} />*/}
       </ScrollView>
@@ -79,10 +112,19 @@ const styles = StyleSheet.create({
     ...customStyles.border(1, 'solid', colors.borderColor),
     marginVertical: 5,
   },
+  row_wrap: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 10,
+    marginVertical: 3,
+  },
   text_h2: {
     fontSize: 25,
     fontWeight: 'bold',
     marginVertical: 10,
     textAlign: 'center',
+  },
+  title: {
+    fontWeight: 'bold',
   },
 })

@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { Pressable, View, Text, StyleSheet, ScrollView } from 'react-native'
 
 import { SHOP_API } from '~api'
@@ -14,6 +15,7 @@ export const CartItems = ({
   trigger,
   onDataToParent,
 }: any) => {
+  const { t } = useTranslation()
   const handleUpdateQuantity = async (id: string, itemId: string, qty: number) => {
     // const updatedQtyObj = elem.map((item: any) => {
     //   if (item.id === itemId) {
@@ -60,13 +62,20 @@ export const CartItems = ({
                 <Text>{item.product.productName}</Text>
                 <Text>Sku: {item.product.sku}</Text>
                 <Text>
-                  Unit:{' '}
-                  {item.properties.unit.name + ' ' + '(x' + item.properties.unit.contents + ')'}
+                  {t('unit')}: {`${item.properties.unit.name} (x${item.properties.unit.contents})`}
                 </Text>
-                <Text>Qty: {item.quantity}</Text>
-                <Text>Price: {item.price}</Text>
-                <Text>Reward: {item.reward}</Text>
-                <Text>Discount {item.discount} %</Text>
+                <Text>
+                  {t('quantity')}: {item.quantity}
+                </Text>
+                <Text>
+                  {t('price')}: {item.price}
+                </Text>
+                <Text>
+                  {t('reward')}: {item.reward}
+                </Text>
+                <Text>
+                  {t('discount')} {item.discount} %
+                </Text>
                 {isDelete && (
                   <View style={styles.buttons_wrapper}>
                     <Pressable
@@ -78,7 +87,7 @@ export const CartItems = ({
                         })
                       }
                     >
-                      <Text style={styles.delete}>Delete</Text>
+                      <Text style={styles.delete}>{t('modal.delete')}</Text>
                     </Pressable>
                     <View style={styles.incrementor}>
                       <InputNumber

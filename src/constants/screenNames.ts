@@ -54,3 +54,14 @@ export const MENUS = {
   PARTNERS: 'menu.partners',
   CONTACT_US: 'menu.contact_us',
 }
+
+export type partnersType = {
+  'not-send': string
+  pending: string
+  accepted: string
+}
+export const PARTNERS_STATUS: partnersType = {
+  'not-send': 'partners_status.not-send',
+  pending: 'partners_status.pending',
+  accepted: 'partners_status.accepted',
+}

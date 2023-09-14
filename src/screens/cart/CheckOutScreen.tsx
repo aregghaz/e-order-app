@@ -82,7 +82,7 @@ export const CheckOutScreen: FC = ({ route, navigation }: any) => {
         <View style={styles.inputBox}>
           <TextInput
             style={styles.input}
-            placeholder={'comments'}
+            placeholder={t('comment')}
             placeholderTextColor={'black'}
             multiline={true}
             numberOfLines={4}

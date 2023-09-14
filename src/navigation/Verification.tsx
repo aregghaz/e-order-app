@@ -2,6 +2,7 @@
  * was created by tigran at 09.07.23
  */
 import React, { FC, useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 
 import { SHOP_API } from '~api'
@@ -29,14 +30,13 @@ export const Verification: FC<IProps> = ({
   const [pin3, setPin3] = useState('')
   const [pin4, setPin4] = useState('')
   const [countdown, setCountdown] = useState(duration)
-
+  const { t } = useTranslation()
   const handleResend = async () => {
     const resend = await SHOP_API.resendConfirmation(phone)
     setCountdown(resend.payload.duration)
   }
   const handleVerify = async () => {
     const combineCode = pin1 + pin2 + pin3 + pin4
-    console.log('datadatadata')
     if (combineCode.trim().length === 4) {
       const toNumberCode = Number(combineCode)
       const data = await SHOP_API.setVerificationCode(phone, toNumberCode)
@@ -137,7 +137,7 @@ export const Verification: FC<IProps> = ({
           }}
         />
       </View>
-      <CustomButton title="Verify Code" onPress={handleVerify} />
+      <CustomButton title={t('verify_code')} onPress={handleVerify} />
       <TouchableOpacity onPress={resendCode} style={styles.resend}>
         <Text style={styles.counter}>
           {countdown > 0 ? formatCountdown(countdown) : 'Resend code'}
