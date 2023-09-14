@@ -112,7 +112,6 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
           setType(false)
         }
       }
-      console.log(typeData === false, isSignedIn, '33333333333333333333333333')
 
       if (typeData === false) {
         resetValues()
@@ -219,7 +218,7 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
       if (!dataCheck) {
         ///    console.log(dataCheck, '!dataCheck!dataCheck')
       } else {
-        notification('Сохранено')
+        await notification('Сохранено')
         navigate(SCREEN.DRAWER_ROOT)
       }
     }
@@ -236,9 +235,9 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
 
   const handleConfirm = (date: any) => {
     const validAge = checkAge(date)
-    console.log(validAge, 'validAgevalidAge')
     if (validAge < 18) {
       setDobError(t('form.under18'))
+      hideDatePicker()
     } else {
       setDobError('')
       setDob(date)
