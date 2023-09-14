@@ -80,6 +80,7 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
       const getAsyncData = async (): Promise<void> => {
         /// try {
         setSelectedOption(null)
+        activeItemRef.current = null
         const getID = await getShopId()
         setShopId(getID)
         if (getID) {
@@ -111,6 +112,8 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
     addOption(1)
   }
   const handleAddToCart = async () => {
+    activeItemRef.current = null
+    setSelectedOption(null)
     if (!isSignedIn) {
       await notification(t('notification.signIn'), ALERT_TYPE.WARNING)
       navigation.navigate(SCREEN.STACK_SIGN_IN)
