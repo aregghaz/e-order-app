@@ -17,38 +17,17 @@ export const CartItems = ({
 }: any) => {
   const { t } = useTranslation()
   const handleUpdateQuantity = async (id: string, itemId: string, qty: number) => {
-    // const updatedQtyObj = elem.map((item: any) => {
-    //   if (item.id === itemId) {
-    //     return {
-    //       itemId: item.id,
-    //       quantity: qty,
-    //     }
-    //   }
-    //   return item
-    // })
-    // const updatedQtyObj = elem.map((item: any) => {
-    //   if (item.id === itemId) {
-    //     item.quantity = qty
-    //   }
-    //   return {
-    //     itemId: item.id,
-    //     quantity: item.quantity,
-    //   }
-    // })
-
     const updatedQtyObj = elem.map((item: any) => {
       if (item.id === itemId) {
-        console.log(item, '________++++++++++')
-        console.log(qty, '________++++++++++qty')
-        // Create a shallow copy of the item and update its quantity
-        return { ...item, quantity: qty }
+        item.quantity = qty
       }
-      // return item
+      return {
+        itemId: item.id,
+        quantity: item.quantity,
+      }
     })
-
     console.log(updatedQtyObj, '______updatedQtyObj')
     onDataToParent(id, updatedQtyObj)
-    // await SHOP_API.updateCartQuantity(id, updatedQtyObj)
     setTrigger(!trigger)
   }
 

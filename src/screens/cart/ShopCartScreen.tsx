@@ -96,9 +96,8 @@ export const ShopCartScreen: FC = ({ navigation }: any) => {
   }
 
   const handleUpdateData = async (id: string, data: any) => {
-    console.log(id, '___ ID')
-    console.log(data, '___ data')
     await SHOP_API.updateCartQuantity(id, data)
+    setTrigger(!trigger)
   }
 
   return loding ? (
@@ -229,7 +228,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   hr: {
-    ...customStyles.border(1, 'solid', colors.borderColor),
+    ...customStyles.borderTop(1, 'solid', colors.borderColor),
     marginVertical: 3,
     width: 200,
   },
