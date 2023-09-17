@@ -35,14 +35,24 @@ export const SCREEN = {
   DRAWER_MENU: 'Menu',
   DRAWER_ROOT: 'Root',
   PHONE_REGISTER: 'PhoneRegister',
-  PARTNER_SHIP: 'ParthnerShip',
-  ADD_PARTNERSHIP: 'AddPrtnerShip',
+  PARTNER_SHIP: 'Partnership',
+  ADD_PARTNERSHIP: 'AddPartnership',
   CHECKOUT: 'Checkout',
   PROFILE_EDIT: 'ProfileEdit',
   CHANGE_PASSWORD: 'ChangePassword',
   SUPPLIER: 'Supplier',
 }
 
+export type TMenusType =
+  | 'menu.home'
+  | 'menu.shop_list'
+  | 'menu.profile'
+  | 'menu.personal_info'
+  | 'menu.change_password'
+  | 'menu.edit_profile'
+  | 'menu.order_list'
+  | 'menu.partners'
+  | 'menu.contact_us'
 export const MENUS = {
   HOME: 'menu.home',
   SHOP_LIST: 'menu.shop_list',
@@ -60,6 +70,13 @@ export type partnersType = {
   pending: string
   accepted: string
 }
+
+export type TPartners =
+  | 'partners_status.not-send'
+  | 'partners_status.pending'
+  | 'partners_status.accepted'
+
+export type TPartnersStatus = 'not-send' | 'pending' | 'accepted'
 export const PARTNERS_STATUS: partnersType = {
   'not-send': 'partners_status.not-send',
   pending: 'partners_status.pending',

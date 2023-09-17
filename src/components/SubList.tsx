@@ -5,7 +5,7 @@ import React, { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
-import { SCREEN } from '~constants'
+import { SCREEN, TMenusType } from '~constants'
 import { setShopId } from '~services/ShopService'
 import { ScreenNameChanger } from '~utils/helper'
 
@@ -49,7 +49,7 @@ export const SubList: FC<IProps> = ({
     <TouchableOpacity onPress={() => handlePressCheck(title, group!, shop_id!)}>
       <View style={styles.SubList_wrapper}>
         {/*<Text>{title}</Text>*/}
-        <Text>{t(title)}</Text>
+        <Text>{t(title as TMenusType)}</Text>
       </View>
     </TouchableOpacity>
   )

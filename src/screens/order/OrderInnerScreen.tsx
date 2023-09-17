@@ -8,6 +8,12 @@ import { IOorder, IProduct } from '~types/order'
 import { timestampToDate } from '~utils/dateTimeFormat'
 import { customStyles } from '~utils/style_helpers'
 
+export const statusTypes = {
+  status: 'Status',
+  pending: 'Pending',
+  accepted: 'Accepted',
+}
+
 export const OrderInnerScreen: FC = ({ route }: any) => {
   const id = route.params.id
   const [order, setOrder] = useState<IOorder>()
@@ -39,7 +45,7 @@ export const OrderInnerScreen: FC = ({ route }: any) => {
           </View>
           <View style={styles.row_wrap}>
             <Text style={styles.title}>{t('status')} :</Text>
-            <Text>{t(order.status)}</Text>
+            <Text>{t(order.status as keyof typeof statusTypes)}</Text>
           </View>
         </View>
 
@@ -78,8 +84,6 @@ export const OrderInnerScreen: FC = ({ route }: any) => {
             </View>
           )
         })}
-
-        {/*<View style={styles.hr} />*/}
       </ScrollView>
     </View>
   ) : (

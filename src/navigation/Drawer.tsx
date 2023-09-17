@@ -13,25 +13,23 @@ import { Header } from '~navigation/Header'
 import { optionForScreen } from '~navigation/HeaderGlobalStyles'
 import { PasswordStack } from '~navigation/PasswordStack'
 import { RootNavigator } from '~navigation/RootNavigator'
-import { CategoryInnerScreen, ProfileEditScreen, SignInScreen } from '~screens'
-import { CategoryDetailScreen } from '~screens/CategoryDetailScreen'
-import { CategorySearchScreen } from '~screens/CategorySearchScreen'
-import { MenuScreen } from '~screens/MenuScreen'
+import { NotFoundScreen, SignInScreen } from '~screens'
 import { ProductInnerScreen } from '~screens/ProductInnerScreen'
 import { SupplierSearch } from '~screens/SupplierSearch'
 import { WishlistScreen } from '~screens/WishlistScreen'
 import { CheckOutScreen } from '~screens/cart/CheckOutScreen'
 import { ShopCartScreen } from '~screens/cart/ShopCartScreen'
-import { OrderFailScreen } from '~screens/order/OrderFailScreen'
-import { OrderInnerScreen } from '~screens/order/OrderInnerScreen'
-import { OrderListScreen } from '~screens/order/OrderListScreen'
-import { OrderSuccessScreen } from '~screens/order/OrderSuccessScreen'
-import { AddPrtnerShipScreen } from '~screens/panthers/AddPrtnerShipScreen'
-import { PrtnerShipScreen } from '~screens/panthers/PartnerShipScreen'
-import { ChangePasswordScreen } from '~screens/profile/ChangePasswordScreen'
-import { CreateStoreScreen } from '~screens/shops/CreateStoreScreen'
-import { ShopListScreen } from '~screens/shops/ShopListScreen'
-import { UpdateShopScreen } from '~screens/shops/UpdateShopScreen'
+import { CategoryDetailScreen, CategoryInnerScreen, CategorySearchScreen } from '~screens/category'
+import {
+  OrderFailScreen,
+  OrderInnerScreen,
+  OrderListScreen,
+  OrderSuccessScreen,
+} from '~screens/order'
+import { AddPartnershipScreen } from '~screens/partners/AddPartnershipScreen'
+import { PartnershipScreen } from '~screens/partners/PartnershipScreen'
+import { ChangePasswordScreen, ProfileEditScreen } from '~screens/profile'
+import { CreateStoreScreen, ShopListScreen, UpdateShopScreen } from '~screens/shops'
 
 const locale = 'ru'
 
@@ -164,11 +162,21 @@ export const DrawerNavigator = () => {
           // headerLeft: () => null,
         })}
       />
+      {/*<Drawer.Screen*/}
+      {/*  name={SCREEN.DRAWER_MENU}*/}
+      {/*  component={MenuScreen}*/}
+      {/*  options={({ navigation, route }: any) => ({*/}
+      {/*    headerTitle: () => <Header navigation={navigation} title={route.params.title} />,*/}
+      {/*    headerLeft: () => null,*/}
+      {/*  })}*/}
+      {/*/>*/}
       <Drawer.Screen
-        name={SCREEN.DRAWER_MENU}
-        component={MenuScreen}
+        name={SCREEN.STACK_NOT_FOUND}
+        component={NotFoundScreen}
         options={({ navigation, route }: any) => ({
-          headerTitle: () => <Header navigation={navigation} title={route.params.title} />,
+          headerTitle: () => (
+            <Header navigation={navigation} title={t('navigation.screen_titles.not_found')} />
+          ),
           headerLeft: () => null,
         })}
       />
@@ -224,7 +232,7 @@ export const DrawerNavigator = () => {
       />
       <Drawer.Screen
         name={SCREEN.PARTNER_SHIP}
-        component={PrtnerShipScreen}
+        component={PartnershipScreen}
         options={({ navigation, route }: any) => ({
           headerTitle: () => <Header navigation={navigation} title={t('menu.partners')} />,
           headerLeft: () => null,
@@ -232,7 +240,7 @@ export const DrawerNavigator = () => {
       />
       <Drawer.Screen
         name={SCREEN.ADD_PARTNERSHIP}
-        component={AddPrtnerShipScreen}
+        component={AddPartnershipScreen}
         options={({ navigation, route }: any) => ({
           headerTitle: () => <Header navigation={navigation} title={'Add Partners'} />,
           headerLeft: () => null,

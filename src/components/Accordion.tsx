@@ -5,6 +5,7 @@ import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native'
 
 import { SubList } from '~components/SubList'
 // import { SCREEN } from '~constants'
+import { TMenusType } from '~constants'
 import { ScreenNameChanger } from '~utils/helper'
 
 //import { useAuth } from '~hooks'
@@ -80,7 +81,7 @@ export const Accordion: FC<IProps> = ({
             <View style={styles.sidebar_icon__block}>
               <Feather name={iconName} size={20} />
               {/*<Text style={styles.text}>{title}</Text>*/}
-              <Text style={styles.text}>{t(title)}</Text>
+              <Text style={styles.text}>{t(title as TMenusType)}</Text>
             </View>
             {hasChildren && <Feather name="chevron-left" size={18} style={chevronStyle} />}
           </View>

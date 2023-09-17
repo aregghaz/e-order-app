@@ -69,7 +69,7 @@ export const ScreenNameChanger = (name: string) => {
     case 'menu.contact_us':
       return SCREEN.TAB_CONTACT
     default:
-      return SCREEN.DRAWER_MENU
+      return SCREEN.STACK_NOT_FOUND
   }
 }
 

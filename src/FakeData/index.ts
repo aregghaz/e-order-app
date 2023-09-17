@@ -422,4 +422,78 @@ export const fakeData = {
       shopId: 'shop_id_6',
     },
   ],
+  elem: [
+    {
+      id: 1,
+      product: {
+        productName: 'poxos',
+        sku: '123',
+      },
+      properties: {
+        unit: {
+          name: 'po',
+          contents: '1 pack',
+        },
+      },
+      quantity: 1,
+      price: 50,
+      reward: 0,
+      discount: 0,
+      itemId: 1,
+    },
+    {
+      id: 2,
+      product: {
+        productName: 'gago',
+        sku: '456',
+      },
+      properties: {
+        unit: {
+          name: 'ga',
+          contents: '1 pack',
+        },
+      },
+      quantity: 1,
+      price: 150,
+      reward: 0,
+      discount: 0,
+      itemId: 2,
+    },
+    {
+      id: 3,
+      product: {
+        productName: 'Davo',
+        sku: '789',
+      },
+      properties: {
+        unit: {
+          name: 'da',
+          contents: '1 pack',
+        },
+      },
+      quantity: 1,
+      price: 750,
+      reward: 0,
+      discount: 0,
+      itemId: 3,
+    },
+    {
+      id: 4,
+      product: {
+        productName: 'Mato',
+        sku: '426',
+      },
+      properties: {
+        unit: {
+          name: 'ma',
+          contents: '1 pack',
+        },
+      },
+      quantity: 1,
+      price: 5140,
+      reward: 0,
+      discount: 0,
+      itemId: 4,
+    },
+  ],
 }

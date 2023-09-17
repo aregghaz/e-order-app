@@ -14,7 +14,6 @@ interface IOptions {
   categoryId?: number | string | null
 }
 
-
 export const fakeUrl = 'https://test-api.redro.ru'
 // export const fakeUrl = 'https://api-android.redro.ru/api'
 
@@ -326,9 +325,7 @@ export const SHOP_API = {
     const tokenUSer = await getToken()
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
     return axios
-      .get(
-        `${fakeUrl}/api/orders/get-orders?orderBy=o.createdAt&orderDirection=${direction}`
-      )
+      .get(`${fakeUrl}/api/orders/get-orders?orderBy=o.createdAt&orderDirection=${direction}`)
       .then((res) => {
         return res.data
       })
