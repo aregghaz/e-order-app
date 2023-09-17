@@ -2,7 +2,7 @@
  * was created by tigran at 24.06.23
  */
 import { Feather, Ionicons } from '@expo/vector-icons'
-import { useFocusEffect } from '@react-navigation/native'
+// import { useFocusEffect } from '@react-navigation/native'
 import React, { FC, useCallback, useState } from 'react'
 import {
   Dimensions,
@@ -16,8 +16,8 @@ import {
 
 import { SHOP_API } from '~api'
 import { SCREEN } from '~constants'
-import { useAuth } from '~hooks'
-import { getShopId } from '~services/ShopService'
+import { useAuth, useGlobal } from '~hooks'
+// import { getShopId } from '~services/ShopService'
 
 const width = Dimensions.get('window').width - 30
 
@@ -29,32 +29,32 @@ interface IProps {
 export const Header: FC<IProps> = ({ title, navigation }) => {
   const [search, setSearch] = useState(false)
   const [text, setText] = useState('')
-  const [countIndicator, setCountIndicator] = useState<null | number>(null)
+  // const [countIndicator, setCountIndicator] = useState<null | number>(null)
   const { isSignedIn } = useAuth()
-
-  useFocusEffect(
-    useCallback(() => {
-      const getShopCartCount = async () => {
-        const getID = await getShopId()
-        console.log(getID, '333333')
-
-        if (getID) {
-          console.log(getID, '1111111111')
-
-          const count = await SHOP_API.getShopCarts(getID)
-
-          if (count) {
-            setCountIndicator(count.payload.content.length)
-          } else {
-            setCountIndicator(0)
-          }
-        } else {
-          setCountIndicator(0)
-        }
-      }
-      getShopCartCount()
-    }, [countIndicator, isSignedIn])
-  )
+  const { indicatorCount } = useGlobal()
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     const getShopCartCount = async () => {
+  //       const getID = await getShopId()
+  //       console.log(getID, '333333')
+  //
+  //       if (getID) {
+  //         console.log(getID, '1111111111')
+  //
+  //         const count = await SHOP_API.getShopCarts(getID)
+  //
+  //         // if (count) {
+  //         //   setCountIndicator(count.payload.content.length)
+  //         // } else {
+  //         //   setCountIndicator(0)
+  //         // }
+  //       } else {
+  //         setCountIndicator(0)
+  //       }
+  //     }
+  //     getShopCartCount()
+  //   }, [countIndicator, isSignedIn])
+  // )
 
   const handleOpenMenu = useCallback(() => {
     navigation.openDrawer()
@@ -138,7 +138,8 @@ export const Header: FC<IProps> = ({ title, navigation }) => {
           <Feather name="shopping-bag" size={25} style={styles.icons} onPress={handleShopCart} />
           {isSignedIn && (
             <View style={styles.cart_bandage}>
-              <Text style={styles.indicator}>{countIndicator}</Text>
+              {/*<Text style={styles.indicator}>{countIndicator}</Text>*/}
+              <Text style={styles.indicator}>{indicatorCount}</Text>
               {/*<Text style={styles.indicator}>0</Text>*/}
             </View>
           )}

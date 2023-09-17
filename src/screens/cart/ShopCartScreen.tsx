@@ -3,7 +3,7 @@
  */
 import { useFocusEffect } from '@react-navigation/native'
 import { CheckIcon, Select } from 'native-base'
-import React, { FC, useCallback, useEffect, useState } from 'react'
+import React, { FC, useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
 import { ALERT_TYPE } from 'react-native-alert-notification'
@@ -12,6 +12,7 @@ import { SHOP_API } from '~api'
 import { CartItems } from '~components/CartItem'
 import { CustomButton } from '~components/molecules/CustomButton'
 import { SCREEN } from '~constants'
+import { useGlobal } from '~hooks'
 import { getShopId, notification } from '~services/ShopService'
 import { screenWidth } from '~utils/breakpoints'
 import { customStyles } from '~utils/style_helpers'
@@ -32,9 +33,10 @@ export const ShopCartScreen: FC = ({ navigation }: any) => {
     total: 0,
     totalReward: 0,
   })
+  const { setIndicatorCount } = useGlobal()
+
   useFocusEffect(
     useCallback(() => {
-      // setCarts([])
       const getShopCarts = async () => {
         const getID = await getShopId()
 
@@ -42,16 +44,23 @@ export const ShopCartScreen: FC = ({ navigation }: any) => {
           const data = await SHOP_API.getShopCarts(getID)
           if (data) {
             const item = data.payload.content
-            setSelectedShops(item[0].id)
-            setCarData({
-              selectedShops: item[0].supplier.companyName,
-              shop: item[0].shop.shopName,
-              total: item[0].cartTotal,
-              totalReward: item[0].totalReward,
-            })
-            setCarts(item[0].cartItems)
-            // setCartId(item[0].id)
-            setData(item)
+            if (item.length > 0) {
+              setIndicatorCount(item.length)
+              setSelectedShops(item[0].id)
+              setCarData({
+                selectedShops: item[0].supplier.companyName,
+                shop: item[0].shop.shopName,
+                total: item[0].cartTotal,
+                totalReward: item[0].totalReward,
+              })
+              setCarts(item[0].cartItems)
+              setLoading(true)
+              setData(item)
+            } else {
+              setIndicatorCount(0)
+              setCarts([])
+              setLoading(true)
+            }
           }
           setLoading(true)
         } else {
@@ -60,28 +69,9 @@ export const ShopCartScreen: FC = ({ navigation }: any) => {
         }
       }
       getShopCarts()
-    }, [trigger])
+    }, [trigger, carts.length])
   )
 
-  useEffect(() => {
-    const getCartData = async () => {
-      data.map((item: any) => {
-        if (item.id === selectedShops) {
-          setCarData({
-            selectedShops: item.supplier.companyName,
-            shop: item.shop.shopName,
-            total: item.cartTotal,
-            totalReward: item.totalReward,
-          })
-          setCarts(item.cartItems)
-          setLoading(true)
-        }
-      })
-    }
-    getCartData()
-  }, [loding])
-
-  ///console.log(carts,'cartscarts')
   const handleDelete = async (Ids: { cartItemID: string; itemId: string }) => {
     await SHOP_API.deleteFromCart(Ids.cartItemID, Ids.itemId)
     setTrigger(!trigger)
@@ -98,6 +88,21 @@ export const ShopCartScreen: FC = ({ navigation }: any) => {
   const handleUpdateData = async (id: string, data: any) => {
     await SHOP_API.updateCartQuantity(id, data)
     setTrigger(!trigger)
+  }
+
+  const handleChangeValue = (value: any) => {
+    setSelectedShops(value)
+    data.map((item: any) => {
+      if (item.id === value) {
+        setCarData({
+          selectedShops: item.supplier.companyName,
+          shop: item.shop.shopName,
+          total: item.cartTotal,
+          totalReward: item.totalReward,
+        })
+        setCarts(item.cartItems)
+      }
+    })
   }
 
   return loding ? (
@@ -123,8 +128,8 @@ export const ShopCartScreen: FC = ({ navigation }: any) => {
               }}
               mt={1}
               onValueChange={(itemValue) => {
-                setSelectedShops(itemValue)
-                setLoading(false)
+                // setLoading(false)
+                handleChangeValue(itemValue)
               }}
             >
               {data.map((item: any) => {

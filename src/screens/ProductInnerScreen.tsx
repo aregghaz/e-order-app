@@ -23,13 +23,13 @@ import { ImgOrSvg } from '~components/ImgOrSvg'
 import { ModalWishList } from '~components/ModalWishList'
 import { NoImageSvg } from '~components/NoImageSvg'
 import { CustomButton } from '~components/molecules/CustomButton'
+import InputNumber from '~components/molecules/InputNumber'
 import { SCREEN } from '~constants'
-import { useAuth, useTranslation } from '~hooks'
+import { useAuth, useGlobal, useTranslation } from '~hooks'
 import { useIncrement } from '~hooks/useIncrement'
 import { getShopId, notification } from '~services/ShopService'
 import { IFeatured } from '~types/featuredProducts'
 import { customStyles } from '~utils/style_helpers'
-import InputNumber from '~components/molecules/InputNumber'
 
 const colors = {
   grey: '#dee2e6',
@@ -74,6 +74,7 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
     page: value,
     limit: 6,
   }
+  const { setIndicatorCount } = useGlobal()
 
   useFocusEffect(
     useCallback(() => {
@@ -136,6 +137,10 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
         if (!add) {
           await notification('SOMETHING WRONG', ALERT_TYPE.DANGER)
         } else {
+          const data = await SHOP_API.getShopCarts(shopId)
+          if (data.payload.content.length > 0) {
+            setIndicatorCount(data.payload.content.length)
+          }
           await notification('Добавлено в корзину')
         }
       }
@@ -232,7 +237,6 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
    *We are always getting different products in different pages!!!!!!!!!!!
    *
    * ***/
-  console.log(params, 'PRODUCT IN INNERPAGE')
 
   return isLoading ? (
     <View style={styles.ProductInnerScreen_wrapper}>
