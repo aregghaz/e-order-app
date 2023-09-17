@@ -5,7 +5,7 @@ import { useTranslation } from '~hooks'
 import { Header } from '~navigation/Header'
 import { optionForScreen } from '~navigation/HeaderGlobalStyles'
 import { CategoryInnerScreen, CategoryScreen } from '~screens'
-import { CategoryDetailScreen } from '~screens/CategoryDetailScreen'
+import { CategoryDetailScreen } from '~screens/category/CategoryDetailScreen'
 // import { CategorySearchScreen } from '~screens/CategorySearchScreen'
 
 const { Navigator, Screen } = createStackNavigator()

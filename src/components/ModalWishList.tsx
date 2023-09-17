@@ -17,7 +17,6 @@ import {
 } from 'react-native'
 
 import { SHOP_API } from '~api'
-import { notification } from '~services/ShopService'
 import { screenHeight, screenWidth } from '~utils/breakpoints'
 import { findTheExactElement, IWishlist } from '~utils/helper'
 
@@ -57,10 +56,8 @@ export const ModalWishList: FC<IProps> = ({ setModalVisible, modalVisible, produ
 
     if (hasProduct) {
       await SHOP_API.removeFromWishList(productId, id)
-      // await notification('Успешно удален из списка')
     } else {
       await SHOP_API.addToWishList(productId, id)
-      // await notification('Успешно добавлено в список')
     }
   }
 

@@ -2,20 +2,22 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, View, Text, StyleSheet, ScrollView } from 'react-native'
 
-// import { SHOP_API } from '~api'
 import InputNumber from '~components/molecules/InputNumber'
 import { customStyles } from '~utils/style_helpers'
+// import { fakeData } from "~FakeData";
 
 export const CartItems = ({
   elem,
   onDelete,
   cartItemId,
   isDelete,
-  setTrigger,
-  trigger,
+  // setTrigger,
+  // trigger,
   onDataToParent,
 }: any) => {
   const { t } = useTranslation()
+
+  // const { elem } = fakeData
   const handleUpdateQuantity = async (id: string, itemId: string, qty: number) => {
     const updatedQtyObj = elem.map((item: any) => {
       if (item.id === itemId) {
@@ -28,7 +30,7 @@ export const CartItems = ({
     })
     console.log(updatedQtyObj, '______updatedQtyObj')
     onDataToParent(id, updatedQtyObj)
-    setTrigger(!trigger)
+    // setTrigger(!trigger)
   }
 
   return (

@@ -15,7 +15,7 @@ import { getShopId, notification } from '~services/ShopService'
 import { screenHeight, screenWidth } from '~utils/breakpoints'
 import { customStyles } from '~utils/style_helpers'
 
-export const PrtnerShipScreen: FC = () => {
+export const PartnershipScreen: FC = () => {
   const [partnerShips, setPartnerShips] = useState<any>([])
   const [shops, setShops] = useState<any>([])
   const [shopsReq, setShopsReq] = useState<any>([])

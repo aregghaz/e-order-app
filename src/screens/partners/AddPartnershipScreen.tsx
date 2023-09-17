@@ -5,17 +5,15 @@ import { ActivityIndicator, FlatList, StyleSheet, Text, View } from 'react-nativ
 
 import { SHOP_API } from '~api'
 import { CustomButton } from '~components/molecules/CustomButton'
-import { PARTNERS_STATUS } from '~constants'
+import { PARTNERS_STATUS, TPartners, TPartnersStatus } from '~constants'
 import { getShopId, notification } from '~services/ShopService'
 import { customStyles } from '~utils/style_helpers'
 
-export const AddPrtnerShipScreen: FC = () => {
+export const AddPartnershipScreen: FC = () => {
   const [suppliers, setSuppliers] = useState<any>([])
 
   const [page, setPage] = useState(1)
-  ///   const [isLoading, setIsLoading] = useState(false);
-  const [loding, setLoading] = useState(false)
-  ///   const [hasMoreData, setHasMoreData] = useState(true);
+  const [loading, setLoading] = useState(false)
   const { t } = useTranslation()
 
   useFocusEffect(
@@ -29,29 +27,20 @@ export const AddPrtnerShipScreen: FC = () => {
       }
 
       getData()
-    }, [loding])
+    }, [loading])
   )
   const handleOnPress = async (id: string) => {
     const getID = await getShopId()
 
     if (getID !== undefined) {
-      SHOP_API.addParthner(id, getID)
+      await SHOP_API.addParthner(id, getID)
       setPage(1)
-      setLoading(!loding)
-      notification('Добавлено')
+      setLoading(!loading)
+      await notification('Добавлено')
     }
   }
 
   const renderFooter = () => {
-    // if (!isLoading) return null;
-
-    // if (!hasMoreData) {
-    //     return (
-    //         <View>
-    //             <Text>No more data</Text>
-    //         </View>
-    //     );
-    // }
     return (
       <View>
         <ActivityIndicator />
@@ -69,20 +58,17 @@ export const AddPrtnerShipScreen: FC = () => {
       <FlatList
         data={suppliers}
         keyExtractor={(item, index) => index.toString()}
-        /// ItemSeparatorComponent={ItemSeparatorView}
-        /// enableEmptySections={true}
         ListFooterComponent={renderFooter}
         onEndReached={() => handleLoadMore()}
         onEndReachedThreshold={0.5}
         renderItem={(e: any) => {
           const item = e.item
-          console.log(item, 'OPOPOPOP')
           return (
             <View key={item.id} style={styles.box}>
               <Text style={styles.title}>{item.companyName}</Text>
               <View style={styles.buttonsContainer}>
                 <CustomButton
-                  title={t(PARTNERS_STATUS[item.partnershipStatus])}
+                  title={t(PARTNERS_STATUS[item.partnershipStatus as TPartnersStatus] as TPartners)}
                   width={200}
                   padding={15}
                   border="grey"
@@ -125,7 +111,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     margin: 5,
     padding: 10,
-    // backgroundColor: colors.background,
   },
   title: {
     fontSize: 18,

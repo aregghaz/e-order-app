@@ -1,4 +1,4 @@
-import { MaterialCommunityIcons, MaterialIcons, Octicons } from "@expo/vector-icons";
+import { MaterialIcons, Octicons } from '@expo/vector-icons'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import React, { FC, useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -6,6 +6,7 @@ import { Pressable, ScrollView, StyleSheet, Text, View, TouchableOpacity } from 
 
 import { SHOP_API } from '~api'
 import { SCREEN } from '~constants'
+import { statusTypes } from '~screens/order'
 import { timestampToDate } from '~utils/dateTimeFormat'
 import { customStyles } from '~utils/style_helpers'
 
@@ -107,9 +108,7 @@ export const OrderListScreen: FC = () => {
                     {t('order_number')} : {order.orderNumber}
                   </Text>
                   <Text style={styles.text_h2}>
-                    <>
-                      {t('status')} : {t(order.status)}
-                    </>
+                    {t('status')} : {t(order.status as keyof typeof statusTypes)}
                   </Text>
                 </View>
                 <View style={styles.hr} />

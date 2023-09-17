@@ -141,10 +141,12 @@ const styles = StyleSheet.create({
     minHeight: 40,
     minWidth: '100%',
     paddingHorizontal: 15,
+    paddingVertical: 10,
     ...customStyles.border(1, 'solid', colors.borderColor),
     borderRadius: 4,
     fontSize: 16,
     marginVertical: 4,
+    textAlignVertical: 'top',
   },
   inputBox: {
     paddingHorizontal: 15,
