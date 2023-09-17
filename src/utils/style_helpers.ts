@@ -15,4 +15,10 @@ export const customStyles = {
     borderTopStyle: style,
     borderTopColor: color,
   }),
+  borderRadius: (top: number, right: number, bottom: number, left: number) => ({
+    borderTopRightRadius: top,
+    borderBottomRightRadius: right,
+    borderBottomLeftRadius: bottom,
+    borderTopLeftRadius: left,
+  }),
 }

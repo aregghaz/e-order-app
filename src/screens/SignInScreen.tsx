@@ -86,7 +86,7 @@ export const SignInScreen: FC<IProps> = (props): JSX.Element => {
         style={styles.forgot_password_btn}
         onPress={() => navigate(SCREEN.STACK_FORGOT_PASSWORD)}
       >
-        <Text style={styles.forgot_password}>Forgot password ?</Text>
+        <Text style={styles.forgot_password}>{t('forgot_password')}</Text>
       </TouchableOpacity>
       <Button
         isDisabled={isSubmitting}

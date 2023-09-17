@@ -5,6 +5,8 @@
 import createGenericContext from '~utils/createGenericContext'
 
 export type GlobalContextType = {
+  indicatorCount: number
+  setIndicatorCount: (value: number) => void
   name: string
   surname: string
   setName: (name: string) => void

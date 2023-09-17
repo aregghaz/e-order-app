@@ -322,6 +322,18 @@ export const SHOP_API = {
       })
       .catch((err) => console.log(err))
   },
+  getSortOrders: async (direction: string) => {
+    const tokenUSer = await getToken()
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
+    return axios
+      .get(
+        `${fakeUrl}/api/orders/get-orders?orderBy=o.createdAt&orderDirection=${direction}`
+      )
+      .then((res) => {
+        return res.data
+      })
+      .catch((err) => console.log(err))
+  },
   getOrdersDetails: async (id: string) => {
     const tokenUSer = await getToken()
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
@@ -357,6 +369,7 @@ export const SHOP_API = {
     return axios
       .delete(`${fakeUrl}/api/shopping-cart/delete-from-cart/${shoppingCartId}/${itemId}`)
       .then((res) => {
+        notification('Удалено из корзины.')
         return res.data
       })
       .catch((err) => console.log('Error while deleting', err))

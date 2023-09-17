@@ -2,7 +2,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, View, Text, StyleSheet, ScrollView } from 'react-native'
 
-import { SHOP_API } from '~api'
+// import { SHOP_API } from '~api'
 import InputNumber from '~components/molecules/InputNumber'
 import { customStyles } from '~utils/style_helpers'
 
