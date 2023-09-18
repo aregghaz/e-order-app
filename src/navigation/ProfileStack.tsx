@@ -4,7 +4,7 @@ import { SCREEN } from '~constants'
 import { useTranslation } from '~hooks'
 import { Header } from '~navigation/Header'
 import { optionForScreen } from '~navigation/HeaderGlobalStyles'
-import { ProfileScreen } from '~screens'
+import { ProfileScreen } from '~screens/profile'
 
 const { Navigator, Screen } = createStackNavigator()
 

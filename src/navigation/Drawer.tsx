@@ -140,7 +140,7 @@ export const DrawerNavigator = () => {
         component={ForgotPasswordStack}
         options={({ navigation, route }: any) => ({
           // headerTitle: () => <Header navigation={navigation} title={'login'} />,
-          headerTitle: () => <Text>Forgot Password</Text>,
+          headerTitle: () => <Text>{t('forgot_password__alt')}</Text>,
           // headerLeft: () => null,
         })}
       />
@@ -149,7 +149,7 @@ export const DrawerNavigator = () => {
         component={PasswordStack}
         options={({ navigation, route }: any) => ({
           // headerTitle: () => <Header navigation={navigation} title={'login'} />,
-          headerTitle: () => <Text>Change Password</Text>,
+          headerTitle: () => <Text>{t('password.changePassword')}</Text>,
           // headerLeft: () => null,
         })}
       />
