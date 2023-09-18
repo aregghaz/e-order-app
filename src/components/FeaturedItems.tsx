@@ -10,7 +10,7 @@ import { SCREEN } from '~constants'
 import { IFeatured } from '~types/featuredProducts'
 import { getVW, screenWidth } from '~utils/breakpoints'
 import { customStyles } from '~utils/style_helpers'
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next'
 
 interface ITrending {
   items: IFeatured[]

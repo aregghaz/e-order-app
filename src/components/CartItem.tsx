@@ -34,9 +34,11 @@ export const CartItems = ({
   }
 
   const calculateSum = (item: any) => {
-    console.log(item, 'Item')
     const calculatedPrice = item.quantity * item.properties.unit.contents * item.price
-    console.log(calculatedPrice, 'calculatedPrice')
+    if (item.discount && item.discount > 0) {
+      const percentage = (calculatedPrice * item.discount) / 100
+      return calculatedPrice - percentage
+    }
     return calculatedPrice
   }
 
