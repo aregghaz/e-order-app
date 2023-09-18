@@ -33,7 +33,7 @@
     "required": "Old password field is required",
     "passwordChanged": "Password changed",
     "do_not_match": "Passwords do not match",
-    "valid_password": "Password must contain at least one lowercase letter, one uppercase letter, and one digit, and be at least 10 characters long",
+    "valid_password": "Password must contain at least one lowercase letter, one uppercase letter, and one digit, and be at least 10 characters long"
   },
   "navigation": {
     "prevent_go_back_alert": {
@@ -187,11 +187,21 @@
     "pending": "Pending",
     "accepted": "Accepted"
   },
+  "postcode": "Postcode",
+  "country": "Country",
+  "passport": "Passport",
+  "phone": "Phone",
+  "city": "City",
+  "address_1": "Address 1",
+  "address_2": "Address 2",
+  "email": "Email",
   "checkout_title": "Checkout",
   "unit": "Unit",
   "quantity": "Quantity",
   "price": "Price",
   "reward": "Reward",
+  "sum": "Sum",
+  "sku": "Sku",
   "discount": "Discount",
   "comment": "Comments",
   "order_number": "Order Number",

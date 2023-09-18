@@ -33,6 +33,13 @@ export const CartItems = ({
     // setTrigger(!trigger)
   }
 
+  const calculateSum = (item: any) => {
+    console.log(item, 'Item')
+    const calculatedPrice = item.quantity * item.properties.unit.contents * item.price
+    console.log(calculatedPrice, 'calculatedPrice')
+    return calculatedPrice
+  }
+
   return (
     <ScrollView>
       {elem &&
@@ -41,7 +48,9 @@ export const CartItems = ({
             <View key={index} style={styles.cart_wrapper}>
               <View>
                 <Text>{item.product.productName}</Text>
-                <Text>Sku: {item.product.sku}</Text>
+                <Text>
+                  {t('sku')}: {item.product.sku}
+                </Text>
                 <Text>
                   {t('unit')}: {`${item.properties.unit.name} (x${item.properties.unit.contents})`}
                 </Text>
@@ -55,7 +64,10 @@ export const CartItems = ({
                   {t('reward')}: {item.reward}
                 </Text>
                 <Text>
-                  {t('discount')} {item.discount} %
+                  {t('discount')}: {item.discount} %
+                </Text>
+                <Text>
+                  {t('sum')}: {calculateSum(item)}
                 </Text>
                 {isDelete && (
                   <View style={styles.buttons_wrapper}>

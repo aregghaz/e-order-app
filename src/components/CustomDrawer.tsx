@@ -4,8 +4,9 @@
 
 import { Feather, FontAwesome5 } from '@expo/vector-icons'
 // import { DrawerContentScrollView } from '@react-navigation/drawer'
-import { useFocusEffect } from '@react-navigation/native'
-import React, { FC, useState } from 'react'
+// import { useFocusEffect } from '@react-navigation/native'
+// import React, { FC, useState } from 'react'
+import React, { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
@@ -15,25 +16,26 @@ import { ImgOrSvg } from '~components/ImgOrSvg'
 /*FIXME do not delete this part*/
 import { LanguageToggle } from '~components/LanguageToggle'
 import { SCREEN } from '~constants'
-import { useAuth } from '~hooks'
-import { IProps } from '~screens'
-import { getUserData } from '~services/UserService'
+import { useAuth, useGlobal } from '~hooks'
+// import { IProps } from '~screens/profile'
+// import { getUserData } from '~services/UserService'
 import { customStyles } from '~utils/style_helpers'
 
 export const CustomDrawer: FC = (props: any) => {
   const { signOut, isSignedIn } = useAuth()
+  const { userData } = useGlobal()
   const { t } = useTranslation()
-  const [data, setData] = useState<IProps>({} as IProps)
+  // const [data, setData] = useState<IProps>({} as IProps)
 
-  useFocusEffect(
-    React.useCallback(() => {
-      const getData = async () => {
-        //////FIXME SHOULD ADD FAKE DATA
-        isSignedIn ? setData(await getUserData()) : ''
-      }
-      getData()
-    }, [isSignedIn])
-  )
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     const getData = async () => {
+  //       //////FIXME SHOULD ADD FAKE DATA
+  //       isSignedIn ? setData(await getUserData()) : ''
+  //     }
+  //     getData()
+  //   }, [isSignedIn])
+  // )
   const detectState = () => {
     if (isSignedIn) {
       signOut()
@@ -46,16 +48,18 @@ export const CustomDrawer: FC = (props: any) => {
   }
 
   const addPadding = isSignedIn ? { paddingTop: 0 } : { paddingTop: 50 }
-
   return (
     <SafeAreaView style={[styles.sidebar, addPadding]}>
-      {isSignedIn && data && (
+      {/*{isSignedIn && data && (*/}
+      {isSignedIn && userData && (
         <View style={styles.infoBlock}>
           <View style={styles.imageWrapper}>
-            <ImgOrSvg item={data.customer} product="photo" radius={10} width={68} />
+            {/*<ImgOrSvg item={data.customer} product="photo" radius={10} width={68} />*/}
+            <ImgOrSvg item={userData.customer} product="photo" radius={10} width={68} />
           </View>
           <Text style={styles.name}>
-            {data.customer?.person?.firstName + ' ' + data.customer?.person?.lastName}
+            {/*{data.customer?.person?.firstName + ' ' + data.customer?.person?.lastName}*/}
+            {userData.customer?.person?.firstName + ' ' + userData.customer?.person?.lastName}
           </Text>
         </View>
       )}

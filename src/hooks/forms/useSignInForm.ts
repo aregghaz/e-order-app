@@ -43,7 +43,9 @@ export const useSignInForm = () => {
       setError('')
       await signIn(signInData)
     } catch (e) {
+      console.log(e, '________________E_________________')
       if (isError(e)) {
+        console.log(e.message, '________________E_MESSAGE_________________')
         setError(e.message)
       } else {
         setError(t('errors.something_went_wrong'))

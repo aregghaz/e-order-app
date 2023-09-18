@@ -1,6 +1,7 @@
 import { Feather } from '@expo/vector-icons'
 import { Text, View } from 'native-base'
 import React, { FC, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 
 import { ImgOrSvg } from '~components/ImgOrSvg'
@@ -26,6 +27,8 @@ const colors = {
 const TopDiscountItems: FC<IFeaturedItems> = ({ items, navigation }) => {
   const [modalVisible, setModalVisible] = useState(false)
   const [productId, setProductId] = useState('')
+  const { t } = useTranslation()
+
   const heightOfBlock = { height: 'auto' }
   return (
     <View style={styles.main}>
@@ -61,7 +64,9 @@ const TopDiscountItems: FC<IFeaturedItems> = ({ items, navigation }) => {
                   <Text style={styles.price}>₽ {price}</Text>
                 </View>
                 <View style={styles.reward_block}>
-                  <Text style={styles.price}>Reward {reward}</Text>
+                  <Text style={styles.price}>
+                    {t('reward')} {reward}
+                  </Text>
                   <Text style={styles.reward}>B</Text>
                 </View>
               </TouchableOpacity>

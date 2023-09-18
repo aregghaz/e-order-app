@@ -1,6 +1,7 @@
 import { Feather } from '@expo/vector-icons'
 import { View, Text } from 'native-base'
 import React, { FC, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 import Carousel from 'react-native-reanimated-carousel'
 
@@ -19,6 +20,7 @@ interface ITopBrands {
 const NewArrivalItems: FC<ITopBrands> = ({ items, navigation, title }) => {
   const [modalVisible, setModalVisible] = useState(false)
   const [productId, setProductId] = useState('')
+  const { t } = useTranslation()
   return (
     <>
       <View style={styles.main}>
@@ -57,7 +59,9 @@ const NewArrivalItems: FC<ITopBrands> = ({ items, navigation, title }) => {
                   <Text style={styles.price}>₽ {item.price}</Text>
                 </View>
                 <View style={styles.reward_block}>
-                  <Text style={styles.price}>Reward {item.reward}</Text>
+                  <Text style={styles.price}>
+                    {t('reward')} {item.reward}
+                  </Text>
                   <Text style={styles.reward}>B</Text>
                 </View>
               </TouchableOpacity>
