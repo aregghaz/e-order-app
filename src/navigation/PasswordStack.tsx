@@ -8,6 +8,8 @@ import { CustomButton } from '~components/molecules/CustomButton'
 import { SCREEN } from '~constants'
 import { getToken, setToken } from '~services'
 import { notification } from '~services/ShopService'
+// import { ControlledField } from "~components";
+// import { useForm } from "react-hook-form";
 
 interface IProps {
   route: any
@@ -19,6 +21,20 @@ export const PasswordStack: FC<IProps> = ({ route }) => {
   const [tokenData, setTokenData] = useState<any>('')
   const { t } = useTranslation()
   const { reset, token } = route.params
+  // const defaultValues: any = {
+  //   // TODO: Reset this values when building production app
+  //   password: '',
+  //   changePassword: '',
+  //   confirm: false,
+  // }
+  // const {
+  //   control,
+  //   formState: { errors },
+  //   handleSubmit,
+  // } = useForm<any>({
+  //   mode: 'onTouched',
+  //   defaultValues,
+  // })
   useFocusEffect(
     useCallback(() => {
       const getTokenData = async () => {
@@ -33,15 +49,15 @@ export const PasswordStack: FC<IProps> = ({ route }) => {
   const navigation = useNavigation<any>()
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  const handleSubmit = async () => {
+  const handleSubmitForm = async () => {
+    console.log(password, 'password')
+    console.log(confirmPassword, 'confirmPassword')
     if (password !== confirmPassword) {
-      alert('Passwords do not match')
+      alert(t('password.do_not_match'))
       return
     }
     if (!regex.test(password)) {
-      alert(
-        'Password must contain at least one lowercase letter, one uppercase letter, and one digit, and be at least 10 characters long'
-      )
+      alert(t('password.valid_password'))
       return
     }
     let data
@@ -80,7 +96,45 @@ export const PasswordStack: FC<IProps> = ({ route }) => {
         placeholder="Confirm Password"
         secureTextEntry
       />
-      <CustomButton title={reset ? 'Change Password' : 'Create Password'} onPress={handleSubmit} />
+      {/*<ControlledField.Input*/}
+      {/*  autoCapitalize="none"*/}
+      {/*  control={control}*/}
+      {/*  errors={errors}*/}
+      {/*  isRequired*/}
+      {/*  label={t('sign_in_screen.password_label')}*/}
+      {/*  name="password"*/}
+      {/*  onSubmitEditing={handleSubmit(handleSubmitForm)}*/}
+      {/*  placeholder={t('sign_in_screen.password_placeholder')}*/}
+      {/*  /// ref={passwordInputRef}*/}
+      {/*  returnKeyType="send"*/}
+      {/*  rules={{*/}
+      {/*    required: t('form.required'),*/}
+      {/*  }}*/}
+      {/*  testID="passwordInput"*/}
+      {/*  type="password"*/}
+      {/*/>*/}
+      {/*<ControlledField.Input*/}
+      {/*  autoCapitalize="none"*/}
+      {/*  control={control}*/}
+      {/*  errors={errors}*/}
+      {/*  isRequired*/}
+      {/*  label={t('password.oldPassword')}*/}
+      {/*  name="oldPassword"*/}
+      {/*  onSubmitEditing={handleSubmit(handleSubmitForm)}*/}
+      {/*  placeholder={t('password.oldPassword')}*/}
+      {/*  ////     ref={passwordInputRef}*/}
+      {/*  returnKeyType="send"*/}
+      {/*  rules={{*/}
+      {/*    required: t('form.required'),*/}
+      {/*  }}*/}
+      {/*  testID="passwordInput"*/}
+      {/*  type="password"*/}
+      {/*/>*/}
+      <CustomButton
+        title={reset ? 'Change Password' : 'Create Password'}
+        // onPress={handleSubmit(handleSubmitForm)}
+        onPress={handleSubmitForm}
+      />
     </View>
   )
 }

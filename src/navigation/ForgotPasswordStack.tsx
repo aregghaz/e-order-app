@@ -3,6 +3,7 @@
  */
 import { useNavigation } from '@react-navigation/native'
 import React, { FC, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 import PhoneInput from 'react-native-phone-input'
 
@@ -13,6 +14,7 @@ import { SCREEN } from '~constants'
 export const ForgotPasswordStack: FC = ({ route }: any) => {
   const [number, setNumber] = useState('')
   const { navigate } = useNavigation<any>()
+  const { t } = useTranslation()
   const handleVerify = async () => {
     const data = await SHOP_API.forgotPassword({ mobile: number })
     navigate(SCREEN.STACK_VERIFICATION, {
@@ -29,7 +31,7 @@ export const ForgotPasswordStack: FC = ({ route }: any) => {
         onChangePhoneNumber={setNumber}
         textProps={{ placeholder: '+37491444444' }}
       />
-      <CustomButton title="Verify" onPress={handleVerify} />
+      <CustomButton title={t('send')} onPress={handleVerify} />
     </View>
   )
 }

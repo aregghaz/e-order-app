@@ -31,7 +31,9 @@
     "doNotMatch": "Passwords do not match",
     "passError": "Password must contain at least one lowercase letter, one uppercase letter, and one digit, and be at least 10 characters long",
     "required": "Old password field is required",
-    "passwordChanged": "Password changed"
+    "passwordChanged": "Password changed",
+    "do_not_match": "Passwords do not match",
+    "valid_password": "Password must contain at least one lowercase letter, one uppercase letter, and one digit, and be at least 10 characters long",
   },
   "navigation": {
     "prevent_go_back_alert": {
@@ -207,6 +209,10 @@
   "descending_order": "By date of creation (Z - A)",
   "ascending_order": "By date of creation (A - Z)",
   "forgot_password": "Forgot password ?",
+  "forgot_password__alt": "Forgot password",
+  "send": "Send",
+  "resend": "Resend code",
+  "please_fill": "Please enter the 4-digit verification code sent to ",
   "total": "Total",
   "reward_total": "Reward Total",
   "status": "Status",

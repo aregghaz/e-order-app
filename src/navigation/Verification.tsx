@@ -8,6 +8,8 @@ import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-nativ
 import { SHOP_API } from '~api'
 import { CustomButton } from '~components/molecules/CustomButton'
 import { SCREEN } from '~constants'
+import { styleLoaderRule } from "@expo/webpack-config/loaders";
+import { customStyles } from "~utils/style_helpers";
 
 interface IProps {
   route: any
@@ -20,6 +22,7 @@ export const Verification: FC<IProps> = ({
   },
   navigation,
 }) => {
+  console.log(reset, 'reset!!!')
   const pin1ref = useRef<TextInput | null>(null)
   const pin2ref = useRef<TextInput | null>(null)
   const pin3ref = useRef<TextInput | null>(null)
@@ -62,10 +65,6 @@ export const Verification: FC<IProps> = ({
     }
   }
   useEffect(() => {
-    // setPin1('')
-    // setPin2('')
-    // setPin3('')
-    // setPin4('')
     const interval = setInterval(() => {
       if (countdown > 0) {
         setCountdown(countdown - 1)
@@ -83,6 +82,10 @@ export const Verification: FC<IProps> = ({
 
   return (
     <View style={styles.PhoneRegisterStack_wrapper}>
+      <View style={styles.title_text__wrapper}>
+        <Text style={styles.title_text}>{t('please_fill')}</Text>
+        <Text style={styles.phone_number}>{phone}</Text>
+      </View>
       <View style={styles.input_block}>
         <TextInput
           ref={pin1ref}
@@ -140,7 +143,7 @@ export const Verification: FC<IProps> = ({
       <CustomButton title={t('verify_code')} onPress={handleVerify} />
       <TouchableOpacity onPress={resendCode} style={styles.resend}>
         <Text style={styles.counter}>
-          {countdown > 0 ? formatCountdown(countdown) : 'Resend code'}
+          {countdown > 0 ? formatCountdown(countdown) : t('resend')}
         </Text>
       </TouchableOpacity>
     </View>
@@ -150,6 +153,7 @@ export const Verification: FC<IProps> = ({
 const colors = {
   border: '#ddd',
   red: 'red',
+  blue: 'blue',
 }
 
 const styles = StyleSheet.create({
@@ -179,10 +183,27 @@ const styles = StyleSheet.create({
   input_block: {
     flexDirection: 'row',
   },
+  phone_number: {
+    color: colors.blue,
+    fontWeight: 'bold',
+    textDecorationLine: 'underline',
+  },
   resend: {
     borderColor: colors.border,
     borderStyle: 'solid',
     borderWidth: 1,
     marginTop: 10,
+  },
+  title_text: {
+    fontWeight: 'bold',
+    letterSpacing: 1,
+    textAlign: 'center',
+  },
+  title_text__wrapper: {
+    alignItems: 'center',
+    gap: 10,
+    // ...customStyles.border(1, 'solid', colors.border),
+    marginVertical: 20,
+    width: '100%',
   },
 })
