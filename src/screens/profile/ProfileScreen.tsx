@@ -4,13 +4,13 @@
 
 import { useFocusEffect } from '@react-navigation/native'
 import React, { FC, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
-import { SHOP_API } from '~api'
 
+import { SHOP_API } from '~api'
 import { ImgOrSvg } from '~components/ImgOrSvg'
 import { SCREEN } from '~constants'
-import { useAuth } from '~hooks'
-import { getUserData } from '~services/UserService'
+import { useAuth, useGlobal } from '~hooks'
 import { IPropsData } from '~types/authForms'
 
 export interface IProps {
@@ -49,29 +49,26 @@ interface IAddress {
 export const ProfileScreen: FC = ({ route, navigation }: any) => {
   const [data, setData] = useState<any>(IPropsData)
   const { isSignedIn } = useAuth()
-  // const {
-  //   navigation: { navigate },
-  // } = props
+  const { userData } = useGlobal()
+  const { t } = useTranslation()
+
   useFocusEffect(
     React.useCallback(() => {
       ;(async () => {
         console.log(isSignedIn, 'isSignedIn')
         if (isSignedIn) {
-          const data = await getUserData()
-          if (!data.customer) {
+          if (!userData.customer) {
             navigation.navigate(SCREEN.PROFILE_EDIT, { type: false })
           } else {
-            const custommerData = await SHOP_API.getCustommer(data.customer.id)
+            const custommerData = await SHOP_API.getCustommer(userData.customer.id)
             setData(custommerData.payload)
           }
         } else {
           navigation.navigate(SCREEN.STACK_SIGN_IN)
         }
       })()
-      ///return () => setData(IPropsData)
     }, [isSignedIn])
   )
-
   return (
     <View style={styles.profile_wrapper}>
       {data && data.person && (
@@ -85,31 +82,36 @@ export const ProfileScreen: FC = ({ route, navigation }: any) => {
             </Text>
           </View>
           <View style={styles.icons}>
-            <Text>Email: {data.person?.email}</Text>
+            <Text style={styles.title_bold}>{t('email')} :</Text>
+            <Text>{data.person?.email}</Text>
           </View>
           <View style={styles.icons}>
-            <Text>Passport: {data.person?.passport}</Text>
+            <Text style={styles.title_bold}>{t('passport')} :</Text>
+            <Text>{data.person?.citizenship?.passport}</Text>
           </View>
           <View style={styles.icons}>
-            <Text>Phone1 : {data.person?.phoneNumber1}</Text>
+            <Text style={styles.title_bold}>{t('phone')} :</Text>
+            <Text>{data.person?.address?.phoneNumber1}</Text>
           </View>
           <View style={styles.icons}>
-            <Text>Phone2 : {data.person?.phoneNumber2}</Text>
+            <Text style={styles.title_bold}>{t('address_1')} :</Text>
+            <Text>{data.person?.address.address_1}</Text>
           </View>
           <View style={styles.icons}>
-            <Text>Address1 : {data.person?.address.address_1}</Text>
+            <Text style={styles.title_bold}>{t('address_2')} :</Text>
+            <Text>{data.person?.address.address_2}</Text>
           </View>
           <View style={styles.icons}>
-            <Text>Address2 : {data.person?.address.address_2}</Text>
+            <Text style={styles.title_bold}>{t('city')} :</Text>
+            <Text>{data.person?.address.city}</Text>
           </View>
           <View style={styles.icons}>
-            <Text>City : {data.person?.address.city}</Text>
+            <Text style={styles.title_bold}>{t('country')} :</Text>
+            <Text>{data.person?.address.country}</Text>
           </View>
           <View style={styles.icons}>
-            <Text>Country : {data.person?.address.country}</Text>
-          </View>
-          <View style={styles.icons}>
-            <Text>Postcode : {data.person?.address.postCode}</Text>
+            <Text style={styles.title_bold}>{t('postcode')} :</Text>
+            <Text>{data.person?.address.postCode}</Text>
           </View>
         </ScrollView>
       )}
@@ -122,17 +124,6 @@ const colors = {
 }
 
 const styles = StyleSheet.create({
-  // actions: {
-  //   alignItems: 'center',
-  //   borderColor: colors.border,
-  //   borderRadius: 8,
-  //   borderStyle: 'solid',
-  //   borderWidth: 1,
-  //   flexDirection: 'row',
-  //   height: 50,
-  //   marginVertical: 10,
-  //   paddingHorizontal: 10,
-  // },
   avatar_block: {
     alignItems: 'center',
     backgroundColor: colors.grey,
@@ -146,6 +137,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   icons: {
+    flexDirection: 'row',
+    gap: 10,
     marginTop: 10,
   },
   name: {
@@ -161,5 +154,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     padding: 20,
+  },
+  title_bold: {
+    fontWeight: 'bold',
   },
 })

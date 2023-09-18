@@ -1,5 +1,7 @@
-import { useFocusEffect, useNavigation } from '@react-navigation/native'
+import { useFocusEffect } from '@react-navigation/native'
+import moment from 'moment'
 import React, { FC, useCallback, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   SafeAreaView,
   ScrollView,
@@ -9,25 +11,30 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native'
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
-import { useAuth } from '~hooks'
 
 import { SHOP_API } from '~api'
 import { CustomButton } from '~components/molecules/CustomButton'
-import { SCREEN } from '~constants'
+// import { SCREEN } from '~constants'
+import { useAuth, useGlobal } from '~hooks'
 import { notification } from '~services/ShopService'
-import { getUserData, setUserData } from '~services/UserService'
+// import { getUserData } from '~services/UserService'
 import { checkAge, timestampToDate } from '~utils/dateTimeFormat'
-import { GooglePlacesAutocomplete, Point } from 'react-native-google-places-autocomplete'
-import { useTranslation } from 'react-i18next'
-const moment = require('moment')
+import { customStyles } from '~utils/style_helpers'
 
+const colors = {
+  border: '#ddd',
+  red: 'red',
+  white: 'white',
+}
 export const ProfileEditScreen: FC = ({ route }: any) => {
   const { typeData } = route.params
-  const { navigate } = useNavigation<any>()
+  // const { navigate } = useNavigation<any>()
   const { t } = useTranslation()
   // const [validAge, setValidAge] = useState(false);
-  const { setIsSignedIn, isSignedIn } = useAuth()
+  const { isSignedIn } = useAuth()
+  const { userData, setUserData } = useGlobal()
 
   /*Name*/
   const [id, setId] = useState('')
@@ -78,9 +85,11 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
   useFocusEffect(
     useCallback(() => {
       const getAsyncData = async (): Promise<void> => {
-        const pesdonalData = await getUserData()
-        if (pesdonalData.id) {
-          const custommerData = await SHOP_API.getCustommer(pesdonalData.id)
+        // const pesdonalData = await getUserData()
+        // if (pesdonalData.id) {
+        if (userData.id) {
+          // const custommerData = await SHOP_API.getCustommer(pesdonalData.id)
+          const custommerData = await SHOP_API.getCustommer(userData.id)
           const dataUser = custommerData.payload
           setLocation({
             contry: dataUser.person.address.country,
@@ -88,7 +97,6 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
             city: dataUser.person.address.city,
             address: dataUser.person.address.address_1,
           })
-          //// console.log( dataUser.person.address.,' dataUser.person.address')
           setLatloang({
             latitude: dataUser.person.address.gpsCoordinates.latitude,
             longitude: dataUser.person.address.gpsCoordinates.longitude,
@@ -131,7 +139,7 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
       setLastNameError('Обязательное поле.')
       isValid = false
     }
-    //
+
     // if (dob.trim() === '') {
     //   setDobError('Обязательное поле.')
     //   isValid = false
@@ -140,20 +148,6 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
       setLegalAddressError('Обязательное поле.')
       isValid = false
     }
-
-    // if (iih.trim() === '') {
-    //   setIihError('Обязательное поле.')
-    //   isValid = false
-    // }
-    // if (email.trim() === '') {
-    //   setEmailError('Обязательное поле.')
-    //   isValid = false
-    // }
-
-    // if (whoGive.trim() === '') {
-    //   setWhoGiveError('Обязательное поле.')
-    //   isValid = false
-    // }
 
     const body = {
       firstName: name,
@@ -167,7 +161,7 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
         address_2: legalApartment,
         postCode: legalPostCode,
         phoneNumber1: legalPhone_1,
-        phoneNumber2: ' ',
+        phoneNumber2: '',
         gpsCoordinates: latloang,
       },
       inn: iih,
@@ -177,32 +171,8 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
         passport,
         issuedBy: whoGive,
         issueDate: expireData,
-        // "passportPhoto": [
-        //     {
-        //         "id": "string",
-        //         "originalName": "string",
-        //         "filename": "string",
-        //         "path": "string",
-        //         "mimetype": "string",
-        //         "size": 0,
-        //         "order": 0,
-        //         "createdAt": "2023-08-25T09:12:24.462Z",
-        //         "updatedAt": "2023-08-25T09:12:24.462Z"
-        //     }
-        // ]
       },
       email,
-      // "photo": {
-      //     "id": "string",
-      //     "originalName": "string",
-      //     "filename": "string",
-      //     "path": "string",
-      //     "mimetype": "string",
-      //     "size": 0,
-      //     "order": 0,
-      //     "createdAt": "2023-08-25T09:12:24.462Z",
-      //     "updatedAt": "2023-08-25T09:12:24.462Z"
-      // }
     }
     if (isValid) {
       let dataCheck
@@ -210,16 +180,18 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
         dataCheck = await SHOP_API.updateCustomerUser(body, id)
       } else {
         dataCheck = await SHOP_API.fillingCustomerUser(body)
-        // console.log(dataCheck.payload, 'dataCheck.payload.')
-        // await setUserData(dataCheck.payload.person)
-        // await setIsSignedIn(true)
       }
-      ///  console.log(dataCheck, '!dataCheck!dataCheck')
-      if (!dataCheck) {
-        ///    console.log(dataCheck, '!dataCheck!dataCheck')
-      } else {
+
+      if (dataCheck) {
+        const parsedDataCheck = JSON.parse(JSON.stringify(dataCheck.payload.person))
+        const parsedUserData = JSON.parse(JSON.stringify(userData))
+        const combinedObj = {
+          ...parsedUserData,
+          customer: { ...parsedUserData.customer, person: parsedDataCheck },
+        }
+        setUserData(combinedObj)
         await notification('Сохранено')
-        navigate(SCREEN.DRAWER_ROOT)
+        // navigate(SCREEN.DRAWER_ROOT)
       }
     }
   }
@@ -245,11 +217,12 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
     }
   }
   const resetValues = () => {
+    const momentDate = new Date(moment().subtract(18, 'years').toDate())
     setId('')
     setName('')
     setLastName('')
     setFatherName('')
-    setDob(new Date(moment().subtract(18, 'years')))
+    setDob(momentDate)
     setLegalApartment('')
     setLegalPostCode('')
     setLegalPhone_1('')
@@ -325,21 +298,15 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
           </>
           <>
             <GooglePlacesAutocomplete
-              placeholder="Address"
+              placeholder="Адрес"
               GooglePlacesDetailsQuery={{
                 fields: 'geometry',
               }}
-              ///  predefinedPlaces={[{geometry: { location: latloang2}}]}
-              // getDefaultValue={(e:any) => {
-              //   return (locationa.address + ' ' + locationa.city + ' ' + locationa.contry)
-              // }}
               textInputProps={{
                 autoFocus: true,
                 placeholder: locationa.address + ' ' + locationa.city + ' ' + locationa.contry,
               }}
-              //   getDefaultValue={() => locationa.address + ' ' + locationa.city + " "+ locationa.contry}
               onPress={(data: any, details: any = null) => {
-                console.log(details, 'detailsdetailsdetails')
                 setLocation({
                   contry: data.terms[2].value,
                   state: data.terms[1].value,
@@ -355,16 +322,13 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
               styles={{
                 textInputContainer: {
                   width: '100%',
-                  //top: 8,
                   alignSelf: 'center',
                 },
                 textInput: {
-                  /// borderColor: grey,
-                  borderWidth: 1,
+                  ...customStyles.border(1, 'solid', colors.border),
                   borderRadius: 5,
                   height: 48,
                   paddingBottom: 8,
-                  //   color: black,
                   fontSize: 16,
                 },
                 predefinedPlacesDescription: {
@@ -479,11 +443,6 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
   )
 }
 
-const colors = {
-  border: '#ddd',
-  red: 'red',
-}
-
 const styles = StyleSheet.create({
   CreateStoreScreen_wrapper: {
     justifyContent: 'center',
@@ -500,10 +459,9 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   input: {
-    borderColor: colors.border,
-    borderRadius: 8,
-    borderStyle: 'solid',
-    borderWidth: 1,
+    ...customStyles.border(1, 'solid', colors.border),
+    backgroundColor: colors.white,
+    borderRadius: 5,
     padding: 10,
     width: '100%',
   },

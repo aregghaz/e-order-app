@@ -8,8 +8,8 @@ import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-nativ
 import { SHOP_API } from '~api'
 import { CustomButton } from '~components/molecules/CustomButton'
 import { SCREEN } from '~constants'
-import { styleLoaderRule } from "@expo/webpack-config/loaders";
-import { customStyles } from "~utils/style_helpers";
+import { styleLoaderRule } from '@expo/webpack-config/loaders'
+import { customStyles } from '~utils/style_helpers'
 
 interface IProps {
   route: any

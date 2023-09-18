@@ -1,4 +1,4 @@
-import { MaterialIcons, Octicons } from '@expo/vector-icons'
+import { Entypo, MaterialIcons, Octicons } from '@expo/vector-icons'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import React, { FC, useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -25,14 +25,14 @@ export const OrderListScreen: FC = () => {
   const { t } = useTranslation()
   const sortOrders = [
     {
+      id: 1,
+      direction: 'desc',
+      title: t('descending_order'),
+    },
+    {
       id: 2,
       direction: 'asc',
       title: t('ascending_order'),
-    },
-    {
-      id: 3,
-      direction: 'desc',
-      title: t('descending_order'),
     },
   ]
   const [selected, setSelected] = useState<TOrder>(sortOrders[0])
@@ -79,9 +79,12 @@ export const OrderListScreen: FC = () => {
   return (
     <View style={styles.ShopListScreen_wrapper}>
       <View style={styles.order_filter__wrapper}>
-        <TouchableOpacity style={styles.order_button} onPress={() => setOpenDrop(!openDrop)}>
+        <View style={styles.order_button}>
           {setTheRightIcon(selected.direction)}
           <Text>{selected.title}</Text>
+        </View>
+        <TouchableOpacity onPress={() => setOpenDrop(!openDrop)}>
+          <Entypo name="dots-three-vertical" size={24} color="black" />
         </TouchableOpacity>
       </View>
       {openDrop && (
@@ -185,8 +188,10 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   order_filter__wrapper: {
+    alignItems: 'center',
+    flexDirection: 'row',
     height: 50,
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     marginHorizontal: 10,
     marginTop: 10,
     paddingHorizontal: 15,

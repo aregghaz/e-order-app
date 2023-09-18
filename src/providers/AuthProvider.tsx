@@ -2,15 +2,16 @@ import { FC, PropsWithChildren } from 'react'
 
 import { SHOP_API } from '~api'
 import { AuthContextProvider, AuthContextType } from '~contexts'
-import { useCallback, useEffect, useMemo, useState } from '~hooks'
+import { useCallback, useEffect, useGlobal, useMemo, useState } from '~hooks'
 import { deleteToken, getToken, setToken } from '~services'
 import { deleteShopId } from '~services/ShopService'
-import { setUserData } from '~services/UserService'
+// import { setUserData } from '~services/UserService'
 import { SignUpFormValues } from '~types/authForms'
 import { wait } from '~utils'
 
 export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   const [isSignedIn, setIsSignedIn] = useState<boolean | null>(null)
+  const { setUserData } = useGlobal()
 
   useEffect(() => {
     const bootstrap = async () => {
@@ -30,19 +31,18 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
     // Remember to pass readable error message for user, because this error will be displayed for him
     await wait(500)
     const res = await SHOP_API.signInRequest(data.phone, data.password)
-    // console.log(res.payload.user.customer,'22222222222')
     ///console.log(res.payload.user.customer,res.payload.token.accessToken,'2222')
-    if (!res.payload.user.customer) {
-      await setUserData(res.payload.user)
-      await setToken(res.payload.token.accessToken)
-      ///navigation.navigate(SCREEN.PROFILE_EDIT)
-      setIsSignedIn(true)
-    } else {
-      await setUserData(res.payload.user)
-      await setToken(res.payload.token.accessToken)
-      setIsSignedIn(true)
-      ///navigation.navigate(SCREEN.HOME_STACK)
-    }
+    // if (!res.payload.user.customer) {
+    setUserData(res.payload.user)
+    await setToken(res.payload.token.accessToken)
+    ///navigation.navigate(SCREEN.PROFILE_EDIT)
+    setIsSignedIn(true)
+    // } else {
+    //   setUserData(res.payload.user)
+    //   await setToken(res.payload.token.accessToken)
+    //   setIsSignedIn(true)
+    //   ///navigation.navigate(SCREEN.HOME_STACK)
+    // }
   }, [])
 
   const signOut = useCallback(async () => {
