@@ -50,8 +50,6 @@ export const PasswordStack: FC<IProps> = ({ route }) => {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const handleSubmitForm = async () => {
-    console.log(password, 'password')
-    console.log(confirmPassword, 'confirmPassword')
     if (password !== confirmPassword) {
       alert(t('password.do_not_match'))
       return
@@ -61,11 +59,10 @@ export const PasswordStack: FC<IProps> = ({ route }) => {
       return
     }
     let data
-    /// console.log(tokenData, token, mobile, reset, 'resetreset')
     if (reset != undefined) {
       data = await SHOP_API.resetPassword(token, mobile, password)
     } else {
-      console.log(token, 'tokentoken')
+      // console.log(token, 'tokentoken')
       data = await SHOP_API.createCustomerUser(token, mobile, password)
     }
     if (data) {
@@ -74,7 +71,7 @@ export const PasswordStack: FC<IProps> = ({ route }) => {
         navigation.navigate(SCREEN.STACK_SIGN_IN)
       } else {
         const token2 = data.payload.token.accessToken
-        console.log(token2, 'token__222222')
+        // console.log(token2, 'token__222222')
         await setToken(token2)
         navigation.navigate(SCREEN.PROFILE_EDIT, { typeData: false })
       }

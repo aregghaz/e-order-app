@@ -86,7 +86,7 @@ export const ShopCartScreen: FC = ({ navigation }: any) => {
   }
 
   const handleUpdateData = async (id: string, data: any) => {
-    console.log(data, '__ data __')
+    // console.log(data, '__ data __')
     await SHOP_API.updateCartQuantity(id, data)
     setTrigger(!trigger)
   }

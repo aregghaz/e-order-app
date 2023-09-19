@@ -2,7 +2,7 @@
  * was created by tigran at 09.07.23
  */
 import React, { FC } from 'react'
-import { Pressable, StyleSheet, Text } from 'react-native'
+import { Pressable, StyleSheet, Text, ActivityIndicator } from 'react-native'
 
 import { customStyles } from '~utils/style_helpers'
 
@@ -15,6 +15,7 @@ interface IProps {
   background?: 'white' | 'blue' | 'black' | 'green' | 'red' | 'orange' | 'grey'
   border?: 'white' | 'blue' | 'black' | 'green' | 'red' | 'orange' | 'grey'
   elevation?: number
+  loading?: boolean
 }
 
 const colors = {
@@ -29,7 +30,9 @@ export const CustomButton: FC<IProps> = ({
   background = '',
   color = '',
   border,
+  loading,
 }) => {
+  const opacityBackground = loading ? { opacity: 0.5 } : { opacity: 1 }
   const btnWidth = width ? { width } : { width: '100%' }
   const btnPaddingHorizontal = padding ? { padding } : { padding: 32 }
   const btnColor = color ? { color } : { color: colors.white }
@@ -41,10 +44,21 @@ export const CustomButton: FC<IProps> = ({
     : { ...customStyles.border(0, 'solid', 'transparent') }
   return (
     <Pressable
-      style={[styles.button, btnWidth, btnPaddingHorizontal, btnBackground, btnBorder]}
+      style={[
+        styles.button,
+        btnWidth,
+        btnPaddingHorizontal,
+        btnBackground,
+        btnBorder,
+        opacityBackground,
+      ]}
       onPress={onPress}
     >
-      <Text style={[styles.text, btnColor]}>{title}</Text>
+      {loading ? (
+        <ActivityIndicator size="small" color="white" />
+      ) : (
+        <Text style={[styles.text, btnColor]}>{title}</Text>
+      )}
     </Pressable>
   )
 }

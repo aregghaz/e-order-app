@@ -30,9 +30,7 @@ const colors = {
 }
 export const ProfileEditScreen: FC = ({ route }: any) => {
   const { typeData } = route.params
-  // const { navigate } = useNavigation<any>()
   const { t } = useTranslation()
-  // const [validAge, setValidAge] = useState(false);
   const { isSignedIn } = useAuth()
   const { userData, setUserData } = useGlobal()
 
@@ -53,42 +51,27 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
   const [legalAddressError, setLegalAddressError] = useState('')
   /*Legal Apt unit*/
   const [legalApartment, setLegalApartment] = useState('')
-  // const [legalApartmentError, setlLegalApartmentError] = useState('')
   /*Legal Post Code */
   const [legalPostCode, setLegalPostCode] = useState('')
-  ///  const [legalPostCodeError, setLegalPostCodeError] = useState('')
   /*Legal phone  1*/
   const [legalPhone_1, setLegalPhone_1] = useState('')
-  ///  const [legalPhoneError_1, setLegalPhoneError_1] = useState('')
   /*Legal phone 2*/
-  ///  const [legalPhone_2, setLegalPhone_2] = useState('')
-  /// const [legalPhoneError_2] = useState('')
 
   /*passport data */
   const [cityzen, setCityzen] = useState('')
   const [cityzenError, setCityzenError] = useState('')
   const [passport, setPassport] = useState('')
-  /// const [passportError, setpPassportError] = useState('')
   const [whoGive, setWhoGive] = useState('')
-  ///   const [whoGiveError, setWhoGiveError] = useState('')
   const [expireData, setExpireData] = useState('')
-  /// const [expireDataError, setExpireDataError] = useState('')
-
   const [iih, setIih] = useState('')
-  ///  const [iihError, setIihError] = useState('')
   const [email, setEmail] = useState('')
-  ///  const [emailError, setEmailError] = useState('')
   const [latloang, setLatloang] = useState({ latitude: '', longitude: '' })
-  /// const [latloang2, setLatloang2] = useState<Point>({ lat: 0, lng: 0 })
   const [locationa, setLocation] = useState({ contry: '', state: '', city: '', address: '' })
 
   useFocusEffect(
     useCallback(() => {
       const getAsyncData = async (): Promise<void> => {
-        // const pesdonalData = await getUserData()
-        // if (pesdonalData.id) {
         if (userData.id) {
-          // const custommerData = await SHOP_API.getCustommer(pesdonalData.id)
           const custommerData = await SHOP_API.getCustommer(userData.id)
           const dataUser = custommerData.payload
           setLocation({
@@ -126,7 +109,7 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
       } else {
         getAsyncData()
       }
-    }, [])
+    }, [userData])
   )
   const handleSave = async () => {
     let isValid = true
@@ -139,11 +122,6 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
       setLastNameError('Обязательное поле.')
       isValid = false
     }
-
-    // if (dob.trim() === '') {
-    //   setDobError('Обязательное поле.')
-    //   isValid = false
-    // }
     if (locationa.address.trim() === '') {
       setLegalAddressError('Обязательное поле.')
       isValid = false

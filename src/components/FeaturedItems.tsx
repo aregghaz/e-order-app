@@ -6,11 +6,11 @@ import Carousel from 'react-native-snap-carousel'
 
 import { ImgOrSvg } from '~components/ImgOrSvg'
 import { ModalWishList } from '~components/ModalWishList'
+import { Price } from '~components/Price'
 import { SCREEN } from '~constants'
 import { IFeatured } from '~types/featuredProducts'
 import { getVW, screenWidth } from '~utils/breakpoints'
 import { customStyles } from '~utils/style_helpers'
-import { useTranslation } from 'react-i18next'
 
 interface ITrending {
   items: IFeatured[]
@@ -56,7 +56,7 @@ const FeaturedItems: FC<ITrending> = ({ items, navigation }) => {
                   <Text style={styles.name}>{item.name}</Text>
                 </View>
                 <View>
-                  <Text style={styles.price}>₽ {item.price}</Text>
+                  <Price price={item.price} discount={item.discount} />
                 </View>
               </TouchableOpacity>
             )

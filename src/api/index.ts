@@ -111,7 +111,7 @@ export const SHOP_API = {
         `${fakeUrl}/api/products/products-search?categories=${categoryId}&limit=${limit}&page=${page}`
       )
       .then((res) => {
-        console.log(res.data, 'data in result')
+        // console.log(res.data, 'data in result')
         return res.data
       })
       .catch((err) => console.log(err))
@@ -120,16 +120,16 @@ export const SHOP_API = {
     return axios
       .post(`${fakeUrl}/api/products/products-search?text=${text}`)
       .then((res) => {
-        console.log(res.data, 'data in result')
+        // console.log(res.data, 'data in result')
         return res.data
       })
       .catch((err) => console.log(err))
   },
-  getSupplierData: async (id: string) => {
+  getSupplierData: async (id: string, shopId: string) => {
+    // console.log(id, 'IDIDIDIDIIDIDIDIID')
     return axios
-      .post(`${fakeUrl}/api/products/products-search?supplier=${id}`)
+      .post(`${fakeUrl}/api/products/products-search?supplier=${id}&shopId=${shopId}`)
       .then((res) => {
-        // console.log(res.data, 'data in supplier')
         return res.data
       })
       .catch((err) => console.log(err))
@@ -151,7 +151,7 @@ export const SHOP_API = {
     return axios
       .post(`${fakeUrl}/api/auth/confirm-mobile-token`, { mobile: phoneNumber, token })
       .then((res) => {
-        console.log(res, 'data in result')
+        // console.log(res, 'data in result')
         return res
       })
       .catch((err) => console.log(err))
@@ -161,7 +161,7 @@ export const SHOP_API = {
     return axios
       .post(`${fakeUrl}/api/users/create-customer-user`, { mobile: phone, password, token })
       .then((res) => {
-        console.log(res, '22222')
+        // console.log(res, '22222')
         return res.data
       })
       .catch((err) => console.log(err))
@@ -220,7 +220,7 @@ export const SHOP_API = {
   },
   /*** Forgot password ***/
   forgotPassword: async (data: any) => {
-    console.log(data, 'FORGOT REQUEST')
+    // console.log(data, 'FORGOT REQUEST')
     return axios
       .post(`${fakeUrl}/api/auth/customer-forgot-password`, data)
       .then((res) => {
@@ -234,7 +234,7 @@ export const SHOP_API = {
     return axios
       .post(`${fakeUrl}/api/auth/customer-reset-password`, { mobile: phone, password, token })
       .then((res) => {
-        console.log(res.data, '___ RES_DATA ___')
+        // console.log(res.data, '___ RES_DATA ___')
         return res
       })
       .catch((err) => console.log(err))
@@ -242,7 +242,7 @@ export const SHOP_API = {
   changePassword: async (newPassword: string, currentPassword: string) => {
     const tokenUSer = await getToken()
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
-    console.log(currentPassword, newPassword, '2222')
+    // console.log(currentPassword, newPassword, '2222')
     return axios
       .post(`${fakeUrl}/api/users/change-password`, { currentPassword, newPassword })
       .then((res) => {
@@ -283,12 +283,14 @@ export const SHOP_API = {
       .catch((err) => console.log(err))
   },
   getShopCart: async (shopId: string) => {
+    console.log(shopId, '___ SHOP ID')
     return axios
       .get(`${fakeUrl}/api/shopping-cart/shopping-cart/${shopId}`)
       .then((res) => {
+        console.log(res, '___@@@ RES')
         return res.data
       })
-      .catch((err) => console.log(err))
+      .catch((err) => console.log(err, 'EROR????????????????'))
   },
   updateCartQuantity: async (id: string, requestBody: { itemId: string; qty: number }[]) => {
     console.log(requestBody, 'BODYYYYYYYYYYYYYYY')

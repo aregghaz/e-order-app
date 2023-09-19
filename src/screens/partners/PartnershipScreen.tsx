@@ -27,10 +27,10 @@ export const PartnershipScreen: FC = () => {
   useFocusEffect(
     React.useCallback(() => {
       const getData = async () => {
-        console.log(selectedShops, 'selectedShops')
+        // console.log(selectedShops, 'selectedShops')
         const getID = await getShopId()
         const data = await SHOP_API.get(selectedShops)
-        console.log(data.payload.content, 'DATA________________')
+        // console.log(data.payload.content, 'DATA________________')
         const shopData = await SHOP_API.getShopsData()
         const shopReqData = await SHOP_API.getShopReq(selectedShops ? selectedShops : getID)
         setShopsReq(shopReqData.payload.content)

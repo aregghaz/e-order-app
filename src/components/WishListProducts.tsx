@@ -18,6 +18,7 @@ import { getShopId, notification } from '~services/ShopService'
 import { screenHeight, screenWidth } from '~utils/breakpoints'
 import { IWishlistProduct } from '~utils/helper'
 import { customStyles } from '~utils/style_helpers'
+import { Price } from '~components/Price'
 
 // import { ALERT_TYPE } from 'react-native-alert-notification'
 
@@ -55,8 +56,6 @@ export const WishListProducts: FC<IWishListProductProps> = ({
   const { isSignedIn } = useAuth()
   const { t } = useTranslation()
   const navigation = useNavigation<any>()
-  console.log(cartProduct, 'cartProduct')
-  console.log(countProduct, 'countProduct')
 
   useFocusEffect(
     useCallback(() => {
@@ -121,16 +120,23 @@ export const WishListProducts: FC<IWishListProductProps> = ({
             <View key={item.id} style={styles.product_wrapper}>
               <ImgOrSvg item={item} product="-product" padding={20} width={80} />
               <View>
-                <Text>{item.name}</Text>
+                <Pressable onPress={() => navigation.navigate(SCREEN.STACK_PRODUCT_INNER, item)}>
+                  <Text>{item.name}</Text>
+                </Pressable>
+              </View>
+              <View style={styles.price_wrapper}>
+                <Text>{t('price')} :</Text>
+                <Price price={item.price} discount={item.discount} />
               </View>
               <View>
-                <Text>Price : {item.price}</Text>
+                <Text>
+                  {t('discount')} : {item.discount}
+                </Text>
               </View>
               <View>
-                <Text>Discount : {item.discount}</Text>
-              </View>
-              <View>
-                <Text>Bonus : {item.reward}</Text>
+                <Text>
+                  {t('reward')} : {item.reward}
+                </Text>
               </View>
               <View style={styles.icons}>
                 <AntDesign
@@ -280,6 +286,11 @@ const styles = StyleSheet.create({
   price: {
     fontSize: 20,
     fontWeight: 'bold',
+  },
+  price_wrapper: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 10,
   },
   product_wrapper: {
     ...customStyles.border(1, 'solid', colors.borderColor),

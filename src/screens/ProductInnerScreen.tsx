@@ -22,6 +22,7 @@ import { SHOP_API } from '~api'
 import { ImgOrSvg } from '~components/ImgOrSvg'
 import { ModalWishList } from '~components/ModalWishList'
 import { NoImageSvg } from '~components/NoImageSvg'
+import { Price } from '~components/Price'
 import { CustomButton } from '~components/molecules/CustomButton'
 import InputNumber from '~components/molecules/InputNumber'
 import { SCREEN } from '~constants'
@@ -62,6 +63,7 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
   const [value, addOption] = useIncrement()
   const width = Dimensions.get('window').width
   const { params } = route
+  // console.log(params, 'params')
   const activeItemRef = useRef(null)
   const { isSignedIn } = useAuth()
   const [modalVisible, setModalVisible] = useState(false)
@@ -146,8 +148,12 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
       }
     }
   }
+  // console.log(params, 'PARAMS _______')
   const handleSearchSupplier = async () => {
-    navigation.navigate(SCREEN.SUPPLIER, { id: params.supplier.id })
+    navigation.navigate(SCREEN.SUPPLIER, {
+      id: params.supplier.id,
+      name: params.supplier.companyName,
+    })
   }
   const handleUpdateQuantity = (cartItemId: string, id: string, count: number) => {
     setCount(count)
@@ -194,7 +200,8 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
           </View>
           <View style={styles.horizontal_row} />
           <View>
-            <Text style={styles.price}>₽ {params.price}</Text>
+            <Price price={params.price} discount={params.discount} />
+            {/*<Text style={styles.price}>₽ {params.price}</Text>*/}
           </View>
           <View style={styles.horizontal_row} />
           <View>
@@ -258,7 +265,8 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
               <Text style={styles.name}>{item.name}</Text>
             </View>
             <View>
-              <Text style={styles.price}>₽ {item.price}</Text>
+              {/*<Text style={styles.price}>₽ {item.price}</Text>*/}
+              <Price price={item.price} discount={item.discount} />
             </View>
           </TouchableOpacity>
         )}
@@ -306,27 +314,16 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  icrement: {
-    marginTop: 20,
-  },
-  supplier: {
-    marginVertical: 10,
-  },
-  horizontal: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    padding: 10,
-  },
   ProductInnerScreen_wrapper: {
     flex: 1,
   },
   btn_wrapper: {
     marginHorizontal: 5,
     width: '45%',
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
   },
   description: {},
   details: {
@@ -358,11 +355,19 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlign: 'center',
   },
+  horizontal: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 10,
+  },
   horizontal_row: {
     backgroundColor: colors.grey,
     height: 1,
     marginVertical: 20,
     width: '100%',
+  },
+  icrement: {
+    marginTop: 20,
   },
   inner_wrapper: {
     paddingHorizontal: 20,
@@ -404,6 +409,9 @@ const styles = StyleSheet.create({
     height: '100%',
     marginHorizontal: 10,
     width: 1,
+  },
+  supplier: {
+    marginVertical: 10,
   },
   textContainer: {
     alignItems: 'center',

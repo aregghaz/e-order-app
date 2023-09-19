@@ -12,7 +12,7 @@
     "something_went_wrong": "Something went wrong"
   },
   "form": {
-    "invalid_email_format": "Incorrect e-mail address",
+    "invalid_email_format": "Неверный адрес электронной почты",
     "required": "Это поле обязательно к заполнению",
     "under18": "Вам меньше 18 лет",
     "numberExist": "Аккаунт с таким номером уже существует"
@@ -186,14 +186,18 @@
     "pending": "Запрос в ожидании",
     "accepted": "Запрос принят"
   },
+  "alt_phone": "Доп. номер телефона",
   "postcode": "Почтовый индекс",
   "country": "Страна",
   "passport": "Паспорт",
   "phone": "Телефон",
   "city": "Город",
+  "address": "Адрес",
   "address_1": "Адрес 1",
   "address_2": "Адрес 2",
+  "wishlist": "Список избранных",
   "email": "Эл. Почта",
+  "delivery": "Адрес доставки",
   "checkout_title": "Обзор заказа",
   "unit": "Вложение",
   "quantity": "Количество",
@@ -214,6 +218,11 @@
   "updated_at": "Обновлен",
   "product_name": "Товар",
   "company_name": "Компания",
+  "company_name__alt": "Название компании*",
+  "legal_address": "Юридический адрес",
+  "delivery_address": "Адрес доставки",
+  "store_name": "Название магазина*",
+  "update_store": "Редактировать магазин",
   "order_total": "Сумма заказа",
   "descending_order": "По дате созданию (Я - А)",
   "ascending_order": "По дате созданию (А - Я)",
@@ -232,6 +241,7 @@
   "declined": "Отклонен",
   "canceled": "Отменен",
   "hello": "Welcome",
+  "apartment": "Квартира, блок, здание, этаж и т. д.",
   "thanks": "Thank you for using the best template for expo apps",
   "app_information": "Shake your device to open developer menu"
 }

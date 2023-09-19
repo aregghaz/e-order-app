@@ -6,6 +6,7 @@ import { StyleSheet, TouchableOpacity } from 'react-native'
 
 import { ImgOrSvg } from '~components/ImgOrSvg'
 import { ModalWishList } from '~components/ModalWishList'
+import { Price } from '~components/Price'
 import { SCREEN } from '~constants'
 import { IFeatured } from '~types/featuredProducts'
 import { customStyles } from '~utils/style_helpers'
@@ -37,7 +38,7 @@ const TopDiscountItems: FC<IFeaturedItems> = ({ items, navigation }) => {
         {items &&
           items.length > 0 &&
           items.map((item) => {
-            const { name, id, price, reward } = item
+            const { name, id, price, reward, discount } = item
             return (
               <TouchableOpacity
                 key={id}
@@ -61,7 +62,7 @@ const TopDiscountItems: FC<IFeaturedItems> = ({ items, navigation }) => {
                   <Text style={styles.name}>{name}</Text>
                 </View>
                 <View>
-                  <Text style={styles.price}>₽ {price}</Text>
+                  <Price price={price} discount={discount} />
                 </View>
                 <View style={styles.reward_block}>
                   <Text style={styles.price}>

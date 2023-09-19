@@ -23,7 +23,7 @@ export const PhoneRegisterStack: FC = () => {
 
   const handleButtonPress = async () => {
     const data = await SHOP_API.setPhoneNumberRequest(phoneNumber)
-    console.log(data, 'datadata')
+    // console.log(data, 'datadata')
     if (data) {
       navigation.navigate(SCREEN.STACK_VERIFICATION, {
         phone: phoneNumber,

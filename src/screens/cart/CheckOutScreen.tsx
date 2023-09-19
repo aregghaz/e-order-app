@@ -43,6 +43,7 @@ export const CheckOutScreen: FC = ({ route, navigation }: any) => {
     useCallback(() => {
       const getShopCarts = async () => {
         const data = await SHOP_API.getShopCart(id)
+        // console.log(id)
         setCarts(data.payload)
         ////   console.log(carts, 'carts')
       }

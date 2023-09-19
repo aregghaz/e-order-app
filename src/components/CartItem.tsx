@@ -28,7 +28,6 @@ export const CartItems = ({
         quantity: item.quantity,
       }
     })
-    console.log(updatedQtyObj, '______updatedQtyObj')
     onDataToParent(id, updatedQtyObj)
     // setTrigger(!trigger)
   }

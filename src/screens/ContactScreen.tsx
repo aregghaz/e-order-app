@@ -22,7 +22,7 @@ export const ContactScreen: FC = () => {
       phone,
       message,
     }
-    console.log(messageObj, '___ Message')
+    // console.log(messageObj, '___ Message')
   }
   return (
     <View style={styles.contact_wrapper}>

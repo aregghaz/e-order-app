@@ -1,7 +1,7 @@
 import { useFocusEffect } from '@react-navigation/native'
-import React, { FC, useState } from 'react'
+import React, { FC, useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
 
 import { SHOP_API } from '~api'
 import { IOorder, IProduct } from '~types/order'
@@ -19,15 +19,15 @@ export const OrderInnerScreen: FC = ({ route }: any) => {
   const [order, setOrder] = useState<IOorder>()
   const { t } = useTranslation()
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       const getData = async () => {
         const orderData = await SHOP_API.getOrdersDetails(id)
-        console.log(id, 'orderDataorderData')
         setOrder(orderData.payload)
       }
       getData()
     }, [id])
   )
+  // console.log(order, '___ ORDER')
 
   return order ? (
     <View style={styles.ShopListScreen_wrapper}>
@@ -85,6 +85,40 @@ export const OrderInnerScreen: FC = ({ route }: any) => {
           )
         })}
       </ScrollView>
+      <View style={styles.parentBox}>
+        <View style={styles.boxContainer}>
+          <View style={styles.box_little}>
+            <Text>{t('shop.shop')}</Text>
+            <Text>{order.shop.shopName}</Text>
+            <Text>{order.shop.companyName}</Text>
+            <Text>{order.shop.deliveryAddress.phoneNumber1}</Text>
+          </View>
+          <View style={styles.box_little}>
+            <Text>{t('shop.supplier')}</Text>
+            {/*<Text>{order.supplier.shopName}</Text>*/}
+            <Text>{order.supplier.companyName}</Text>
+            <Text>{order.supplier.address.phoneNumber1}</Text>
+          </View>
+        </View>
+        <View style={styles.inputBox}>
+          <TextInput
+            style={styles.input}
+            editable={false}
+            placeholder={t('comment')}
+            placeholderTextColor={'lightgrey'}
+            multiline={true}
+            numberOfLines={4}
+          />
+        </View>
+      </View>
+      <View style={styles.btn_wrapper}>
+        <View style={styles.orderViewContainer}>
+          <View style={styles.orderView}>
+            <Text>Бонус за заказ : {order.rewardTotal.toFixed(2)}</Text>
+            <Text>Итоговая сумма : {order.orderTotal.toFixed(2)} </Text>
+          </View>
+        </View>
+      </View>
     </View>
   ) : (
     <View>
@@ -112,9 +146,61 @@ const styles = StyleSheet.create({
     padding: 5,
     ...customStyles.border(1, 'solid', colors.borderColor),
   },
-  hr: {
+  boxContainer: {
+    flexDirection: 'row',
+    gap: 12,
+    justifyContent: 'center',
+    marginHorizontal: 15,
+  },
+  box_little: {
+    borderRadius: 4,
+    flex: 1,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
     ...customStyles.border(1, 'solid', colors.borderColor),
+  },
+  btn_wrapper: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 10,
+  },
+  hr: {
+    ...customStyles.borderTop(1, 'solid', colors.borderColor),
     marginVertical: 5,
+  },
+  input: {
+    minHeight: 40,
+    minWidth: '100%',
+    paddingLeft: 10,
+    paddingTop: 10,
+    ...customStyles.border(1, 'solid', colors.borderColor),
+    borderRadius: 3,
+    fontSize: 16,
+    textAlignVertical: 'top',
+  },
+  inputBox: {
+    paddingHorizontal: 15,
+    paddingVertical: 3,
+  },
+  orderView: {
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    marginBottom: 10,
+  },
+  orderViewContainer: {
+    alignItems: 'flex-end',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    width: 340,
+  },
+  parentBox: {
+    alignItems: 'flex-start',
+    display: 'flex',
+    justifyContent: 'center',
+    ...customStyles.border(1, 'solid', colors.borderColor),
+    gap: 7,
+    paddingVertical: 10,
+    // backgroundColor: "#f1f1f1"
   },
   row_wrap: {
     flexDirection: 'row',

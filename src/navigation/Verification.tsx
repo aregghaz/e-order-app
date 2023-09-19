@@ -22,7 +22,7 @@ export const Verification: FC<IProps> = ({
   },
   navigation,
 }) => {
-  console.log(reset, 'reset!!!')
+  // console.log(reset, 'reset!!!')
   const pin1ref = useRef<TextInput | null>(null)
   const pin2ref = useRef<TextInput | null>(null)
   const pin3ref = useRef<TextInput | null>(null)

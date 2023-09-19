@@ -36,16 +36,12 @@ export const useSignInForm = () => {
       password: data.password,
       confirm: data.confirm,
     }
-    console.log(data, 'data in submit!!!!')
-    console.log(signInData, 'signInData in submit!!!!')
     try {
       setIsSubmitting(true)
       setError('')
       await signIn(signInData)
     } catch (e) {
-      console.log(e, '________________E_________________')
       if (isError(e)) {
-        console.log(e.message, '________________E_MESSAGE_________________')
         setError(e.message)
       } else {
         setError(t('errors.something_went_wrong'))
