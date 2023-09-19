@@ -276,10 +276,10 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
           </>
           <>
             <GooglePlacesAutocomplete
-              placeholder="Адрес"
               GooglePlacesDetailsQuery={{
                 fields: 'geometry',
               }}
+              placeholder="Адрес"
               textInputProps={{
                 autoFocus: true,
                 placeholder: locationa.address + ' ' + locationa.city + ' ' + locationa.contry,
