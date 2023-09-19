@@ -18,7 +18,7 @@ import { getShopId, notification } from '~services/ShopService'
 import { screenHeight, screenWidth } from '~utils/breakpoints'
 import { IWishlistProduct } from '~utils/helper'
 import { customStyles } from '~utils/style_helpers'
-import { Price } from "~components/Price";
+import { Price } from '~components/Price'
 
 // import { ALERT_TYPE } from 'react-native-alert-notification'
 
