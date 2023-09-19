@@ -7,6 +7,7 @@ import { Text, StyleSheet, SafeAreaView, ScrollView, View, ActivityIndicator } f
 
 import { SHOP_API } from '~api'
 import TopRatedItems from '~components/TopRatedItems'
+import { getShopId } from '~services/ShopService'
 import { screenHeight } from '~utils/breakpoints'
 
 interface IProps {
@@ -14,6 +15,7 @@ interface IProps {
   navigation: any
 }
 export const SupplierSearch: FC<IProps> = ({ route, navigation }) => {
+  // console.log(route, 'route!!!')
   const [data, setData] = useState<any>(null)
   const [loading, setLoading] = useState(false)
   useFocusEffect(
@@ -21,7 +23,8 @@ export const SupplierSearch: FC<IProps> = ({ route, navigation }) => {
       const getAsyncData = async () => {
         try {
           setLoading(true)
-          const data = await SHOP_API.getSupplierData(route.params.id)
+          const getID = await getShopId()
+          const data = await SHOP_API.getSupplierData(route.params.id, getID)
           setData(data.payload.content.products)
         } catch (err) {
           console.log(err, 'Error handle')
@@ -30,7 +33,7 @@ export const SupplierSearch: FC<IProps> = ({ route, navigation }) => {
         }
       }
       getAsyncData()
-    }, [])
+    }, [route.params.id])
   )
   return (
     <SafeAreaView>
@@ -40,7 +43,13 @@ export const SupplierSearch: FC<IProps> = ({ route, navigation }) => {
             <ActivityIndicator size="large" />
           </View>
         ) : data && data.length > 0 ? (
-          <TopRatedItems items={data} navigation={navigation} isCategoryProduct={true} />
+          <TopRatedItems
+            items={data}
+            navigation={navigation}
+            isCategoryProduct={true}
+            companyName={route.params.name}
+            supplierId={route.params.id}
+          />
         ) : (
           <View style={styles.text_wrapper}>
             <Text style={styles.text}>Nothing found</Text>

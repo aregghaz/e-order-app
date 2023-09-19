@@ -39,7 +39,6 @@ export const ShopListScreen: FC = () => {
   }
 
   const handleSetShopId = async (id: string, name: string) => {
-    console.log(id, ',,,,,8888888888888888')
     await setShopId(id)
     notification(t('notification.change_shop') + name, ALERT_TYPE.WARNING)
     navigation.navigate(SCREEN.DRAWER_ROOT, {
@@ -56,7 +55,6 @@ export const ShopListScreen: FC = () => {
 
     notification('Удалено')
   }
-  console.log(shops, 'tyops$$$')
   return (
     <View style={styles.ShopListScreen_wrapper}>
       <ScrollView>
@@ -75,11 +73,17 @@ export const ShopListScreen: FC = () => {
                   <Text style={styles.title}>{item.companyName}</Text>
                   <Text style={styles.text_h2}>{item.shopName}</Text>
                   <View style={styles.hr} />
-                  <Text>Delivery Address : {item.deliveryAddress.address_1}</Text>
-                  <Text>Phone : {item.deliveryAddress.phoneNumber1}</Text>
+                  <View style={styles.text_title__wrapper}>
+                    <Text style={styles.text_title}>{t('delivery')} :</Text>
+                    <Text>{item.deliveryAddress.address_1}</Text>
+                  </View>
+                  <View style={styles.text_title__wrapper}>
+                    <Text style={styles.text_title}>{t('phone')} :</Text>
+                    <Text>{item.deliveryAddress.phoneNumber1}</Text>
+                  </View>
                   <View style={styles.buttonsContainer}>
                     <CustomButton
-                      title="изменить"
+                      title={t('modal.edit')}
                       width={150}
                       padding={15}
                       border="grey"
@@ -88,7 +92,7 @@ export const ShopListScreen: FC = () => {
                       onPress={() => handleUpdate(item.id)}
                     />
                     <CustomButton
-                      title="удалить"
+                      title={t('modal.delete')}
                       width={150}
                       padding={15}
                       border="grey"
@@ -166,6 +170,15 @@ const styles = StyleSheet.create({
   },
   text_h2: {
     fontWeight: 'bold',
+  },
+  text_title: {
+    fontWeight: 'bold',
+    marginVertical: 4,
+  },
+  text_title__wrapper: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 10,
   },
   title: {
     fontSize: 18,

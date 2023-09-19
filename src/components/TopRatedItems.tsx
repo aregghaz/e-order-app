@@ -6,6 +6,7 @@ import { StyleSheet, TouchableOpacity } from 'react-native'
 
 import { ImgOrSvg } from '~components/ImgOrSvg'
 import { ModalWishList } from '~components/ModalWishList'
+import { Price } from '~components/Price'
 import { SCREEN } from '~constants'
 import { IFeatured } from '~types/featuredProducts'
 import { customStyles } from '~utils/style_helpers'
@@ -16,6 +17,8 @@ interface IFeaturedItems {
   isCategoryProduct: boolean
   onPress?: any
   isLoading?: boolean
+  companyName?: string
+  supplierId?: string
 }
 
 const colors = {
@@ -25,7 +28,13 @@ const colors = {
   red: 'red',
 }
 
-const TopRatedItems: FC<IFeaturedItems> = ({ items, navigation, isCategoryProduct }) => {
+const TopRatedItems: FC<IFeaturedItems> = ({
+  items,
+  navigation,
+  isCategoryProduct,
+  companyName,
+  supplierId,
+}) => {
   const [modalVisible, setModalVisible] = useState(false)
   const [productId, setProductId] = useState('')
   const { t } = useTranslation()
@@ -37,13 +46,16 @@ const TopRatedItems: FC<IFeaturedItems> = ({ items, navigation, isCategoryProduc
         {items &&
           items.length > 0 &&
           items.map((item) => {
-            const { name, id, price, reward } = item
+            const { name, id, price, reward, discount } = item
             return (
               <TouchableOpacity
                 key={id}
                 style={[styles.item, heightOfBlock]}
                 onPress={() => {
-                  navigation.navigate(SCREEN.STACK_PRODUCT_INNER, item)
+                  navigation.navigate(
+                    SCREEN.STACK_PRODUCT_INNER,
+                    companyName ? { ...item, supplier: { companyName, id: supplierId } } : item
+                  )
                 }}
               >
                 <Feather
@@ -61,7 +73,8 @@ const TopRatedItems: FC<IFeaturedItems> = ({ items, navigation, isCategoryProduc
                   <Text style={styles.name}>{name}</Text>
                 </View>
                 <View>
-                  <Text style={styles.price}>₽ {price}</Text>
+                  <Price price={price} discount={discount} />
+                  {/*<Text style={styles.price}>₽ {price}</Text>*/}
                 </View>
                 <View style={styles.reward_block}>
                   <Text style={styles.price}>

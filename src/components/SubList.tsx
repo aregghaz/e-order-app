@@ -29,7 +29,6 @@ export const SubList: FC<IProps> = ({
 }) => {
   const { t } = useTranslation()
   const handlePressCheck = async (title: string, group: string, shop_id: string) => {
-    console.log(title, 'title')
     if (group === 'shop') {
       navigation.navigate(SCREEN.STACK_SHOP_LIST, { title })
       handlePress()

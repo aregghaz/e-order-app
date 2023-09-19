@@ -16,7 +16,7 @@ export interface IWishlistProduct {
   barcode: string
   createdAt: string
   description: string
-  discount: null
+  discount: null | number
   discountEnd: null
   discountStart: null
   id: string
@@ -32,7 +32,7 @@ export interface IWishlistProduct {
   status: string
   updatedAt: string
   views: number
-  price: string
+  price: number
   reward: string
 }
 
@@ -76,7 +76,7 @@ export const ScreenNameChanger = (name: string) => {
 export const ErrorStatusCodeHandling = (statusCode: number) => {
   switch (statusCode) {
     case 401:
-      return notification('Сперва нужно войти!!!', ALERT_TYPE.WARNING)
+      return notification('Неверный логин или пароль', ALERT_TYPE.WARNING)
     case 404:
       return notification('Такого пользователя не существует ', ALERT_TYPE.WARNING)
     default:

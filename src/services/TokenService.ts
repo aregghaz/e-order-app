@@ -22,7 +22,6 @@ export async function getToken(): Promise<Token | undefined> {
 
 export async function deleteToken() {
   const token = await secureStore.getItem(USER_TOKEN)
-  console.log(token, 'tokiiiiiiiiiiii')
   if (!token) return
 
   return secureStore.removeItem(USER_TOKEN)

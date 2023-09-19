@@ -81,7 +81,7 @@ export const DrawerNavigator = () => {
         name={SCREEN.STACK_WISHLIST}
         component={WishlistScreen}
         options={({ navigation, route }: any) => ({
-          headerTitle: () => <Header navigation={navigation} title={'Wishlist'} />,
+          headerTitle: () => <Header navigation={navigation} title={t('wishlist')} />,
           headerLeft: () => null,
         })}
       />
@@ -121,7 +121,7 @@ export const DrawerNavigator = () => {
         name={SCREEN.STACK_UPDATE_STORE}
         component={UpdateShopScreen}
         options={({ navigation, route }: any) => ({
-          headerTitle: () => <Header navigation={navigation} title={'Update Store'} />,
+          headerTitle: () => <Header navigation={navigation} title={t('update_store')} />,
           headerLeft: () => null,
         })}
       />

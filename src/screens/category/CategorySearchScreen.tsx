@@ -8,7 +8,7 @@ import TopRatedItems from '~components/TopRatedItems'
 
 export const CategorySearchScreen: FC<any> = ({ route, navigation }) => {
   const { products } = route.params
-  console.log(products, 'pppp')
+  // console.log(products, 'pppp')
   return (
     <ScrollView>
       {products.length > 0 ? (

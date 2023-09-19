@@ -33,7 +33,7 @@ export const ChangePasswordScreen: FC<IProps> = ({ route }) => {
 
   const handleSubmitForm = async (data: any) => {
     const { confirmPassword, oldPassword, password } = data
-    console.log(data, oldPassword, password)
+    // console.log(data, oldPassword, password)
     if (oldPassword !== confirmPassword) {
       notification(t('password.doNotMatch'), ALERT_TYPE.WARNING)
       return

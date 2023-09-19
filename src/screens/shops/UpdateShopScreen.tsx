@@ -1,18 +1,22 @@
 /**
  * was created by tigran at 11.08.23
  */
-import { useFocusEffect, useNavigation } from '@react-navigation/native'
+import { useFocusEffect } from '@react-navigation/native'
 import React, { FC, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { View, Text, StyleSheet, ScrollView, TextInput, ActivityIndicator } from 'react-native'
 
 import { SHOP_API } from '~api'
 import { CustomButton } from '~components/molecules/CustomButton'
-import { SCREEN } from '~constants'
+// import { SCREEN } from '~constants'
+import useLoadingState from '~hooks/useLoading'
 import { notification } from '~services/ShopService'
 
 export const UpdateShopScreen: FC = ({ route }: any) => {
   const id = route.params
-  const navigation = useNavigation<any>()
+  // const navigation = useNavigation<any>()
+  const { t } = useTranslation()
+  const { loading, startLoading, stopLoading } = useLoadingState()
   /*shop*/
   const [shopName, setShopName] = useState('')
   const [shopNameError, setShopNameError] = useState('')
@@ -24,7 +28,7 @@ export const UpdateShopScreen: FC = ({ route }: any) => {
   const [companyNameError, setCompanyNameError] = useState('')
   /*** Legal address ***/
   const [legalAddress, setLegalAddress] = useState('')
-  const [legalAddressError, setLegalAddressError] = useState('')
+  // const [legalAddressError, setLegalAddressError] = useState('')
   /*Legal Apt unit*/
   const [legalApartment, setLegalApartment] = useState('')
   const [legalApartmentError] = useState('')
@@ -77,31 +81,33 @@ export const UpdateShopScreen: FC = ({ route }: any) => {
       getData()
     }, [id])
   )
+  const errorFieldMessage = t('form.required')
 
   const handleSave = async () => {
+    startLoading()
     let isValid = true
 
     if (shopName.trim() === '') {
-      setShopNameError('this field is required')
+      setShopNameError(errorFieldMessage)
       isValid = false
     }
 
     if (tax.trim() === '') {
-      setTaxError('this field is required')
+      setTaxError(errorFieldMessage)
       isValid = false
     }
     if (companyName.trim() === '') {
-      setCompanyNameError('this field is required')
+      setCompanyNameError(errorFieldMessage)
       isValid = false
     }
 
-    if (legalAddress.trim() === '') {
-      setLegalAddressError('this field is required')
-      isValid = false
-    }
+    // if (legalAddress.trim() === '') {
+    //   setLegalAddressError(errorFieldMessage)
+    //   isValid = false
+    // }
 
     if (deliveryAddress.trim() === '') {
-      setDeliveryAddressError('this field is required')
+      setDeliveryAddressError(errorFieldMessage)
       isValid = false
     }
 
@@ -142,12 +148,14 @@ export const UpdateShopScreen: FC = ({ route }: any) => {
     if (isValid) {
       try {
         await SHOP_API.updateShops(id, body)
-        notification('Обновлено')
-        navigation.navigate(SCREEN.DRAWER_ROOT, {
-          screen: SCREEN.STACK_MAIN_TAB,
-        })
+        await notification('Обновлено')
+        // navigation.navigate(SCREEN.DRAWER_ROOT, {
+        //   screen: SCREEN.STACK_MAIN_TAB,
+        // })
       } catch (err) {
         console.log(err)
+      } finally {
+        stopLoading()
       }
     }
   }
@@ -160,10 +168,10 @@ export const UpdateShopScreen: FC = ({ route }: any) => {
             style={styles.input}
             onChangeText={(value) => {
               setShopName(value)
-              setShopNameError(value.trim() === '' ? 'Обязательное поле.' : '')
+              setShopNameError(value.trim() === '' ? errorFieldMessage : '')
             }}
             value={shopName}
-            placeholder="Название магазина*"
+            placeholder={t('store_name')}
           />
           <Text style={styles.errorText}>{shopNameError}</Text>
         </>
@@ -172,7 +180,7 @@ export const UpdateShopScreen: FC = ({ route }: any) => {
             style={styles.input}
             onChangeText={(value) => {
               setTax(value)
-              setTaxError(value.trim() === '' ? 'Обязательное поле.' : '')
+              setTaxError(value.trim() === '' ? errorFieldMessage : '')
             }}
             value={tax}
             placeholder="ИНН*"
@@ -184,32 +192,32 @@ export const UpdateShopScreen: FC = ({ route }: any) => {
             style={styles.input}
             onChangeText={(value) => {
               setCompanyName(value)
-              setCompanyNameError(value.trim() === '' ? 'Обязательное поле.' : '')
+              setCompanyNameError(value.trim() === '' ? errorFieldMessage : '')
             }}
             value={companyName}
-            placeholder="Название компании*"
+            placeholder={t('company_name__alt')}
           />
           <Text style={styles.errorText}>{companyNameError}</Text>
         </>
-        <Text style={styles.title}>Юридический адрес</Text>
+        <Text style={styles.title}>{t('legal_address')}</Text>
         <>
           <TextInput
             style={styles.input}
             onChangeText={(value) => {
               setLegalAddress(value)
-              setLegalAddressError(value.trim() === '' ? 'Обязательное поле.' : '')
+              // setLegalAddressError(value.trim() === '' ? errorFieldMessage : '')
             }}
             value={legalAddress}
-            placeholder="Адрес*"
+            placeholder={t('address')}
           />
-          <Text style={styles.errorText}>{legalAddressError}</Text>
+          <Text style={styles.errorText}></Text>
         </>
         <>
           <TextInput
             style={styles.input}
             onChangeText={setLegalApartment}
             value={legalApartment}
-            placeholder="Квартира, блок, здание, этаж и т. д."
+            placeholder={t('apartment')}
           />
           <Text style={styles.errorText}>{legalApartmentError}</Text>
         </>
@@ -218,7 +226,7 @@ export const UpdateShopScreen: FC = ({ route }: any) => {
             style={styles.input}
             onChangeText={setLegalPostCode}
             value={legalPostCode}
-            placeholder="Почтовый индекс"
+            placeholder={t('postcode')}
           />
           <Text style={styles.errorText}>{legalPostCodeError}</Text>
         </>
@@ -227,7 +235,7 @@ export const UpdateShopScreen: FC = ({ route }: any) => {
             style={styles.input}
             onChangeText={setLegalPhone_1}
             value={legalPhone_1}
-            placeholder="Номер телефона"
+            placeholder={t('phone')}
           />
           <Text style={styles.errorText}>{legalPhoneError_1}</Text>
         </>
@@ -236,20 +244,20 @@ export const UpdateShopScreen: FC = ({ route }: any) => {
             style={styles.input}
             onChangeText={setLegalPhone_2}
             value={legalPhone_2}
-            placeholder="Доп. номер телефона"
+            placeholder={t('alt_phone')}
           />
           <Text style={styles.errorText}>{legalPhoneError_2}</Text>
         </>
-        <Text style={styles.title}>Адрес доставки</Text>
+        <Text style={styles.title}>{t('delivery_address')}</Text>
         <>
           <TextInput
             style={styles.input}
             onChangeText={(value) => {
               setDeliveryAddress(value)
-              setDeliveryAddressError(value.trim() === '' ? 'Обязательное поле.' : '')
+              setDeliveryAddressError(value.trim() === '' ? errorFieldMessage : '')
             }}
             value={deliveryAddress}
-            placeholder="Адрес*"
+            placeholder={t('address')}
           />
           <Text style={styles.errorText}>{deliveryAddressError}</Text>
         </>
@@ -258,7 +266,7 @@ export const UpdateShopScreen: FC = ({ route }: any) => {
             style={styles.input}
             onChangeText={setDeliveryApartment}
             value={deliveryApartment}
-            placeholder="Квартира, блок, здание, этаж и т. д."
+            placeholder={t('apartment')}
           />
           <Text style={styles.errorText}>{deliveryApartmentError}</Text>
         </>
@@ -267,7 +275,7 @@ export const UpdateShopScreen: FC = ({ route }: any) => {
             style={styles.input}
             onChangeText={setDeliveryPostCode}
             value={deliveryPostCode}
-            placeholder="Почтовый индекс"
+            placeholder={t('postcode')}
           />
           <Text style={styles.errorText}>{deliveryPostCodeError}</Text>
         </>
@@ -276,7 +284,7 @@ export const UpdateShopScreen: FC = ({ route }: any) => {
             style={styles.input}
             onChangeText={setDeliveryPhone_1}
             value={deliveryPhone_1}
-            placeholder="Номер телефона"
+            placeholder={t('phone')}
           />
           <Text style={styles.errorText}>{deliveryPhoneError_1}</Text>
         </>
@@ -285,11 +293,11 @@ export const UpdateShopScreen: FC = ({ route }: any) => {
             style={styles.input}
             onChangeText={setDeliveryPhone_2}
             value={deliveryPhone_2}
-            placeholder="Доп. номер телефона"
+            placeholder={t('alt_phone')}
           />
           <Text style={styles.errorText}>{deliveryPhoneError_2}</Text>
         </>
-        <CustomButton title=" Сохранить " onPress={handleSave} />
+        <CustomButton loading={loading} title={t('common.save')} onPress={handleSave} />
       </View>
     </ScrollView>
   ) : (
@@ -305,23 +313,23 @@ const colors = {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  horizontal: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    padding: 10,
-  },
   CreateStoreScreen_wrapper: {
     flexGrow: 1,
     justifyContent: 'center',
     paddingHorizontal: 20,
   },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+  },
   errorText: {
     color: colors.red,
     marginBottom: 5,
+  },
+  horizontal: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 10,
   },
   innerWrapper: {
     paddingVertical: 20,
