@@ -6,7 +6,7 @@ import { AuthContextProvider, AuthContextType } from '~contexts'
 import { useCallback, useEffect, useGlobal, useMemo, useState } from '~hooks'
 import { deleteToken, getToken, setToken } from '~services'
 import { deleteShopId, notification } from '~services/ShopService'
-import { getUserData, setUserDataSecure } from "~services/UserService";
+import { getUserData, setUserDataSecure } from '~services/UserService'
 import { SignUpFormValues } from '~types/authForms'
 import { wait } from '~utils'
 

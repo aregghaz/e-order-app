@@ -14,7 +14,7 @@ import { SCREEN } from '~constants'
 import { getShopId, notification } from '~services/ShopService'
 import { screenHeight, screenWidth } from '~utils/breakpoints'
 import { customStyles } from '~utils/style_helpers'
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next'
 
 export const PartnershipScreen: FC = () => {
   const [partnerShips, setPartnerShips] = useState<any>([])
