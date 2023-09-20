@@ -14,6 +14,7 @@ import { SCREEN } from '~constants'
 import { getShopId, notification } from '~services/ShopService'
 import { screenHeight, screenWidth } from '~utils/breakpoints'
 import { customStyles } from '~utils/style_helpers'
+import { useTranslation } from "react-i18next";
 
 export const PartnershipScreen: FC = () => {
   const [partnerShips, setPartnerShips] = useState<any>([])
@@ -24,6 +25,7 @@ export const PartnershipScreen: FC = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [modalData, setModalData] = useState<any>(null)
   const navigation = useNavigation<any>()
+  const { t } = useTranslation()
   useFocusEffect(
     React.useCallback(() => {
       const getData = async () => {
@@ -70,7 +72,7 @@ export const PartnershipScreen: FC = () => {
             letterSpacing="1"
             fontSize="17"
             accessibilityLabel="Choose Service"
-            placeholder="Choose Service"
+            placeholder={t('select_store')}
             _selectedItem={{
               bg: 'teal.600',
               endIcon: <CheckIcon size="5" />,
@@ -81,7 +83,7 @@ export const PartnershipScreen: FC = () => {
               setLoading(true)
             }}
           >
-            <Select.Item label={'Выбор магазина'} value={'0'} />
+            <Select.Item label={t('select_store')} value={'0'} />
             {shops.map((item: any) => {
               return <Select.Item label={item.shopName} key={item.id} value={item.id} />
             })}
@@ -123,7 +125,9 @@ export const PartnershipScreen: FC = () => {
                   <View key={item.id} style={styles.box}>
                     <Pressable onPress={() => handlerGetPartner(item.id)}>
                       <Text style={styles.title}>{item.supplier.companyName}</Text>
-                      <Text style={styles.text_h2}>Название магазина: {item.shop.shopName}</Text>
+                      <Text style={styles.text_h2}>
+                        {t('store_name')}: {item.shop.shopName}
+                      </Text>
                     </Pressable>
                     <View style={styles.buttonsContainer}>
                       <CustomButton

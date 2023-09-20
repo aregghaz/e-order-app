@@ -16,7 +16,7 @@ export type IUser = {
   username: string
 }
 
-export function setUserData(data: IUser) {
+export function setUserDataSecure(data: IUser) {
   return secureStore.setItem(USER_DATA, JSON.stringify(data))
 }
 

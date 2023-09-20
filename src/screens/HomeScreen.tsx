@@ -1,6 +1,7 @@
 import { useFocusEffect } from '@react-navigation/native'
 import { ScrollView, View } from 'native-base'
 import React, { useCallback, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { ActivityIndicator, StyleSheet } from 'react-native'
 import { SHOP_API } from '~api'
 ///import CarouselComponent from '~components/CarouselComponent'
@@ -31,6 +32,7 @@ export const HomeScreen = ({ navigation }: any): JSX.Element => {
   const [shopId, setShopDefaultId] = useState('')
   const [laoding, setLoading] = useState(false)
   const { isSignedIn } = useAuth()
+  const { t } = useTranslation()
   // const { t } = useTranslation()
   useFocusEffect(
     useCallback(() => {
@@ -77,8 +79,8 @@ export const HomeScreen = ({ navigation }: any): JSX.Element => {
       <TopRatedItems navigation={navigation} items={topRated} isCategoryProduct={false} />
       <FeaturedItems navigation={navigation} items={featured} />
       <TopDiscountItems navigation={navigation} items={topDiscount} />
-      <NewArrivalItems navigation={navigation} title={'New Arrival'} items={newArrival} />
-      <NewArrivalItems navigation={navigation} title={'Best Seller'} items={bestSeller} />
+      <NewArrivalItems navigation={navigation} title={t('new_arrival')} items={newArrival} />
+      <NewArrivalItems navigation={navigation} title={t('best_seller')} items={bestSeller} />
       <View style={styles.dummy}></View>
     </ScrollView>
   ) : (

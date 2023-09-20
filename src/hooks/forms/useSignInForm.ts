@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { isError } from 'react-query'
 
 import { useAuth } from '~hooks'
+import { notification } from '~services/ShopService'
 import { SignInFormValues } from '~types/authForms'
 
 const defaultValues: SignInFormValues = {
@@ -40,6 +41,7 @@ export const useSignInForm = () => {
       setIsSubmitting(true)
       setError('')
       await signIn(signInData)
+      await notification(t('notification.success_login'))
     } catch (e) {
       if (isError(e)) {
         setError(e.message)

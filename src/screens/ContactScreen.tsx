@@ -4,6 +4,7 @@
 
 import { Text, View } from 'native-base'
 import React, { FC, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { ScrollView, TextInput, StyleSheet } from 'react-native'
 
 import { CustomButton } from '~components/molecules/CustomButton'
@@ -14,7 +15,7 @@ export const ContactScreen: FC = () => {
   const [email, setEmail] = useState<string>('')
   const [phone, setPhone] = useState<string>('')
   const [message, setMessage] = useState<string>('')
-
+  const { t } = useTranslation()
   const handleSendMessage = () => {
     const messageObj = {
       name,
@@ -22,16 +23,16 @@ export const ContactScreen: FC = () => {
       phone,
       message,
     }
-    // console.log(messageObj, '___ Message')
+    console.log(messageObj, '___ Message')
   }
   return (
     <View style={styles.contact_wrapper}>
       <ScrollView>
         <View style={styles.inner_wrapper}>
-          <Text style={styles.contact_wrapper_title}>Drop us a Line</Text>
+          <Text style={styles.contact_wrapper_title}>{t('write_us')}</Text>
           <View style={styles.divider} />
           <View>
-            <Text style={styles.fields}>Enter Name</Text>
+            <Text style={styles.fields}>{t('enter_name')}</Text>
             <TextInput
               onChangeText={setName}
               value={name}
@@ -39,7 +40,7 @@ export const ContactScreen: FC = () => {
             />
           </View>
           <View>
-            <Text style={styles.fields}>Enter Email</Text>
+            <Text style={styles.fields}>{t('enter_email')}</Text>
             <TextInput
               onChangeText={setEmail}
               value={email}
@@ -47,7 +48,7 @@ export const ContactScreen: FC = () => {
             />
           </View>
           <View>
-            <Text style={styles.fields}>Phone Number</Text>
+            <Text style={styles.fields}>{t('phone_number')}</Text>
             <TextInput
               keyboardType={'phone-pad'}
               onChangeText={setPhone}
@@ -56,7 +57,7 @@ export const ContactScreen: FC = () => {
             />
           </View>
           <View>
-            <Text style={styles.fields}>Message</Text>
+            <Text style={styles.fields}>{t('message')}</Text>
             <TextInput
               numberOfLines={7}
               multiline={true}
@@ -66,7 +67,7 @@ export const ContactScreen: FC = () => {
             />
           </View>
           <View style={styles.button}>
-            <CustomButton onPress={handleSendMessage} title="Send" />
+            <CustomButton onPress={handleSendMessage} title={t('send')} />
           </View>
         </View>
       </ScrollView>

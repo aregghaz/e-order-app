@@ -1,8 +1,9 @@
 {
   "shop": {
-    "shop": "МАГАЗИН",
-    "supplier": "ПОСТАВЩИК",
-    "add": "Пожалуйста, создайте магазин, чтобы добавить в корзину"
+    "shop": "Торговая точка",
+    "supplier": "Поставщик",
+    "add": "Пожалуйста, создайте торговую точку, чтобы добавить в корзину",
+    "shopping_cart": "Корзина"
   },
   "order": {
     "confirmOrder": "Оформить заказ"
@@ -19,9 +20,9 @@
   },
 
   "password": {
-    "oldPassword": "Прежний пароль",
+    "oldPassword": "Текущий пароль",
     "newPassword": "Новый пароль",
-    "confirmPassword": "Подтвердите пароль",
+    "confirmPassword": "Повторите новый пароль",
     "changePassword": "Изменить пароль",
     "doNotMatch": "Пароли не совпадают",
     "passError": "Пароль должен содержать хотя бы одну строчную букву, одну прописную букву и одну цифру и иметь длину не менее 10 символов.",
@@ -35,7 +36,9 @@
     "signIn": "Чтобы добавить в корзину, пожалуйста, авторизуйтесь",
     "chose_unit": "Виберите вложение",
     "add_cart": "Добавлено в корзину",
-    "change_shop": "Магазин изменился на "
+    "change_shop": "Торговая точка изменился на ",
+    "success_login": "Вы успешно вошли в аккаунт",
+    "success_logout": "Вы успешно вышли из аккаунта"
   },
 
   "navigation": {
@@ -162,10 +165,10 @@
   },
   "menu": {
     "home": "Главная",
-    "shop_list": "Магазины",
+    "shop_list": "Торговые точки",
     "profile": "Профиль",
     "personal_info": "Аккаунт",
-    "change_password": "Сменить пароль",
+    "change_password": "Сбросить пароль",
     "edit_profile": "Изменить профиль",
     "order_list": "Заказы",
     "partners": "Партнерство",
@@ -173,13 +176,16 @@
   },
   "modal": {
     "edit": "Редактировать",
+    "edit_alt": "Изменить",
     "delete": "Удалить",
     "confirm": "Сохранить"
   },
   "buttons": {
-    "update": "Обновить",
-    "checkout": "Оформить",
-    "pay": "Заплатить"
+    "update": "Обновить корзину",
+    "checkout": "Обзор заказа",
+    "pay": "Заплатить",
+    "add_to_cart": "Добавить в корзину",
+    "send": "Отправить"
   },
   "partners_status": {
     "not-send": "Отправить запрос",
@@ -195,15 +201,15 @@
   "address": "Адрес",
   "address_1": "Адрес 1",
   "address_2": "Адрес 2",
-  "wishlist": "Список избранных",
+  "wishlist": "Избранные",
   "email": "Эл. Почта",
-  "delivery": "Адрес доставки",
+  "delivery": "Адрес торговой точки",
   "checkout_title": "Обзор заказа",
   "unit": "Вложение",
   "quantity": "Количество",
   "price": "Цена",
   "reward": "Бонус",
-  "sum": "Сумма",
+  "sum": "Итого",
   "sku": "Артикул",
   "discount": "Скидка",
   "comment": "Комментарий",
@@ -221,8 +227,14 @@
   "company_name__alt": "Название компании*",
   "legal_address": "Юридический адрес",
   "delivery_address": "Адрес доставки",
-  "store_name": "Название магазина*",
-  "update_store": "Редактировать магазин",
+  "store_name": "Название торговой точки",
+  "store_name_alt": "Торговая точка",
+  "select_store": "Выбрать торговую точку",
+  "top_discount": "Топ бонусов",
+  "top_rated": "Популярные",
+  "new_arrival": "Новые поступления",
+  "best_seller": "Лидеры продаж",
+  "update_store": "Редактировать торговую точку",
   "order_total": "Сумма заказа",
   "descending_order": "По дате созданию (Я - А)",
   "ascending_order": "По дате созданию (А - Я)",
@@ -241,6 +253,11 @@
   "declined": "Отклонен",
   "canceled": "Отменен",
   "hello": "Welcome",
+  "write_us": "Напишите нам",
+  "enter_name": "Введите имя",
+  "enter_email": "Введите эл. почту",
+  "phone_number": "Номер телефона",
+  "message": "Сообщение",
   "apartment": "Квартира, блок, здание, этаж и т. д.",
   "thanks": "Thank you for using the best template for expo apps",
   "app_information": "Shake your device to open developer menu"

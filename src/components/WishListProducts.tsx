@@ -40,6 +40,7 @@ const colors = {
   edit: 'orange',
   delete: 'red',
   activeText: 'white',
+  red: 'red',
 }
 
 export const WishListProducts: FC<IWishListProductProps> = ({
@@ -133,10 +134,11 @@ export const WishListProducts: FC<IWishListProductProps> = ({
                   {t('discount')} : {item.discount}
                 </Text>
               </View>
-              <View>
+              <View style={styles.reward_block}>
                 <Text>
-                  {t('reward')} : {item.reward}
+                  {t('reward')} : {cartProduct.reward}
                 </Text>
+                <Text style={styles.reward}>B</Text>
               </View>
               <View style={styles.icons}>
                 <AntDesign
@@ -180,10 +182,19 @@ export const WishListProducts: FC<IWishListProductProps> = ({
             <ImgOrSvg item={cartProduct} product="-product" width={140} />
             <View style={styles.inner_wrapper}>
               <Text style={styles.title}>{cartProduct.name}</Text>
-              <Text style={styles.supplier}>Bonus : {cartProduct.reward}</Text>
-              <Text style={styles.price}>₽ {cartProduct.price}</Text>
+              <View style={styles.reward_block}>
+                <Text>
+                  {t('reward')} : {cartProduct.reward}
+                </Text>
+                <Text style={styles.reward}>B</Text>
+              </View>
+              <Price
+                price={cartProduct.price}
+                discount={cartProduct.discount}
+                textStyles={styles.price}
+              />
               <View style={styles.horizontal_row} />
-              <Text>Вложение</Text>
+              <Text>{t('unit')}</Text>
               <View style={styles.each}>
                 {cartProduct?.properties?.unit?.length > 0 &&
                   cartProduct?.properties?.unit.map((el: any, index: number) => (
@@ -211,7 +222,7 @@ export const WishListProducts: FC<IWishListProductProps> = ({
               <View style={styles.horizontal_row} />
               <View style={styles.btn_wrapper}>
                 <CustomButton
-                  title="Add To Cart"
+                  title={t('buttons.add_to_cart')}
                   padding={10}
                   onPress={handleAddToCart}
                   background="black"
@@ -301,8 +312,13 @@ const styles = StyleSheet.create({
     paddingRight: 40,
     position: 'relative',
   },
-  supplier: {
-    marginVertical: 10,
+  reward: {
+    color: colors.red,
+  },
+  reward_block: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 5,
   },
   title: {
     flex: 1,

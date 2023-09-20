@@ -114,8 +114,8 @@ export const OrderInnerScreen: FC = ({ route }: any) => {
       <View style={styles.btn_wrapper}>
         <View style={styles.orderViewContainer}>
           <View style={styles.orderView}>
-            <Text>Бонус за заказ : {order.rewardTotal.toFixed(2)}</Text>
-            <Text>Итоговая сумма : {order.orderTotal.toFixed(2)} </Text>
+            <Text>Бонус за заказ : {order.rewardTotal.toFixed(2)} B</Text>
+            <Text>Итоговая сумма : {order.orderTotal.toFixed(2)} ₽</Text>
           </View>
         </View>
       </View>

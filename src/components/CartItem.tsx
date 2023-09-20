@@ -1,20 +1,28 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, View, Text, StyleSheet, ScrollView } from 'react-native'
 
+import { Price } from '~components/Price'
 import InputNumber from '~components/molecules/InputNumber'
 import { customStyles } from '~utils/style_helpers'
 // import { fakeData } from "~FakeData";
 
-export const CartItems = ({
+interface IProps {
+  elem?: any
+  onDelete?: any
+  cartItemId?: any
+  isDelete?: any
+  onDataToParent?: any
+  total?: any
+}
+export const CartItems: FC<IProps> = ({
   elem,
   onDelete,
   cartItemId,
   isDelete,
-  // setTrigger,
-  // trigger,
   onDataToParent,
-}: any) => {
+  total,
+}) => {
   const { t } = useTranslation()
 
   // const { elem } = fakeData
@@ -58,18 +66,21 @@ export const CartItems = ({
                 <Text>
                   {t('quantity')}: {item.quantity}
                 </Text>
+                <View style={styles.price_block}>
+                  <Text>{t('price')}:</Text>
+                  <Price price={item.price} discount={item.discount} />
+                </View>
                 <Text>
-                  {t('price')}: {item.price}
-                </Text>
-                <Text>
-                  {t('reward')}: {item.reward}
+                  {t('reward')}: {item.reward} B
                 </Text>
                 <Text>
                   {t('discount')}: {item.discount} %
                 </Text>
-                <Text>
-                  {t('sum')}: {calculateSum(item)}
-                </Text>
+                {total && (
+                  <Text>
+                    {t('sum')}: {calculateSum(item)} ₽
+                  </Text>
+                )}
                 {isDelete && (
                   <View style={styles.buttons_wrapper}>
                     <Pressable
@@ -138,5 +149,10 @@ const styles = StyleSheet.create({
   },
   incrementor: {
     height: 30,
+  },
+  price_block: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 5,
   },
 })

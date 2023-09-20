@@ -1,6 +1,7 @@
 /**
  * was created by tigran at 03.09.23
  */
+
 import { Feather } from '@expo/vector-icons'
 import React, { FC, useState } from 'react'
 import { View, StyleSheet, TouchableOpacity, TextInput } from 'react-native'
@@ -42,9 +43,10 @@ const InputNumber: FC<IProps> = ({
   cartItemId,
   id,
 }) => {
-  const [value, setValue] = useState<number>(qty)
+  const [value, setValue] = useState<number | string>(qty)
+
   const handleAddSubMousePress = (direction: number) => {
-    let newValue = value + step * direction
+    let newValue = typeof value === 'number' ? value + step * direction : 1
 
     if (max !== null) {
       newValue = Math.min(max, newValue)
@@ -52,18 +54,25 @@ const InputNumber: FC<IProps> = ({
     if (min !== null) {
       newValue = Math.max(min, newValue)
     }
-    if (newValue !== value) {
-      setValue(newValue)
-      handleUpdateQuantity(cartItemId, id, newValue)
-    }
+
+    setValue(newValue)
+    handleUpdateQuantity(cartItemId, id, newValue)
   }
+
   const handleChange = (changeValue: string) => {
     const parsedValue = parseFloat(changeValue)
     if (!isNaN(parsedValue)) {
       setValue(parsedValue)
       handleUpdateQuantity(cartItemId, id, parsedValue)
     } else {
+      setValue('')
+    }
+  }
+
+  const handleBlur = () => {
+    if (typeof value !== 'number') {
       setValue(1)
+      handleUpdateQuantity(cartItemId, id, 1)
     }
   }
 
@@ -76,9 +85,10 @@ const InputNumber: FC<IProps> = ({
         style={styles.form_control}
         onChangeText={handleChange}
         keyboardType={'number-pad'}
-        value={value?.toString()}
+        value={typeof value === 'number' ? value.toString() : ''}
+        onBlur={handleBlur}
       />
-      <TouchableOpacity style={styles.input_number__add} onPress={() => handleAddSubMousePress(+1)}>
+      <TouchableOpacity style={styles.input_number__add} onPress={() => handleAddSubMousePress(1)}>
         <Feather name="plus" size={20} color="black" />
       </TouchableOpacity>
     </View>

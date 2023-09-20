@@ -1,17 +1,19 @@
 import { FC, PropsWithChildren } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import { SHOP_API } from '~api'
 import { AuthContextProvider, AuthContextType } from '~contexts'
 import { useCallback, useEffect, useGlobal, useMemo, useState } from '~hooks'
 import { deleteToken, getToken, setToken } from '~services'
-import { deleteShopId } from '~services/ShopService'
-// import { setUserData } from '~services/UserService'
+import { deleteShopId, notification } from '~services/ShopService'
+import { getUserData, setUserDataSecure } from "~services/UserService";
 import { SignUpFormValues } from '~types/authForms'
 import { wait } from '~utils'
 
 export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   const [isSignedIn, setIsSignedIn] = useState<boolean | null>(null)
   const { setUserData } = useGlobal()
+  const { t } = useTranslation()
 
   useEffect(() => {
     const bootstrap = async () => {
@@ -33,7 +35,9 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
     const res = await SHOP_API.signInRequest(data.phone, data.password)
     ///console.log(res.payload.user.customer,res.payload.token.accessToken,'2222')
     // if (!res.payload.user.customer) {
-    setUserData(res.payload.user)
+    await setUserDataSecure(res.payload.user)
+    // setUserData(res.payload.user)
+    setUserData(await getUserData())
     await setToken(res.payload.token.accessToken)
     ///navigation.navigate(SCREEN.PROFILE_EDIT)
     setIsSignedIn(true)
@@ -50,6 +54,7 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
     await deleteShopId()
     await deleteToken()
     await SHOP_API.signOut()
+    await notification(t('notification.success_logout'))
     setIsSignedIn(false)
   }, [])
 

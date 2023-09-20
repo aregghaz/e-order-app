@@ -13,6 +13,7 @@ import { CartItems } from '~components/CartItem'
 import { CustomButton } from '~components/molecules/CustomButton'
 import { SCREEN } from '~constants'
 import { useGlobal } from '~hooks'
+import useLoading from '~hooks/useLoading'
 import { getShopId, notification } from '~services/ShopService'
 import { screenWidth } from '~utils/breakpoints'
 import { customStyles } from '~utils/style_helpers'
@@ -26,6 +27,7 @@ export const ShopCartScreen: FC = ({ navigation }: any) => {
   const [trigger, setTrigger] = useState(false)
   const [selectedShops, setSelectedShops] = useState('')
   const [loding, setLoading] = useState(false)
+  const { loading: uLoading, startLoading, stopLoading } = useLoading()
   const halfWidth = screenWidth / 2 - 20
   const [carData, setCarData] = useState({
     selectedShops: '',
@@ -33,8 +35,8 @@ export const ShopCartScreen: FC = ({ navigation }: any) => {
     total: 0,
     totalReward: 0,
   })
-  const { setIndicatorCount } = useGlobal()
-
+  const { setIndicatorCount, userData } = useGlobal()
+  console.log(userData, 'Userkkkkkk')
   useFocusEffect(
     useCallback(() => {
       const getShopCarts = async () => {
@@ -86,8 +88,10 @@ export const ShopCartScreen: FC = ({ navigation }: any) => {
   }
 
   const handleUpdateData = async (id: string, data: any) => {
+    startLoading()
     // console.log(data, '__ data __')
     await SHOP_API.updateCartQuantity(id, data)
+    stopLoading()
     setTrigger(!trigger)
   }
 
@@ -144,13 +148,14 @@ export const ShopCartScreen: FC = ({ navigation }: any) => {
         <>
           {carts.length > 0 ? (
             <CartItems
-              trigger={trigger}
-              setTrigger={setTrigger}
+              // trigger={trigger}
+              // setTrigger={setTrigger}
               isDelete={true}
               elem={carts}
               onDelete={handleDelete}
               cartItemId={selectedShops}
               onDataToParent={onDataToParent}
+              total={true}
             />
           ) : (
             <View style={styles.no_product}>
@@ -165,9 +170,11 @@ export const ShopCartScreen: FC = ({ navigation }: any) => {
                 <Text> Итоги: </Text>
                 <View style={styles.hr} />
                 <Text>Поставщик: {carData.selectedShops}</Text>
-                <Text>Магазин: {carData.shop} </Text>
-                <Text>Бонус за заказ : {carData.totalReward.toFixed(2)}</Text>
-                <Text>Итоговая сумма : {carData.total.toFixed(2)} </Text>
+                <Text>
+                  {t('store_name_alt')}: {carData.shop}{' '}
+                </Text>
+                <Text>Бонус за заказ : {carData.totalReward.toFixed(2)} B</Text>
+                <Text>Итоговая сумма : {carData.total.toFixed(2)} ₽</Text>
               </View>
             </View>
             <View style={styles.button_double}>
@@ -179,6 +186,7 @@ export const ShopCartScreen: FC = ({ navigation }: any) => {
                 color="black"
                 title={t('buttons.update')}
                 onPress={() => handleUpdateData(cartID, combinedData)}
+                loading={uLoading}
               />
               <CustomButton
                 width={halfWidth}
