@@ -7,6 +7,7 @@ import { View, Text, StyleSheet } from 'react-native'
 interface IProps {
   price: number
   discount: number | null
+  textStyles?: any
 }
 
 const calculateDiscountPrice = (price: number, discount: number | null) => {
@@ -20,18 +21,19 @@ const calculateDiscountPrice = (price: number, discount: number | null) => {
     newPrice,
   }
 }
-export const Price: FC<IProps> = ({ price, discount }) => {
+export const Price: FC<IProps> = ({ price, discount, textStyles }) => {
+  const styleForText = textStyles ? textStyles : {}
   const { oldPrice, newPrice } = calculateDiscountPrice(price, discount)
   return (
     <>
       {discount && discount > 0 ? (
         <View style={styles.prices}>
-          <Text>{newPrice} ₽</Text>
-          <Text style={styles.delete_value}>{oldPrice} ₽</Text>
+          <Text style={textStyles}>{newPrice} ₽</Text>
+          <Text style={[styleForText, styles.delete_value]}>{oldPrice} ₽</Text>
         </View>
       ) : (
         <View>
-          <Text>{oldPrice} ₽</Text>
+          <Text style={textStyles}>{oldPrice} ₽</Text>
         </View>
       )}
     </>

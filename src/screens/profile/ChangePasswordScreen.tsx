@@ -4,10 +4,12 @@ import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 import { ALERT_TYPE } from 'react-native-alert-notification'
+
 import { SHOP_API } from '~api'
 import { ControlledField } from '~components'
 import { CustomButton } from '~components/molecules/CustomButton'
 import { SCREEN } from '~constants'
+import useLoading from '~hooks/useLoading'
 import { notification } from '~services/ShopService'
 
 interface IProps {
@@ -19,38 +21,31 @@ export const ChangePasswordScreen: FC<IProps> = ({ route }) => {
   const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{10,}$/
 
   const { t } = useTranslation()
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     const getTokenData = async () => {
-  //       const pesdonalData = await getUserData()
-  //     }
-  //     getTokenData()
-  //   }, [])
-  // )
-
-  /// const mobile = route?.params?.mobile
+  const { loading, startLoading, stopLoading } = useLoading()
   const navigation = useNavigation<any>()
 
   const handleSubmitForm = async (data: any) => {
+    startLoading()
     const { confirmPassword, oldPassword, password } = data
     // console.log(data, oldPassword, password)
     if (oldPassword !== confirmPassword) {
-      notification(t('password.doNotMatch'), ALERT_TYPE.WARNING)
+      await notification(t('password.doNotMatch'), ALERT_TYPE.WARNING)
       return
     }
     if (password.trim() === '') {
-      notification(t('password.required'), ALERT_TYPE.WARNING)
+      await notification(t('password.required'), ALERT_TYPE.WARNING)
       // alert('Passwords do not match')
       return
     }
     if (!regex.test(password)) {
-      notification(t('password.passError'), ALERT_TYPE.WARNING)
+      await notification(t('password.passError'), ALERT_TYPE.WARNING)
       return
     }
 
     const dataRes = await SHOP_API.changePassword(oldPassword, password)
     if (dataRes) {
-      notification(t('password.passwordChanged'))
+      await notification(t('password.passwordChanged'))
+      stopLoading()
       navigation.navigate(SCREEN.TAB_HOME)
     }
   }
@@ -70,16 +65,6 @@ export const ChangePasswordScreen: FC<IProps> = ({ route }) => {
     defaultValues,
   })
 
-  // const onSubmit = async (data: SignInFormValues) => {
-  //   try {
-  //
-  //   } catch (e) {
-  //
-  //   } finally {
-  //
-  //   }
-  // }
-
   return (
     <View style={styles.PasswordStack_wrapper}>
       <ControlledField.Input
@@ -87,10 +72,10 @@ export const ChangePasswordScreen: FC<IProps> = ({ route }) => {
         control={control}
         errors={errors}
         isRequired
-        label={t('sign_in_screen.password_label')}
+        label={t('password.oldPassword')}
         name="password"
         onSubmitEditing={handleSubmit(handleSubmitForm)}
-        placeholder={t('sign_in_screen.password_placeholder')}
+        placeholder={t('password.oldPassword')}
         /// ref={passwordInputRef}
         returnKeyType="send"
         rules={{
@@ -104,10 +89,10 @@ export const ChangePasswordScreen: FC<IProps> = ({ route }) => {
         control={control}
         errors={errors}
         isRequired
-        label={t('password.oldPassword')}
+        label={t('password.newPassword')}
         name="oldPassword"
         onSubmitEditing={handleSubmit(handleSubmitForm)}
-        placeholder={t('password.oldPassword')}
+        placeholder={t('password.newPassword')}
         ////     ref={passwordInputRef}
         returnKeyType="send"
         rules={{
@@ -137,6 +122,7 @@ export const ChangePasswordScreen: FC<IProps> = ({ route }) => {
         <CustomButton
           title={t('password.changePassword')}
           onPress={handleSubmit(handleSubmitForm)}
+          loading={loading}
         />
       </View>
     </View>

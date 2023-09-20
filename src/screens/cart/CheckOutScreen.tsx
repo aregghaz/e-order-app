@@ -96,8 +96,8 @@ export const CheckOutScreen: FC = ({ route, navigation }: any) => {
       <View style={styles.btn_wrapper}>
         <View style={styles.orderViewContainer}>
           <View style={styles.orderView}>
-            <Text>Бонус за заказ : {carts.totalReward.toFixed(2)}</Text>
-            <Text>Итоговая сумма : {carts.cartTotal.toFixed(2)} </Text>
+            <Text>Бонус за заказ : {carts.totalReward.toFixed(2)} B</Text>
+            <Text>Итоговая сумма : {carts.cartTotal.toFixed(2)} ₽</Text>
           </View>
         </View>
         <CustomButton

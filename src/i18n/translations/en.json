@@ -2,7 +2,8 @@
   "shop": {
     "shop": "SHOP",
     "supplier": "SUPPLIER",
-    "add": "Please create shop to add to cart"
+    "add": "Please create shop to add to cart",
+    "shopping_cart": "Shopping cart"
   },
   "order": {
     "confirmOrder": "Оформить заказ"
@@ -21,7 +22,9 @@
     "signIn": "To add to cart, please login",
     "chose_unit": "Choose an attachment",
     "add_cart": "Добавлено в корзину",
-    "change_shop": "The shop changed to "
+    "change_shop": "The shop changed to ",
+    "success_login": "You have successfully logged in to your account",
+    "success_logout": "You have successfully logged out of your account"
   },
   "password": {
     "oldPassword": "Old password",
@@ -152,6 +155,7 @@
     "remove": "Remove",
     "save": "Save",
     "search": "Search",
+    "search_alt": "Search in Redro",
     "send_again": "Send again",
     "show_on_map": "Show on map",
     "sign_in": "Sign in",
@@ -174,13 +178,16 @@
   },
   "modal": {
     "edit": "Edit",
+    "edit_alt": "Edit",
     "delete": "Delete",
     "confirm": "Save Name"
   },
   "buttons": {
     "update": "Update",
     "checkout": "Checkout",
-    "pay": "Pay"
+    "pay": "Pay",
+    "add_to_cart": "Add to cart",
+    "send": "Send"
   },
   "partners_status": {
     "not-send": "Not Send",
@@ -222,7 +229,13 @@
   "company_name__alt": "Company name*",
   "legal_address": "Legal address",
   "delivery_address": "Delivery address",
-  "store_name": "Store Name*",
+  "select_store": "Choose Service",
+  "store_name": "Store Name",
+  "store_name_alt": "Store name",
+  "top_discount": "Top Discount",
+  "top_rated": "Top rated",
+  "new_arrival": "New arrival",
+  "best_seller": "Best seller",
   "update_store": "Update Store",
   "order_total": "Order Total",
   "descending_order": "By date of creation (Z - A)",
@@ -242,6 +255,11 @@
   "declined": "Declined",
   "canceled": "Canceled",
   "hello": "Welcome",
+  "write_us": "Drop us a Line",
+  "enter_name": "Enter Name",
+  "enter_email": "Enter Email",
+  "phone_number": "Phone Number",
+  "message": "Message",
   "apartment": "Apartment, block, building, floor, etc.",
   "thanks": "Thank you for using the best template for expo apps",
   "app_information": "Shake your device to open developer menu"

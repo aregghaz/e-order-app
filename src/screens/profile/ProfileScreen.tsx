@@ -57,6 +57,7 @@ export const ProfileScreen: FC = ({ route, navigation }: any) => {
       ;(async () => {
         // console.log(isSignedIn, 'isSignedIn')
         if (isSignedIn) {
+          console.log(userData, 'profile screen user data !!! _______________________-')
           if (!userData.customer) {
             navigation.navigate(SCREEN.PROFILE_EDIT, { type: false })
           } else {

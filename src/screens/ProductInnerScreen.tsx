@@ -235,7 +235,7 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
             <Text>{params.description}</Text>
           </View>
           <View style={styles.horizontal_row} />
-          <Text style={styles.heading}>Top Discounts</Text>
+          <Text style={styles.heading}>{t('top_discount')}</Text>
         </View>
       </>
     )

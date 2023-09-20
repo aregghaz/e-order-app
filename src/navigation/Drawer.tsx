@@ -89,7 +89,7 @@ export const DrawerNavigator = () => {
         name={SCREEN.STACK_SHOP_CART}
         component={ShopCartScreen}
         options={({ navigation, route }: any) => ({
-          headerTitle: () => <Header navigation={navigation} title={'Shopping Cart'} />,
+          headerTitle: () => <Header navigation={navigation} title={t('shop.shopping_cart')} />,
           headerLeft: () => null,
         })}
       />
@@ -147,11 +147,14 @@ export const DrawerNavigator = () => {
       <Drawer.Screen
         name={SCREEN.STACK_PASSWORD}
         component={PasswordStack}
-        options={({ navigation, route }: any) => ({
-          // headerTitle: () => <Header navigation={navigation} title={'login'} />,
-          headerTitle: () => <Text>{t('password.changePassword')}</Text>,
-          // headerLeft: () => null,
-        })}
+        options={({ navigation, route }: any) => {
+          console.log(route.params, 'route params!!!!')
+          return {
+            // headerTitle: () => <Header navigation={navigation} title={'login'} />,
+            headerTitle: () => <Text>{t('password.changePassword')}</Text>,
+            // headerLeft: () => null,
+          }
+        }}
       />
       <Drawer.Screen
         name={SCREEN.PHONE_REGISTER}
@@ -192,7 +195,7 @@ export const DrawerNavigator = () => {
         name={SCREEN.STACK_CATEGORY_SEARCH}
         component={CategorySearchScreen}
         options={({ navigation, route }: any) => ({
-          headerTitle: () => <Header navigation={navigation} title="Search Results" />,
+          headerTitle: () => <Header navigation={navigation} title={t('common.search')} />,
           headerLeft: () => null,
         })}
       />

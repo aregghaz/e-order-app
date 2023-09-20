@@ -41,7 +41,9 @@ const TopRatedItems: FC<IFeaturedItems> = ({
   const heightOfBlock = isCategoryProduct ? { height: 270 } : { height: 'auto' }
   return (
     <View style={styles.main}>
-      {items.length > 0 && !isCategoryProduct && <Text style={styles.heading}>Top Rated</Text>}
+      {items.length > 0 && !isCategoryProduct && (
+        <Text style={styles.heading}>{t('top_rated')}</Text>
+      )}
       <View style={styles.container}>
         {items &&
           items.length > 0 &&

@@ -33,7 +33,7 @@ const TopDiscountItems: FC<IFeaturedItems> = ({ items, navigation }) => {
   const heightOfBlock = { height: 'auto' }
   return (
     <View style={styles.main}>
-      {items.length > 0 && <Text style={styles.heading}>Top Discount</Text>}
+      {items.length > 0 && <Text style={styles.heading}>{t('top_discount')}</Text>}
       <View style={styles.container}>
         {items &&
           items.length > 0 &&

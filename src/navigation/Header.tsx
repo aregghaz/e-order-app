@@ -4,6 +4,7 @@
 import { Feather, Ionicons } from '@expo/vector-icons'
 // import { useFocusEffect } from '@react-navigation/native'
 import React, { FC, useCallback, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   Dimensions,
   Pressable,
@@ -32,6 +33,7 @@ export const Header: FC<IProps> = ({ title, navigation }) => {
   // const [countIndicator, setCountIndicator] = useState<null | number>(null)
   const { isSignedIn } = useAuth()
   const { indicatorCount } = useGlobal()
+  const { t } = useTranslation()
   // useFocusEffect(
   //   useCallback(() => {
   //     const getShopCartCount = async () => {
@@ -110,7 +112,7 @@ export const Header: FC<IProps> = ({ title, navigation }) => {
             style={styles.search_input}
             value={text}
             onChangeText={handleSearch}
-            placeholder="Search"
+            placeholder={t('common.search_alt')}
             onSubmitEditing={handleRequest}
           />
           <Feather name="x" size={24} style={styles.icons} onPress={() => setSearch(false)} />

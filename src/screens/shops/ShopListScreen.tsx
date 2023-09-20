@@ -40,7 +40,7 @@ export const ShopListScreen: FC = () => {
 
   const handleSetShopId = async (id: string, name: string) => {
     await setShopId(id)
-    notification(t('notification.change_shop') + name, ALERT_TYPE.WARNING)
+    await notification(t('notification.change_shop') + name, ALERT_TYPE.WARNING)
     navigation.navigate(SCREEN.DRAWER_ROOT, {
       screen: SCREEN.STACK_MAIN_TAB,
     })
@@ -53,7 +53,7 @@ export const ShopListScreen: FC = () => {
     await SHOP_API.deleteShop(id)
     setLoad(!load)
 
-    notification('Удалено')
+    await notification('Удалено')
   }
   return (
     <View style={styles.ShopListScreen_wrapper}>
@@ -83,7 +83,7 @@ export const ShopListScreen: FC = () => {
                   </View>
                   <View style={styles.buttonsContainer}>
                     <CustomButton
-                      title={t('modal.edit')}
+                      title={t('modal.edit_alt')}
                       width={150}
                       padding={15}
                       border="grey"
@@ -178,6 +178,7 @@ const styles = StyleSheet.create({
   text_title__wrapper: {
     alignItems: 'center',
     flexDirection: 'row',
+    flexWrap: 'wrap',
     gap: 10,
   },
   title: {
