@@ -158,6 +158,7 @@ export const UpdateShopScreen: FC = ({ route }: any) => {
         stopLoading()
       }
     }
+    stopLoading()
   }
 
   return laoding ? (
@@ -171,7 +172,7 @@ export const UpdateShopScreen: FC = ({ route }: any) => {
               setShopNameError(value.trim() === '' ? errorFieldMessage : '')
             }}
             value={shopName}
-            placeholder={t('store_name')}
+            placeholder={t('store_name') + '*'}
           />
           <Text style={styles.errorText}>{shopNameError}</Text>
         </>
@@ -183,7 +184,7 @@ export const UpdateShopScreen: FC = ({ route }: any) => {
               setTaxError(value.trim() === '' ? errorFieldMessage : '')
             }}
             value={tax}
-            placeholder="ИНН*"
+            placeholder={t('inn')}
           />
           <Text style={styles.errorText}>{taxError}</Text>
         </>
@@ -257,7 +258,7 @@ export const UpdateShopScreen: FC = ({ route }: any) => {
               setDeliveryAddressError(value.trim() === '' ? errorFieldMessage : '')
             }}
             value={deliveryAddress}
-            placeholder={t('address')}
+            placeholder={t('address') + '*'}
           />
           <Text style={styles.errorText}>{deliveryAddressError}</Text>
         </>

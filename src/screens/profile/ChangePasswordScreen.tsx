@@ -48,6 +48,7 @@ export const ChangePasswordScreen: FC<IProps> = ({ route }) => {
       stopLoading()
       navigation.navigate(SCREEN.TAB_HOME)
     }
+    stopLoading()
   }
   const defaultValues: any = {
     // TODO: Reset this values when building production app
