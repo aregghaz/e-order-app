@@ -30,6 +30,7 @@
     "oldPassword": "Old password",
     "newPassword": "New password",
     "confirmPassword": "Confirm Password",
+    "create_password": "Create Password",
     "changePassword": "Change Password",
     "doNotMatch": "Passwords do not match",
     "passError": "Password must contain at least one lowercase letter, one uppercase letter, and one digit, and be at least 10 characters long",
@@ -187,13 +188,15 @@
     "checkout": "Checkout",
     "pay": "Pay",
     "add_to_cart": "Add to cart",
-    "send": "Send"
+    "send": "Send",
+    "create": "Create"
   },
   "partners_status": {
     "not-send": "Not Send",
     "pending": "Pending",
     "accepted": "Accepted"
   },
+  "inn": "TIN*",
   "alt_phone": "Additional phone number",
   "postcode": "Postcode",
   "country": "Country",
@@ -223,6 +226,7 @@
   "verification": "Verification",
   "verify_code": "Verify Code",
   "created-at": "Created At",
+  "create_store": "Create store",
   "updated_at": "Updated At",
   "product_name": "product",
   "company_name": "Company",

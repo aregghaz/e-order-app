@@ -113,7 +113,7 @@ export const DrawerNavigator = () => {
         name={SCREEN.STACK_CREATE_STORE}
         component={CreateStoreScreen}
         options={({ navigation, route }: any) => ({
-          headerTitle: () => <Header navigation={navigation} title={'Create Store'} />,
+          headerTitle: () => <Header navigation={navigation} title={t('create_store')} />,
           headerLeft: () => null,
         })}
       />
@@ -148,7 +148,7 @@ export const DrawerNavigator = () => {
         name={SCREEN.STACK_PASSWORD}
         component={PasswordStack}
         options={({ navigation, route }: any) => {
-          console.log(route.params, 'route params!!!!')
+          // console.log(route.params, 'route params!!!!')
           return {
             // headerTitle: () => <Header navigation={navigation} title={'login'} />,
             headerTitle: () => <Text>{t('password.changePassword')}</Text>,

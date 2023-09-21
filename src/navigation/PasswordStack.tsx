@@ -1,157 +1,136 @@
-import { useFocusEffect, useNavigation } from '@react-navigation/native'
-import React, { FC, useCallback, useState } from 'react'
+import { useNavigation } from '@react-navigation/native'
+import React, { FC } from 'react'
+import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, TextInput, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 
 import { SHOP_API } from '~api'
+import { ControlledField } from '~components'
 import { CustomButton } from '~components/molecules/CustomButton'
 import { SCREEN } from '~constants'
-import { getToken, setToken } from '~services'
+import useLoading from '~hooks/useLoading'
+import { setToken } from '~services'
 import { notification } from '~services/ShopService'
-// import { ControlledField } from "~components";
-// import { useForm } from "react-hook-form";
 
 interface IProps {
-  route: any
-  navigation: any
+  route: {
+    params: {
+      mobile: string
+      token: string | number
+      reset: undefined | boolean
+    }
+  }
 }
 
 export const PasswordStack: FC<IProps> = ({ route }) => {
   const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{10,}$/
-  const [tokenData, setTokenData] = useState<any>('')
   const { t } = useTranslation()
-  const { reset, token } = route.params
-  // const defaultValues: any = {
-  //   // TODO: Reset this values when building production app
-  //   password: '',
-  //   changePassword: '',
-  //   confirm: false,
-  // }
-  // const {
-  //   control,
-  //   formState: { errors },
-  //   handleSubmit,
-  // } = useForm<any>({
-  //   mode: 'onTouched',
-  //   defaultValues,
-  // })
-  useFocusEffect(
-    useCallback(() => {
-      const getTokenData = async () => {
-        const tokenUSer = await getToken()
-        setTokenData(tokenUSer)
-      }
-      getTokenData()
-    }, [])
-  )
+  const { loading, startLoading, stopLoading } = useLoading()
+  const { reset, token, mobile } = route.params
 
-  const mobile = route?.params?.mobile
+  type TEditPassword = {
+    edit_new_password: string
+    edit_confirm_password: string
+  }
+
+  const defaultValues: TEditPassword = {
+    edit_new_password: '',
+    edit_confirm_password: '',
+  }
+  const {
+    control,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<TEditPassword>({
+    mode: 'onTouched',
+    defaultValues,
+  })
+
   const navigation = useNavigation<any>()
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const handleSubmitForm = async () => {
-    if (password !== confirmPassword) {
+  const handleSubmitForm = async ({ edit_new_password, edit_confirm_password }: TEditPassword) => {
+    if (edit_new_password !== edit_confirm_password) {
       alert(t('password.do_not_match'))
       return
     }
-    if (!regex.test(password)) {
+    if (!regex.test(edit_new_password)) {
       alert(t('password.valid_password'))
       return
     }
+    startLoading()
     let data
-    if (reset != undefined) {
-      data = await SHOP_API.resetPassword(token, mobile, password)
+    if (reset !== undefined) {
+      data = await SHOP_API.resetPassword(token, mobile, edit_new_password)
+      stopLoading()
     } else {
-      // console.log(token, 'tokentoken')
-      data = await SHOP_API.createCustomerUser(token, mobile, password)
+      data = await SHOP_API.createCustomerUser(token, mobile, edit_new_password)
+      stopLoading()
     }
     if (data) {
-      if (reset != undefined) {
+      if (reset !== undefined) {
         await notification(t('password.passwordChanged'))
+        stopLoading()
         navigation.navigate(SCREEN.STACK_SIGN_IN)
       } else {
+        stopLoading()
         const token2 = data.payload.token.accessToken
-        // console.log(token2, 'token__222222')
         await setToken(token2)
         navigation.navigate(SCREEN.PROFILE_EDIT, { typeData: false })
       }
     }
+    stopLoading()
   }
   return (
     <View style={styles.PasswordStack_wrapper}>
-      <TextInput
-        style={styles.input}
-        onChangeText={setPassword}
-        value={password}
-        placeholder={reset ? 'New Password' : 'Password'}
-        secureTextEntry
+      <ControlledField.Input
+        autoCapitalize="none"
+        control={control}
+        errors={errors}
+        isRequired
+        label={reset ? t('password.newPassword') : t('sign_in_screen.password_placeholder')}
+        name="edit_new_password"
+        onSubmitEditing={handleSubmit(handleSubmitForm)}
+        placeholder={reset ? t('password.newPassword') : t('sign_in_screen.password_placeholder')}
+        returnKeyType="send"
+        rules={{
+          required: t('form.required'),
+        }}
+        testID="passwordInput"
+        type="password"
       />
-      <TextInput
-        style={styles.input}
-        onChangeText={setConfirmPassword}
-        value={confirmPassword}
-        placeholder="Confirm Password"
-        secureTextEntry
+      <ControlledField.Input
+        autoCapitalize="none"
+        control={control}
+        errors={errors}
+        isRequired
+        label={t('password.confirmPassword')}
+        name="edit_confirm_password"
+        onSubmitEditing={handleSubmit(handleSubmitForm)}
+        placeholder={t('password.confirmPassword')}
+        returnKeyType="send"
+        rules={{
+          required: t('form.required'),
+        }}
+        testID="passwordInput"
+        type="password"
       />
-      {/*<ControlledField.Input*/}
-      {/*  autoCapitalize="none"*/}
-      {/*  control={control}*/}
-      {/*  errors={errors}*/}
-      {/*  isRequired*/}
-      {/*  label={t('sign_in_screen.password_label')}*/}
-      {/*  name="password"*/}
-      {/*  onSubmitEditing={handleSubmit(handleSubmitForm)}*/}
-      {/*  placeholder={t('sign_in_screen.password_placeholder')}*/}
-      {/*  /// ref={passwordInputRef}*/}
-      {/*  returnKeyType="send"*/}
-      {/*  rules={{*/}
-      {/*    required: t('form.required'),*/}
-      {/*  }}*/}
-      {/*  testID="passwordInput"*/}
-      {/*  type="password"*/}
-      {/*/>*/}
-      {/*<ControlledField.Input*/}
-      {/*  autoCapitalize="none"*/}
-      {/*  control={control}*/}
-      {/*  errors={errors}*/}
-      {/*  isRequired*/}
-      {/*  label={t('password.oldPassword')}*/}
-      {/*  name="oldPassword"*/}
-      {/*  onSubmitEditing={handleSubmit(handleSubmitForm)}*/}
-      {/*  placeholder={t('password.oldPassword')}*/}
-      {/*  ////     ref={passwordInputRef}*/}
-      {/*  returnKeyType="send"*/}
-      {/*  rules={{*/}
-      {/*    required: t('form.required'),*/}
-      {/*  }}*/}
-      {/*  testID="passwordInput"*/}
-      {/*  type="password"*/}
-      {/*/>*/}
-      <CustomButton
-        title={reset ? 'Change Password' : 'Create Password'}
-        // onPress={handleSubmit(handleSubmitForm)}
-        onPress={handleSubmitForm}
-      />
+      <View style={styles.button_wrapper}>
+        <CustomButton
+          loading={loading}
+          title={reset ? t('password.changePassword') : t('password.create_password')}
+          onPress={handleSubmit(handleSubmitForm)}
+        />
+      </View>
     </View>
   )
 }
-const colors = {
-  border: '#ddd',
-  red: 'red',
-}
+
 const styles = StyleSheet.create({
   PasswordStack_wrapper: {
     flex: 1,
     justifyContent: 'center',
     paddingHorizontal: 20,
   },
-  input: {
-    borderColor: colors.border,
-    borderRadius: 8,
-    borderStyle: 'solid',
-    borderWidth: 1,
-    marginBottom: 20,
-    padding: 10,
-    width: '100%',
+  button_wrapper: {
+    marginTop: 20,
   },
 })

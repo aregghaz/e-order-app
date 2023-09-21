@@ -157,7 +157,7 @@ export const SHOP_API = {
       .catch((err) => console.log(err))
   },
   /* step 3 */
-  createCustomerUser: async (token: number, phone: string, password: string) => {
+  createCustomerUser: async (token: string | number, phone: string, password: string) => {
     return axios
       .post(`${fakeUrl}/api/users/create-customer-user`, { mobile: phone, password, token })
       .then((res) => {
@@ -228,7 +228,7 @@ export const SHOP_API = {
       })
       .catch((err) => console.log(err))
   },
-  resetPassword: async (token: string, phone: string, password: string) => {
+  resetPassword: async (token: string | number, phone: string, password: string) => {
     const tokenUSer = await getToken()
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
     return axios
