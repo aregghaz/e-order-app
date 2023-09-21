@@ -12,6 +12,7 @@ import { ForgotPasswordStack } from '~navigation/ForgotPasswordStack'
 import { Header } from '~navigation/Header'
 import { optionForScreen } from '~navigation/HeaderGlobalStyles'
 import { PasswordStack } from '~navigation/PasswordStack'
+import { PaymentScreen } from '~navigation/PaymentScreen'
 import { RootNavigator } from '~navigation/RootNavigator'
 import { NotFoundScreen, SignInScreen } from '~screens'
 import { ProductInnerScreen } from '~screens/ProductInnerScreen'
@@ -130,29 +131,22 @@ export const DrawerNavigator = () => {
         name={SCREEN.STACK_SIGN_IN}
         component={SignInScreen}
         options={({ navigation, route }: any) => ({
-          // headerTitle: () => <Header navigation={navigation} title={'login'} />,
-          headerTitle: () => <Text>Login</Text>,
-          // headerLeft: () => null,
+          headerTitle: () => <Text>{t('navigation.screen_titles.sign_in')}</Text>,
         })}
       />
       <Drawer.Screen
         name={SCREEN.STACK_FORGOT_PASSWORD}
         component={ForgotPasswordStack}
         options={({ navigation, route }: any) => ({
-          // headerTitle: () => <Header navigation={navigation} title={'login'} />,
           headerTitle: () => <Text>{t('forgot_password__alt')}</Text>,
-          // headerLeft: () => null,
         })}
       />
       <Drawer.Screen
         name={SCREEN.STACK_PASSWORD}
         component={PasswordStack}
         options={({ navigation, route }: any) => {
-          // console.log(route.params, 'route params!!!!')
           return {
-            // headerTitle: () => <Header navigation={navigation} title={'login'} />,
             headerTitle: () => <Text>{t('password.changePassword')}</Text>,
-            // headerLeft: () => null,
           }
         }}
       />
@@ -160,19 +154,9 @@ export const DrawerNavigator = () => {
         name={SCREEN.PHONE_REGISTER}
         component={PhoneRegisterStack}
         options={({ navigation, route }: any) => ({
-          // headerTitle: () => <Header navigation={navigation} title={'login'} />,
           headerTitle: () => <Text>{t('registration')}</Text>,
-          // headerLeft: () => null,
         })}
       />
-      {/*<Drawer.Screen*/}
-      {/*  name={SCREEN.DRAWER_MENU}*/}
-      {/*  component={MenuScreen}*/}
-      {/*  options={({ navigation, route }: any) => ({*/}
-      {/*    headerTitle: () => <Header navigation={navigation} title={route.params.title} />,*/}
-      {/*    headerLeft: () => null,*/}
-      {/*  })}*/}
-      {/*/>*/}
       <Drawer.Screen
         name={SCREEN.STACK_NOT_FOUND}
         component={NotFoundScreen}
@@ -219,7 +203,9 @@ export const DrawerNavigator = () => {
         name={SCREEN.STACK_ORDER_SUCCESS}
         component={OrderSuccessScreen}
         options={({ navigation, route }: any) => ({
-          headerTitle: () => <Header navigation={navigation} title={'Order Success'} />,
+          headerTitle: () => (
+            <Header navigation={navigation} title={t('navigation.screen_titles.order_success')} />
+          ),
           headerShown: false,
           headerLeft: () => null,
         })}
@@ -228,7 +214,9 @@ export const DrawerNavigator = () => {
         name={SCREEN.STACK_ORDER_FAIL}
         component={OrderFailScreen}
         options={({ navigation, route }: any) => ({
-          headerTitle: () => <Header navigation={navigation} title={'Order Failed'} />,
+          headerTitle: () => (
+            <Header navigation={navigation} title={t('navigation.screen_titles.order_fail')} />
+          ),
           headerLeft: () => null,
           headerShown: false,
         })}
@@ -245,7 +233,7 @@ export const DrawerNavigator = () => {
         name={SCREEN.ADD_PARTNERSHIP}
         component={AddPartnershipScreen}
         options={({ navigation, route }: any) => ({
-          headerTitle: () => <Header navigation={navigation} title={'Add Partners'} />,
+          headerTitle: () => <Header navigation={navigation} title={t('add_partners')} />,
           headerLeft: () => null,
         })}
       />
@@ -262,6 +250,14 @@ export const DrawerNavigator = () => {
         component={ChangePasswordScreen}
         options={({ navigation, route }: any) => ({
           headerTitle: () => <Header navigation={navigation} title={t('menu.change_password')} />,
+          headerLeft: () => null,
+        })}
+      />
+      <Drawer.Screen
+        name={SCREEN.STACK_PAYMENT}
+        component={PaymentScreen}
+        options={({ navigation, route }: any) => ({
+          headerTitle: () => <Header navigation={navigation} title={t('menu.payment')} />,
           headerLeft: () => null,
         })}
       />

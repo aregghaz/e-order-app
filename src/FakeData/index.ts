@@ -15,7 +15,7 @@ export const fakeData = {
       children: [],
     },
     {
-      id: '3',
+      id: '2',
       iconName: 'shopping-cart',
       title: MENUS.SHOP_LIST,
       group: 'shop',
@@ -24,7 +24,7 @@ export const fakeData = {
       children: [],
     },
     {
-      id: '5',
+      id: '3',
       title: MENUS.PROFILE,
       iconName: 'lock',
       hasChildren: true,
@@ -50,21 +50,27 @@ export const fakeData = {
       ],
     },
     {
-      id: '7',
+      id: '4',
       title: MENUS.ORDER_LIST,
       iconName: 'list',
       hasChildren: false,
     },
     {
-      id: '9',
+      id: '5',
       title: MENUS.PARTNERS,
       iconName: 'users',
       hasChildren: false,
     },
     {
-      id: '2',
+      id: '6',
       title: MENUS.CONTACT_US,
       iconName: 'headphones',
+      hasChildren: false,
+    },
+    {
+      id: '7',
+      title: MENUS.PAYMENT,
+      iconName: 'credit-card',
       hasChildren: false,
     },
   ],

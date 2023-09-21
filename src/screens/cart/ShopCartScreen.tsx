@@ -159,7 +159,7 @@ export const ShopCartScreen: FC = ({ navigation }: any) => {
             />
           ) : (
             <View style={styles.no_product}>
-              <Text>There is no products here</Text>
+              <Text>{t('notification.no_products')}</Text>
             </View>
           )}
         </>

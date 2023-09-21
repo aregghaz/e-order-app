@@ -34,6 +34,7 @@
   },
 
   "notification": {
+    "no_products": "Товаров пока нет",
     "signIn": "Чтобы добавить в корзину, пожалуйста, авторизуйтесь",
     "chose_unit": "Виберите вложение",
     "add_cart": "Добавлено в корзину",
@@ -51,7 +52,8 @@
     },
     "screen_titles": {
       "category": "Категории",
-      "category_inner": "CategoryInner",
+      "order_success": "Успешно завершено",
+      "order_fail": "Заказ не выполнен",
       "profile": "Профиль",
       "contact": "Контакты",
       "components": "Components",
@@ -155,6 +157,7 @@
     "remove": "Удалить",
     "save": "Сохранить",
     "search": "Поиск",
+    "search_alt": "Поиск в Redro",
     "send_again": "Отправить снова",
     "show_on_map": "Show on map",
     "sign_in": "Войти",
@@ -173,7 +176,8 @@
     "edit_profile": "Изменить профиль",
     "order_list": "Заказы",
     "partners": "Партнерство",
-    "contact_us": "Связаться с нами"
+    "contact_us": "Связаться с нами",
+    "payment": "Платёжные операции"
   },
   "modal": {
     "edit": "Редактировать",
@@ -194,6 +198,9 @@
     "pending": "Запрос в ожидании",
     "accepted": "Запрос принят"
   },
+  "pay_method": "Способ оплаты",
+  "deposit": "Депозит",
+  "add_partners": "Добавить партнеров",
   "inn": "ИНН*",
   "alt_phone": "Доп. номер телефона",
   "postcode": "Почтовый индекс",
