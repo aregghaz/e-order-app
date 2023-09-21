@@ -581,4 +581,14 @@ export const SHOP_API = {
       })
       .catch((err) => console.log(err))
   },
+  getPayment: async () => {
+    const tokenUSer = await getToken()
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
+    return axios
+      .get(`${fakeUrl}/api/payments/get-payments?orderBy=p.createdAt&orderDirection=desc`)
+      .then((res) => {
+        return res.data
+      })
+      .catch((err) => console.log(err, '___ ERROR IN getPayment'))
+  },
 }

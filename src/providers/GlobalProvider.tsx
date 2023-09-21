@@ -3,6 +3,7 @@ import { FC, PropsWithChildren } from 'react'
 import { GlobalContextProvider } from '~contexts'
 import { useMemo, useState } from '~hooks'
 export const GlobalProvider: FC<PropsWithChildren> = ({ children }) => {
+  const [shop_id, setShop_id] = useState<string>('')
   const [name, setName] = useState<string>('')
   const [surname, setSurname] = useState<string>('')
   const [userData, setUserData] = useState<any>({})
@@ -18,8 +19,21 @@ export const GlobalProvider: FC<PropsWithChildren> = ({ children }) => {
       setUserData,
       indicatorCount,
       setIndicatorCount,
+      shop_id,
+      setShop_id,
     }
-  }, [name, setName, surname, setSurname, setUserData, userData, indicatorCount, setIndicatorCount])
+  }, [
+    name,
+    setName,
+    surname,
+    setSurname,
+    setUserData,
+    userData,
+    indicatorCount,
+    setIndicatorCount,
+    shop_id,
+    setShop_id,
+  ])
 
   return <GlobalContextProvider value={value}>{children}</GlobalContextProvider>
 }

@@ -60,6 +60,7 @@ export const ShopListScreen: FC = () => {
       <ScrollView>
         {shops &&
           shops.map((item: any) => {
+            console.log(item.shopName, 'name__________________________')
             return (
               <Pressable key={item.id} onPress={() => handleSetShopId(item.id, item.shopName)}>
                 <View key={item.id} style={styles.box}>
@@ -67,7 +68,7 @@ export const ShopListScreen: FC = () => {
                     <Checkbox
                       isChecked={item.id === shopID}
                       value={item.id}
-                      accessibilityLabel={item.name}
+                      accessibilityLabel={item.shopName}
                     />
                   </View>
                   <Text style={styles.title}>{item.companyName}</Text>

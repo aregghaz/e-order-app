@@ -144,7 +144,7 @@ export const WishlistScreen: FC = () => {
           </ScrollView>
         ) : (
           <View style={styles.no_products}>
-            <Text>There are no products yet</Text>
+            <Text>{t('notification.no_products')}</Text>
           </View>
         )}
       </View>

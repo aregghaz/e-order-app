@@ -19,6 +19,7 @@
     "numberExist": "Аккаунт с таким номером уже существует"
   },
   "notification": {
+    "no_products": "There are no products yet",
     "signIn": "To add to cart, please login",
     "chose_unit": "Choose an attachment",
     "add_cart": "Добавлено в корзину",
@@ -48,7 +49,8 @@
     },
     "screen_titles": {
       "category": "Category",
-      "category_inner": "CategoryInner",
+      "order_success": "Order Success",
+      "order_fail": "Order Fail",
       "profile": "Profile",
       "contact": "Contact",
       "components": "Components",
@@ -175,7 +177,8 @@
     "edit_profile": "Edit Profile",
     "order_list": "Order List",
     "partners": "Partners",
-    "contact_us": "Contact Us"
+    "contact_us": "Contact Us",
+    "payment": "Payment transactions"
   },
   "modal": {
     "edit": "Edit",
@@ -196,6 +199,9 @@
     "pending": "Pending",
     "accepted": "Accepted"
   },
+  "pay_method": "Payment method",
+  "deposit": "Deposit",
+  "add_partners": "Add partners",
   "inn": "TIN*",
   "alt_phone": "Additional phone number",
   "postcode": "Postcode",

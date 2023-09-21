@@ -36,7 +36,7 @@ export const CustomButton: FC<IProps> = ({
   const btnWidth = width ? { width } : { width: '100%' }
   const btnPaddingHorizontal = padding ? { padding } : { padding: 32 }
   const btnColor = color ? { color } : { color: colors.white }
-  const btnBackground = padding
+  const btnBackground = background
     ? { backgroundColor: background }
     : { backgroundColor: colors.black }
   const btnBorder = border

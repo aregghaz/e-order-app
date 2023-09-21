@@ -41,6 +41,7 @@ export const SCREEN = {
   PROFILE_EDIT: 'ProfileEdit',
   CHANGE_PASSWORD: 'ChangePassword',
   SUPPLIER: 'Supplier',
+  STACK_PAYMENT: 'Payment',
 }
 
 export type TMenusType =
@@ -53,6 +54,7 @@ export type TMenusType =
   | 'menu.order_list'
   | 'menu.partners'
   | 'menu.contact_us'
+  | 'menu.payment'
 export const MENUS = {
   HOME: 'menu.home',
   SHOP_LIST: 'menu.shop_list',
@@ -63,6 +65,7 @@ export const MENUS = {
   ORDER_LIST: 'menu.order_list',
   PARTNERS: 'menu.partners',
   CONTACT_US: 'menu.contact_us',
+  PAYMENT: 'menu.payment',
 }
 
 export type partnersType = {

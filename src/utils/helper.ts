@@ -68,6 +68,8 @@ export const ScreenNameChanger = (name: string) => {
       return SCREEN.PARTNER_SHIP
     case 'menu.contact_us':
       return SCREEN.TAB_CONTACT
+    case 'menu.payment':
+      return SCREEN.STACK_PAYMENT
     default:
       return SCREEN.STACK_NOT_FOUND
   }
