@@ -2,7 +2,7 @@
  * was created by tigran at 09.07.23
  */
 import { useFocusEffect } from '@react-navigation/native'
-import React, { FC, useCallback, useEffect, useRef, useState } from "react";
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 

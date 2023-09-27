@@ -22,7 +22,7 @@ import { notification } from '~services/ShopService'
 // import { getUserData } from '~services/UserService'
 import { checkAge, timestampToDate } from '~utils/dateTimeFormat'
 import { customStyles } from '~utils/style_helpers'
-import { getUserData } from "~services/UserService";
+import { getUserData } from '~services/UserService'
 // import { setUserDataSecure } from '~services/UserService'
 
 const colors = {
