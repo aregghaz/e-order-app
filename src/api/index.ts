@@ -5,7 +5,7 @@ import { getToken } from '~services'
 import { notification } from '~services/ShopService'
 import { IProfile } from '~types/authForms'
 import { IShopDetails } from '~types/shop'
-import { ErrorStatusCodeHandling } from '~utils/helper'
+import { ErrorMessageName, ErrorStatusCodeHandling } from '~utils/helper'
 
 interface IOptions {
   shopId: string | null
@@ -186,7 +186,7 @@ export const SHOP_API = {
       })
       .catch((err) => console.log(err))
   },
-  getCustommer: async (id: string) => {
+  getCustomer: async (id: string) => {
     const tokenUSer = await getToken()
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
     return axios
@@ -210,14 +210,14 @@ export const SHOP_API = {
       })
   },
   /* step 5 */
-  createCustomerAccount: async (data = {}) => {
-    return axios
-      .post(`${fakeUrl}/api/customers/create-customer-account`, data)
-      .then((res) => {
-        return res.data
-      })
-      .catch((err) => console.log(err))
-  },
+  // createCustomerAccount: async (data = {}) => {
+  //   return axios
+  //     .post(`${fakeUrl}/api/customers/create-customer-account`, data)
+  //     .then((res) => {
+  //       return res.data
+  //     })
+  //     .catch((err) => console.log(err))
+  // },
   /*** Forgot password ***/
   forgotPassword: async (data: any) => {
     // console.log(data, 'FORGOT REQUEST')
@@ -287,7 +287,7 @@ export const SHOP_API = {
     return axios
       .get(`${fakeUrl}/api/shopping-cart/shopping-cart/${shopId}`)
       .then((res) => {
-        console.log(res, '___@@@ RES')
+        // console.log(res, '___@@@ RES')
         return res.data
       })
       .catch((err) => console.log(err, 'EROR????????????????'))
@@ -344,7 +344,7 @@ export const SHOP_API = {
       .catch((err) => console.log(err))
   },
   createOrder: async (body: { shoppingCart: string; comment: string }) => {
-    console.log(body, 'body')
+    // console.log(body, 'body')
     const tokenUSer = await getToken()
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
     return axios
@@ -353,7 +353,10 @@ export const SHOP_API = {
         console.log(res, 'resresres')
         return res.data
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        ErrorMessageName(err.response.data.message)
+        console.log(err.response.data.message, '___ERROR___+++++++++++')
+      })
   },
   /**** end orders ****/
   deleteShopCartID: async (id: string) => {
@@ -378,7 +381,7 @@ export const SHOP_API = {
     const tokenUSer = await getToken()
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
     return axios
-      .get(`${fakeUrl}/api/shops/get-shops`)
+      .get(`${fakeUrl}/api/shops/get-shops?state="active"`)
       .then((res) => {
         return res.data
       })
@@ -421,6 +424,18 @@ export const SHOP_API = {
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
     return axios
       .get(`${fakeUrl}/api/shops/get-shops/${id}`)
+      .then((res) => {
+        return res.data
+      })
+      .catch((err) => console.log(err))
+  },
+  getShopsBySearch: async (searchValue = '', state = 'active') => {
+    const tokenUSer = await getToken()
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
+    return axios
+      .get(
+        `${fakeUrl}/api/shops/get-shops?sort=s.updatedAt&order=desc&search=${searchValue}&state=${state}`
+      )
       .then((res) => {
         return res.data
       })

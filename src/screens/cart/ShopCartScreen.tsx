@@ -12,7 +12,7 @@ import { SHOP_API } from '~api'
 import { CartItems } from '~components/CartItem'
 import { CustomButton } from '~components/molecules/CustomButton'
 import { SCREEN } from '~constants'
-import { useGlobal } from '~hooks'
+import { useAuth, useGlobal } from '~hooks'
 import useLoading from '~hooks/useLoading'
 import { getShopId, notification } from '~services/ShopService'
 import { screenWidth } from '~utils/breakpoints'
@@ -20,6 +20,7 @@ import { customStyles } from '~utils/style_helpers'
 
 export const ShopCartScreen: FC = ({ navigation }: any) => {
   const { t } = useTranslation()
+  const { isSignedIn } = useAuth()
   const [data, setData] = useState<null | any>([])
   const [carts, setCarts] = useState<null | any>([])
   const [combinedData, setCombinedData] = useState<any>([])
@@ -28,20 +29,20 @@ export const ShopCartScreen: FC = ({ navigation }: any) => {
   const [selectedShops, setSelectedShops] = useState('')
   const [loding, setLoading] = useState(false)
   const { loading: uLoading, startLoading, stopLoading } = useLoading()
-  const halfWidth = screenWidth / 2 - 20
+  // const halfWidth = screenWidth / 2 - 20
+  const halfWidth = screenWidth - 20
   const [carData, setCarData] = useState({
     selectedShops: '',
     shop: '',
     total: 0,
     totalReward: 0,
   })
-  const { setIndicatorCount, userData } = useGlobal()
-  console.log(userData, 'Userkkkkkk')
+  const { setIndicatorCount } = useGlobal()
   useFocusEffect(
     useCallback(() => {
       const getShopCarts = async () => {
         const getID = await getShopId()
-
+        console.log(getID, 'get id')
         if (getID) {
           const data = await SHOP_API.getShopCarts(getID)
           if (data) {
@@ -71,8 +72,17 @@ export const ShopCartScreen: FC = ({ navigation }: any) => {
         }
       }
       getShopCarts()
-    }, [trigger, carts.length])
+    }, [trigger, isSignedIn])
   )
+  useFocusEffect(
+    useCallback(() => {
+      setCombinedData([])
+    }, [])
+  )
+
+  console.log(trigger, 'triggrer')
+  console.log(carts.length, 'carts.length')
+  console.log(isSignedIn, 'isSignedIn')
 
   const handleDelete = async (Ids: { cartItemID: string; itemId: string }) => {
     await SHOP_API.deleteFromCart(Ids.cartItemID, Ids.itemId)
@@ -89,7 +99,6 @@ export const ShopCartScreen: FC = ({ navigation }: any) => {
 
   const handleUpdateData = async (id: string, data: any) => {
     startLoading()
-    // console.log(data, '__ data __')
     await SHOP_API.updateCartQuantity(id, data)
     stopLoading()
     setTrigger(!trigger)
@@ -178,25 +187,52 @@ export const ShopCartScreen: FC = ({ navigation }: any) => {
               </View>
             </View>
             <View style={styles.button_double}>
-              <CustomButton
-                width={halfWidth}
-                padding={10}
-                border="grey"
-                background="white"
-                color="black"
-                title={t('buttons.update')}
-                onPress={() => handleUpdateData(cartID, combinedData)}
-                loading={uLoading}
-              />
-              <CustomButton
-                width={halfWidth}
-                padding={10}
-                border="grey"
-                background="black"
-                color="white"
-                title={t('buttons.checkout')}
-                onPress={() => handlerCheckOut(selectedShops)}
-              />
+              {combinedData.length > 0 ? (
+                <CustomButton
+                  width={halfWidth}
+                  padding={10}
+                  border="grey"
+                  background="white"
+                  color="black"
+                  title={t('buttons.update')}
+                  onPress={() => {
+                    setCombinedData([])
+                    handleUpdateData(cartID, combinedData)
+                  }}
+                  loading={uLoading}
+                  disabled={!(combinedData.length > 0)}
+                />
+              ) : (
+                <CustomButton
+                  width={halfWidth}
+                  padding={10}
+                  border="grey"
+                  background="black"
+                  color="white"
+                  title={t('buttons.checkout')}
+                  onPress={() => handlerCheckOut(selectedShops)}
+                />
+              )}
+              {/*<CustomButton*/}
+              {/*  width={halfWidth}*/}
+              {/*  padding={10}*/}
+              {/*  border="grey"*/}
+              {/*  background="white"*/}
+              {/*  color="black"*/}
+              {/*  title={t('buttons.update')}*/}
+              {/*  onPress={() => handleUpdateData(cartID, combinedData)}*/}
+              {/*  loading={uLoading}*/}
+              {/*  disabled={!(combinedData.length > 0)}*/}
+              {/*/>*/}
+              {/*<CustomButton*/}
+              {/*  width={halfWidth}*/}
+              {/*  padding={10}*/}
+              {/*  border="grey"*/}
+              {/*  background="black"*/}
+              {/*  color="white"*/}
+              {/*  title={t('buttons.checkout')}*/}
+              {/*  onPress={() => handlerCheckOut(selectedShops)}*/}
+              {/*/>*/}
             </View>
           </View>
         )}

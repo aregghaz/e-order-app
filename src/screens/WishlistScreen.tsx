@@ -150,12 +150,14 @@ export const WishlistScreen: FC = () => {
       </View>
       <ScrollView>
         <View>
-          {wishListProducts.length > 0 && (
+          {wishListProducts.length > 0 ? (
             <WishListProducts
               products={wishListProducts as any}
               handleRemoveProductFromWishlist={handleRemoveProductFromWishlist}
               itemId={id}
             />
+          ) : (
+            <Text style={styles.empty_products}>{t('wishlist_empty')}</Text>
           )}
         </View>
       </ScrollView>
@@ -253,6 +255,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: screenWidth,
   },
+  empty_products: {
+    marginTop: 20,
+    textAlign: 'center',
+  },
   input: {
     ...customStyles.border(1, 'solid', colors.borderColor),
     borderRadius: 4,
@@ -323,6 +329,3 @@ const styles = StyleSheet.create({
     padding: 5,
   },
 })
-// function useTranlation(): { t: any } {
-//   throw new Error('Function not implemented.')
-// }

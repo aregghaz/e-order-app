@@ -61,7 +61,7 @@ const InputNumber: FC<IProps> = ({
 
   const handleChange = (changeValue: string) => {
     const parsedValue = parseFloat(changeValue)
-    if (!isNaN(parsedValue)) {
+    if (!isNaN(parsedValue) && parsedValue !== 0) {
       setValue(parsedValue)
       handleUpdateQuantity(cartItemId, id, parsedValue)
     } else {
@@ -70,7 +70,7 @@ const InputNumber: FC<IProps> = ({
   }
 
   const handleBlur = () => {
-    if (typeof value !== 'number') {
+    if (typeof value !== 'number' || value === 0) {
       setValue(1)
       handleUpdateQuantity(cartItemId, id, 1)
     }

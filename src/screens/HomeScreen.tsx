@@ -16,6 +16,7 @@ import TopRatedItems from '~components/TopRatedItems'
 import { useAuth, useGlobal } from '~hooks'
 import { optionForScreen } from '~navigation/HeaderGlobalStyles'
 import { getShopId, setShopId } from '~services/ShopService'
+// import { getUserData } from "~services/UserService";
 //
 // const { slides } = fakeData.homeScreen
 
@@ -27,6 +28,7 @@ const options = {
 
 const colors = {
   white: 'white',
+  grey: '#9a9a9a',
 }
 export const HomeScreen = ({ navigation }: any): JSX.Element => {
   const [categories, setCategories] = useState([])
@@ -35,32 +37,29 @@ export const HomeScreen = ({ navigation }: any): JSX.Element => {
   const [newArrival, setNewArrival] = useState([])
   const [bestSeller, setBestSeller] = useState([])
   const [topRated, setTopRated] = useState([])
-  const [defaultShop, setDefaultShop] = useState<any>([])
+  const [defaultShop, setDefaultShop] = useState<any>({})
   const [shopId, setShopDefaultId] = useState('')
   const [laoding, setLoading] = useState(false)
   const { isSignedIn } = useAuth()
-  const { shop_id, setShop_id } = useGlobal()
+  const { shop_id, setShop_id, userData } = useGlobal()
   const { t } = useTranslation()
   // const { t } = useTranslation()
   useFocusEffect(
     useCallback(() => {
       const getAsyncData = async (): Promise<void> => {
         if (isSignedIn) {
-          console.log('1')
           const getID = await getShopId()
+          const shopData = await SHOP_API.getShopsData()
+          const defStore = shopData.payload.content.find((shop: any) => shop.id === getID)
+          if (defStore === undefined) setDefaultShop({})
+          setDefaultShop(defStore)
           if (!getID) {
-            console.log('2')
-            const shopData = await SHOP_API.getShopsData()
             if (shopData.payload.content.length > 0) {
-              console.log('3')
               await setShopId(shopData.payload.content[0].id)
               setDefaultShop(shopData.payload.content[0])
               setShopDefaultId(shopData.payload.content[0].id)
               setShop_id(shopData.payload.content[0].id)
             }
-            // else{
-            //   await notification(t('shop.add'), ALERT_TYPE.WARNING)
-            // }
           } else {
             setShopDefaultId(getID)
           }
@@ -81,12 +80,11 @@ export const HomeScreen = ({ navigation }: any): JSX.Element => {
         setLoading(true)
       }
       getAsyncData()
-    }, [shopId, shop_id])
+    }, [shopId, shop_id, userData])
   )
-  console.log(defaultShop, 'default shop!!!')
   return laoding ? (
     <>
-      {defaultShop.length > 0 && (
+      {Object.keys(defaultShop).length > 0 && (
         <View style={[optionForScreen.addressOption, styles.address_bar]}>
           <Text style={styles.store_title}>{t('store_name_alt')} : </Text>
           <Text style={styles.store_title_address}>
@@ -144,8 +142,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   store_title_address: {
-    fontSize: 12,
-    fontWeight: 'bold',
+    color: colors.grey,
+    fontSize: 11,
+    // fontWeight: 'bold',
+    letterSpacing: 0.6,
     textAlign: 'center',
   },
 })

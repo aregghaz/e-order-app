@@ -1,7 +1,8 @@
 /**
  * was created by tigran at 09.07.23
  */
-import React, { FC, useEffect, useRef, useState } from 'react'
+import { useFocusEffect } from '@react-navigation/native'
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 
@@ -20,7 +21,7 @@ export const Verification: FC<IProps> = ({
   },
   navigation,
 }) => {
-  // console.log(reset, 'reset!!!')
+  // console.log(duration, 'duration!!!')
   const pin1ref = useRef<TextInput | null>(null)
   const pin2ref = useRef<TextInput | null>(null)
   const pin3ref = useRef<TextInput | null>(null)
@@ -32,6 +33,16 @@ export const Verification: FC<IProps> = ({
   const [pin4, setPin4] = useState('')
   const [countdown, setCountdown] = useState(duration)
   const { t } = useTranslation()
+
+  useFocusEffect(
+    useCallback(() => {
+      setPin1('')
+      setPin2('')
+      setPin3('')
+      setPin4('')
+      setCountdown(duration)
+    }, [])
+  )
   const handleResend = async () => {
     const resend = await SHOP_API.resendConfirmation(phone)
     setCountdown(resend.payload.duration)
@@ -53,13 +64,13 @@ export const Verification: FC<IProps> = ({
     }
   }
 
-  const resendCode = () => {
+  const resendCode = async () => {
     if (countdown === 0) {
       setPin1('')
       setPin2('')
       setPin3('')
       setPin4('')
-      handleResend()
+      await handleResend()
     }
   }
   useEffect(() => {

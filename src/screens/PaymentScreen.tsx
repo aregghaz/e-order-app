@@ -10,9 +10,10 @@ import { SHOP_API } from '~api'
 import { CustomButton } from '~components/molecules/CustomButton'
 import { SCREEN } from '~constants'
 import { useAuth, useGlobal } from '~hooks'
+import { getUserData } from '~services/UserService'
 
 export const PaymentScreen: FC = () => {
-  const [payment, setPayment] = useState<any>([])
+  const [account, setAccount] = useState<any>([])
   const { userData } = useGlobal()
   const { t } = useTranslation()
   const { isSignedIn } = useAuth()
@@ -20,11 +21,12 @@ export const PaymentScreen: FC = () => {
   useFocusEffect(
     useCallback(() => {
       if (isSignedIn) {
-        const getPaymentData = async () => {
-          const data = await SHOP_API.getPayment()
-          setPayment(data.payload.content)
+        const getCustomerAccount = async () => {
+          const userInfo = await getUserData()
+          const data = await SHOP_API.getCustomer(userInfo.id)
+          setAccount(data.payload.account)
         }
-        getPaymentData()
+        getCustomerAccount()
       } else {
         navigate(SCREEN.STACK_SIGN_IN)
       }
@@ -33,25 +35,19 @@ export const PaymentScreen: FC = () => {
 
   const handlePay = () => {
     console.log(userData.id, 'IDDDDDD')
-    console.log(payment, 'payment')
+    console.log(account, 'payment')
   }
 
   return (
     <>
-      {/*{payment.length > 0 &&*/}
-      {/*  payment.map((el: any) => (*/}
-      {/*    <View key={el.id}>*/}
-      {/*      <Text>poxos</Text>*/}
-      {/*    </View>*/}
-      {/*  ))}*/}
       <View style={styles.PaymentScreen_wrapper}>
         <View style={styles.text_wrapper}>
           <Text style={styles.text_title}>{t('deposit')} : </Text>
-          <Text style={styles.text_title}>0 ₽</Text>
+          <Text style={styles.text_title}>{account.deposit} ₽</Text>
         </View>
         <View style={styles.text_wrapper}>
           <Text style={styles.text_title}>{t('reward')} : </Text>
-          <Text style={styles.text_title}>0 B</Text>
+          <Text style={styles.text_title}>{account.reward} B</Text>
         </View>
         <View style={styles.button_wrapper}>
           <CustomButton width={200} title={t('pay_method')} background="red" onPress={handlePay} />

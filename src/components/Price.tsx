@@ -14,7 +14,7 @@ const calculateDiscountPrice = (price: number, discount: number | null) => {
   let newPrice
   if (discount && discount > 0) {
     const percentage = (price * discount) / 100
-    newPrice = price - percentage
+    newPrice = (price - percentage).toFixed(2)
   }
   return {
     oldPrice: price,

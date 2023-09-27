@@ -2,7 +2,7 @@
  * was created by tigran at 09.07.23
  */
 import React, { FC } from 'react'
-import { Pressable, StyleSheet, Text, ActivityIndicator } from 'react-native'
+import { Pressable, StyleSheet, Text, ActivityIndicator, ColorValue } from 'react-native'
 
 import { customStyles } from '~utils/style_helpers'
 
@@ -16,6 +16,7 @@ interface IProps {
   border?: 'white' | 'blue' | 'black' | 'green' | 'red' | 'orange' | 'grey'
   elevation?: number
   loading?: boolean
+  disabled?: boolean
 }
 
 const colors = {
@@ -31,8 +32,11 @@ export const CustomButton: FC<IProps> = ({
   color = '',
   border,
   loading,
+  disabled,
 }) => {
+  const isDisabled = disabled ? disabled : false
   const opacityBackground = loading ? { opacity: 0.5 } : { opacity: 1 }
+  const disabledButtonStyle = disabled ? { opacity: 0.3 } : { opacity: 1 }
   const btnWidth = width ? { width } : { width: '100%' }
   const btnPaddingHorizontal = padding ? { padding } : { padding: 32 }
   const btnColor = color ? { color } : { color: colors.white }
@@ -44,6 +48,7 @@ export const CustomButton: FC<IProps> = ({
     : { ...customStyles.border(0, 'solid', 'transparent') }
   return (
     <Pressable
+      disabled={isDisabled}
       style={[
         styles.button,
         btnWidth,
@@ -51,11 +56,12 @@ export const CustomButton: FC<IProps> = ({
         btnBackground,
         btnBorder,
         opacityBackground,
+        disabledButtonStyle,
       ]}
       onPress={onPress}
     >
       {loading ? (
-        <ActivityIndicator size="small" color="white" />
+        <ActivityIndicator size="small" color={btnColor as unknown as ColorValue} />
       ) : (
         <Text style={[styles.text, btnColor]}>{title}</Text>
       )}
