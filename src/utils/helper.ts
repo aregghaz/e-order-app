@@ -85,3 +85,20 @@ export const ErrorStatusCodeHandling = (statusCode: number) => {
       return notification('Что то пошло не так.', ALERT_TYPE.WARNING)
   }
 }
+
+type TErrorMessage = 'SUPPLIER_ACCEPTS_ORDERS_ONLY_PARTNERS' | 'SUPPLIER_NOT_ACCEPTS_ORDERS'
+
+const supplierErrorNames = {
+  SUPPLIER_ACCEPTS_ORDERS_ONLY_PARTNERS: 'SUPPLIER_ACCEPTS_ORDERS_ONLY_PARTNERS',
+  SUPPLIER_NOT_ACCEPTS_ORDERS: 'SUPPLIER_NOT_ACCEPTS_ORDERS',
+}
+export const ErrorMessageName = async (name: TErrorMessage) => {
+  switch (name) {
+    case supplierErrorNames.SUPPLIER_ACCEPTS_ORDERS_ONLY_PARTNERS:
+      return notification('Поставщик принимает заказы только от партнеров', ALERT_TYPE.WARNING)
+    case supplierErrorNames.SUPPLIER_NOT_ACCEPTS_ORDERS:
+      return notification('Поставщик не принимает заказы', ALERT_TYPE.WARNING)
+    default:
+      return notification('Что то пошло не так.', ALERT_TYPE.WARNING)
+  }
+}

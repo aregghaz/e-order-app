@@ -3,14 +3,15 @@
  */
 
 import { useFocusEffect } from '@react-navigation/native'
-import React, { FC, useState } from 'react'
+import React, { FC, useState, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 
 import { SHOP_API } from '~api'
 import { ImgOrSvg } from '~components/ImgOrSvg'
 import { SCREEN } from '~constants'
-import { useAuth, useGlobal } from '~hooks'
+import { useAuth } from '~hooks'
+import { getUserData } from '~services/UserService'
 import { IPropsData } from '~types/authForms'
 
 export interface IProps {
@@ -49,70 +50,74 @@ interface IAddress {
 export const ProfileScreen: FC = ({ route, navigation }: any) => {
   const [data, setData] = useState<any>(IPropsData)
   const { isSignedIn } = useAuth()
-  const { userData } = useGlobal()
   const { t } = useTranslation()
 
   useFocusEffect(
-    React.useCallback(() => {
-      ;(async () => {
-        // console.log(isSignedIn, 'isSignedIn')
+    useCallback(() => {
+      const getFetchedData = async () => {
         if (isSignedIn) {
-          console.log(userData, 'profile screen user data !!! _______________________-')
-          if (!userData.customer) {
-            navigation.navigate(SCREEN.PROFILE_EDIT, { type: false })
-          } else {
-            const custommerData = await SHOP_API.getCustommer(userData.customer.id)
-            setData(custommerData.payload)
+          const dataM = await getUserData()
+          if (dataM) {
+            const customerData = await SHOP_API.getCustomer(dataM.id)
+            const dataUser = customerData.payload
+            setData(dataUser)
+            if (!dataM.customer) {
+              navigation.navigate(SCREEN.PROFILE_EDIT, { type: false })
+            }
           }
         } else {
+          setData({})
           navigation.navigate(SCREEN.STACK_SIGN_IN)
         }
-      })()
+      }
+      getFetchedData()
     }, [isSignedIn])
   )
+
+  const trueUserData = data
   return (
     <View style={styles.profile_wrapper}>
-      {data && data.person && (
+      {trueUserData && trueUserData.person && (
         <ScrollView>
           <View style={styles.avatar_block}>
             <View style={styles.profileImage}>
-              <ImgOrSvg item={data} product="photo" radius={50} width={100} />
+              <ImgOrSvg item={trueUserData.person} product="photo" radius={50} width={100} />
             </View>
             <Text style={styles.name}>
-              {data.person?.firstName} {data.person?.lastName}
+              {trueUserData.person?.firstName} {trueUserData.person?.lastName}
             </Text>
           </View>
           <View style={styles.icons}>
             <Text style={styles.title_bold}>{t('email')} :</Text>
-            <Text>{data.person?.email}</Text>
+            <Text>{trueUserData.person?.email}</Text>
           </View>
           <View style={styles.icons}>
             <Text style={styles.title_bold}>{t('passport')} :</Text>
-            <Text>{data.person?.citizenship?.passport}</Text>
+            <Text>{trueUserData.person?.citizenship?.passport}</Text>
           </View>
           <View style={styles.icons}>
             <Text style={styles.title_bold}>{t('phone')} :</Text>
-            <Text>{data.person?.address?.phoneNumber1}</Text>
+            <Text>{trueUserData.person?.address?.phoneNumber1}</Text>
           </View>
           <View style={styles.icons}>
             <Text style={styles.title_bold}>{t('address_1')} :</Text>
-            <Text>{data.person?.address.address_1}</Text>
+            <Text>{trueUserData.person?.address.address_1}</Text>
           </View>
           <View style={styles.icons}>
             <Text style={styles.title_bold}>{t('address_2')} :</Text>
-            <Text>{data.person?.address.address_2}</Text>
+            <Text>{trueUserData.person?.address.address_2}</Text>
           </View>
           <View style={styles.icons}>
             <Text style={styles.title_bold}>{t('city')} :</Text>
-            <Text>{data.person?.address.city}</Text>
+            <Text>{trueUserData.person?.address.city}</Text>
           </View>
           <View style={styles.icons}>
             <Text style={styles.title_bold}>{t('country')} :</Text>
-            <Text>{data.person?.address.country}</Text>
+            <Text>{trueUserData.person?.address.country}</Text>
           </View>
           <View style={styles.icons}>
             <Text style={styles.title_bold}>{t('postcode')} :</Text>
-            <Text>{data.person?.address.postCode}</Text>
+            <Text>{trueUserData.person?.address.postCode}</Text>
           </View>
         </ScrollView>
       )}

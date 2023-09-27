@@ -23,15 +23,13 @@ export const PhoneRegisterStack: FC = () => {
 
   const handleButtonPress = async () => {
     const data = await SHOP_API.setPhoneNumberRequest(phoneNumber)
-    // console.log(data, 'datadata')
     if (data) {
       navigation.navigate(SCREEN.STACK_VERIFICATION, {
         phone: phoneNumber,
         duration: data.payload.duration,
-        // handleResend: handleButtonPress,
       })
     } else {
-      notification(t('form.numberExist'), ALERT_TYPE.WARNING)
+      await notification(t('form.numberExist'), ALERT_TYPE.WARNING)
     }
   }
 

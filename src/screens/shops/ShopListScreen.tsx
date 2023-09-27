@@ -3,13 +3,14 @@
  */
 import { Feather } from '@expo/vector-icons'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
-import { Checkbox } from 'native-base'
-import React, { FC, useState } from 'react'
+import { Checkbox, CheckIcon, Select } from 'native-base'
+import React, { FC, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { ALERT_TYPE } from 'react-native-alert-notification'
 
 import { SHOP_API } from '~api'
+import { Search } from '~components/Search'
 import { CustomButton } from '~components/molecules/CustomButton'
 import { SCREEN } from '~constants'
 import { getShopId, notification, setShopId } from '~services/ShopService'
@@ -19,6 +20,8 @@ export const ShopListScreen: FC = () => {
   const [shops, setShops] = useState<any>([])
   const [load, setLoad] = useState<boolean>(false)
   const [shopID, setShopID] = useState<string>('')
+  const [state, setState] = useState<string>('active')
+  const [searchValue, setSearchValue] = useState('')
   const navigation = useNavigation<any>()
   const { t } = useTranslation()
 
@@ -27,7 +30,7 @@ export const ShopListScreen: FC = () => {
       const getData = async () => {
         const getID = await getShopId()
         setShopID(getID)
-        const shopData = await SHOP_API.getShopsData()
+        const shopData = await SHOP_API.getShopsBySearch()
         setShops(shopData.payload.content)
       }
       getData()
@@ -46,6 +49,10 @@ export const ShopListScreen: FC = () => {
     })
   }
 
+  useEffect(() => {
+    handleSearch(searchValue)
+  }, [state])
+
   const handleUpdate = (id: string) => {
     navigation.navigate(SCREEN.STACK_UPDATE_STORE, id)
   }
@@ -55,12 +62,33 @@ export const ShopListScreen: FC = () => {
 
     await notification('Удалено')
   }
+
+  const handleSearch = async (value = '') => {
+    setSearchValue(value)
+    const shopData = await SHOP_API.getShopsBySearch(value, state)
+    setShops(shopData.payload.content)
+  }
   return (
     <View style={styles.ShopListScreen_wrapper}>
+      <Search handleSearch={handleSearch} />
+      <View style={styles.select_style__wrapper}>
+        <Select
+          selectedValue={state}
+          onValueChange={(state) => setState(state)}
+          // marginX={1}
+          _selectedItem={{
+            bg: 'teal.600',
+            endIcon: <CheckIcon size="5" />,
+          }}
+        >
+          <Select.Item label={t('shop.active_select')} value="active" />
+          <Select.Item label={t('shop.archived_select')} value="archived" />
+          <Select.Item label={t('shop.all_select')} value="all" />
+        </Select>
+      </View>
       <ScrollView>
         {shops &&
           shops.map((item: any) => {
-            console.log(item.shopName, 'name__________________________')
             return (
               <Pressable key={item.id} onPress={() => handleSetShopId(item.id, item.shopName)}>
                 <View key={item.id} style={styles.box}>
@@ -168,6 +196,11 @@ const styles = StyleSheet.create({
   hr: {
     ...customStyles.border(1, 'solid', colors.borderColor),
     marginVertical: 5,
+  },
+  select_style__wrapper: {
+    // ...customStyles.border(1, 'solid', colors.borderColor),
+    backgroundColor: colors.white,
+    marginHorizontal: 10,
   },
   text_h2: {
     fontWeight: 'bold',

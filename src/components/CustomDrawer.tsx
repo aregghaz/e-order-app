@@ -3,39 +3,36 @@
  */
 
 import { Feather, FontAwesome5 } from '@expo/vector-icons'
-// import { DrawerContentScrollView } from '@react-navigation/drawer'
-// import { useFocusEffect } from '@react-navigation/native'
-// import React, { FC, useState } from 'react'
-import React, { FC } from 'react'
+import { useFocusEffect } from '@react-navigation/native'
+import React, { FC, useState, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 import { fakeData } from '~FakeData'
 import { Accordion, TIcon } from '~components/Accordion'
 import { ImgOrSvg } from '~components/ImgOrSvg'
-/*FIXME do not delete this part*/
 import { LanguageToggle } from '~components/LanguageToggle'
 import { SCREEN } from '~constants'
 import { useAuth, useGlobal } from '~hooks'
-// import { IProps } from '~screens/profile'
-// import { getUserData } from '~services/UserService'
+import { IProps } from '~screens/profile'
+import { getUserData } from '~services/UserService'
 import { customStyles } from '~utils/style_helpers'
 
 export const CustomDrawer: FC = (props: any) => {
   const { signOut, isSignedIn } = useAuth()
   const { userData } = useGlobal()
   const { t } = useTranslation()
-  // const [data, setData] = useState<IProps>({} as IProps)
+  const [data, setData] = useState<IProps>({} as IProps)
 
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     const getData = async () => {
-  //       //////FIXME SHOULD ADD FAKE DATA
-  //       isSignedIn ? setData(await getUserData()) : ''
-  //     }
-  //     getData()
-  //   }, [isSignedIn])
-  // )
+  useFocusEffect(
+    useCallback(() => {
+      const getData = async () => {
+        setData(isSignedIn ? await getUserData() : {})
+      }
+      getData()
+    }, [isSignedIn])
+  )
+  const trueUserData = Object.keys(userData).length > 0 ? userData : data
   const detectState = () => {
     if (isSignedIn) {
       signOut()
@@ -46,25 +43,22 @@ export const CustomDrawer: FC = (props: any) => {
 
     props.navigation.closeDrawer()
   }
-
   const addPadding = isSignedIn ? { paddingTop: 0 } : { paddingTop: 50 }
   return (
     <SafeAreaView style={[styles.sidebar, addPadding]}>
-      {/*{isSignedIn && data && (*/}
-      {isSignedIn && userData && (
+      {isSignedIn && trueUserData && (
         <View style={styles.infoBlock}>
           <View style={styles.imageWrapper}>
-            {/*<ImgOrSvg item={data.customer} product="photo" radius={10} width={68} />*/}
-            <ImgOrSvg item={userData.customer} product="photo" radius={10} width={68} />
+            <ImgOrSvg item={trueUserData.customer} product="photo" radius={10} width={68} />
           </View>
           <Text style={styles.name}>
-            {/*{data.customer?.person?.firstName + ' ' + data.customer?.person?.lastName}*/}
-            {userData.customer?.person?.firstName + ' ' + userData.customer?.person?.lastName}
+            {trueUserData.customer?.person?.firstName +
+              ' ' +
+              trueUserData.customer?.person?.lastName}
           </Text>
         </View>
       )}
       <ScrollView>
-        {/*FIXME do not delete this part*/}
         <LanguageToggle {...props} />
         {fakeData.accordion &&
           fakeData.accordion.map((item: any) => {
@@ -110,7 +104,6 @@ export const CustomDrawer: FC = (props: any) => {
           )}
         </View>
       </TouchableOpacity>
-      {/*<Switch />*/}
     </SafeAreaView>
   )
 }
@@ -138,11 +131,6 @@ const styles = StyleSheet.create({
     paddingTop: 50,
     position: 'relative',
   },
-  // profileImage: {
-  //   borderRadius: 10,
-  //   height: '100%',
-  //   width: '100%',
-  // },
   name: {
     color: colors.white,
     paddingLeft: 10,

@@ -44,9 +44,9 @@ export const CartItems: FC<IProps> = ({
     const calculatedPrice = item.quantity * item.properties.unit.contents * item.price
     if (item.discount && item.discount > 0) {
       const percentage = (calculatedPrice * item.discount) / 100
-      return calculatedPrice - percentage
+      return (calculatedPrice - percentage).toFixed(2)
     }
-    return calculatedPrice
+    return calculatedPrice.toFixed(2)
   }
 
   return (

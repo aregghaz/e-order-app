@@ -112,14 +112,15 @@ export const WishListProducts: FC<IWishListProductProps> = ({
       }
     }
   }
-
   return (
     <View>
       {products?.length > 0 &&
         products.map((item: IWishlistProduct) => {
           return (
             <View key={item.id} style={styles.product_wrapper}>
-              <ImgOrSvg item={item} product="-product" padding={20} width={80} />
+              <Pressable onPress={() => navigation.navigate(SCREEN.STACK_PRODUCT_INNER, item)}>
+                <ImgOrSvg item={item} product="-product" padding={20} width={80} />
+              </Pressable>
               <View>
                 <Pressable onPress={() => navigation.navigate(SCREEN.STACK_PRODUCT_INNER, item)}>
                   <Text>{item.name}</Text>

@@ -196,7 +196,9 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
             <Text style={styles.rates}>{params.reward}</Text>
             <Ionicons name="star" size={16} color="#FFC107" />
             <View style={styles.slash} />
-            <Text style={styles.rates}>{params.rating} Ratings</Text>
+            <Text style={styles.rates}>
+              {params.rating} {t('rating')}
+            </Text>
           </View>
           <View style={styles.horizontal_row} />
           <View>
@@ -205,7 +207,7 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
           </View>
           <View style={styles.horizontal_row} />
           <View>
-            <Text>Вложение</Text>
+            <Text>{t('unit')}</Text>
           </View>
           <View style={styles.each}>
             {params.properties.unit.length > 0 &&
@@ -231,7 +233,7 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
 
           <View style={styles.horizontal_row} />
           <View>
-            <Text style={styles.details}>Product Details</Text>
+            <Text style={styles.details}>{t('product_details')}</Text>
             <Text>{params.description}</Text>
           </View>
           <View style={styles.horizontal_row} />
@@ -278,10 +280,11 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
       <View style={styles.fix_footer}>
         <View style={styles.btn_wrapper}>
           <CustomButton
-            title="Wishlist"
+            title={t('buttons.wishlist_add')}
             padding={10}
             color="black"
             border="grey"
+            background="white"
             // onPress={() => handlerOpenModal()}
             // onPress={() => setModalVisible(true)}
             onPress={() => {
@@ -292,7 +295,7 @@ export const ProductInnerScreen: FC = ({ route, navigation }: any) => {
         </View>
         <View style={styles.btn_wrapper}>
           <CustomButton
-            title="Add To Cart"
+            title={t('buttons.add_to_cart')}
             padding={10}
             onPress={handleAddToCart}
             background="black"
@@ -385,10 +388,6 @@ const styles = StyleSheet.create({
   name: {
     color: colors.nameColor,
     fontWeight: '700',
-  },
-  price: {
-    fontSize: 20,
-    fontWeight: 'bold',
   },
   rates: {
     fontSize: 14,

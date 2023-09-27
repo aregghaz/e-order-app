@@ -22,6 +22,8 @@ import { notification } from '~services/ShopService'
 // import { getUserData } from '~services/UserService'
 import { checkAge, timestampToDate } from '~utils/dateTimeFormat'
 import { customStyles } from '~utils/style_helpers'
+import { getUserData } from "~services/UserService";
+// import { setUserDataSecure } from '~services/UserService'
 
 const colors = {
   border: '#ddd',
@@ -71,9 +73,10 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
   useFocusEffect(
     useCallback(() => {
       const getAsyncData = async (): Promise<void> => {
-        if (userData.id) {
-          const custommerData = await SHOP_API.getCustommer(userData.id)
-          const dataUser = custommerData.payload
+        const userInfo = await getUserData()
+        if (userInfo) {
+          const customerData = await SHOP_API.getCustomer(userInfo.id)
+          const dataUser = customerData.payload
           setLocation({
             contry: dataUser.person.address.country,
             state: dataUser.person.address.city,
@@ -161,12 +164,14 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
       }
 
       if (dataCheck) {
+        console.log(dataCheck, 'DATACHECK!!!!!!!!!!!!')
         const parsedDataCheck = JSON.parse(JSON.stringify(dataCheck.payload.person))
         const parsedUserData = JSON.parse(JSON.stringify(userData))
         const combinedObj = {
           ...parsedUserData,
           customer: { ...parsedUserData.customer, person: parsedDataCheck },
         }
+        // await setUserDataSecure(res.payload.user)
         setUserData(combinedObj)
         await notification('Сохранено')
         // navigate(SCREEN.DRAWER_ROOT)

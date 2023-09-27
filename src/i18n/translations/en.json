@@ -2,8 +2,13 @@
   "shop": {
     "shop": "SHOP",
     "supplier": "SUPPLIER",
+    "supplier_accepts_partners": "Supplier accepts orders from partners only",
+    "supplier_not_accepts_orders": "Supplier not accepts orders",
     "add": "Please create shop to add to cart",
-    "shopping_cart": "Shopping cart"
+    "shopping_cart": "Shopping cart",
+    "active_select": "Active",
+    "archived_select": "Archived",
+    "all_select": "All"
   },
   "order": {
     "confirmOrder": "Оформить заказ"
@@ -25,7 +30,8 @@
     "add_cart": "Добавлено в корзину",
     "change_shop": "The shop changed to ",
     "success_login": "You have successfully logged in to your account",
-    "success_logout": "You have successfully logged out of your account"
+    "success_logout": "You have successfully logged out of your account",
+    "search_not_found": "Nothing found"
   },
   "password": {
     "oldPassword": "Old password",
@@ -191,6 +197,7 @@
     "checkout": "Checkout",
     "pay": "Pay",
     "add_to_cart": "Add to cart",
+    "wishlist_add": "add to wishlist",
     "send": "Send",
     "create": "Create"
   },
@@ -199,6 +206,8 @@
     "pending": "Pending",
     "accepted": "Accepted"
   },
+  "product_details": "Product details",
+  "rating": "Ratings",
   "pay_method": "Payment method",
   "deposit": "Deposit",
   "add_partners": "Add partners",
@@ -213,6 +222,7 @@
   "address_1": "Address 1",
   "address_2": "Address 2",
   "wishlist": "Wishlist",
+  "wishlist_empty": "Empty wishlist",
   "email": "Email",
   "delivery": "Delivery address",
   "checkout_title": "Checkout",

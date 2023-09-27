@@ -68,7 +68,7 @@ export const Header: FC<IProps> = ({ title, navigation }) => {
 
   const handleRequest = async () => {
     setSearch(false)
-    setText('')
+    // setText('')
     const result = await SHOP_API.getSearchedValues(text)
     const products = result.payload.content
     if (products) {

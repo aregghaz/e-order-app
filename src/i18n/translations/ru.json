@@ -2,8 +2,13 @@
   "shop": {
     "shop": "Торговая точка",
     "supplier": "Поставщик",
+    "supplier_accepts_partners": "Поставщик принимает заказы только от партнеров",
+    "supplier_not_accepts_orders": "Поставщик не принимает заказы",
     "add": "Пожалуйста, создайте торговую точку, чтобы добавить в корзину",
-    "shopping_cart": "Корзина"
+    "shopping_cart": "Корзина",
+    "active_select": "Активный",
+    "archived_select": "Архив",
+    "all_select": "Все"
   },
   "order": {
     "confirmOrder": "Оформить заказ"
@@ -40,7 +45,8 @@
     "add_cart": "Добавлено в корзину",
     "change_shop": "Торговая точка изменился на ",
     "success_login": "Вы успешно вошли в аккаунт",
-    "success_logout": "Вы успешно вышли из аккаунта"
+    "success_logout": "Вы успешно вышли из аккаунта",
+    "search_not_found": "Нет подходящих товаров"
   },
 
   "navigation": {
@@ -190,6 +196,7 @@
     "checkout": "Обзор заказа",
     "pay": "Заплатить",
     "add_to_cart": "Добавить в корзину",
+    "wishlist_add": "Добавить в избранное",
     "send": "Отправить",
     "create": "Создать"
   },
@@ -198,6 +205,8 @@
     "pending": "Запрос в ожидании",
     "accepted": "Запрос принят"
   },
+  "product_details": "Детали продукта",
+  "rating": "Отзывы",
   "pay_method": "Способ оплаты",
   "deposit": "Депозит",
   "add_partners": "Добавить партнеров",
@@ -212,6 +221,7 @@
   "address_1": "Адрес 1",
   "address_2": "Адрес 2",
   "wishlist": "Избранные",
+  "wishlist_empty": "Список избранных пуст",
   "email": "Эл. Почта",
   "delivery": "Адрес торговой точки",
   "checkout_title": "Обзор заказа",
@@ -247,8 +257,8 @@
   "best_seller": "Лидеры продаж",
   "update_store": "Редактировать торговую точку",
   "order_total": "Сумма заказа",
-  "descending_order": "По дате созданию (Я - А)",
-  "ascending_order": "По дате созданию (А - Я)",
+  "descending_order": "По дате создания",
+  "ascending_order": "По дате создания",
   "forgot_password": "Забыли пароль ?",
   "forgot_password__alt": "Забыли пароль",
   "send": "Отправить",
