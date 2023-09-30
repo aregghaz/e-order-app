@@ -17,23 +17,6 @@ export const RootNavigator: FC = () => {
 
   return (
     <Navigator>
-      {/*{!isSignedIn ? (*/}
-      {/*  <Group key="unauthorized">*/}
-      {/*    <Screen*/}
-      {/*      name={SCREEN.STACK_MAIN_REGISTER}*/}
-      {/*      component={RegistrationAlias}*/}
-      {/*      options={{ headerShown: false }}*/}
-      {/*    />*/}
-      {/*  </Group>*/}
-      {/*) : (*/}
-      {/*  <Group key="authorized">*/}
-      {/*    <Screen*/}
-      {/*      name={SCREEN.STACK_MAIN_TAB}*/}
-      {/*      component={BottomTabNavigator}*/}
-      {/*      options={{ title: t('navigation.screen_titles.main_tab'), headerShown: false }}*/}
-      {/*    />*/}
-      {/*  </Group>*/}
-      {/*)}*/}
       <Group>
         <Screen
           name={SCREEN.STACK_MAIN_TAB}

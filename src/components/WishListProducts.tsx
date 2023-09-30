@@ -13,7 +13,7 @@ import { ImgOrSvg } from '~components/ImgOrSvg'
 import { CustomButton } from '~components/molecules/CustomButton'
 import InputNumber from '~components/molecules/InputNumber'
 import { SCREEN } from '~constants'
-import { useAuth, useTranslation } from '~hooks'
+import { useAuth, useGlobal, useTranslation } from '~hooks'
 import { getShopId, notification } from '~services/ShopService'
 import { screenHeight, screenWidth } from '~utils/breakpoints'
 import { IWishlistProduct } from '~utils/helper'
@@ -56,6 +56,7 @@ export const WishListProducts: FC<IWishListProductProps> = ({
   const activeItemRef = useRef<any>(null)
   const { isSignedIn } = useAuth()
   const { t } = useTranslation()
+  const { setIndicatorCount } = useGlobal()
   const navigation = useNavigation<any>()
 
   useFocusEffect(
@@ -85,6 +86,8 @@ export const WishListProducts: FC<IWishListProductProps> = ({
   }
 
   const handleAddToCart = async () => {
+    activeItemRef.current = null
+    setSelectedOption(null)
     if (!isSignedIn) {
       await notification(t('notification.signIn'), ALERT_TYPE.WARNING)
       navigation.navigate(SCREEN.STACK_SIGN_IN)
@@ -106,6 +109,10 @@ export const WishListProducts: FC<IWishListProductProps> = ({
         if (!add) {
           await notification('SOMETHING WRONG', ALERT_TYPE.DANGER)
         } else {
+          const data = await SHOP_API.getShopCarts(shopId)
+          if (data.payload.content.length > 0) {
+            setIndicatorCount(data.payload.content.length)
+          }
           await notification('Добавлено в корзину')
           setCartModalVisible(!cartModalVisible)
         }

@@ -18,11 +18,12 @@ import { SHOP_API } from '~api'
 import { CustomButton } from '~components/molecules/CustomButton'
 // import { SCREEN } from '~constants'
 import { useAuth, useGlobal } from '~hooks'
+import useLoading from '~hooks/useLoading'
 import { notification } from '~services/ShopService'
 // import { getUserData } from '~services/UserService'
+import { getUserData } from '~services/UserService'
 import { checkAge, timestampToDate } from '~utils/dateTimeFormat'
 import { customStyles } from '~utils/style_helpers'
-import { getUserData } from '~services/UserService'
 // import { setUserDataSecure } from '~services/UserService'
 
 const colors = {
@@ -35,6 +36,7 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
   const { t } = useTranslation()
   const { isSignedIn } = useAuth()
   const { userData, setUserData } = useGlobal()
+  const { loading, startLoading, stopLoading } = useLoading()
 
   /*Name*/
   const [id, setId] = useState('')
@@ -115,6 +117,7 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
     }, [userData])
   )
   const handleSave = async () => {
+    startLoading()
     let isValid = true
 
     if (name.trim() === '') {
@@ -174,6 +177,7 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
         // await setUserDataSecure(res.payload.user)
         setUserData(combinedObj)
         await notification('Сохранено')
+        stopLoading()
         // navigate(SCREEN.DRAWER_ROOT)
       }
     }
@@ -419,7 +423,7 @@ export const ProfileEditScreen: FC = ({ route }: any) => {
             />
             <Text style={styles.errorText}></Text>
           </>
-          <CustomButton title=" Сохранить " onPress={handleSave} />
+          <CustomButton loading={loading} title={t('common.save')} onPress={handleSave} />
         </View>
       </ScrollView>
     </SafeAreaView>
