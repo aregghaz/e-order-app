@@ -65,6 +65,7 @@ export const WishlistScreen: FC = () => {
       getWishListData()
     }, [])
   )
+  console.log(navigation.getState().routes[navigation.getState().index - 1], 'Navigation!!!!')
 
   useEffect(() => {
     const getAsyncRefreshData = async () => {

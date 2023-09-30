@@ -44,6 +44,7 @@ export const HomeScreen = ({ navigation }: any): JSX.Element => {
   const { shop_id, setShop_id, userData } = useGlobal()
   const { t } = useTranslation()
   // const { t } = useTranslation()
+
   useFocusEffect(
     useCallback(() => {
       const getAsyncData = async (): Promise<void> => {

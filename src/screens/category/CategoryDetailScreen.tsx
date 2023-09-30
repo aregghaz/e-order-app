@@ -3,7 +3,8 @@
  */
 import { useFocusEffect } from '@react-navigation/native'
 import React, { FC, useCallback, useState } from 'react'
-import { ScrollView } from 'react-native'
+import { useTranslation } from 'react-i18next'
+import { ScrollView, Text, StyleSheet } from 'react-native'
 
 import { SHOP_API } from '~api'
 import TopRatedItems from '~components/TopRatedItems'
@@ -19,6 +20,7 @@ import TopRatedItems from '~components/TopRatedItems'
 export const CategoryDetailScreen: FC<any> = ({ route, navigation }) => {
   const detail = route.params
   const [data, setData] = useState([])
+  const { t } = useTranslation()
   useFocusEffect(
     useCallback(() => {
       ;(async () => {
@@ -29,7 +31,21 @@ export const CategoryDetailScreen: FC<any> = ({ route, navigation }) => {
   )
   return (
     <ScrollView>
-      <TopRatedItems items={data} navigation={navigation} isCategoryProduct={true} />
+      {data.length > 0 ? (
+        <TopRatedItems items={data} navigation={navigation} isCategoryProduct={true} />
+      ) : (
+        <Text style={styles.no_products}>{t('notification.no_products')}</Text>
+      )}
     </ScrollView>
   )
 }
+
+const styles = StyleSheet.create({
+  no_products: {
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center',
+    marginTop: 20,
+    textAlign: 'center',
+  },
+})
