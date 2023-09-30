@@ -231,7 +231,15 @@
 import { Feather, Ionicons } from '@expo/vector-icons'
 import React, { FC, useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Dimensions, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import {
+  Dimensions,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 
 import { SHOP_API } from '~api'
 import { SCREEN } from '~constants'
@@ -408,4 +416,3 @@ const styles = StyleSheet.create({
     width: '80%',
   },
 })
-
