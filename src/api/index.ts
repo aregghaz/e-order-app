@@ -462,15 +462,19 @@ export const SHOP_API = {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
-    };
+    }
 
     try {
-      const response = await axios.post(`${fakeUrl}/api/customers/upload-photo/${id}`, body, options);
-      console.log(response.data, '____ response ____');
-      return response.data;
+      const response = await axios.post(
+        `${fakeUrl}/api/customers/upload-photo/${id}`,
+        body,
+        options
+      )
+      console.log(response.data, '____ response ____')
+      return response.data
     } catch (error) {
-      console.error(error);
-      throw error; // You can choose to handle or rethrow the error as needed.
+      console.error(error)
+      throw error // You can choose to handle or rethrow the error as needed.
     }
   },
 

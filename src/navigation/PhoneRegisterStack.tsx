@@ -4,7 +4,7 @@
 import { useNavigation } from '@react-navigation/native'
 import React, { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { ALERT_TYPE } from 'react-native-alert-notification'
 import PhoneInput from 'react-native-phone-input'
 
@@ -65,7 +65,7 @@ export const PhoneRegisterStack: FC = () => {
 const colors = {
   border: '#ddd',
   red: 'red',
-  link: '#5495ff'
+  link: '#5495ff',
 }
 
 const styles = StyleSheet.create({
