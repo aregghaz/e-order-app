@@ -71,7 +71,9 @@
       "settings": "Settings",
       "application_info": "ApplicationInfo",
       "not_found": "NotFound",
-      "supplier": "Supplier"
+      "supplier": "Supplier",
+      "privacy": "Privacy policy",
+      "terms": "Terms of processing"
     }
   },
   "application_info_screen": {
@@ -282,5 +284,10 @@
   "message": "Message",
   "apartment": "Apartment, block, building, floor, etc.",
   "thanks": "Thank you for using the best template for expo apps",
-  "app_information": "Shake your device to open developer menu"
+  "app_information": "Shake your device to open developer menu",
+  "pt_part_1": "By clicking on the registration button, you agree to the",
+  "terms_alt": " terms of use",
+  "pt_part_2": " of Redro services and the",
+  "privacy_alt": " terms of processing",
+  "pt_part_3": " of personal data."
 }

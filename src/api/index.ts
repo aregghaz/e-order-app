@@ -15,6 +15,7 @@ interface IOptions {
 }
 
 export const fakeUrl = 'https://test-api.redro.ru'
+export const trueUrl = 'https://api.redro.ru'
 // export const fakeUrl = 'https://api-android.redro.ru/api'
 
 const shopIdTest = `07c1a17d-41ed-49a6-96a0-01db91821db2`
@@ -441,6 +442,38 @@ export const SHOP_API = {
       })
       .catch((err) => console.log(err))
   },
+  // customerUploadImage: async (id: string, body: any) => {
+  //   const options = {
+  //     headers: {
+  //       'Content-Type': 'multipart/form-data',
+  //     },
+  //   }
+  //   console.log(id, '__ID__', body, '___BODY ___')
+  //   return axios
+  //     .post(`${fakeUrl}/api/customers/upload-photo/${id}`, body, options)
+  //     .then((res) => {
+  //       console.log(res, '____ res ___')
+  //       return res.data
+  //     })
+  //     .catch((err) => console.log(err))
+  // },
+  customerUploadImage: async (id: string, body: any) => {
+    const options = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    };
+
+    try {
+      const response = await axios.post(`${fakeUrl}/api/customers/upload-photo/${id}`, body, options);
+      console.log(response.data, '____ response ____');
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      throw error; // You can choose to handle or rethrow the error as needed.
+    }
+  },
+
   /*  Partnerships  */
   get: async (id: string) => {
     const tokenUSer = await getToken()
@@ -605,5 +638,25 @@ export const SHOP_API = {
         return res.data
       })
       .catch((err) => console.log(err, '___ ERROR IN getPayment'))
+  },
+  getTermConditions: async () => {
+    const tokenUSer = await getToken()
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
+    return axios
+      .get(`${trueUrl}/api/posts/get-post-by-slug/terms-conditions`)
+      .then((res) => {
+        return res.data
+      })
+      .catch((err) => console.log(err, '___ ERROR IN getTermConditions'))
+  },
+  getPrivacyPolicy: async () => {
+    const tokenUSer = await getToken()
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + tokenUSer
+    return axios
+      .get(`${trueUrl}/api/posts/get-post-by-slug/privacy-policy`)
+      .then((res) => {
+        return res.data
+      })
+      .catch((err) => console.log(err, '___ ERROR IN getPrivacyPolicy'))
   },
 }

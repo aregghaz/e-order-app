@@ -18,7 +18,8 @@ import { getShopId, notification } from '~services/ShopService'
 import { screenWidth } from '~utils/breakpoints'
 import { customStyles } from '~utils/style_helpers'
 
-export const ShopCartScreen: FC = ({ navigation }: any) => {
+export const ShopCartScreen: FC = ({ navigation, route }: any) => {
+  // console.log(route, 'ruyyyyyyyyyy')
   const { t } = useTranslation()
   const { isSignedIn } = useAuth()
   const [data, setData] = useState<null | any>([])
@@ -42,7 +43,6 @@ export const ShopCartScreen: FC = ({ navigation }: any) => {
     useCallback(() => {
       const getShopCarts = async () => {
         const getID = await getShopId()
-        console.log(getID, 'get id')
         if (getID) {
           const data = await SHOP_API.getShopCarts(getID)
           if (data) {
@@ -50,13 +50,15 @@ export const ShopCartScreen: FC = ({ navigation }: any) => {
             if (item.length > 0) {
               setIndicatorCount(item.length)
               setSelectedShops(item[0].id)
+              const trueCartData = await SHOP_API.getShopCart(item[0].id)
               setCarData({
                 selectedShops: item[0].supplier.companyName,
                 shop: item[0].shop.shopName,
                 total: item[0].cartTotal,
                 totalReward: item[0].totalReward,
               })
-              setCarts(item[0].cartItems)
+              // setCarts(item[0].cartItems)
+              setCarts(trueCartData.payload.cartItems)
               setLoading(true)
               setData(item)
             } else {
@@ -76,13 +78,15 @@ export const ShopCartScreen: FC = ({ navigation }: any) => {
   )
   useFocusEffect(
     useCallback(() => {
-      setCombinedData([])
-    }, [])
+      const fetchData = async () => {
+        const trueCartData = await SHOP_API.getShopCart(selectedShops)
+        // console.log(trueCartData, 'second@@@@@')
+        setCarts(trueCartData.payload.cartItems)
+        setCombinedData([])
+      }
+      fetchData()
+    }, [selectedShops])
   )
-
-  console.log(trigger, 'triggrer')
-  console.log(carts.length, 'carts.length')
-  console.log(isSignedIn, 'isSignedIn')
 
   const handleDelete = async (Ids: { cartItemID: string; itemId: string }) => {
     await SHOP_API.deleteFromCart(Ids.cartItemID, Ids.itemId)
@@ -114,7 +118,7 @@ export const ShopCartScreen: FC = ({ navigation }: any) => {
           total: item.cartTotal,
           totalReward: item.totalReward,
         })
-        setCarts(item.cartItems)
+        // setCarts(item.cartItems)
       }
     })
   }
@@ -174,16 +178,28 @@ export const ShopCartScreen: FC = ({ navigation }: any) => {
         </>
         {carts.length > 0 && (
           <View style={styles.btn_wrapper}>
-            <View style={styles.orderViewContainer}>
+            <View>
               <View style={styles.orderView}>
-                <Text> Итоги: </Text>
-                <View style={styles.hr} />
-                <Text>Поставщик: {carData.selectedShops}</Text>
-                <Text>
-                  {t('store_name_alt')}: {carData.shop}{' '}
-                </Text>
-                <Text>Бонус за заказ : {carData.totalReward.toFixed(2)} B</Text>
-                <Text>Итоговая сумма : {carData.total.toFixed(2)} ₽</Text>
+                <View>
+                  <Text>
+                    {t('store_name_alt')}: {carData.shop}{' '}
+                  </Text>
+                  <Text>
+                    {t('navigation.screen_titles.supplier')}: {carData.selectedShops}
+                  </Text>
+                </View>
+                <View style={styles.right_side}>
+                  <View style={styles.price_block}>
+                    <Text style={styles.large_text}>
+                      {t('sum')}: {carData.total.toFixed(2)} ₽
+                    </Text>
+                  </View>
+                  <View style={styles.price_block}>
+                    <Text>{t('reward')}: </Text>
+                    <Text>{carData.totalReward.toFixed(2)}</Text>
+                    <Text style={styles.bonus}>B</Text>
+                  </View>
+                </View>
               </View>
             </View>
             <View style={styles.button_double}>
@@ -252,12 +268,13 @@ const colors = {
 }
 
 const styles = StyleSheet.create({
+  bonus: {
+    color: colors.red,
+  },
   btn_wrapper: {
-    alignItems: 'center',
     ...customStyles.border(1, 'solid', colors.borderColor),
     backgroundColor: colors.white,
     paddingVertical: 10,
-    // position: 'absolute',
     width: '100%',
   },
   button_double: {
@@ -277,33 +294,25 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     padding: 10,
   },
-  hr: {
-    ...customStyles.borderTop(1, 'solid', colors.borderColor),
-    marginVertical: 3,
-    width: 200,
+  large_text: {
+    fontSize: 18,
+    fontWeight: '600',
   },
-
   no_product: {
     alignItems: 'center',
     marginTop: 20,
   },
   orderView: {
-    // width: 340,
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
     marginBottom: 10,
-    // backgroundColor: 'red',
+    paddingHorizontal: 10,
   },
-  // image_wrapper: {
-  //   ...customStyles.border(1, "solid", colors.borderColor),
-  //   width: 100,
-  //   height: 100,
-  //   marginRight: 10
-  // },
-  orderViewContainer: {
+  price_block: {
+    alignItems: 'center',
     flexDirection: 'row',
-    justifyContent: 'flex-end',
-    width: 340,
+    gap: 5,
+  },
+  right_side: {
+    marginLeft: 'auto',
   },
   select_wrapper: {
     alignItems: 'center',

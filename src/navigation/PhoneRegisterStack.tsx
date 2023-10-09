@@ -4,7 +4,7 @@
 import { useNavigation } from '@react-navigation/native'
 import React, { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { ALERT_TYPE } from 'react-native-alert-notification'
 import PhoneInput from 'react-native-phone-input'
 
@@ -45,6 +45,19 @@ export const PhoneRegisterStack: FC = () => {
       <TouchableOpacity onPress={() => navigation.navigate(SCREEN.STACK_SIGN_IN)}>
         <Text style={styles.have_account}>{t('have_account')}</Text>
       </TouchableOpacity>
+      <View style={styles.policy_terms}>
+        <View style={styles.policy_wrapper}>
+          <Text>{t('pt_part_1')}</Text>
+          <Pressable onPress={() => navigation.navigate(SCREEN.TERMS)}>
+            <Text style={styles.links}>{t('terms_alt')}</Text>
+          </Pressable>
+          <Text>{t('pt_part_2')}</Text>
+          <Pressable onPress={() => navigation.navigate(SCREEN.PRIVACY)}>
+            <Text style={styles.links}>{t('privacy_alt')}</Text>
+          </Pressable>
+          <Text>{t('pt_part_3')}</Text>
+        </View>
+      </View>
     </View>
   )
 }
@@ -52,6 +65,7 @@ export const PhoneRegisterStack: FC = () => {
 const colors = {
   border: '#ddd',
   red: 'red',
+  link: '#5495ff'
 }
 
 const styles = StyleSheet.create({
@@ -72,6 +86,18 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     paddingHorizontal: 10,
     paddingVertical: 20,
+    width: '100%',
+  },
+  links: {
+    color: colors.link,
+  },
+  policy_terms: {
+    marginTop: 20,
+    width: '100%',
+  },
+  policy_wrapper: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     width: '100%',
   },
 })

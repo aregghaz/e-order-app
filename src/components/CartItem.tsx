@@ -1,7 +1,9 @@
+import { MaterialIcons } from '@expo/vector-icons'
 import React, { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Pressable, View, Text, StyleSheet, ScrollView } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native'
 
+import { ImgOrSvg } from '~components/ImgOrSvg'
 import { Price } from '~components/Price'
 import InputNumber from '~components/molecules/InputNumber'
 import { customStyles } from '~utils/style_helpers'
@@ -55,45 +57,38 @@ export const CartItems: FC<IProps> = ({
         elem.map((item: any, index: number) => {
           return (
             <View key={index} style={styles.cart_wrapper}>
-              <View>
-                <Text>{item.product.productName}</Text>
-                <Text>
-                  {t('sku')}: {item.product.sku}
-                </Text>
-                <Text>
-                  {t('unit')}: {`${item.properties.unit.name} (x${item.properties.unit.contents})`}
-                </Text>
-                <Text>
-                  {t('quantity')}: {item.quantity}
-                </Text>
-                <View style={styles.price_block}>
-                  <Text>{t('price')}:</Text>
-                  <Price price={item.price} discount={item.discount} />
+              <View style={styles.info_section}>
+                <View style={styles.image_wrapper}>
+                  <ImgOrSvg item={item.product} product="-product" padding={20} width={80} />
                 </View>
-                <Text>
-                  {t('reward')}: {item.reward} B
-                </Text>
-                <Text>
-                  {t('discount')}: {item.discount} %
-                </Text>
-                {total && (
-                  <Text>
-                    {t('sum')}: {calculateSum(item)} ₽
-                  </Text>
-                )}
+                <View>
+                  <View>
+                    <Text style={styles.name}>{item.product.productName}</Text>
+                  </View>
+                  <View style={styles.price_block}>
+                    <Text style={styles.text_little_light}>{t('sku')}: </Text>
+                    <Text style={styles.text_little_light}>{item.product.sku}</Text>
+                  </View>
+                  <View style={styles.price_block}>
+                    <Text style={styles.text_little_light}>{t('unit')}:</Text>
+                    <Text
+                      style={styles.text_little_light}
+                    >{`${item.properties.unit.name} (x${item.properties.unit.contents})`}</Text>
+                  </View>
+                  <View style={[styles.price_block, styles.price_gap]}>
+                    <Text>{t('price')}:</Text>
+                    <Price price={item.price} discount={item.discount} />
+                  </View>
+                  <View style={styles.price_block}>
+                    <Text style={styles.text_little}>{t('reward')}: </Text>
+                    <Text style={styles.text_little}>{item.reward}</Text>
+                    <Text style={styles.bonus}>B</Text>
+                  </View>
+                </View>
+              </View>
+              <View style={styles.footer_block}>
                 {isDelete && (
                   <View style={styles.buttons_wrapper}>
-                    <Pressable
-                      style={styles.delete_wrapper}
-                      onPress={() =>
-                        onDelete({
-                          cartItemID: cartItemId,
-                          itemId: item.id,
-                        })
-                      }
-                    >
-                      <Text style={styles.delete}>{t('modal.delete')}</Text>
-                    </Pressable>
                     <View style={styles.incrementor}>
                       <InputNumber
                         qty={item.quantity}
@@ -103,6 +98,23 @@ export const CartItems: FC<IProps> = ({
                         handleUpdateQuantity={handleUpdateQuantity}
                       />
                     </View>
+                    <Pressable
+                      style={styles.delete_wrapper}
+                      onPress={() =>
+                        onDelete({
+                          cartItemID: cartItemId,
+                          itemId: item.id,
+                        })
+                      }
+                    >
+                      <MaterialIcons name="delete" size={24} color="black" />
+                    </Pressable>
+                  </View>
+                )}
+                {total && (
+                  <View style={styles.price_block}>
+                    <Text style={styles.large_text}>{t('sum')}: </Text>
+                    <Text style={styles.large_text}>{calculateSum(item)} ₽</Text>
                   </View>
                 )}
               </View>
@@ -115,44 +127,76 @@ export const CartItems: FC<IProps> = ({
 const colors = {
   borderColor: '#d1d1d1',
   red: 'red',
+  lightGrey: '#b4b4b4',
 }
 
 const styles = StyleSheet.create({
+  bonus: {
+    color: colors.red,
+  },
   buttons_wrapper: {
     alignItems: 'center',
     flexDirection: 'row',
     flex: 1,
-    gap: 20,
-    justifyContent: 'space-between',
+    gap: 10,
     marginTop: 10,
   },
   cart_wrapper: {
-    flexDirection: 'column',
     marginHorizontal: 15,
     marginVertical: 10,
     padding: 10,
     ...customStyles.border(1, 'solid', colors.borderColor),
     borderRadius: 4,
   },
-  delete: {
-    color: colors.red,
-    letterSpacing: 1,
-    textAlign: 'center',
-  },
   delete_wrapper: {
     ...customStyles.border(1, 'solid', colors.borderColor),
     alignItems: 'center',
     borderRadius: 4,
-    marginVertical: 4,
-    paddingVertical: 4,
-    width: 140,
+    flexDirection: 'row',
+    height: 30,
+    justifyContent: 'center',
+    width: 30,
+  },
+  footer_block: {
+    flexDirection: 'row',
+    marginTop: 20,
+  },
+  image_wrapper: {
+    alignItems: 'center',
+    borderRadius: 4,
+    flexDirection: 'row',
+    height: 100,
+    justifyContent: 'center',
+    width: 100,
+    ...customStyles.border(1, 'solid', colors.borderColor),
   },
   incrementor: {
     height: 30,
+  },
+  info_section: {
+    flexDirection: 'row',
+    gap: 10,
+  },
+  large_text: {
+    fontSize: 16,
+  },
+  name: {
+    fontWeight: '500',
+    width: 250,
   },
   price_block: {
     alignItems: 'center',
     flexDirection: 'row',
     gap: 5,
+  },
+  price_gap: {
+    marginTop: 5,
+  },
+  text_little: {
+    fontSize: 12,
+  },
+  text_little_light: {
+    color: colors.lightGrey,
+    fontSize: 11,
   },
 })
