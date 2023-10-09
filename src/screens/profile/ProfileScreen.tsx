@@ -3,9 +3,10 @@
  */
 
 import { useFocusEffect } from '@react-navigation/native'
+import * as ImagePicker from 'expo-image-picker'
 import React, { FC, useState, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 
 import { SHOP_API } from '~api'
 import { ImgOrSvg } from '~components/ImgOrSvg'
@@ -50,8 +51,9 @@ interface IAddress {
 export const ProfileScreen: FC = ({ route, navigation }: any) => {
   const [data, setData] = useState<any>(IPropsData)
   const { isSignedIn } = useAuth()
-  const { t } = useTranslation()
+  // const [image, setImage] = useState<any>(null)
 
+  const { t } = useTranslation()
   useFocusEffect(
     useCallback(() => {
       const getFetchedData = async () => {
@@ -74,15 +76,47 @@ export const ProfileScreen: FC = ({ route, navigation }: any) => {
     }, [isSignedIn])
   )
 
+  const generateFileName = () => {
+    // Implement your logic to generate a unique filename here
+    // For example, you can use a timestamp or a unique identifier
+    const timestamp = Date.now()
+    return `image_${timestamp}.jpg`
+  }
+
+  const imageUpload = async () => {
+    // No permissions request is necessary for launching the image library
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    })
+
+    if (!result.canceled) {
+      const formData = new FormData()
+      console.log(result.assets[0], 'result.assets[0]')
+      // formData.append('file', {
+      //   uri: result.assets[0].uri,
+      //   type: result.assets[0].type,
+      //   // name: result.assets[0].fileName,
+      //   name: generateFileName(),
+      // })
+      formData.append('file', result.assets[0].uri)
+      await SHOP_API.customerUploadImage(data.person.id, formData)
+    }
+  }
   const trueUserData = data
+
   return (
     <View style={styles.profile_wrapper}>
       {trueUserData && trueUserData.person && (
         <ScrollView>
           <View style={styles.avatar_block}>
-            <View style={styles.profileImage}>
-              <ImgOrSvg item={trueUserData.person} product="photo" radius={50} width={100} />
-            </View>
+            <Pressable onPress={imageUpload}>
+              <View style={styles.profileImage}>
+                <ImgOrSvg item={trueUserData.person} product="photo" radius={50} width={100} />
+              </View>
+            </Pressable>
             <Text style={styles.name}>
               {trueUserData.person?.firstName} {trueUserData.person?.lastName}
             </Text>

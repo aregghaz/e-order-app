@@ -37,6 +37,7 @@ export const CheckOutScreen: FC = ({ route, navigation }: any) => {
 
   const [comment, setComment] = useState('')
   const { id } = route.params
+  console.log(route, 'route===============')
   const { t } = useTranslation()
 
   useFocusEffect(
@@ -66,45 +67,63 @@ export const CheckOutScreen: FC = ({ route, navigation }: any) => {
         </View>
       </ScrollView>
       <View style={styles.parentBox}>
-        <View style={styles.boxContainer}>
-          <View style={styles.box}>
-            <Text>{t('shop.shop')}</Text>
-            <Text>{carts.shop.shopName}</Text>
-            <Text>{carts.shop.companyName}</Text>
-            <Text>{carts.shop.deliveryAddress.phoneNumber1}</Text>
-          </View>
-          <View style={styles.box}>
-            <Text>{t('shop.supplier')}</Text>
-            <Text>{carts.supplier.shopName}</Text>
-            <Text>{carts.supplier.companyName}</Text>
-            <Text>{carts.supplier.__address__.phoneNumber1}</Text>
-          </View>
-        </View>
+        {/*<View style={styles.boxContainer}>*/}
+        {/*  <View style={styles.box}>*/}
+        {/*    <Text>{t('shop.shop')}</Text>*/}
+        {/*    <Text>{carts.shop.shopName}</Text>*/}
+        {/*    <Text>{carts.shop.companyName}</Text>*/}
+        {/*    <Text>{carts.shop.deliveryAddress.phoneNumber1}</Text>*/}
+        {/*  </View>*/}
+        {/*  <View style={styles.box}>*/}
+        {/*    <Text>{t('shop.supplier')}</Text>*/}
+        {/*    <Text>{carts.supplier.shopName}</Text>*/}
+        {/*    <Text>{carts.supplier.companyName}</Text>*/}
+        {/*    <Text>{carts.supplier.__address__.phoneNumber1}</Text>*/}
+        {/*  </View>*/}
+        {/*</View>*/}
         <View style={styles.inputBox}>
           <TextInput
             style={styles.input}
             placeholder={t('comment')}
             placeholderTextColor={'black'}
             multiline={true}
-            numberOfLines={4}
+            numberOfLines={2}
             onChangeText={(text) => {
               setComment(text)
             }}
           />
         </View>
       </View>
-      <View style={styles.btn_wrapper}>
-        <View style={styles.orderViewContainer}>
-          <View style={styles.orderView}>
-            <Text>Бонус за заказ : {carts.totalReward.toFixed(2)} B</Text>
-            <Text>Итоговая сумма : {carts.cartTotal.toFixed(2)} ₽</Text>
+      {/*<View style={styles.orderView}>*/}
+      {/*  <Text>Бонус за заказ : {carts.totalReward.toFixed(2)} B</Text>*/}
+      {/*  <Text>Итоговая сумма : {carts.cartTotal.toFixed(2)} ₽</Text>*/}
+      {/*</View>*/}
+      <View>
+        <View style={styles.orderView}>
+          <View>
+            <Text>
+              {t('store_name_alt')}: {carts.shop.shopName}{' '}
+            </Text>
+            <Text>
+              {t('navigation.screen_titles.supplier')}: {carts.supplier.companyName}
+            </Text>
+          </View>
+          <View style={styles.right_side}>
+            <View style={styles.price_block}>
+              <Text style={styles.large_text}>
+                {t('sum')}: {carts.cartTotal.toFixed(2)} ₽
+              </Text>
+            </View>
+            <View style={styles.price_block}>
+              <Text>{t('reward')}: </Text>
+              <Text>{carts.totalReward.toFixed(2)}</Text>
+              <Text style={styles.bonus}>B</Text>
+            </View>
           </View>
         </View>
-        <CustomButton
-          width={340}
-          title={t('order.confirmOrder')}
-          onPress={() => handlerCheckOut()}
-        />
+      </View>
+      <View style={styles.button_double}>
+        <CustomButton title={t('order.confirmOrder')} onPress={() => handlerCheckOut()} />
       </View>
     </>
   )
@@ -117,32 +136,36 @@ const colors = {
 
 const styles = StyleSheet.create({
   ShopCartScreen_wrapper: {},
-  box: {
-    borderRadius: 4,
-    flexDirection: 'column',
-    paddingHorizontal: 15,
-    // width: 180,
-    paddingVertical: 5,
-    width: screenWidth / 2 - 22,
-    ...customStyles.border(1, 'solid', colors.borderColor),
+  bonus: {
+    color: colors.red,
   },
-  boxContainer: {
+  // box: {
+  //   borderRadius: 4,
+  //   flexDirection: 'column',
+  //   paddingHorizontal: 15,
+  //   // width: 180,
+  //   paddingVertical: 5,
+  //   width: screenWidth / 2 - 22,
+  //   ...customStyles.border(1, 'solid', colors.borderColor),
+  // },
+  // boxContainer: {
+  //   flexDirection: 'row',
+  //   gap: 12,
+  //   justifyContent: 'center',
+  //   marginHorizontal: 15,
+  // },
+  button_double: {
+    ...customStyles.borderTop(1, 'solid', colors.borderColor),
     flexDirection: 'row',
-    gap: 12,
-    justifyContent: 'center',
-    marginHorizontal: 15,
-  },
-
-  btn_wrapper: {
-    alignItems: 'center',
     justifyContent: 'center',
     padding: 10,
+    width: '100%',
   },
   input: {
-    minHeight: 40,
+    // minHeight: 40,
     minWidth: '100%',
-    paddingHorizontal: 15,
-    paddingVertical: 10,
+    // paddingHorizontal: 15,
+    padding: 5,
     ...customStyles.border(1, 'solid', colors.borderColor),
     borderRadius: 4,
     fontSize: 16,
@@ -150,26 +173,30 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
   },
   inputBox: {
-    paddingHorizontal: 15,
-    paddingVertical: 3,
+    paddingHorizontal: 5,
+    // paddingVertical: 3,
+  },
+  large_text: {
+    fontSize: 18,
+    fontWeight: '600',
   },
   orderView: {
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-    marginBottom: 10,
-  },
-  orderViewContainer: {
-    alignItems: 'flex-end',
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    width: 340,
+    padding: 10,
   },
   parentBox: {
-    alignItems: 'flex-start',
+    // alignItems: 'flex-start',
     display: 'flex',
     justifyContent: 'center',
     ...customStyles.border(1, 'solid', colors.borderColor),
-    gap: 7,
-    paddingVertical: 10,
+    // gap: 7,
+    // paddingVertical: 5,
+  },
+  price_block: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    gap: 5,
+  },
+  right_side: {
+    marginLeft: 'auto',
   },
 })

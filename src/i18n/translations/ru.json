@@ -74,7 +74,9 @@
       "settings": "Settings",
       "application_info": "ApplicationInfo",
       "not_found": "Не найдена",
-      "supplier": "Поставщик"
+      "supplier": "Поставщик",
+      "privacy": "Условия обработки",
+      "terms": "Условия использования"
     }
   },
   "application_info_screen": {
@@ -281,5 +283,10 @@
   "message": "Сообщение",
   "apartment": "Квартира, блок, здание, этаж и т. д.",
   "thanks": "Thank you for using the best template for expo apps",
-  "app_information": "Shake your device to open developer menu"
+  "app_information": "Shake your device to open developer menu",
+  "pt_part_1": "Нажимая на кнопку регистрации, вы соглашаетесь с",
+  "terms_alt": " условиями использования",
+  "pt_part_2": " сервисов Redro и",
+  "privacy_alt": " условиями обработки",
+  "pt_part_3": " персональных данных."
 }

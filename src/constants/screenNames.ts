@@ -42,6 +42,8 @@ export const SCREEN = {
   CHANGE_PASSWORD: 'ChangePassword',
   SUPPLIER: 'Supplier',
   STACK_PAYMENT: 'Payment',
+  TERMS: 'Terms',
+  PRIVACY: 'Privacy',
 }
 
 export type TMenusType =

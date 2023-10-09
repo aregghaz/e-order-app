@@ -31,6 +31,8 @@ import { AddPartnershipScreen } from '~screens/partners/AddPartnershipScreen'
 import { PartnershipScreen } from '~screens/partners/PartnershipScreen'
 import { ChangePasswordScreen, ProfileEditScreen } from '~screens/profile'
 import { CreateStoreScreen, ShopListScreen, UpdateShopScreen } from '~screens/shops'
+import { TermConditionsScreen } from '~screens/rules/TermConditionsScreen'
+import { PrivacyScreen } from '~screens/rules/PrivacyScreen'
 
 const locale = 'ru'
 
@@ -267,6 +269,26 @@ export const DrawerNavigator = () => {
         options={({ navigation, route }: any) => ({
           headerTitle: () => (
             <Header navigation={navigation} title={t('navigation.screen_titles.supplier')} />
+          ),
+          headerLeft: () => null,
+        })}
+      />
+      <Drawer.Screen
+        name={SCREEN.TERMS}
+        component={TermConditionsScreen}
+        options={({ navigation, route }: any) => ({
+          headerTitle: () => (
+            <Header navigation={navigation} title={t('navigation.screen_titles.terms')} />
+          ),
+          headerLeft: () => null,
+        })}
+      />
+      <Drawer.Screen
+        name={SCREEN.PRIVACY}
+        component={PrivacyScreen}
+        options={({ navigation, route }: any) => ({
+          headerTitle: () => (
+            <Header navigation={navigation} title={t('navigation.screen_titles.privacy')} />
           ),
           headerLeft: () => null,
         })}
